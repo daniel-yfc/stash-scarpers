@@ -1,0 +1,158 @@
+# Gayerdar scraper. Rendered zh-TW DOM verified for performer detail/search
+# and scene detail. No cookies, credentials, tokens, or browser profile data.
+name: Gayerdar
+
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - gayerdar.com/en-US/videos/
+      - gayerdar.com/en-us/videos/
+      - gayerdar.com/videos/
+      - gayerdar.com/zh-TW/videos/
+      - gayerdar.com/zh-tw/videos/
+    queryURL: "{url}"
+    queryURLReplace:
+      url:
+        - regex: "(?i)gayerdar\\.com/(?:en-us|zh-tw)?/?videos/"
+          with: "gayerdar.com/zh-TW/videos/"
+    scraper: sceneScraper
+
+sceneByName:
+  action: scrapeXPath
+  queryURL: "https://gayerdar.com/zh-TW/search?query={}"
+  scraper: sceneSearchScraper
+
+sceneByQueryFragment:
+  action: scrapeXPath
+  queryURL: "{url}"
+  queryURLReplace:
+    url:
+      - regex: "(?i)gayerdar\\.com/(?:en-us|zh-tw)?/?videos/"
+          with: "gayerdar.com/zh-TW/videos/"
+  scraper: sceneScraper
+
+performerByURL:
+  - action: scrapeXPath
+    url:
+      - gayerdar.com/en-US/models/
+      - gayerdar.com/en-us/models/
+      - gayerdar.com/models/
+      - gayerdar.com/zh-TW/models/
+      - gayerdar.com/zh-tw/models/
+    queryURL: "{url}"
+    queryURLReplace:
+      url:
+        - regex: "(?i)gayerdar\\.com/(?:en-us|zh-tw)?/?models/"
+          with: "gayerdar.com/zh-TW/models/"
+    scraper: performerScraper
+
+performerByName:
+  action: scrapeXPath
+  queryURL: "https://gayerdar.com/zh-TW/search?query={}"
+  scraper: performerSearchScraper
+
+xPathScrapers:
+  sceneScraper:
+    scene:
+      Title:
+        selector: //title/text()
+        postProcess:
+          - replace:
+              - regex: "｜.*$"
+                with: ""
+              - regex: "\\|.*$"
+                with: ""
+      Code:
+        selector: //link[@rel="canonical"]/@href
+        postProcess:
+          - replace:
+              - regex: "^.*/videos/"
+                with: ""
+              - regex: "/$"
+                with: ""
+      Date:
+        selector: //span[contains(@class,"trending-year")]/text()
+        postProcess:
+          - parseDate: "20060102"
+      Details:
+        selector: //meta[@name="description"]/@content
+      Tags:
+        Name:
+          selector: //ul[contains(@class,"iq-blogtag")]//a[contains(@class,"title")]/text()
+      Performers:
+        Name:
+          selector: //div[contains(@class,"content-details") and contains(@class,"trending-info")]//a[contains(@href,"/models/")]//h6/text()
+      Image:
+        selector: //div[contains(@class,"iq-main-slider")]//div[contains(@class,"absolute") and contains(@class,"object-cover")]//img[contains(@src,"imagedelivery.net") or contains(@src,"video_covers") or contains(@src,"videocovers")][1]/@src
+      Studio:
+        Name:
+          fixed: Gayerdar
+        URL:
+          fixed: "https://gayerdar.com/zh-TW"
+      URL:
+        selector: //link[@rel="canonical"]/@href
+
+  sceneSearchScraper:
+    common:
+      $result: //a[contains(@href,"/videos/")]
+    scene:
+      URL:
+        selector: $result/@href
+        postProcess:
+          - replace:
+              - regex: "^/"
+                with: "https://gayerdar.com/"
+              - regex: "^(?!https)"
+                with: "https://gayerdar.com/"
+              - regex: "(?i)gayerdar\\.com/(?:en-us|zh-tw)?/?videos/"
+                with: "gayerdar.com/zh-TW/videos/"
+
+  performerScraper:
+    performer:
+      Name:
+        selector: //title/text()
+        postProcess:
+          - replace:
+              - regex: "｜.*$"
+                with: ""
+              - regex: "\\|.*$"
+                with: ""
+      Height:
+        selector: //p[contains(@class,"text-D1D0CF")][contains(text(),"cm")]/text()
+        postProcess:
+          - replace:
+              - regex: "[^0-9]"
+                with: ""
+      Weight:
+        selector: //p[contains(@class,"text-D1D0CF")][contains(text(),"kg")]/text()
+        postProcess:
+          - replace:
+              - regex: "[^0-9]"
+                with: ""
+      URLs:
+        selector: //link[@rel="canonical"]/@href | //ul[contains(@class,"widgetsocialmedia")]//a[contains(@href,"twitter.com") or contains(@href,"x.com")]/@href
+      Image:
+        selector: //img[contains(@src,"model_covers") or contains(@src,"model-covers")]/@src
+
+  performerSearchScraper:
+    common:
+      $result: //a[contains(@href,"/models/")]
+    performer:
+      Name:
+        selector: $result//img/@alt
+      URL:
+        selector: $result/@href
+        postProcess:
+          - replace:
+              - regex: "^/"
+                with: "https://gayerdar.com/"
+              - regex: "^(?!https)"
+                with: "https://gayerdar.com/"
+              - regex: "(?i)gayerdar\\.com/(?:en-us|zh-tw)?/?models/"
+                with: "gayerdar.com/zh-TW/models/"
+
+driver:
+  useCDP: true
+  headers:
+    - Key: Accept-Language
+      Value: "zh-TW,zh;q=0.9,en;q=0.5"
