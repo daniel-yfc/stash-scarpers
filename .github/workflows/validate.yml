@@ -9,6 +9,8 @@ on:
       - "tools/**"
       - "docs/**"
       - "evidence/**"
+      - "tests/fixtures/**"
+      - "logs/**"
       - "skills/**"
       - "templates/README.md"
       - "README.md"
@@ -28,6 +30,8 @@ on:
       - "tools/**"
       - "docs/**"
       - "evidence/**"
+      - "tests/fixtures/**"
+      - "logs/**"
       - "skills/**"
       - "templates/README.md"
       - "README.md"
@@ -82,11 +86,23 @@ jobs:
       - name: Run Python regression tests
         run: python -m pytest tools/tests/ -v
 
-      - name: Run fixture-runner self-test
+      - name: Parse committed scraper YAML
+        run: python tools/parse_committed_yaml.py
+
+      - name: Run fixture-control self-test
         run: node tools/verify-scraper-fixtures.mjs --self-test
 
-      - name: Run safeguard audit
-        run: python tools/safeguard_audit.py
+      - name: Scan session material
+        run: python tools/scan_session_material.py
+
+      - name: Check evidence labels
+        run: python tools/check_evidence_labels.py
+
+      - name: Check live CDP claim status
+        run: python tools/check_live_cdp_status.py
+
+      - name: Run safeguard self-evaluation
+        run: python tools/self_evaluate.py
 
       - name: Check documentation examples and contradictions
         run: python tools/check_scraper_docs.py
