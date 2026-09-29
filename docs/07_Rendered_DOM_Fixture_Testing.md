@@ -1,3 +1,24 @@
+---
+doc_id: DOC-TEST-51
+title: Rendered-DOM Fixture Testing
+status: active
+layer: repository
+owner: maintainer
+audience:
+  - agent
+  - maintainer
+applies_to:
+  - testing
+  - fixtures
+last_verified: "2026-09-29"
+authority: canonical
+routing:
+  intents:
+    - testing
+    - rendered-dom
+    - fixtures
+---
+
 # Rendered-DOM Fixture Testing
 
 ## Purpose
@@ -44,7 +65,8 @@ Record evidence separately:
 ## Recommended command
 
 ```bash
+node tools/verify-scraper-fixtures.mjs --self-test
 node tools/verify-scraper-fixtures.mjs tests/fixtures/<scraper>-fixtures.yml
 ```
 
-Fixture success proves the recorded selector contract only. Run the normal validator, URL sorting, quality gate, documentation check, and live Stash/CDP test separately.
+The self-test proves the runner only. A site fixture command proves the recorded selector contract only. Run schema validation, URL sorting, the quality gate, evidence-label checks, and live Stash/CDP status separately.

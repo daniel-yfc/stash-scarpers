@@ -72,6 +72,12 @@ documents:
     layer: repository
     status: active
     intents: [testing, live-scrutiny]
+  - doc_id: DOC-TEST-51
+    title: Rendered-DOM Fixture Testing
+    path: docs/07_Rendered_DOM_Fixture_Testing.md
+    layer: repository
+    status: active
+    intents: [testing, rendered-dom, fixtures]
   - doc_id: STATUS-LIVE-60
     title: Live Test Status
     path: docs/LIVE_TEST_STATUS.md

@@ -4,44 +4,49 @@ GitHub Actions workflows live under `.github/workflows/`.
 
 ## 1. Full Validation Suite (`validate.yml`)
 
-The primary blocking CI gate. Triggered on push to `main` and pull requests modifying scrapers, validator code, or tools. It orchestrates all local test layers in sequence:
+The primary blocking CI gate. It runs the repository checks in this order:
 
 ```bash
-# Node layer
 npm ci || npm install
 node validator/index.mjs -a --ci
 node validator/index.mjs -a -s --ci
-
-# Quality gate
 bash tools/validate-all.sh
-
-# Python test suite & doc check
 python -m pytest tools/tests/ -v
+python tools/parse_committed_yaml.py
+node tools/verify-scraper-fixtures.mjs --self-test
+python tools/scan_session_material.py
+python tools/check_evidence_labels.py
+python tools/check_live_cdp_status.py
+python tools/self_evaluate.py
 python tools/check_scraper_docs.py
+python tools/check_docs_index.py
 ```
 
-The workflow also runs `node tools/verify-scraper-fixtures.mjs --self-test` and `python tools/safeguard_audit.py`. Those checks prove the control scripts run. They do not prove that a site-specific fixture corpus or live Stash/CDP extraction exists.
+The fixture command above is a runner self-test. It does not prove that a site-specific fixture corpus exists. The CDP command records `UNVERIFIED` when Stash is absent and rejects an unsupported verified claim.
 
 ## 2. Pull Request Scraper Check (`pr-check.yml`)
 
-Runs on pull requests modifying scraper files. Detects changed scrapers using `tj-actions/changed-files`, executes `tools/scraper-quality-gate.sh` on each changed file, runs `check_scraper_docs.py`, and posts a formatted status table as an inline PR comment.
+Runs on pull requests modifying scraper files. It executes `tools/scraper-quality-gate.sh` on each changed file and posts a status table.
 
 ## 3. Live Scraper Scrutiny (`scrutiny.yml`)
 
-Manual on-demand workflow (`workflow_dispatch`) to execute raw-response probing with `tools/scrutiny.js`.
+Manual workflow for raw-response probing with `tools/scrutiny.js`.
 
 - `tools/scrutiny.js` uses HTTP fetch plus JSDOM. It does not execute site JavaScript and is not rendered-DOM or live Stash/CDP verification.
-- Configurable inputs: target scraper file, `--search` toggle, `--paginate` walking, `--url` direct testing, and custom `--probe` terms.
-- Emits raw-response extraction coverage statistics into workflow job logs.
+- Inputs: scraper path, `--search`, `--paginate`, `--url`, and `--probe`.
 
-## 4. Evaluation Pack Runner (`eval.yml`)
+## 4. CDP Evidence Gate (`cdp-evidence-gate.yml`)
 
-Manual on-demand workflow (`workflow_dispatch`) running the Python pytest suite across specific test targets or the complete suite.
+Runs on evidence changes and manual dispatch. It checks whether a live CDP claim has an artifact. It does not launch Stash or a browser.
 
-## 5. Documentation Link Checker (`link-check.yml`)
+## 5. Evaluation Pack Runner (`eval.yml`)
 
-Runs on pull requests and scheduled intervals to detect broken internal and external Markdown links.
+Manual workflow for the Python pytest suite.
+
+## 6. Documentation Link Checker (`link-check.yml`)
+
+Checks Markdown links on pull requests and a schedule.
 
 ## Interpretation
 
-A green schema and quality gate job means YAML conforms to official syntax and repository policy. It does not establish live selector correctness, site availability, login success, rendered-DOM coverage, or image CDN accessibility. Those results require separate evidence and must not be inferred from a green workflow.
+A green validation job means the executed repository checks passed. It does not establish live selector correctness, rendered-DOM coverage, live Stash/CDP extraction, or production readiness.
