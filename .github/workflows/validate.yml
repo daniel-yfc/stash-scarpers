@@ -8,6 +8,7 @@ on:
       - "validator/**"
       - "tools/**"
       - "docs/**"
+      - "evidence/**"
       - "skills/**"
       - "templates/README.md"
       - "README.md"
@@ -26,6 +27,7 @@ on:
       - "validator/**"
       - "tools/**"
       - "docs/**"
+      - "evidence/**"
       - "skills/**"
       - "templates/README.md"
       - "README.md"
@@ -79,6 +81,12 @@ jobs:
 
       - name: Run Python regression tests
         run: python -m pytest tools/tests/ -v
+
+      - name: Run fixture-runner self-test
+        run: node tools/verify-scraper-fixtures.mjs --self-test
+
+      - name: Run safeguard audit
+        run: python tools/safeguard_audit.py
 
       - name: Check documentation examples and contradictions
         run: python tools/check_scraper_docs.py
