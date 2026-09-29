@@ -10,7 +10,7 @@ audience:
 applies_to:
   - documentation
   - repository
-last_verified: "2026-09-29"
+last_verified: "2026-09-30"
 authority: canonical
 routing:
   intents:
@@ -28,34 +28,34 @@ This document is the canonical policy for repository documentation numbering, na
 
 ## Ownership model
 
-| Layer | Owns | Must not own |
-|---|---|---|
-| Root `README.md` | Project purpose, quick start, canonical commands, directory map | Detailed scraper selector or runtime semantics |
-| `AGENTS.md` | Repository-wide agent constraints, safety, and routing pointers | A second copy of detailed repository or skill rules |
-| `CLAUDE.md` | Claude-specific behavior that differs from repository-wide rules | A second copy of `AGENTS.md` or skill references |
-| `CONTRIBUTING.md` | Human contribution and review workflow | Runtime implementation details |
-| `templates/README.md` | Template inventory, pairing, provenance, naming, copy workflow | Full scraper authoring manual |
-| `docs/` | Repository architecture, CI, testing, production gates, maintenance, and status | Per-field scraper rules |
-| `skills/stash-scraper-builder/SKILL.md` | Skill purpose, trigger conditions, output contract, authoring workflow | Repository administration and CI policy |
-| `skills/stash-scraper-builder/references/` | Specialized XPath, JSON, script, CDP, date, failure, and validation guidance | Project-wide contribution policy |
-| `validator/` | Executable validation behavior and schema | Prose-only source of truth |
-| `tools/` | Inspection, validation, documentation, and live-scrutiny utilities | Canonical schema definitions |
+| Layer                                      | Owns                                                                            | Must not own                                        |
+| ------------------------------------------ | ------------------------------------------------------------------------------- | --------------------------------------------------- |
+| Root `README.md`                           | Project purpose, quick start, canonical commands, directory map                 | Detailed scraper selector or runtime semantics      |
+| `AGENTS.md`                                | Repository-wide agent constraints, safety, and routing pointers                 | A second copy of detailed repository or skill rules |
+| `CLAUDE.md`                                | Claude-specific behavior that differs from repository-wide rules                | A second copy of `AGENTS.md` or skill references    |
+| `CONTRIBUTING.md`                          | Human contribution and review workflow                                          | Runtime implementation details                      |
+| `templates/README.md`                      | Template inventory, pairing, provenance, naming, copy workflow                  | Full scraper authoring manual                       |
+| `docs/`                                    | Repository architecture, CI, testing, production gates, maintenance, and status | Per-field scraper rules                             |
+| `skills/stash-scraper-builder/SKILL.md`    | Skill purpose, trigger conditions, output contract, authoring workflow          | Repository administration and CI policy             |
+| `skills/stash-scraper-builder/references/` | Specialized XPath, JSON, script, CDP, date, failure, and validation guidance    | Project-wide contribution policy                    |
+| `validator/`                               | Executable validation behavior and schema                                       | Prose-only source of truth                          |
+| `tools/`                                   | Inspection, validation, documentation, and live-scrutiny utilities              | Canonical schema definitions                        |
 
 ## Document identity and numbering
 
 Every indexed document has a stable `doc_id`. The ID is independent of the filename and must not be reused after deprecation.
 
-| Layer | Format | Example |
-|---|---|---|
-| Repository docs | `DOC-<DOMAIN>-<NN>` | `DOC-QG-21` |
-| Skill references | `REF-<DOMAIN>-<NN>` | `REF-MODE-40` |
-| Templates | `TPL-<DOMAIN>-<NN>` | `TPL-REPORT-71` |
-| Status records | `STATUS-<DOMAIN>-<NN>` | `STATUS-LIVE-60` |
-| Skill contract | `SKILL-<DOMAIN>-<NN>` | `SKILL-CORE-00` |
+| Layer            | Format                 | Example          |
+| ---------------- | ---------------------- | ---------------- |
+| Repository docs  | `DOC-<DOMAIN>-<NN>`    | `DOC-QG-21`      |
+| Skill references | `REF-<DOMAIN>-<NN>`    | `REF-MODE-40`    |
+| Templates        | `TPL-<DOMAIN>-<NN>`    | `TPL-REPORT-71`  |
+| Status records   | `STATUS-<DOMAIN>-<NN>` | `STATUS-LIVE-60` |
+| Skill contract   | `SKILL-<DOMAIN>-<NN>`  | `SKILL-CORE-00`  |
 
 Use increments of 10 where practical. Do not renumber documents solely to close gaps. `DOC-TEST-51` is the rendered-DOM fixture document and does not replace `DOC-TEST-50`.
 
-Current repository document IDs are registered in [`index.yml`](index.yml). Existing numbered filenames under `docs/` remain valid for compatibility.
+Current repository document IDs are registered in [`index.yml`](index.yml). Existing numbered filenames under `docs/` remain valid for compatibility; new numbered files use a two-digit prefix followed by lowercase kebab-case.
 
 ## Naming rules
 
@@ -68,9 +68,36 @@ Current repository document IDs are registered in [`index.yml`](index.yml). Exis
 
 ## Metadata rules
 
-New or materially updated Markdown documents use YAML front matter. Controlled values are `status` (`draft`, `active`, `deprecated`, `archived`), `layer` (`repository`, `skill`, `template`, `status`, `tool`), `authority` (`canonical`, `derived`, `informational`), and `audience` (`agent`, `maintainer`, `contributor`).
+New or materially updated Markdown documents use YAML front matter:
 
-When front matter contains `doc_id`, CI requires it to match `docs/index.yml`.
+```yaml
+---
+doc_id: DOC-QG-21
+title: Quality Gate Rules
+status: active
+layer: repository
+owner: maintainer
+audience:
+  - agent
+  - maintainer
+applies_to:
+  - scrapers
+last_verified: "2026-09-09"
+authority: canonical
+routing:
+  intents:
+    - quality-gate
+---
+```
+
+Controlled values:
+
+- `status`: `draft`, `active`, `deprecated`, `archived`
+- `layer`: `repository`, `skill`, `template`, `status`, `tool`
+- `authority`: `canonical`, `derived`, `informational`
+- `audience`: `agent`, `maintainer`, `contributor`
+
+Legacy documents may be migrated incrementally. When front matter contains `doc_id`, CI requires it to match `docs/index.yml`.
 
 ## Indexing rules
 
@@ -79,6 +106,7 @@ When front matter contains `doc_id`, CI requires it to match `docs/index.yml`.
 - Every repository-level Markdown document under `docs/` and every Markdown reference under `skills/stash-scraper-builder/references/` must be indexed.
 - Root routing documents, `templates/README.md`, and `validator/README.md` must also be indexed.
 - Every indexed path must exist, every `doc_id` must be unique, and routing references must point to registered IDs.
+- Add operational documents to `skills/stash-scraper-builder/references/UPSTREAM_SOURCES.md` when they depend on upstream material.
 - Run `python tools/check_docs_index.py` after changing documentation paths or metadata.
 
 ## Agent routing
@@ -95,10 +123,14 @@ If documentation conflicts, resolve in this order: official CommunityScrapers sc
 
 Prettier is the repository formatter for Markdown, YAML, JSON, and JavaScript. The executable rules live in `.prettierrc.yml` and `.prettierignore`; this document owns only the policy.
 
+Commands:
+
 ```bash
 npm run format
 npm run format:check
 ```
+
+Formatting rules:
 
 - Run formatting before validation, never as a replacement for validation.
 - Preserve YAML comments such as `# UNVERIFIED`.
@@ -124,7 +156,7 @@ npm run format:check
 - `python tools/self_evaluate.py` — run the safeguard controls and print their boundaries.
 - `python tools/check_scraper_docs.py` — check documentation examples and contradictions.
 - `python tools/check_docs_index.py` — check the documentation registry.
-- `npm run format:check` — check formatting locally.
+- `npm run format:check` — check Markdown, YAML, JSON, and JavaScript formatting locally.
 
 If a command differs between local tooling and documentation, inspect the executable file first and update the documentation rather than inventing an alias.
 

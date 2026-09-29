@@ -50,7 +50,7 @@ A completed checklist is not production readiness by itself. Schema validation, 
 
 - No hardcoded credentials
 - No sensitive data in scraper
-- Never commit, copy, or reconstruct session material: credentials, session cookies, clearance tokens, CSRF values, browser-profile data, analytics identifiers. Record policy and status only.
+- Never commit, copy, or reconstruct session material: credentials, session cookies, clearance tokens, CSRF values, browser-profile data, analytics identifiers — not from private scrapers, not from repository history. Record policy and status only.
 - Verify external dependencies
 - Check for security vulnerabilities
 
@@ -101,4 +101,4 @@ A completed checklist is not production readiness by itself. Schema validation, 
 ---
 
 **Last Updated**: 2026-09-30
-**Status**: Active
+**Status**: ✅ Active
