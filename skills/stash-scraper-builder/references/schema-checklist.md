@@ -19,7 +19,9 @@ Use this checklist before emitting a scraper YAML file. Run the official Communi
 ## Scraper Definition
 
 - [ ] All referenced keys exist (no dangling refs)
-- [ ] XPath selectors tested with `$x("...")` on live pages
+- [ ] Page classified before selector assessment: completed target page vs. bot-challenge / login / paywall / age-gate / 404 / app-error or partial render
+- [ ] XPath selectors tested with `$x("...")` on live pages, or against a completed sanitized rendered-DOM fixture when the page is JS-rendered
+- [ ] Raw HTTP response compared with browser-rendered DOM; differences documented
 - [ ] JSON paths tested on real API responses
 - [ ] No invented search modes (`sceneByName` / `sceneByQueryFragment` without real search)
 
@@ -31,11 +33,22 @@ Use this checklist before emitting a scraper YAML file. Run the official Communi
 - [ ] Image uses `|` fallbacks, upgrades `/thumb/` → `/poster/`, prefixes `^//` with `https:`
 - [ ] Performers cleaned per `performer-cleaning.md`, no default `Gender`
 
+## Selector Assertions
+
+- [ ] Cardinality asserted per selector (`min`/`max` match counts), not just presence
+- [ ] Locale asserted: `<html lang>`, canonical URL locale segment, and at least one expected source-language text field
+- [ ] At least one missing/optional-field case tested — output must remain a valid partial result, not unrelated fallback data
+
 ## Driver Configuration Rules
 
 - [ ] `driver.useCDP` (if present) is in the top-level `driver` block only, not inside any entry point
 - [ ] Public scrapers (`scrapers/*.yml`) do not contain `driver.cookies`
 - [ ] Session cookies appear only in `scrapers/private/*.yml`
+
+## Secrets and Session Material
+
+- [ ] No credentials, session cookies, clearance tokens, CSRF values, browser-profile data, or analytics identifiers committed to YAML, fixtures, evidence, logs, or documentation
+- [ ] Private-scraper session state is referenced by status only — never reconstructed or copied
 
 ## Output
 

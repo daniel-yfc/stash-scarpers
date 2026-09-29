@@ -20,7 +20,7 @@ This document describes the business requirements and production checklist for s
 - Implement scraper YAML following 5 rules
 - Code review for best practices
 - Verify CDP configuration
-- Check for driver.cookies usage (prohibited)
+- Public scrapers (`scrapers/*.yml`) contain no `driver.cookies`; session-dependent scrapers belong in `scrapers/private/`
 
 ### C: Content Quality & Field Coverage
 
@@ -34,6 +34,7 @@ This document describes the business requirements and production checklist for s
 - Run local quality gate tests
 - Verify schema validation passes
 - Test with multiple URLs
+- JS-rendered sites: verify against completed, sanitized rendered-DOM fixtures; record live Stash/CDP status separately
 - Document test results
 
 ### E: Documentation Completeness
@@ -47,6 +48,7 @@ This document describes the business requirements and production checklist for s
 
 - No hardcoded credentials
 - No sensitive data in scraper
+- Never commit, copy, or reconstruct session material: credentials, session cookies, clearance tokens, CSRF values, browser-profile data, analytics identifiers — not from private scrapers, not from repository history. Record policy and status only.
 - Verify external dependencies
 - Check for security vulnerabilities
 
@@ -91,8 +93,9 @@ This document describes the business requirements and production checklist for s
 - [03_Quality_Gate_Rules.md](03_Quality_Gate_Rules.md) - 5 rules details
 - [05_CI_Workflows.md](05_CI_Workflows.md) - CI/CD workflows
 - [06_Testing_Guide.md](06_Testing_Guide.md) - Testing guide
+- [07_Rendered_DOM_Fixture_Testing.md](07_Rendered_DOM_Fixture_Testing.md) - Rendered-DOM fixtures and failure-page classification
 
 ---
 
-**Last Updated**: 2026-08-28
+**Last Updated**: 2026-09-29
 **Status**: ✅ Active
