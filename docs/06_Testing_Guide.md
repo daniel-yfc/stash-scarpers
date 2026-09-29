@@ -143,7 +143,8 @@ Before submitting a scraper change, confirm:
 ## Related Documents
 
 - [01_System_Architecture.md](01_System_Architecture.md) — System design and component map
-- [03_Quality_Gate_Rules.md](03_Quality_Gate_Rules.md) — Detailed 5 quality rules
+- [03_Quality_Gate_Rules.md](03_Quality_Gate_Rules.md) — Quality-gate rules
 - [04_Production_Gate.md](04_Production_Gate.md) — Business readiness checklist
 - [05_CI_Workflows.md](05_CI_Workflows.md) — CI/CD workflow details
+- [07_Rendered_DOM_Fixture_Testing.md](07_Rendered_DOM_Fixture_Testing.md) — Rendered-DOM fixtures and failure-page classification
 - [test-report-template.md](test-report-template.md) — Standard markdown full-suite test report format
