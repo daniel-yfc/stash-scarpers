@@ -34,9 +34,18 @@ Browser-saved completed zh-TW rendered DOM was used to verify performer detail, 
 4. Test optional values deliberately; missing social data must return valid partial output rather than unrelated fallback data.
 5. Credentials, session cookies, clearance tokens, CSRF values, analytics identifiers, and browser-profile values must never be committed, reconstructed, or copied into YAML, fixtures, evidence, logs, or documentation.
 
+## 2026-09-29 review pass
+
+End-to-end static review of the committed `scrapers/private/gayerdar.yml`:
+
+- Fixed blocking YAML parse defect: misaligned `with:` key in `sceneByQueryFragment.queryURLReplace` (validator could not load the file).
+- Simplified both search-scraper URL chains from two prefix rules to one; the second rule was unreachable after the first rewrite.
+- Added header annotations recording verification state and known fragilities (`text-D1D0CF` utility class, broad `$result` anchors, zh-TW-only title split).
+- Added the recommended `# Last Updated` footer.
+
 ## Remaining verification
 
-- Schema validation: unverified
+- Schema validation: pending rerun against corrected YAML
 - URL sorting: unverified
 - Policy gate: unverified
 - Live Stash CDP: unverified

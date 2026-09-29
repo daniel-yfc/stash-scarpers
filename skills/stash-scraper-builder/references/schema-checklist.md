@@ -5,6 +5,7 @@ Use this checklist before emitting a scraper YAML file. Run the official Communi
 ## Required Structure
 
 - [ ] `name` key present and matches CamelCase filename
+- [ ] File parses as YAML before committing (validator load would catch this; verify locally with `python -c "import yaml,sys;yaml.safe_load(open(sys.argv[1]))" <file>`)
 - [ ] At least one entry point (`sceneByURL`, `sceneByName`, etc.)
 - [ ] Each entry has the fields required by its action and entry-point schema
 - [ ] Fragment XPath/JSON entry points include the required `queryURL`; script actions follow their own script contract

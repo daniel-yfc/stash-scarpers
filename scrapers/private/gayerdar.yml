@@ -1,5 +1,15 @@
 # Gayerdar scraper. Rendered zh-TW DOM verified for performer detail/search
 # and scene detail. No cookies, credentials, tokens, or browser profile data.
+#
+# Verification status (see evidence/gayerdar-scraper-development-2026-09-28.md):
+# - Rendered-DOM fixture verification for zh-TW detail/search pages: DONE
+# - Schema validation / policy gate / live Stash CDP runtime: UNVERIFIED
+#
+# Fragility notes:
+# - performerScraper Height/Weight anchor on Tailwind hex-color class text-D1D0CF.
+# - sceneSearchScraper $result matches any /videos/ anchor; fixture evidence
+#   covered only card links. Navigation links are a known drift risk.
+# - Title selectors split on fullwidth ｜ which depends on zh-TW page chrome.
 name: Gayerdar
 
 sceneByURL:
@@ -13,7 +23,7 @@ sceneByURL:
     queryURL: "{url}"
     queryURLReplace:
       url:
-        - regex: "(?i)gayerdar\\.com/(?:en-us|zh-tw)?/?videos/"
+        - regex: "(?i)gayerdar\.com/(?:en-us|zh-tw)?/?videos/"
           with: "gayerdar.com/zh-TW/videos/"
     scraper: sceneScraper
 
@@ -27,8 +37,8 @@ sceneByQueryFragment:
   queryURL: "{url}"
   queryURLReplace:
     url:
-      - regex: "(?i)gayerdar\\.com/(?:en-us|zh-tw)?/?videos/"
-          with: "gayerdar.com/zh-TW/videos/"
+      - regex: "(?i)gayerdar\.com/(?:en-us|zh-tw)?/?videos/"
+        with: "gayerdar.com/zh-TW/videos/"
   scraper: sceneScraper
 
 performerByURL:
@@ -42,7 +52,7 @@ performerByURL:
     queryURL: "{url}"
     queryURLReplace:
       url:
-        - regex: "(?i)gayerdar\\.com/(?:en-us|zh-tw)?/?models/"
+        - regex: "(?i)gayerdar\.com/(?:en-us|zh-tw)?/?models/"
           with: "gayerdar.com/zh-TW/models/"
     scraper: performerScraper
 
@@ -60,7 +70,7 @@ xPathScrapers:
           - replace:
               - regex: "｜.*$"
                 with: ""
-              - regex: "\\|.*$"
+              - regex: "\|.*$"
                 with: ""
       Code:
         selector: //link[@rel="canonical"]/@href
@@ -102,9 +112,7 @@ xPathScrapers:
           - replace:
               - regex: "^/"
                 with: "https://gayerdar.com/"
-              - regex: "^(?!https)"
-                with: "https://gayerdar.com/"
-              - regex: "(?i)gayerdar\\.com/(?:en-us|zh-tw)?/?videos/"
+              - regex: "(?i)gayerdar\.com/(?:en-us|zh-tw)?/?videos/"
                 with: "gayerdar.com/zh-TW/videos/"
 
   performerScraper:
@@ -115,7 +123,7 @@ xPathScrapers:
           - replace:
               - regex: "｜.*$"
                 with: ""
-              - regex: "\\|.*$"
+              - regex: "\|.*$"
                 with: ""
       Height:
         selector: //p[contains(@class,"text-D1D0CF")][contains(text(),"cm")]/text()
@@ -146,9 +154,7 @@ xPathScrapers:
           - replace:
               - regex: "^/"
                 with: "https://gayerdar.com/"
-              - regex: "^(?!https)"
-                with: "https://gayerdar.com/"
-              - regex: "(?i)gayerdar\\.com/(?:en-us|zh-tw)?/?models/"
+              - regex: "(?i)gayerdar\.com/(?:en-us|zh-tw)?/?models/"
                 with: "gayerdar.com/zh-TW/models/"
 
 driver:
@@ -156,3 +162,5 @@ driver:
   headers:
     - Key: Accept-Language
       Value: "zh-TW,zh;q=0.9,en;q=0.5"
+
+# Last Updated 2026-09-29
