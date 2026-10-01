@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../validator/scraper.schema.json
+# fc2 (adult.contents.fc2.com) — FC2 adult contents marketplace.
+# Verification status (2026-10-02, anonymous fetch):
+#   Site reachable: https://adult.contents.fc2.com/ responds (live marketplace).
+#   Selectors UNVERIFIED — no live detail-page verification recorded for
+#   sceneScraper or movieScraper. Verify against a live /article/ page
+#   before relying on them.
+# Last Updated: 2026-10-02
 
 name: fc2
 
