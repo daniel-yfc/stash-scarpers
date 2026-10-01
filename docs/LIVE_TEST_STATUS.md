@@ -8,6 +8,7 @@ This table separates schema validation from live-page verification. `Schema` mea
 | Bravo-Japan   |   Pass |    Not configured |  Unverified | CDP enabled                            | Needs live test            |
 | CK-Download   |   Pass | Verified snapshot |  Unverified | CDP enabled/login-gated                | Needs live detail test     |
 | Coat          |   Pass |        Unverified |  Unverified | CDP enabled/login-gated                | Needs live test            |
+| fc2           |   Pass |    Not configured |  Unverified | Public                                 | Needs live test            |
 | Games-Video   |   Pass |    Not configured |  Unverified | CDP enabled                            | Needs live test            |
 | GV-Wiki       |   Pass |        Unverified |  Unverified | Private CDP; placeholder cookie fields | Configure session and test |
 | Hunks-Ch      |   Pass | Verified snapshot |  Unverified | CDP enabled/login-gated                | Needs live detail test     |

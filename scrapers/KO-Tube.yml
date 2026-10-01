@@ -1,5 +1,11 @@
 # KO-Tube
-# Last Updated: 2026-09-06
+# Last Updated: 2026-10-02
+# Verification status (2026-10-02, anonymous fetch):
+#   Site reachability: https://ko-tube.com/ refused the anonymous automated
+#   probe (age gate / bot filtering); serving status not directly confirmed.
+#   Selectors UNVERIFIED against live pages — no live detail-page or
+#   search-page verification recorded. Verify with a CDP browser session
+#   before relying on them.
 # Validator fixes:
 #   - added sceneByQueryFragment (required by sceneByName)
 #   - replaced invalid `trim` postProcess with replace-regex trim
