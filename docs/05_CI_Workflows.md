@@ -1,62 +1,77 @@
+---
+doc_id: DOC-OPS-40
+title: CI Workflows
+status: active
+layer: repository
+owner: maintainer
+audience:
+  - agent
+  - maintainer
+applies_to:
+  - ci
+  - testing
+last_verified: "2026-10-01"
+authority: canonical
+routing:
+  intents:
+    - ci
+    - workflows
+---
+
 # CI Workflows
 
 GitHub Actions workflows live under `.github/workflows/`.
 
 ## 1. Full Validation Suite (`validate.yml`)
 
-The primary blocking CI gate. Triggered on push to `main` and pull requests modifying scrapers, validator code, tools, documentation, evidence, or fixtures. It runs the local test layers in sequence:
+The blocking repository gate runs on matching pushes to `main` and pull requests changing scrapers, validator, tools, docs, evidence, fixtures, or other configured paths. It runs the local checks in sequence:
 
 ```bash
-# Node layer
 npm ci || npm install
 node validator/index.mjs -a --ci
 node validator/index.mjs -a -s --ci
-
-# Quality gate
 bash tools/validate-all.sh
-
-# Python test suite
 python -m pytest tools/tests/ -v
-
-# Safeguard controls
 python tools/parse_committed_yaml.py
 node tools/verify-scraper-fixtures.mjs --self-test
 python tools/scan_session_material.py
 python tools/check_evidence_labels.py
 python tools/check_live_cdp_status.py
 python tools/self_evaluate.py
-
-# Documentation checks
 python tools/check_scraper_docs.py
 python tools/check_docs_index.py
 ```
 
-The fixture command is a runner self-test. It does not prove that a site-specific fixture corpus exists. The CDP command records `UNVERIFIED` when Stash is absent and rejects an unsupported verified claim.
+The fixture command here tests the runner, not Gayerdar or any other site fixture. The CDP status command does not launch Stash or prove live extraction. Python dependencies are installed between the Node/policy steps and pytest in the workflow.
 
 ## 2. Pull Request Scraper Check (`pr-check.yml`)
 
-Runs on pull requests modifying scraper files. Detects changed scrapers using `tj-actions/changed-files`, executes `tools/scraper-quality-gate.sh` on each changed file, runs `check_scraper_docs.py`, and posts a formatted status table as an inline PR comment.
+For matching scraper pull requests, detects changed scrapers with `tj-actions/changed-files`, runs `tools/scraper-quality-gate.sh` per file and `check_scraper_docs.py`, and attempts a PR status comment. This is distinct from the full validation job.
 
-## 3. Live Scraper Scrutiny (`scrutiny.yml`)
+## 3. Fixture Manifest Verification (`fixture-manifests.yml`)
 
-Manual on-demand workflow (`workflow_dispatch`) to execute raw-response probing with `tools/scrutiny.js`.
+For matching pushes and pull requests affecting fixtures, the runner, its discovery script or tests, installs Node and Python, tests manifest discovery, and executes each committed `tests/fixtures/**/*-fixtures.yml` manifest. No manifest reports `UNVERIFIED`, not a site-fixture pass. `--expect` must be supplied when a specific scraper's fixture is claimed; it is not inferred from prose.
 
-- `tools/scrutiny.js` uses HTTP fetch plus JSDOM. It does not execute site JavaScript and is not rendered-DOM or live Stash/CDP verification.
-- Configurable inputs: target scraper file, `--search` toggle, `--paginate` walking, `--url` direct testing, and custom `--probe` terms.
-- Emits raw-response extraction coverage statistics directly into workflow job logs.
+## 4. Evidence Contract (`evidence-contract.yml`)
 
-## 4. CDP Evidence Gate (`cdp-evidence-gate.yml`)
+For matching evidence, fixture, script or workflow changes, and weekly schedule or manual dispatch, validates `evidence/status/*.yml` and its regression tests. Its artifact existence and digest checks validate provenance metadata, not live Stash behavior.
 
-Runs on evidence changes and manual dispatch. It rejects a live CDP claim that has no artifact. It does not launch Stash or a browser.
+## 5. CDP Evidence Gate (`cdp-evidence-gate.yml`)
 
-## 5. Evaluation Pack Runner (`eval.yml`)
+Runs on matching evidence changes and manual dispatch. It checks a claimed artifact path; it does not launch Stash or a browser and must not be described as live CDP verification.
 
-Manual on-demand workflow (`workflow_dispatch`) running the Python pytest suite across specific test targets or the complete suite.
+## 6. Live Scraper Scrutiny (`scrutiny.yml`)
 
-## 6. Documentation Link Checker (`link-check.yml`)
+Manual raw-response probe using `tools/scrutiny.js` with scraper path, search, pagination, URL and probe inputs. It fetches HTTP and parses with JSDOM; it does not execute site JavaScript.
 
-Runs on pull requests and scheduled intervals to detect broken internal and external Markdown links.
+## 7. Evaluation Workflows (`eval.yml`, `test-eval.yml`)
+
+`eval.yml` manually runs the pytest evaluation pack. `test-eval.yml` manually runs the quality gate on one selected scraper (default `ACCEED.yml`). Neither proves live selector correctness.
+
+## 8. Documentation Link Checker (`link-check.yml`)
+
+Checks Markdown links on pull requests and a schedule. The documentation index and example checks are also part of `validate.yml`; they are distinct from link checking.
 
 ## Interpretation
 
-A green validation job means the executed repository checks passed. It does not establish live selector correctness, site availability, login success, rendered-DOM coverage, live Stash/CDP extraction, image CDN accessibility, or production readiness. Those results require separate evidence, tracked in [`LIVE_TEST_STATUS.md`](LIVE_TEST_STATUS.md).
+A green validation job means only that the steps actually executed passed. It does not establish live-search verification, live-detail verification, rendered-DOM coverage, authorized Stash/CDP extraction, image availability, or production readiness. Record the corresponding evidence in [`LIVE_TEST_STATUS.md`](LIVE_TEST_STATUS.md) and applicable status records without session values.
