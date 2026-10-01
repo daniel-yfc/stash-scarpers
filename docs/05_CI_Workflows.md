@@ -20,58 +20,29 @@ routing:
 
 # CI Workflows
 
-GitHub Actions workflows live under `.github/workflows/`.
+This map describes the workflow definitions in `.github/workflows/` reviewed on 2026-10-01. The date records a documentation review, not a passing run. GitHub Actions results must be checked for the exact commit; a skipped, filtered-out, or unrun job supplies no verification evidence.
 
-## 1. Full Validation Suite (`validate.yml`)
+## Repository checks
 
-The blocking repository gate runs on matching pushes to `main` and pull requests changing scrapers, validator, tools, docs, evidence, fixtures, or other configured paths. It runs the local checks in sequence:
+| Workflow file (display name) | Trigger | Scope and result |
+| --- | --- | --- |
+| `validate.yml` (Validate Scrapers) | Path-filtered push to `main` and PR | Main schema, URL sort, repository quality gate, regression tests, safeguards, and documentation checks. Only the commands actually executed are passes; its fixture self-test is not a site fixture. |
+| `pr-check.yml` (Changed Scraper PR Check) | Path-filtered PR | Changed scraper files pass the per-file quality gate; documentation examples check separately. PR comment is feedback, not additional verification. |
+| `fixture-manifests.yml` (Fixture Manifest Verification) | Fixture/runner-related push to `main` or PR | Discovers and executes committed fixture manifests. When none exist, discovery reports `UNVERIFIED` despite a successful workflow exit. A pass covers only present cases and assertions. |
+| `evidence-contract.yml` (Evidence Contract) | Evidence/contract-related push to `main` or PR; weekly; manual | Checks structured evidence metadata, artifact paths and digests. Does not prove a site's live behavior. |
+| `cdp-evidence-gate.yml` (Live CDP Evidence Gate) | Evidence/checker-related push to `main`; manual | Rejects certain unsupported CDP claims. Does not launch Stash or a browser and cannot produce live-CDP verification. |
 
-```bash
-npm ci || npm install
-node validator/index.mjs -a --ci
-node validator/index.mjs -a -s --ci
-bash tools/validate-all.sh
-python -m pytest tools/tests/ -v
-python tools/parse_committed_yaml.py
-node tools/verify-scraper-fixtures.mjs --self-test
-python tools/scan_session_material.py
-python tools/check_evidence_labels.py
-python tools/check_live_cdp_status.py
-python tools/self_evaluate.py
-python tools/check_scraper_docs.py
-python tools/check_docs_index.py
-```
+## Manual and scheduled checks
 
-The fixture command here tests the runner, not Gayerdar or any other site fixture. The CDP status command does not launch Stash or prove live extraction. Python dependencies are installed between the Node/policy steps and pytest in the workflow.
+| Workflow file (display name) | Trigger | Scope and result |
+| --- | --- | --- |
+| `scrutiny.yml` (Live Raw-Response Scrutiny) | Manual | Fetches HTTP and evaluates via JSDOM. Does not execute site JavaScript, render a browser DOM, or perform live Stash/CDP extraction. |
+| `eval.yml` (Manual Python Regression Tests) | Manual | Runs all or one selected `tools/tests/test_*.py` file. Does not execute the five-task skill evaluation described in `references/eval-pack.md`. |
+| `test-eval.yml` (Single Scraper Policy Check) | Manual | Runs the repository policy gate on one selected public scraper. Does not test `eval.yml` or replace schema, URL sorting, or full validation. |
+| `link-check.yml` (Link Check) | Weekly; manual | Checks configured Markdown links. It is not an every-PR link gate; read its logs and advisory failure configuration before treating a run as a pass. |
 
-## 2. Pull Request Scraper Check (`pr-check.yml`)
+## Evidence boundaries
 
-For matching scraper pull requests, detects changed scrapers with `tj-actions/changed-files`, runs `tools/scraper-quality-gate.sh` per file and `check_scraper_docs.py`, and attempts a PR status comment. This is distinct from the full validation job.
+Schema pass, URL-sort pass, policy-gate pass, regression-test success, fixture/snapshot verification, live-search verification, live-detail verification, live Stash/CDP verification, and production readiness are separate states. For each claim record the workflow run, revision, actual command, target, date, artifact, and limitations. A green job cannot stand in for an absent site manifest, a blocked page, or an authenticated runtime test. Use [`06_Testing_Guide.md`](06_Testing_Guide.md), [`07_Rendered_DOM_Fixture_Testing.md`](07_Rendered_DOM_Fixture_Testing.md), and [`LIVE_TEST_STATUS.md`](LIVE_TEST_STATUS.md) for the appropriate evidence type.
 
-## 3. Fixture Manifest Verification (`fixture-manifests.yml`)
-
-For matching pushes and pull requests affecting fixtures, the runner, its discovery script or tests, installs Node and Python, tests manifest discovery, and executes each committed `tests/fixtures/**/*-fixtures.yml` manifest. No manifest reports `UNVERIFIED`, not a site-fixture pass. `--expect` must be supplied when a specific scraper's fixture is claimed; it is not inferred from prose.
-
-## 4. Evidence Contract (`evidence-contract.yml`)
-
-For matching evidence, fixture, script or workflow changes, and weekly schedule or manual dispatch, validates `evidence/status/*.yml` and its regression tests. Its artifact existence and digest checks validate provenance metadata, not live Stash behavior.
-
-## 5. CDP Evidence Gate (`cdp-evidence-gate.yml`)
-
-Runs on matching evidence changes and manual dispatch. It checks a claimed artifact path; it does not launch Stash or a browser and must not be described as live CDP verification.
-
-## 6. Live Scraper Scrutiny (`scrutiny.yml`)
-
-Manual raw-response probe using `tools/scrutiny.js` with scraper path, search, pagination, URL and probe inputs. It fetches HTTP and parses with JSDOM; it does not execute site JavaScript.
-
-## 7. Evaluation Workflows (`eval.yml`, `test-eval.yml`)
-
-`eval.yml` manually runs the pytest evaluation pack. `test-eval.yml` manually runs the quality gate on one selected scraper (default `ACCEED.yml`). Neither proves live selector correctness.
-
-## 8. Documentation Link Checker (`link-check.yml`)
-
-Checks Markdown links on pull requests and a schedule. The documentation index and example checks are also part of `validate.yml`; they are distinct from link checking.
-
-## Interpretation
-
-A green validation job means only that the steps actually executed passed. It does not establish live-search verification, live-detail verification, rendered-DOM coverage, authorized Stash/CDP extraction, image availability, or production readiness. Record the corresponding evidence in [`LIVE_TEST_STATUS.md`](LIVE_TEST_STATUS.md) and applicable status records without session values.
+`eval.yml` and `test-eval.yml` are retained as narrow manual diagnostics pending confirmation that no required-status rule depends on their job IDs. They are not an Eval Pack, and no removal, consolidation, or live/CDP pass is implied by this map. Formatting (`npm run format:check`) and link checking must be evaluated separately; neither a documentation-index check nor this page proves they passed.

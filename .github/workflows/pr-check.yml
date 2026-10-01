@@ -1,14 +1,14 @@
-name: PR Scraper Check
+name: Changed Scraper PR Check
 
 on:
   pull_request:
     paths:
       - "scrapers/**/*.yml"
       - "validator/**"
-      - "tools/scraper-quality-gate.sh"
-      - "skills/stash-scraper-builder/**"
       - "tools/**"
+      - "skills/stash-scraper-builder/**"
       - "requirements.txt"
+      - ".github/workflows/pr-check.yml"
 
 permissions:
   contents: read
@@ -27,16 +27,17 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          python-version: "3.12"
           cache: pip
           cache-dependency-path: requirements.txt
 
       - name: Install documentation-check dependencies
-        run: python -m pip install pyyaml jsonschema
+        run: python -m pip install -r requirements.txt
 
       - name: Check documentation examples and contradictions
         run: python tools/check_scraper_docs.py
@@ -50,27 +51,37 @@ jobs:
 
       - name: Validate changed scrapers
         if: steps.changed.outputs.any_changed == 'true'
+        env:
+          CHANGED_FILES: ${{ steps.changed.outputs.all_changed_files }}
+        shell: bash
         run: |
-          echo "## Scraper PR Check" > results.md
-          echo "" >> results.md
-          echo "| File | Result |" >> results.md
-          echo "| --- | --- |" >> results.md
-
-          FAILED=0
-          IFS=' ' read -ra CHANGED <<< "${{ steps.changed.outputs.all_changed_files }}"
-          for scraper in "${CHANGED[@]}"; do
-            [ -z "$scraper" ] && continue
+          set -uo pipefail
+          {
+            echo '## Changed Scraper PR Check'
+            echo
+            echo '| File | Result |'
+            echo '| --- | --- |'
+          } > results.md
+          failed=0
+          read -r -a changed <<< "$CHANGED_FILES"
+          for scraper in "${changed[@]}"; do
+            if [[ ! "$scraper" =~ ^scrapers/(private/)?[A-Za-z0-9_-]+\.yml$ ]]; then
+              echo '| Invalid scraper path | FAIL — inspect changed filename |' >> results.md
+              failed=1
+              continue
+            fi
+            if [[ ! -f "$scraper" ]]; then
+              echo "| \`$scraper\` | Deleted or absent — no file to check |" >> results.md
+              continue
+            fi
             if bash tools/scraper-quality-gate.sh "$scraper"; then
-              echo "| \`$scraper\` | ✅ PASS |" >> results.md
+              echo "| \`$scraper\` | PASS |" >> results.md
             else
-              echo "| \`$scraper\` | ❌ FAIL — see workflow log |" >> results.md
-              FAILED=1
+              echo "| \`$scraper\` | FAIL — see job log |" >> results.md
+              failed=1
             fi
           done
-
-          if [ $FAILED -ne 0 ]; then
-            exit 1
-          fi
+          exit "$failed"
 
       - name: Comment results on PR
         if: always() && steps.changed.outputs.any_changed == 'true'
@@ -79,16 +90,15 @@ jobs:
         with:
           script: |
             const fs = require('fs');
+            if (!fs.existsSync('results.md')) return;
             const { owner, repo } = context.repo;
             const issue_number = context.payload.pull_request.number;
             const marker = '<!-- scraper-pr-check -->';
             const body = marker + '\n' + fs.readFileSync('results.md', 'utf8');
-
             const { data: comments } = await github.rest.issues.listComments({
               owner, repo, issue_number, per_page: 100,
             });
             const existing = comments.find((c) => c.body && c.body.includes(marker));
-
             if (existing) {
               await github.rest.issues.updateComment({ owner, repo, comment_id: existing.id, body });
             } else {
