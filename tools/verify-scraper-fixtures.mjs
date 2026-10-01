@@ -5,119 +5,116 @@ import { JSDOM } from 'jsdom';
 import { parse } from 'yaml';
 
 const FAILURE_MARKERS = [
-  'cf-challenge',
-  'Just a moment',
-  'Attention Required',
-  'age-verification',
-  'Application error',
-  '404 Not Found',
+  'cf-challenge', 'Just a moment', 'Attention Required',
+  'age-verification', 'Application error', '404 Not Found',
 ];
 
-function evaluate(html, expression) {
-  const dom = new JSDOM(html);
-  const result = dom.window.document.evaluate(
-    expression,
-    dom.window.document,
-    null,
-    dom.window.XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
-    null,
+function fail(message) { throw new Error(message); }
+
+function matches(document, xpath) {
+  const result = document.evaluate(
+    xpath, document, null, document.defaultView.XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null,
   );
-  return result.snapshotLength;
+  return Array.from({ length: result.snapshotLength }, (_, i) => result.snapshotItem(i));
 }
 
-function classify(html, expected) {
-  const marker = FAILURE_MARKERS.find((item) => html.includes(item));
-  if (expected === 'completed' && marker) {
-    throw new Error(`completed fixture contains failure marker: ${marker}`);
-  }
-  if (expected === 'failure' && !marker) {
-    throw new Error('failure fixture did not contain a known failure marker');
-  }
-}
+function value(node) { return node.nodeValue ?? node.textContent ?? ''; }
 
 function assertCase(item, html) {
-  classify(html, item.classification);
-  if (item.classification !== 'completed') return;
-  const lang = item.locale?.lang;
-  if (lang && !html.includes(`lang="${lang}"`) && !html.includes(`lang='${lang}'`)) {
-    throw new Error(`${item.name}: locale lang ${lang} missing`);
+  const dom = new JSDOM(html);
+  const document = dom.window.document;
+  const marker = FAILURE_MARKERS.find((text) => html.includes(text));
+  if (item.classification === 'failure') {
+    if (!marker) fail(`${item.name}: expected failure marker absent`);
+    return;
   }
-  if (item.locale?.text && !html.includes(item.locale.text)) {
-    throw new Error(`${item.name}: expected source-language text missing`);
+  if (item.classification !== 'completed') fail(`${item.name}: invalid classification`);
+  if (marker) fail(`${item.name}: completed page contains failure marker`);
+  if (!item.locale?.lang || !item.locale?.canonicalLocale || !item.locale?.text) {
+    fail(`${item.name}: lang, canonicalLocale and text are required`);
   }
-  for (const assertion of item.expect || []) {
-    const count = evaluate(html, assertion.xpath);
-    if (count < assertion.min || count > assertion.max) {
-      throw new Error(`${item.name}: ${assertion.xpath} matched ${count}`);
+  if (document.documentElement.getAttribute('lang') !== item.locale.lang) {
+    fail(`${item.name}: html lang mismatch`);
+  }
+  const canonical = document.querySelector('link[rel="canonical"]')?.getAttribute('href');
+  if (!canonical) fail(`${item.name}: canonical link absent`);
+  const pathname = new URL(canonical, 'https://fixture.invalid').pathname;
+  if (!pathname.split('/').includes(item.locale.canonicalLocale)) {
+    fail(`${item.name}: canonical locale mismatch`);
+  }
+  if (!document.documentElement.textContent.includes(item.locale.text)) {
+    fail(`${item.name}: source-language text mismatch`);
+  }
+  if (!Array.isArray(item.expect) || !item.expect.length) fail(`${item.name}: XPath assertions required`);
+  for (const assertion of item.expect) {
+    if (!assertion.xpath || !Number.isInteger(assertion.min) || !Number.isInteger(assertion.max)
+        || assertion.min < 0 || assertion.max < assertion.min) fail(`${item.name}: invalid XPath bounds`);
+    const nodes = matches(document, assertion.xpath);
+    if (nodes.length < assertion.min || nodes.length > assertion.max) {
+      fail(`${item.name}: ${assertion.xpath} matched ${nodes.length}`);
+    }
+    if (assertion.values && JSON.stringify(nodes.map(value)) !== JSON.stringify(assertion.values)) {
+      fail(`${item.name}: representative values mismatch`);
     }
   }
   if (item.optionalField) {
-    const count = evaluate(html, item.optionalField.xpath);
-    if (count !== item.optionalField.expectedCount) {
-      throw new Error(`${item.name}: optional field matched ${count}`);
+    if (!item.optionalField.xpath || item.optionalField.expectedCount !== 0) {
+      fail(`${item.name}: optional case must assert zero matches`);
+    }
+    if (matches(document, item.optionalField.xpath).length !== 0) {
+      fail(`${item.name}: optional field unexpectedly present`);
     }
   }
 }
 
 function checkManifest(file) {
   const manifest = parse(fs.readFileSync(file, 'utf8'));
-  const cases = manifest.cases || [];
-  if (!cases.some((item) => item.classification === 'failure')) {
-    throw new Error(`${file}: missing failure-page classification case`);
-  }
-  if (!cases.some((item) => item.optionalField)) {
-    throw new Error(`${file}: missing optional-field case`);
-  }
-  const base = path.dirname(file);
+  const cases = manifest?.cases;
+  if (!Array.isArray(cases) || !cases.some((c) => c.classification === 'completed')
+      || !cases.some((c) => c.classification === 'failure')
+      || !cases.some((c) => c.optionalField)) fail(`${file}: completed, failure and optional cases required`);
+  const root = path.dirname(path.resolve(file));
   for (const item of cases) {
-    assertCase(item, fs.readFileSync(path.join(base, item.html), 'utf8'));
+    if (!item.name || typeof item.html !== 'string') fail(`${file}: case name and html required`);
+    const fixture = path.resolve(root, item.html);
+    if (!fixture.startsWith(root + path.sep)) fail(`${item.name}: fixture path leaves manifest directory`);
+    assertCase(item, fs.readFileSync(fixture, 'utf8'));
   }
+  return cases.length;
 }
 
 function selfTest() {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'fixture-self-test-'));
-  fs.writeFileSync(path.join(root, 'good.html'), '<html lang="zh-TW"><title>Example</title><a rel="canonical" href="/zh-TW/videos/x"></a></html>');
-  fs.writeFileSync(path.join(root, 'optional.html'), '<html lang="zh-TW"><title>Example</title></html>');
-  fs.writeFileSync(path.join(root, 'bad.html'), '<html><title>Just a moment</title></html>');
-  const manifest = path.join(root, 'self-test-fixtures.yml');
-  fs.writeFileSync(manifest, `cases:
-  - name: good
-    html: good.html
-    classification: completed
-    locale:
-      lang: zh-TW
-      text: Example
-    expect:
-      - xpath: //title
-        min: 1
-        max: 1
-  - name: optional
-    html: optional.html
-    classification: completed
-    locale:
-      lang: zh-TW
-      text: Example
-    optionalField:
-      xpath: //a[contains(@href,'twitter.com')]
-      expectedCount: 0
-    expect:
-      - xpath: //title
-        min: 1
-        max: 1
-  - name: bad
-    html: bad.html
-    classification: failure
-`);
-  checkManifest(manifest);
-  console.log('Fixture runner self-test passed');
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'fixture-contract-'));
+  try {
+    const good = '<html lang="zh-TW"><head><link rel="canonical" href="https://example.invalid/zh-TW/videos/x"></head><body><h1>範例</h1></body></html>';
+    const base = {
+      name: 'valid', classification: 'completed',
+      locale: { lang: 'zh-TW', canonicalLocale: 'zh-TW', text: '範例' },
+      expect: [{ xpath: '//h1/text()', min: 1, max: 1, values: ['範例'] }],
+      optionalField: { xpath: '//a[@rel="social"]', expectedCount: 0 },
+    };
+    assertCase(base, good);
+    const rejected = [
+      [base, good.replace('範例', 'Just a moment')],
+      [base, good.replace('lang="zh-TW"', 'lang="en-US"')],
+      [base, good.replace('/zh-TW/videos/', '/en-US/videos/')],
+      [{ ...base, expect: [{ xpath: '//h1', min: 2, max: 2 }] }, good],
+      [{ ...base, expect: [{ xpath: '//h1/text()', min: 1, max: 1, values: ['wrong'] }] }, good],
+      [{ ...base, optionalField: { xpath: '//h1', expectedCount: 0 } }, good],
+    ];
+    for (const [testCase, html] of rejected) {
+      let failed = false;
+      try { assertCase(testCase, html); } catch { failed = true; }
+      if (!failed) fail('self-test did not reject invalid fixture');
+    }
+    assertCase({ name: 'expected failure', classification: 'failure' }, '<title>Just a moment</title>');
+    console.log('Fixture contract self-test: positive and 6 negative cases passed');
+  } finally { fs.rmSync(root, { recursive: true, force: true }); }
 }
 
 const args = process.argv.slice(2);
-if (args.includes('--self-test')) {
-  selfTest();
-} else if (args.length === 0) {
-  console.log('No fixture manifest supplied; site fixture verification is not established');
-} else {
-  for (const file of args) checkManifest(file);
-  console.log(`Verified ${args.length} fixture manifest(s)`);
+if (args.length === 1 && args[0] === '--self-test') selfTest();
+else if (!args.length) console.log('SITE FIXTURE VERIFICATION: UNVERIFIED (no manifests supplied)');
+else {
+  for (const file of args) console.log(`${file}: ${checkManifest(file)} cases verified`);
 }
