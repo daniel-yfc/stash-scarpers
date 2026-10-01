@@ -32,6 +32,28 @@ This map describes the seven workflow definitions in `.github/workflows/` review
 | `evidence-contract.yml` (Evidence Contract) | Evidence/contract-related push to `main` or PR; weekly; manual | Checks structured evidence metadata, artifact paths and digests. Does not prove a site's live behavior. |
 | `cdp-evidence-gate.yml` (Live CDP Evidence Gate) | Evidence/checker-related push to `main`; manual | Rejects certain unsupported CDP claims. Does not launch Stash or a browser and cannot produce live-CDP verification. |
 
+## Validation commands
+
+The main `validate.yml` checkout sets up Node and Python, then executes these repository checks in order. This is an implementation map, not a claim that a specific run passed:
+
+```bash
+npm ci || npm install
+node validator/index.mjs -a --ci
+node validator/index.mjs -a -s --ci
+bash tools/validate-all.sh
+python -m pytest tools/tests/ -v
+python tools/parse_committed_yaml.py
+node tools/verify-scraper-fixtures.mjs --self-test
+python tools/scan_session_material.py
+python tools/check_evidence_labels.py
+python tools/check_live_cdp_status.py
+python tools/self_evaluate.py
+python tools/check_scraper_docs.py
+python tools/check_docs_index.py
+```
+
+`tools/verify-scraper-fixtures.mjs --self-test` tests only the fixture runner. Site-specific manifest discovery and assertions belong to `fixture-manifests.yml`; the absence of manifests is `UNVERIFIED`, even if its discovery command exits successfully. `npm run format:check` is a separate local formatting check, not a `validate.yml` step.
+
 ## Manual and scheduled checks
 
 | Workflow file (display name) | Trigger | Scope and result |
@@ -43,4 +65,4 @@ This map describes the seven workflow definitions in `.github/workflows/` review
 
 Schema pass, URL-sort pass, policy-gate pass, regression-test success, fixture/snapshot verification, live-search verification, live-detail verification, live Stash/CDP verification, and production readiness are separate states. For each claim record the workflow run, revision, actual command, target, date, artifact, and limitations. A green job cannot stand in for an absent site manifest, a blocked page, or an authenticated runtime test. Use [`06_Testing_Guide.md`](06_Testing_Guide.md), [`07_Rendered_DOM_Fixture_Testing.md`](07_Rendered_DOM_Fixture_Testing.md), and [`LIVE_TEST_STATUS.md`](LIVE_TEST_STATUS.md) for the appropriate evidence type.
 
-`eval.yml` and `test-eval.yml` were retired as duplicate manual diagnostics on 2026-10-02. The five-task skill evaluation in `skills/stash-scraper-builder/references/eval-pack.md` remains an authoring checklist, not an executable CI result. Formatting (`npm run format:check`) and link checking must be evaluated separately; neither a documentation-index check nor this page proves they passed.
+`eval.yml` and `test-eval.yml` were retired as duplicate manual diagnostics on 2026-10-02. The five-task skill evaluation in `skills/stash-scraper-builder/references/eval-pack.md` remains an authoring checklist, not an executable CI result. Formatting and link checking must be evaluated separately; neither a documentation-index check nor this page proves they passed.
