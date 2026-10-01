@@ -1,0 +1,201 @@
+# Test cases for daniel-yfc/stash-scarpers live XPath validation.
+#
+# Usage (from the repository root):
+#   python3 tools/livetest.py --cases tools/test-cases.yaml
+#   python3 tools/livetest.py --cases tools/test-cases.yaml --cdp-url ws://localhost:9222
+#
+# TIP: users who don't know XPath don't need to write any. The harness
+# auto-resolves "Title" -> `xPathScrapers.sceneScraper.scene.Title.selector`
+# from the YAML. So you only write site + URL + auth + (Stash key,
+# expected value).
+#
+# ============================================================================
+# LOGIN — pick exactly one per case
+# ============================================================================
+#
+# auth: false (or omitted)
+#   Anonymous. Uses gsk crawl. Works only for public-static sites.
+#
+# auth: true          (alias: auth: cdp)
+#   Use a Chrome you already logged into manually. Start Chrome with
+#   `--remote-debugging-port=9222`, log in once, leave it open, point
+#   the harness at it with --cdp-url.
+#
+# auth: cookies
+#   The harness imports cookies via CDP Network.setCookies and navigates.
+#   Use this when you've exported cookies from another browser.
+#
+#   Two ways to provide them (in the same `login:` block):
+#     - login.cookies:      inline list
+#     - login.cookies_file: path to .json (EditThisCookie) or cookies.txt
+#
+#   Export cookies with:
+#     - Chrome DevTools -> Application -> Cookies -> copy as JSON/HAR
+#     - EditThisCookie extension -> Export -> JSON
+#     - Or `curl + browsercookies`-style tools
+#
+# auth: form
+#   Drive the login form via CDP. The harness opens the login URL, fills
+#   each input (matched by `name` or `id`), submits, then navigates to the
+#   target. Use `${env:VAR}` placeholders so credentials never appear in
+#   this file.
+#
+#   Example:
+#     login:
+#       url: https://example.com/login.php
+#       fields:
+#         username: ${env:ACCEED_USER}
+#         password: ${env:ACCEED_PASS}
+#       submit_selector: "form#login button[type=submit]"  # optional
+#       wait_after: 2.0                                  # seconds
+#
+# ============================================================================
+# EXPECTED VALUES — two equivalent styles
+# ============================================================================
+#
+# `selectors:`  — verbose (one entry per field):
+#     selectors:
+#       - name: Title
+#         expected: "some exact title"
+#       - name: Code
+#         expected_match: "ACST424"
+#       - name: Date
+#         expected_regex: "^\\d{4}-\\d{2}-\\d{2}$"
+#
+# `stash_keys:` — short (Stash keys only, no XPath knowledge):
+#     stash_keys:
+#       Title: "some exact title"
+#       Code: "ACST424"
+#       Date: "2024-01-15"
+#     # Advanced per-key options go inside a dict:
+#     stash_keys:
+#       Code:
+#         expected_match: "ACST"
+#       Date:
+#         expected_regex: "^\\d{4}"
+#
+# Comparison modes (use exactly ONE per field):
+#   expected:           exact string match (whitespace-trimmed)
+#   expected_match:     case-insensitive substring match
+#   expected_regex:     full Python regex against the scraped value
+#
+# Empty `expected: ""` means "not yet known" — recorded as `no_expected`
+# without counting as a pass/fail. Fill it in once verified.
+auth:
+  cdp_url: ws://localhost:9222   # default CDP endpoint; --cdp-url CLI overrides
+
+cases:
+  # ----- Public-static site — no auth needed (anonymous) -------------------
+  - file: Games-Video.yml
+    target: https://www.games-video.co.jp/dvd_detail.php?code=WIG-387
+    auth: false
+    # Short form — no XPath knowledge required
+    stash_keys:
+      Title: "雄穴中出し28"      # expect exactly this title (Japanese)
+      Code: "WIG-387"            # exact product code
+      Date: "2026-09-04"         # exact release date
+    # Verbose form — also accepted (uncomment to compare with stash_keys):
+    # selectors:
+    #   - name: Title
+    #     expected: "雄穴中出し28"
+
+  # ----- Login type 1: pre-authenticated Chrome ----------------------------
+  - file: ACCEED.yml
+    target: https://acceed.jp/detail.ACST424.html
+    auth: true
+    # no login block needed — your open Chrome at ws://localhost:9222
+    # already carries the cookies for acceed.jp
+    stash_keys:
+      Title: ""
+      Code: "ACST424"
+
+  # ----- Login type 2: cookies file (exported from another browser) --------
+  - file: CK-Download.yml
+    target: https://ck-download.com/product/detail/CK-001
+    auth: cookies
+    login:
+      cookies_file: ./local/ck-download.cookies.json   # not in git, in .gitignore
+    # Or inline:
+    # login:
+    #   cookies:
+    #     - name: PHPSESSID
+    #       value: "<exported value>"
+    #       domain: ck-download.com
+    #       path: /
+    #       httpOnly: true
+    #       secure: true
+    stash_keys:
+      Title: ""
+
+  # ----- Login type 3: form-fill via CDP -----------------------------------
+  - file: Coat.yml
+    target: https://coat.co.jp/products/detail.php?code=COAT-001
+    auth: form
+    login:
+      url: https://coat.co.jp/login.php
+      fields:
+        username: ${env:COAT_USER}      # credentials stay in shell env
+        password: ${env:COAT_PASS}
+      # submit_selector: "form#login button[type=submit]"   # optional, auto-detected
+    stash_keys:
+      Title: ""
+
+  # ----- The rest — pick whichever login mode fits each site ----------------
+  - file: Bravo-Japan.yml
+    target: https://www.bravo-japan.com/clips/275
+    auth: form
+    login:
+      url: https://www.bravo-japan.com/login.php
+      fields:
+        email: ${env:BRAVO_EMAIL}
+        pass: ${env:BRAVO_PASS}
+    stash_keys:
+      Title: ""
+
+  - file: Hunks-Ch.yml
+    target: https://eng.hunk-ch.com/movie_detail.php?id=1
+    auth: cookies
+    login:
+      cookies_file: ./local/hunks-ch.cookies.txt
+    stash_keys:
+      Title: ""
+
+  - file: Justice01.yml
+    target: https://www.justice01.com/justice175th/
+    auth: cookies
+    login:
+      cookies_file: ./local/justice01.cookies.json
+    stash_keys:
+      Title: ""
+
+  - file: KO-Shop.yml
+    target: https://ko-shop.com/products/detail.php?id=1
+    auth: cookies
+    login:
+      cookies_file: ./local/ko-shop.cookies.json
+    stash_keys:
+      Title: ""
+
+  - file: KO-Tube.yml
+    target: https://ko-tube.com/package/index/id/1
+    auth: cookies
+    login:
+      cookies_file: ./local/ko-tube.cookies.json
+    stash_keys:
+      Title: ""
+
+  - file: Ko-Video.yml
+    target: https://ko-video.com/products/detail.php?id=1
+    auth: cookies
+    login:
+      cookies_file: ./local/ko-video.cookies.json
+    stash_keys:
+      Title: ""
+
+  - file: Mens-RushTV.yml
+    target: https://www.mensrush.tv/single.php?id=1
+    auth: cookies
+    login:
+      cookies_file: ./local/mens-rushtv.cookies.json
+    stash_keys:
+      Title: ""
