@@ -6,6 +6,12 @@ documents:
     layer: repository
     status: active
     intents: [quick-start, repository-map]
+  - doc_id: DOC-ROOT-01
+    title: Stash Scraper Builder Guide (Traditional Chinese)
+    path: readme-zh-tw.md
+    layer: repository
+    status: active
+    intents: [quick-start, scraper-authoring, zh-tw]
   - doc_id: DOC-AGENTS-00
     title: Agent Instructions
     path: AGENTS.md
