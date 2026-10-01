@@ -56,6 +56,11 @@ routing:
 - `scrutiny.yml`：手動 raw-response probing，不是 rendered-DOM 或 live CDP。
 - `link-check.yml`：PR／每週／手動的 advisory Markdown 連結檢查，綠燈不保證所有連結正常。
 
-目前沒有執行五題 skill Eval Pack 的 CI workflow。CI 檢查通過也不等於 production readiness；實頁狀態記錄於 [`LIVE_TEST_STATUS.md`](LIVE_TEST_STATUS.md)，詳細報告可使用 [`test-report-template.md`](test-report-template.md)。
+## 狀態追蹤
+
+- Schema／政策／CI 結果不等於網站 selector 正確；live search 與 live detail 必須分別留存實際證據。
+- JavaScript 網站的已完成渲染 DOM fixture，應依 [`07_Rendered_DOM_Fixture_Testing.md`](07_Rendered_DOM_Fixture_Testing.md) 分類頁面與記錄案例；fixture 通過不等於 live Stash/CDP 驗證。
+- 網站實測狀態見 [`LIVE_TEST_STATUS.md`](LIVE_TEST_STATUS.md)；詳細命令、修訂版、來源與限制使用 [`test-report-template.md`](test-report-template.md) 記錄。沒有執行的層級保持 `UNVERIFIED`。
+- 目前沒有執行五題 skill Eval Pack 的 CI workflow；任何 CI 通過皆不等於 production readiness。
 
 **最後更新**: 2026-10-02
