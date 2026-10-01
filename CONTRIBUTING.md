@@ -8,11 +8,8 @@ Thanks for contributing to Stash Scraper Builder!
 2. Install dependencies:
 
    ```bash
-   # Node.js (validator)
-   npm install
-
-   # Python (tests)
-   pip install -r requirements.txt
+   npm ci
+   python -m pip install -r requirements.txt
    ```
 
 3. Create a branch: `git checkout -b feat/my-scraper`
@@ -21,47 +18,48 @@ Thanks for contributing to Stash Scraper Builder!
 
 ### Adding a Scraper
 
-1. Create `scrapers/MyScraper.yml`
-2. Validate locally: `npm run validate`
-3. Check URL sorting: `npm run validate-sort`
-4. Test on live pages
+1. Create `scrapers/MyScraper.yml` with the required root `name:`.
+2. Validate locally: `npm run validate`.
+3. Check URL sorting: `npm run validate-sort`.
+4. Run the repository policy gate and tests, then test applicable search and detail pages when site access permits. Record what remains unverified.
 
 ### Modifying the Skill
 
-1. Edit files in `skills/stash-scraper-builder/`
-2. Ensure all references remain valid
-3. Update `AGENTS.md` if rules change
+1. Edit files in `skills/stash-scraper-builder/`.
+2. Ensure references and runnable examples remain valid.
+3. Update `AGENTS.md` only if repository-wide rules change.
 
 ## Before You Push
 
-- [ ] Run `npm run validate` — no schema errors
-- [ ] Run `npm run validate-sort` — URLs sorted A–Z
-- [ ] Run `python tools/check_scraper_docs.py` when documentation/examples change
-- [ ] Run `pytest` — all tests pass
-- [ ] Check links in Markdown: `lychee .` (optional)
+- [ ] Run `npm run validate` — no schema errors.
+- [ ] Run `npm run validate-sort` — URLs sorted A–Z.
+- [ ] Run `bash tools/validate-all.sh` — repository policy gate.
+- [ ] Run `python -m pytest tools/tests/ -v` — covered regression tests.
+- [ ] Run `python tools/check_scraper_docs.py` and `python tools/check_docs_index.py` for documentation changes.
+- [ ] Run `npm run format:check` for formatting; inspect the separate advisory link report when relevant.
+- [ ] Record fixture, raw-response, rendered-DOM, live-search, live-detail, and Stash/CDP results separately; never replace missing evidence with a checklist pass.
 
 ## Pull Requests
 
-- PRs to `scrapers/`, `skills/`, or `validator/` require maintainer review (see `.github/CODEOWNERS`)
-- CI runs automatically:
-  - `validate.yml` — schema + URL sorting
-  - `test-eval.yml` — Python tests
-  - `link-check.yml` — Markdown links
-  - `pr-check.yml` — scraper and documentation checks
-- All CI checks must pass before merge
+- PRs to `scrapers/`, `skills/`, or `validator/` require maintainer review (see `.github/CODEOWNERS`).
+- `validate.yml` runs the path-filtered repository validation layers, including pytest; `pr-check.yml` gives changed-scraper feedback.
+- `fixture-manifests.yml`, `evidence-contract.yml`, and `cdp-evidence-gate.yml` check distinct evidence contracts on their configured triggers.
+- `link-check.yml` runs on Markdown PRs, weekly, and manually, but broken external links are advisory (`fail: false`).
+- `scrutiny.yml` is a deliberate manual raw-response check, not browser-rendered or live Stash/CDP verification.
+- Read the exact trigger, scope, and proof boundary for all seven current workflows in [`docs/05_CI_Workflows.md`](docs/05_CI_Workflows.md). Only actually executed required checks can pass; an advisory green job is not a guarantee that every link resolved.
 
 ## Code Style
 
-- YAML: 2-space indentation, sorted URL arrays
-- Python: follow `pytest` conventions in `tests/`
-- Markdown: links checked by CI, use relative paths for internal links
+- YAML: 2-space indentation, sorted URL arrays.
+- Python: follow `pytest` conventions in `tools/tests/`.
+- Markdown: use relative paths for internal links and run the formatter; inspect link-check results separately.
 
 ## Evidence and source policy
 
 Use this source hierarchy when authoring or changing scraper guidance:
 
-1. Official CommunityScrapers schema and validator.
-2. Official Stash scraper-development documentation.
+1. Official CommunityScrapers schema and validator, from which this repository's validator expectations derive.
+2. Official Stash scraper-development documentation for upstream application behavior.
 3. Upstream Stash issues or source for runtime behavior.
 4. Project references and examples.
 5. Heuristics, explicitly labeled `Heuristic`.

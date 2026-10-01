@@ -4,17 +4,17 @@ Repository tooling: quality gate, documentation checker, local build/test helper
 
 ## Quality gate
 
-| Script                    | Purpose                                                                                                     |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| `scraper-quality-gate.sh` | Per-scraper policy checks, plus official CommunityScrapers schema validation when `CS_VALIDATOR_DIR` is set |
-| `validate-all.sh`         | Run the gate over every `scrapers/**/*.yml` (including `scrapers/private/`)                                 |
+| Script | Purpose |
+| --- | --- |
+| `scraper-quality-gate.sh` | Per-scraper policy checks, plus upstream CommunityScrapers schema validation when `CS_VALIDATOR_DIR` is set |
+| `validate-all.sh` | Run the gate over every `scrapers/**/*.yml` (including `scrapers/private/`) |
 
 ```bash
 bash tools/scraper-quality-gate.sh scrapers/ACCEED.yml
 bash tools/validate-all.sh
 ```
 
-Set `CS_VALIDATOR_DIR` only when using a prepared `stashapp/CommunityScrapers` checkout that contains `validator/index.mjs`, `validator/scraper.schema.json`, and installed Node dependencies. The repository default validation path is `npm run validate` and `npm run validate-sort`.
+Set `CS_VALIDATOR_DIR` only when using a prepared `stashapp/CommunityScrapers` checkout that contains `validator/index.mjs`, `validator/scraper.schema.json`, and installed Node dependencies. The repository default validation path is `npm run validate` and `npm run validate-sort`; its local schema and validator expectations derive from upstream. Do not treat a policy pass as a schema pass.
 
 ## Documentation checker
 
@@ -28,36 +28,27 @@ python tools/check_scraper_docs.py
 
 `scrutiny.js` probes direct HTTP responses using JSDOM. It does not execute website JavaScript or prove rendered-DOM or live Stash/CDP extraction. Classify challenge, login, age-gate, not-found, and application-error pages before interpreting missing selectors.
 
-| Script        | Purpose |
-| ------------- | --- |
+| Script | Purpose |
+| --- | --- |
 | `scrutiny.js` | Raw-response inspection of `sceneScraper` and `searchScraper` with probe terms and field coverage reporting |
 
 ```bash
-# Evaluate a single scraper with automatic probes
 node tools/scrutiny.js scrapers/CK-Download.yml
-
-# Also test searchScraper selectors on search results
 node tools/scrutiny.js scrapers/CK-Download.yml --search
-
-# Walk pages 1-3 and test multiple candidates
 node tools/scrutiny.js scrapers/CK-Download.yml --paginate --multi
-
-# Custom probe search terms
 node tools/scrutiny.js scrapers/CK-Download.yml --probe=DVD,2026
-
-# Evaluate sceneScraper directly against a specific URL
 node tools/scrutiny.js scrapers/CK-Download.yml --url="https://www.ck-download.com/product/detail/27573"
 ```
 
 ## Safeguard controls
 
-Run these from the repository root. A command's pass proves only its named check. Manifest and structured-evidence verification run in their separate workflows, not the main `validate.yml` job.
+Run these from the repository root. A command's pass proves only its named check. Manifest and structured-evidence verification run in separate workflows, not the main `validate.yml` job.
 
 | Script | What it checks |
 | --- | --- |
 | `parse_committed_yaml.py` | YAML parses in the checked-out scraper tree; not a schema pass |
 | `verify-scraper-fixtures.mjs --self-test` | Fixture runner behavior; not site fixture coverage |
-| `run_fixture_manifests.py` | Discovers and executes committed `tests/fixtures/**/*-fixtures.yml` manifests; no manifests reports `UNVERIFIED`; `--expect` fails if a claimed manifest is missing |
+| `run_fixture_manifests.py` | Executes committed `tests/fixtures/**/*-fixtures.yml`; no manifests reports `UNVERIFIED`; `--expect` fails if a claimed manifest is missing |
 | `scan_session_material.py` | Pattern scan of scraper, fixture, evidence, and log files; prints rule and path, never matched values |
 | `check_evidence_labels.py` | Rejects certain unsupported prose claims in top-level evidence records |
 | `check_evidence_contract.py` | Validates structured evidence states and artifact provenance, not live runtime truth |
@@ -80,19 +71,22 @@ No completed Gayerdar fixture or live Stash/CDP pass is implied by these command
 ## Workflow distinction
 
 - `validate.yml` runs schema, URL sorting, policy, pytest, safeguard self-tests, and documentation checks.
-- `fixture-manifests.yml` runs manifest discovery and executes each committed manifest when its paths change.
+- `pr-check.yml` reports changed-scraper policy results on relevant pull requests.
+- `fixture-manifests.yml` runs manifest discovery and executes committed manifests when its paths change.
 - `evidence-contract.yml` checks status records on relevant changes and a weekly schedule.
 - `cdp-evidence-gate.yml` rejects unsupported CDP claims; it is not a live CDP test.
-- `test-eval.yml` is a manual single-scraper quality-gate check (default `ACCEED.yml`); `eval.yml` is the manual pytest evaluation pack. Neither establishes live selector correctness.
+- `scrutiny.yml` is a manual raw-response check; `link-check.yml` is advisory link inspection for Markdown PRs, weekly, and manually.
+
+See [`docs/05_CI_Workflows.md`](../docs/05_CI_Workflows.md) for the seven-workflow inventory and verification boundaries. No workflow currently executes the five-task skill evaluation pack.
 
 ## Local helpers
 
-| Script          | Purpose                                                   |
-| --------------- | --------------------------------------------------------- |
-| `install.sh`    | Install Python (`requirements.txt`) and Node dependencies |
-| `build-site.sh` | Build the static `site/` directory                        |
-| `clean.sh`      | Remove `site/` and `.cache/`                              |
-| `test.sh`       | Run the pytest suite in `tools/tests/`                    |
+| Script | Purpose |
+| --- | --- |
+| `install.sh` | Install Python (`requirements.txt`) and Node dependencies |
+| `build-site.sh` | Build the static `site/` directory |
+| `clean.sh` | Remove `site/` and `.cache/` |
+| `test.sh` | Run the pytest suite in `tools/tests/` |
 
 ## Tests
 
@@ -102,10 +96,10 @@ python3 -m pytest tools/tests/ -v
 
 ## Standalone utilities
 
-| File                       | Purpose                                     |
-| -------------------------- | ------------------------------------------- |
-| `SPB-2.0.html`             | Scraper pattern builder (open in a browser) |
-| `SRB-2.0-documentation.md` | Documentation for the SRB tool              |
+| File | Purpose |
+| --- | --- |
+| `SPB-2.0.html` | Scraper pattern builder (open in a browser) |
+| `SRB-2.0-documentation.md` | Documentation for the SRB tool |
 
 ## Dependencies
 
