@@ -31,9 +31,22 @@ Requires:
   consumes Genspark credits, and it is NOT available on GitHub Actions
   runners or fresh clones. The preflight check fails fast with install
   instructions when `gsk` is absent.
-- Mode B with CDP login modes (cdp / cookies / form): the `websockets`
-  Python package (`pip install websockets`) and a Chrome instance started
-  with `--remote-debugging-port=9222`.
+- Mode B with CDP login modes (cdp / cookies / form): a Chrome instance
+  started with `--remote-debugging-port=9222`, plus ONE of the two
+  optional backends:
+
+  - `playwright` (recommended, optional): `pip install playwright`.
+    No browser download is needed when connecting to your existing
+    Chrome (`connect_over_cdp`); only run `playwright install chromium`
+    if you also want Playwright to launch its own browser.
+  - `websockets` (fallback, optional): `pip install websockets`.
+    A hand-rolled minimal CDP client kept for environments where
+    Playwright cannot be installed.
+
+  `--engine auto` (the default) picks Playwright when it is importable
+  and falls back to the websockets client otherwise. Neither backend is
+  a hard dependency of this repository — the harness degrades to a clear
+  error message when both are absent.
 
 Security model: credentials never live in YAML — `login.fields` values
 support `${env:VAR}` placeholders resolved from the shell environment,
@@ -44,8 +57,8 @@ Note: incorporated from the 2026-10-02 stash-scraper-builder workflow run
 (upgrade of the 2026-10-01 edition). The CdpSession reader wiring was
 completed during reconstruction — the attachment transfer strips Python
 indentation, and the reader-task spawn / load-event plumbing did not
-survive it. Mode B CDP paths are syntax-verified only; exercise them
-against a real Chrome before trusting results.
+survive it. The Playwright backend (added in the same pass) is the
+recommended path around that hand-rolled code.
 """
 import argparse
 import asyncio
@@ -66,6 +79,12 @@ try:
     import websockets  # lightweight CDP client
 except ImportError:
     websockets = None
+
+try:
+    from playwright.sync_api import sync_playwright, Error as PlaywrightError
+    PLAYWRIGHT_AVAILABLE = True
+except ImportError:
+    PLAYWRIGHT_AVAILABLE = False
 
 # ----- Inputs / Outputs -----------------------------------------------------
 
@@ -88,6 +107,10 @@ SKIP_DOMAINS = (  # URLs whose host matches these patterns are NEVER crawled
 MAX_PARALLEL = 4  # parallel crawls (gsk has its own limits)
 CRAWL_TIMEOUT_SEC = 90  # per-URL deadline
 USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
+
+# CDP backend for Mode B login flows: "auto" | "websockets" | "playwright".
+# Set from --engine in main(); "auto" prefers Playwright when importable.
+ENGINE = "auto"
 
 # Selectors whose XPath body uses unsupported features are recorded as such
 # so a maintainer can decide whether to chase the parity or switch tools.
@@ -482,7 +505,9 @@ class CdpSession:
     Reconstruction note: the attachment's reader-task spawn and load-event
     wiring did not survive the transfer pipeline; they are completed here so
     that _send()/navigate() resolve correctly. A single _reader() task is
-    the sole consumer of the websocket.
+    the sole consumer of the websocket. Prefer the Playwright backend
+    (`--engine playwright`) where installable — it replaces this hand-rolled
+    client entirely.
     """
 
     def __init__(self, cdp_url: str):
@@ -734,7 +759,127 @@ def env_or(value):
     return value
 
 
+# ----- Optional Playwright backend -------------------------------------------
+
+def _pw_endpoint(cdp_url: str) -> str:
+    """Convert a ws:// (or http://) CDP endpoint into the http://host:port
+    form Playwright's connect_over_cdp expects. Any /devtools/... suffix
+    is discarded — connect_over_cdp discovers pages itself.
+    """
+    m = re.match(r'^(?:wss?|https?)://([^/:]+)(?::(\d+))?', (cdp_url or "").strip())
+    if not m:
+        return "http://localhost:9222"
+    host, port = m.group(1), m.group(2) or "9222"
+    return f"http://{host}:{port}"
+
+
+def _pw_cookies(cookies: list[dict]) -> list[dict]:
+    """Convert Network.setCookies-shaped dicts into Playwright
+    context.add_cookies format (domain+path or url; sameSite must be
+    Strict/Lax/None; expires in seconds).
+    """
+    out = []
+    for c in cookies:
+        pc = {"name": c["name"], "value": c["value"]}
+        if c.get("domain"):
+            pc["domain"] = c["domain"]
+            pc["path"] = c.get("path") or "/"
+        elif c.get("url"):
+            pc["url"] = c["url"]
+        else:
+            raise ValueError(f"cookie `{c.get('name')}` missing domain/url")
+        if isinstance(c.get("expires"), (int, float)) and c["expires"] > 0:
+            pc["expires"] = c["expires"]
+        if "secure" in c:
+            pc["secure"] = bool(c["secure"])
+        if "httpOnly" in c:
+            pc["httpOnly"] = bool(c["httpOnly"])
+        if c.get("sameSite") in ("Strict", "Lax", "None"):
+            pc["sameSite"] = c["sameSite"]
+        out.append(pc)
+    return out
+
+
+def playwright_fetch(case: dict, auth_mode: str, cdp_url: str, target: str) -> str:
+    """Fetch the target's rendered HTML via Playwright connected over CDP.
+
+    Optional backend (`pip install playwright` — no browser download is
+    needed when attaching to your existing Chrome). Handles the same auth
+    modes as the websockets CdpSession path:
+    - cdp: pre-logged-in Chrome — reuse the default context, just navigate
+    - cookies: context.add_cookies(...) from login.cookies / cookies_file
+    - form: fill the login form by name/id, submit, then navigate
+    """
+    if not PLAYWRIGHT_AVAILABLE:
+        raise RuntimeError("`playwright` python package not installed; pip install playwright")
+    login = case.get("login") or {}
+    endpoint = _pw_endpoint(cdp_url)
+
+    with sync_playwright() as p:
+        browser = p.chromium.connect_over_cdp(endpoint)
+        try:
+            # contexts[0] is the user's real profile in the attached Chrome —
+            # reusing it keeps the pre-logged-in session cookies.
+            context = browser.contexts[0] if browser.contexts else browser.new_context()
+
+            if auth_mode == "cookies":
+                cookies: list[dict] = list(login.get("cookies") or [])
+                cookies_file = login.get("cookies_file")
+                if cookies_file:
+                    cf_path = (SCRAPERS_DIR / cookies_file) if not cookies_file.startswith("/") else Path(cookies_file)
+                    cookies.extend(load_cookie_file(cf_path))
+                if not cookies:
+                    raise RuntimeError("auth: cookies requires `login.cookies:` or `login.cookies_file:`")
+                context.add_cookies(_pw_cookies(cookies))
+
+            page = context.new_page()
+            try:
+                if auth_mode == "form":
+                    login_url = login.get("url")
+                    if not login_url:
+                        raise RuntimeError("auth: form requires `login.url:` pointing at the login page")
+                    fields = {k: env_or(v) for k, v in (login.get("fields") or {}).items()}
+                    if not fields:
+                        raise RuntimeError("auth: form requires `login.fields:` with at least one input")
+                    page.goto(login_url, wait_until="domcontentloaded")
+                    for name, value in fields.items():
+                        try:
+                            page.fill(f'[name="{name}"]', value, timeout=5000)
+                        except PlaywrightError:
+                            page.fill(f'#{name}', value, timeout=5000)
+                    if login.get("submit_selector"):
+                        page.click(login["submit_selector"])
+                    else:
+                        page.keyboard.press("Enter")
+                    page.wait_for_load_state("domcontentloaded")
+                    page.wait_for_timeout(int(float(login.get("wait_after", 2.0)) * 1000))
+
+                if auth_mode == "cdp" and login.get("url"):
+                    page.goto(login["url"], wait_until="domcontentloaded")
+
+                page.goto(target, wait_until="domcontentloaded")
+                page.wait_for_timeout(200)
+                return page.content()
+            finally:
+                page.close()
+        finally:
+            browser.close()
+
+
+def _resolve_engine() -> str:
+    """Resolve the ENGINE setting to a concrete backend, with clear errors."""
+    if ENGINE == "auto":
+        return "playwright" if PLAYWRIGHT_AVAILABLE else "websockets"
+    if ENGINE == "playwright" and not PLAYWRIGHT_AVAILABLE:
+        raise RuntimeError(
+            "`playwright` python package not installed; pip install playwright "
+            "(or rerun with --engine websockets)"
+        )
+    return ENGINE
+
+
 # ----- Expected-key resolver (selectors: or stash_keys:) --------------------
+
 
 def _resolve_expected_keys(case: dict) -> list[dict]:
     """Convert a case's expected keys into a normalised `selectors:` list
@@ -1073,6 +1218,8 @@ def process_case(case: dict, auth_cfg: dict) -> dict:
     try:
         if auth_mode == "anonymous":
             body, page_meta = crawl(target)
+        elif _resolve_engine() == "playwright":
+            body = playwright_fetch(case, auth_mode, cdp_url, target)
         else:
             body = asyncio.run(_cdp_with_login(case, auth_mode, cdp_url, target))
         result["crawl_status"] = "ok"
@@ -1214,7 +1361,7 @@ def run_pass_per_case(cases: list[dict], auth_cfg: dict) -> list[dict]:
     return results
 
 
-def _preflight(cases_mode: bool) -> None:
+def _preflight(cases_mode: bool, engine: str) -> None:
     """Fail fast when a required fetch backend is unavailable."""
     if not cases_mode:
         if shutil.which("gsk") is None:
@@ -1226,20 +1373,39 @@ def _preflight(cases_mode: bool) -> None:
         if not os.environ.get("GSK_API_KEY"):
             print("warning: GSK_API_KEY is not set; gsk crawl may fail to authenticate.",
                   file=sys.stderr)
-    elif websockets is None:
-        print("warning: `websockets` package not installed; CDP login modes "
-              "are unavailable (pip install websockets).", file=sys.stderr)
+        return
+    if engine == "playwright" and not PLAYWRIGHT_AVAILABLE:
+        sys.exit(
+            "livetest.py: --engine playwright but the `playwright` package is not installed.\n"
+            "Install it with:  pip install playwright\n"
+            "(no browser download needed when connecting to your Chrome via --cdp-url)"
+        )
+    if websockets is None and not PLAYWRIGHT_AVAILABLE:
+        print("warning: neither `playwright` nor `websockets` is installed; "
+              "CDP login modes are unavailable "
+              "(pip install playwright — recommended — or pip install websockets).",
+              file=sys.stderr)
+    elif websockets is None and PLAYWRIGHT_AVAILABLE:
+        print("note: `websockets` not installed; CDP login modes will use the "
+              "Playwright backend.", file=sys.stderr)
 
 
 def main():
+    global ENGINE
+
     parser = argparse.ArgumentParser(description="Live XPath test for Stash scrapers.")
     parser.add_argument("--cases", type=Path,
                         help="Path to test-cases YAML (replaces per-file pass)")
     parser.add_argument("--cdp-url", type=str, default=None,
                         help="Chrome DevTools Protocol endpoint, e.g. ws://localhost:9222")
+    parser.add_argument("--engine", choices=["auto", "websockets", "playwright"],
+                        default="auto",
+                        help="CDP backend for login flows (default: auto = playwright "
+                             "when installed, else websockets)")
     args = parser.parse_args()
 
-    _preflight(bool(args.cases))
+    ENGINE = args.engine
+    _preflight(bool(args.cases), ENGINE)
 
     cdp_url = args.cdp_url
     t0 = time.time()
@@ -1253,7 +1419,7 @@ def main():
         results = run_pass_per_case(cases, auth_cfg or {})
         out_path = RESULTS_DIR / "live-test-cases.json"
         out_path.write_text(
-            json.dumps({"auth": auth_cfg, "cases": results}, indent=2, default=str)
+            json.dumps({"auth": auth_cfg, "engine": ENGINE, "cases": results}, indent=2, default=str)
         )
 
         n_ok = sum(1 for r in results if r["crawl_status"] == "ok")
@@ -1272,6 +1438,7 @@ def main():
 
         print()
         print(f"=== Live-test (cases pass): {len(results)} cases, {time.time()-t0:.1f}s ===")
+        print(f"  engine             : {_resolve_engine()}")
         print(f"  crawled ok         : {n_ok}")
         print(f"  auth-required      : {n_auth}")
         print(f"  domain-skipped     : {n_skip}")
