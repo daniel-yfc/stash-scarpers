@@ -1,11 +1,13 @@
-name: Test Eval Workflow
+name: Single Scraper Policy Check
 
+# Manual diagnostic only; not the five-task Eval Pack or full validation.
 on:
-  workflow_dispatch: # Manual trigger
+  workflow_dispatch:
     inputs:
       scraper_file:
-        description: "Scraper file to test (e.g., ACCEED.yml)"
+        description: "Optional scraper basename, e.g. ACCEED.yml"
         required: false
+        type: string
 
 permissions:
   contents: read
@@ -14,25 +16,22 @@ jobs:
   test-eval:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Show workflow info
+      - uses: actions/checkout@v4
+      - name: Check selected scraper policy
+        env:
+          SCRAPER_FILE: ${{ inputs.scraper_file }}
+        shell: bash
         run: |
-          echo "🔍 Testing scraper via quality gate"
-          echo "Scraper file: ${{ inputs.scraper_file || 'ACCEED.yml' }}"
-
-      - name: Run quality gate
-        run: |
-          bash tools/scraper-quality-gate.sh "scrapers/${{ inputs.scraper_file || 'ACCEED.yml' }}"
-
-      - name: Summary
-        if: always()
-        run: |
-          echo ""
-          echo "💡 Next steps:"
-          echo "1. Check the logs above for any errors"
-          echo "2. Run 'bash tools/validate-all.sh' locally for the full set"
-          echo "3. Run the Eval Pack workflow for the pytest suite"
+          set -euo pipefail
+          file="${SCRAPER_FILE:-ACCEED.yml}"
+          if [[ ! "$file" =~ ^[A-Za-z0-9_-]+\.yml$ ]]; then
+            echo 'Expected a scraper filename, without a directory' >&2
+            exit 2
+          fi
+          target="scrapers/$file"
+          if [[ ! -f "$target" ]]; then
+            echo 'Selected scraper does not exist' >&2
+            exit 2
+          fi
+          bash tools/scraper-quality-gate.sh "$target"

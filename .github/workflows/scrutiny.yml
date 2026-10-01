@@ -1,10 +1,11 @@
-name: Live Scraper Scrutiny
+name: Live Raw-Response Scrutiny
 
+# HTTP + JSDOM checks; not rendered-DOM or live Stash/CDP verification.
 on:
   workflow_dispatch:
     inputs:
       scraper:
-        description: "Scraper path or filename (e.g. scrapers/CK-Download.yml or CK-Download.yml). Leave blank to test all."
+        description: "Scraper path or filename; blank tests all"
         required: false
         default: ""
       search:
@@ -16,7 +17,7 @@ on:
         type: boolean
         default: false
       url:
-        description: "Explicit detail scene URL to evaluate against sceneScraper"
+        description: "Explicit HTTPS detail scene URL"
         required: false
         default: ""
       probe:
@@ -29,50 +30,45 @@ permissions:
 
 jobs:
   scrutiny:
-    name: Live Site Scrutiny
+    name: Raw HTTP and JSDOM Scrutiny
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
           cache: npm
-
-      - name: Verify Node.js version
-        run: node --version
-
-      - name: Install Node dependencies
-        run: npm ci || npm install
-
-      - name: Run Scrutiny
+      - run: npm ci
+      - name: Run raw-response scrutiny
+        env:
+          SCRAPER_INPUT: ${{ inputs.scraper }}
+          SEARCH_INPUT: ${{ inputs.search }}
+          PAGINATE_INPUT: ${{ inputs.paginate }}
+          DETAIL_URL: ${{ inputs.url }}
+          PROBE_INPUT: ${{ inputs.probe }}
+        shell: bash
         run: |
-          ARGS=""
-          if [ "${{ inputs.search }}" = "true" ]; then
-            ARGS="$ARGS --search"
-          fi
-          if [ "${{ inputs.paginate }}" = "true" ]; then
-            ARGS="$ARGS --paginate --multi"
-          fi
-          if [ -n "${{ inputs.url }}" ]; then
-            ARGS="$ARGS --url='${{ inputs.url }}'"
-          fi
-          if [ -n "${{ inputs.probe }}" ]; then
-            ARGS="$ARGS --probe='${{ inputs.probe }}'"
-          fi
-
-          TARGET="${{ inputs.scraper }}"
-          if [ -z "$TARGET" ]; then
-            echo "Running scrutiny against all scrapers..."
-            node tools/scrutiny.js --all $ARGS
-          else
-            # Ensure path prefix if only filename was given
-            if [[ "$TARGET" != scrapers/* ]]; then
-              TARGET="scrapers/$TARGET"
+          set -euo pipefail
+          args=()
+          [[ "$SEARCH_INPUT" == true ]] && args+=(--search)
+          [[ "$PAGINATE_INPUT" == true ]] && args+=(--paginate --multi)
+          if [[ -n "$DETAIL_URL" ]]; then
+            if [[ "$DETAIL_URL" != https://* ]]; then
+              echo 'Explicit detail URL must be HTTPS' >&2
+              exit 2
             fi
-            echo "Running scrutiny on $TARGET with args: $ARGS"
-            node tools/scrutiny.js "$TARGET" $ARGS
+            args+=("--url=$DETAIL_URL")
+          fi
+          [[ -z "$PROBE_INPUT" ]] || args+=("--probe=$PROBE_INPUT")
+          if [[ -z "$SCRAPER_INPUT" ]]; then
+            node tools/scrutiny.js --all "${args[@]}"
+          else
+            target="$SCRAPER_INPUT"
+            [[ "$target" == scrapers/* ]] || target="scrapers/$target"
+            if [[ ! "$target" =~ ^scrapers/[A-Za-z0-9_-]+\.yml$ || ! -f "$target" ]]; then
+              echo 'Select an existing public scraper YAML file' >&2
+              exit 2
+            fi
+            node tools/scrutiny.js "$target" "${args[@]}"
           fi
