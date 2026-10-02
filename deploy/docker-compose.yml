@@ -1,0 +1,32 @@
+# stash-scarpers tooling stack.
+#
+# Usage (from the repository root):
+#   docker compose -f deploy/docker-compose.yml build
+#
+#   Mode B — in-container Chromium, cookie-file/form auth from ./.local:
+#     docker compose -f deploy/docker-compose.yml run --rm livetest
+#
+#   Mode A — anonymous sweep via Genspark CLI (metered; needs the image
+#   built with --build-arg INSTALL_GSK=true and GSK_API_KEY set):
+#     GSK_API_KEY=... docker compose -f deploy/docker-compose.yml run --rm livetest \
+#       bash -c "python3 tools/livetest.py"
+#
+#   Validator + regression tests:
+#     docker compose -f deploy/docker-compose.yml run --rm livetest \
+#       bash -c "node validator/index.mjs -a -s scrapers && python -m pytest tools/tests/"
+services:
+  livetest:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    image: stash-scarpers
+    working_dir: /app
+    environment:
+      # Only needed for Mode A anonymous crawls (Genspark CLI)
+      GSK_API_KEY: ${GSK_API_KEY:-}
+      START_CHROME: "1"
+    volumes:
+      # Cookie files for Mode B auth — never committed (see test-cases template)
+      - ../.local:/app/.local:ro
+      # Persist harness JSON results + crawled HTML outside the container
+      - ../results:/tmp/stash-scarpers-live

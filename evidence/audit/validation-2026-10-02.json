@@ -1,0 +1,210 @@
+[
+  {
+    "file": "ACCEED.yml",
+    "name": "ACCEED",
+    "is_private": false,
+    "uses_cdp": true,
+    "has_cookies": false,
+    "entry_points": ["sceneByURL", "sceneByName", "sceneByFragment"],
+    "schema_pass": true,
+    "issues": [],
+    "mapping_issues": [],
+    "notes": ["Last Updated: 2026-09-06"],
+    "documentation": {
+      "has_last_updated": true,
+      "has_unverified_marker": false
+    }
+  },
+  {
+    "file": "Bravo-Japan.yml",
+    "name": "Bravo-Japan",
+    "is_private": false,
+    "uses_cdp": true,
+    "has_cookies": false,
+    "entry_points": ["sceneByURL", "sceneByFragment"],
+    "schema_pass": true,
+    "issues": [],
+    "mapping_issues": [],
+    "notes": ["Last Updated: 2026-09-06"],
+    "documentation": {
+      "has_last_updated": true,
+      "has_unverified_marker": true
+    }
+  },
+  {
+    "file": "CK-Download.yml",
+    "name": "CK-Download",
+    "is_private": false,
+    "uses_cdp": true,
+    "has_cookies": false,
+    "entry_points": ["sceneByURL", "sceneByName", "sceneByFragment"],
+    "schema_pass": true,
+    "issues": [],
+    "mapping_issues": [],
+    "notes": ["Last Updated: 2026-08-28"],
+    "documentation": {
+      "has_last_updated": true,
+      "has_unverified_marker": false
+    }
+  },
+  {
+    "file": "Coat.yml",
+    "name": "COAT",
+    "is_private": false,
+    "uses_cdp": true,
+    "has_cookies": false,
+    "entry_points": ["sceneByURL", "sceneByName", "sceneByFragment"],
+    "schema_pass": true,
+    "issues": [],
+    "mapping_issues": [],
+    "notes": ["Last Updated: 2026-08-28", "name: COAT does not match filename stem Coat"],
+    "documentation": {
+      "has_last_updated": true,
+      "has_unverified_marker": false
+    }
+  },
+  {
+    "file": "Games-Video.yml",
+    "name": "Games-Video",
+    "is_private": false,
+    "uses_cdp": false,
+    "has_cookies": false,
+    "entry_points": ["sceneByURL", "sceneByName", "sceneByFragment"],
+    "schema_pass": true,
+    "issues": [],
+    "mapping_issues": [],
+    "notes": ["Last Updated: 2026-09-06"],
+    "documentation": {
+      "has_last_updated": true,
+      "has_unverified_marker": false
+    }
+  },
+  {
+    "file": "Hunks-Ch.yml",
+    "name": "Hunk's Channel",
+    "is_private": false,
+    "uses_cdp": true,
+    "has_cookies": false,
+    "entry_points": ["groupByURL", "sceneByURL", "sceneByName", "sceneByFragment"],
+    "schema_pass": true,
+    "issues": [],
+    "mapping_issues": [],
+    "notes": ["Last Updated: 2026-09-06", "name: Hunk's Channel does not match filename stem Hunks-Ch"],
+    "documentation": {
+      "has_last_updated": true,
+      "has_unverified_marker": false
+    }
+  },
+  {
+    "file": "JGVData.yml",
+    "name": "JGVData",
+    "is_private": false,
+    "uses_cdp": false,
+    "has_cookies": false,
+    "entry_points": ["sceneByURL", "sceneByName", "sceneByFragment"],
+    "schema_pass": true,
+    "issues": [],
+    "mapping_issues": [],
+    "notes": ["Last Updated: 2026-09-05"],
+    "documentation": {
+      "has_last_updated": true,
+      "has_unverified_marker": false
+    }
+  },
+  {
+    "file": "Justice01.yml",
+    "name": "Justice01",
+    "is_private": false,
+    "uses_cdp": true,
+    "has_cookies": false,
+    "entry_points": ["sceneByURL", "sceneByName", "sceneByFragment"],
+    "schema_pass": true,
+    "issues": [],
+    "mapping_issues": [],
+    "notes": ["Last Updated: 2026-09-06"],
+    "documentation": {
+      "has_last_updated": true,
+      "has_unverified_marker": false
+    }
+  },
+  {
+    "file": "KO-Shop.yml",
+    "name": "KO Shop",
+    "is_private": false,
+    "uses_cdp": true,
+    "has_cookies": false,
+    "entry_points": ["sceneByURL", "sceneByName", "sceneByFragment"],
+    "schema_pass": true,
+    "issues": [],
+    "mapping_issues": [],
+    "notes": ["Last Updated: 2026-08-28", "name: KO Shop does not match filename stem KO-Shop"],
+    "documentation": {
+      "has_last_updated": true,
+      "has_unverified_marker": false
+    }
+  },
+  {
+    "file": "KO-Tube.yml",
+    "name": "KO-Tube",
+    "is_private": false,
+    "uses_cdp": true,
+    "has_cookies": false,
+    "entry_points": ["sceneByURL", "sceneByName", "groupByURL"],
+    "schema_pass": true,
+    "issues": [],
+    "mapping_issues": [],
+    "notes": ["Last Updated: "2026-10-02"],
+    "documentation": {
+      "has_last_updated": true,
+      "has_unverified_marker": false
+    }
+  },
+  {
+    "file": "Ko-Video.yml",
+    "name": "KO Video",
+    "is_private": false,
+    "uses_cdp": true,
+    "has_cookies": false,
+    "entry_points": ["sceneByURL", "sceneByName", "sceneByFragment"],
+    "schema_pass": true,
+    "issues": [],
+    "mapping_issues": [],
+    "notes": ["Last Updated: 2026-08-28", "name: KO Video does not match filename stem Ko-Video"],
+    "documentation": {
+      "has_last_updated": true,
+      "has_unverified_marker": false
+    }
+  },
+  {
+    "file": "Mens-RushTV.yml",
+    "name": "Men's Rush TV",
+    "is_private": false,
+    "uses_cdp": true,
+    "has_cookies": false,
+    "entry_points": ["sceneByURL", "sceneByName", "sceneByFragment"],
+    "schema_pass": true,
+    "issues": [],
+    "mapping_issues": [],
+    "notes": ["Last Updated: 2026-09-07", "name: Men's Rush TV does not match filename stem Mens-RushTV"],
+    "documentation": {
+      "has_last_updated": true,
+      "has_unverified_marker": false
+    }
+  },
+  {
+    "file": "fc2.yml",
+    "name": "fc2",
+    "is_private": false,
+    "uses_cdp": false,
+    "has_cookies": false,
+    "entry_points": ["sceneByURL", "sceneByFragment", "groupByURL"],
+    "schema_pass": true,
+    "issues": [],
+    "mapping_issues": [],
+    "notes": ["Last Updated: 2026-10-02"],
+    "documentation": {
+      "has_last_updated": true,
+      "has_unverified_marker": false
+    }
+  }
+]
