@@ -7,7 +7,9 @@
 #
 # Build:
 #   docker build -f deploy/Dockerfile -t stash-scarpers .
-#   docker build -f deploy/Dockerfile --build-arg INSTALL_GSK=true -t stash-scarpers .
+#   docker build -f deploy/Dockerfile \
+#     --build-arg INSTALL_GSK=true --build-arg GSK_CLI_VERSION=<verified> \
+#     -t stash-scarpers .
 #
 # Run Mode B (in-container Chromium; cookie-file / form auth only — a fresh
 # container Chrome has no logged-in sessions):
@@ -30,10 +32,18 @@ ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1
 
-# Node.js 22 (validator runtime) + Chromium (CDP target) + basics
+# Node.js 22 (validator runtime) via the official NodeSource APT repository
+# (apt signature verification; no downloaded shell executed as root) +
+# Chromium (CDP target) + basics
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        ca-certificates curl git chromium \
-    && curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+        ca-certificates curl git chromium gnupg \
+    && install -d -m 0755 /etc/apt/keyrings \
+    && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
+        | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+    && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_22.x nodistro main" \
+        > /etc/apt/sources.list.d/nodesource.list \
+    && chmod 644 /etc/apt/keyrings/nodesource.gpg /etc/apt/sources.list.d/nodesource.list \
+    && apt-get update \
     && apt-get install -y --no-install-recommends nodejs \
     && rm -rf /var/lib/apt/lists/*
 
@@ -54,9 +64,19 @@ RUN npm ci --omit=dev || npm install --omit=dev
 # Repository sources (scrapers/, validator/, tools/, skills/, docs/)
 COPY . .
 
-# Optional: Genspark CLI for Mode A anonymous crawls (metered cloud service)
+# Optional: Genspark CLI for Mode A anonymous crawls (metered cloud service).
+# Supply-chain policy: installs default to immutable content — pass an exact
+# verified version, never a moving tag. Look it up once with:
+#   npm view @genspark/cli version
 ARG INSTALL_GSK=false
-RUN if [ "$INSTALL_GSK" = "true" ]; then npm install -g @genspark/cli; fi
+ARG GSK_CLI_VERSION=""
+RUN if [ "$INSTALL_GSK" = "true" ]; then \
+        if [ -z "$GSK_CLI_VERSION" ]; then \
+            echo "ERROR: INSTALL_GSK=true requires --build-arg GSK_CLI_VERSION=<exact version>" >&2; \
+            exit 1; \
+        fi; \
+        npm install -g "@genspark/cli@${GSK_CLI_VERSION}"; \
+    fi
 
 ENTRYPOINT ["bash", "deploy/entrypoint.sh"]
 CMD ["python3", "tools/livetest.py", "--help"]
