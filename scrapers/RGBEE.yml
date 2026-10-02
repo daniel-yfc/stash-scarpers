@@ -14,10 +14,11 @@ sceneByName:
   queryURL: https://www.rgbee.net/search?kw={}
   scraper: sceneSearch
 
+# After a search result is picked, scrape its product page directly.
 sceneByQueryFragment:
   action: scrapeXPath
-  queryURL: https://www.rgbee.net/search?kw={}
-  scraper: sceneSearch
+  queryURL: "{url}"
+  scraper: sceneScraper
 
 # UNVERIFIED: no /cast/ snapshot. Name assumes an h1; URL is the input URL.
 performerByURL:
