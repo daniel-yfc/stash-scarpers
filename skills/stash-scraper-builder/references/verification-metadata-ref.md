@@ -1,3 +1,19 @@
+---
+doc_id: REF-VERIFY-62
+title: Verification Metadata Reference
+status: active
+layer: skill
+owner: maintainer
+audience:
+  - agent
+last_verified: "2026-10-02"
+authority: derived
+routing:
+  intents:
+    - verification
+    - staleness
+---
+
 # Verification Metadata Reference
 
 Quick access to the verification metadata specification and related tooling.

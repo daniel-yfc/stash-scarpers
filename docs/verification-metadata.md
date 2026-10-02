@@ -1,3 +1,24 @@
+---
+doc_id: DOC-TEST-52
+title: Verification Metadata Specification
+status: active
+layer: repository
+owner: maintainer
+audience:
+  - agent
+  - maintainer
+applies_to:
+  - scrapers
+  - testing
+last_verified: "2026-10-02"
+authority: canonical
+routing:
+  intents:
+    - verification
+    - metadata
+    - staleness
+---
+
 # Verification Metadata Specification
 
 This document defines the structured metadata format for scraper verification status. All metadata is stored in YAML comment blocks (prefixed with `#`) to ensure Stash ignores them while remaining machine-readable by tooling.
@@ -75,32 +96,30 @@ name: ACCEED
 
 ## Machine Parsing
 
-Tools (e.g., `tools/livetest.py`) should parse these comments using regex patterns:
+Tools (e.g., `tools/livetest.py`) parse these comments using a whitelist of known metadata keys. General comments such as `# Last Updated:` are intentionally ignored:
 
 ```python
 import re
-from datetime import datetime, timedelta
 
-METADATA_PATTERN = re.compile(r'^#\s*(\w+):\s*(.+)$')
+KNOWN_KEYS = {
+    "validated_on", "ttl_days", "staleness_status", "tested_urls",
+    "url_patterns_declared", "url_patterns_tested", "coverage_status",
+    "postprocess_validated", "stash_integration_tested", "value_match_level",
+    "robustness_notes", "last_robustness_check",
+}
+
+METADATA_PATTERN = re.compile(
+    r"^#\s*(" + "|".join(sorted(KNOWN_KEYS)) + r"):\s*(.+)$"
+)
 
 def parse_verification_metadata(yaml_content: str) -> dict:
     metadata = {}
-    for line in yaml_content.split('\n'):
+    for line in yaml_content.split("\n"):
         match = METADATA_PATTERN.match(line)
         if match:
             key, value = match.groups()
             metadata[key] = value.strip()
     return metadata
-
-def compute_staleness(validated_on: str, ttl_days: int = 30) -> str:
-    validated = datetime.strptime(validated_on, '%Y-%m-%d')
-    age = (datetime.now() - validated).days
-    if age <= ttl_days:
-        return 'FRESH'
-    elif age <= 90:
-        return 'AGING'
-    else:
-        return 'STALE'
 ```
 
 ## Integration with LIVE_TEST_STATUS.md
@@ -114,11 +133,12 @@ The `LIVE_TEST_STATUS.md` table should include these columns:
 
 ## CI Integration
 
-The `link-check` workflow should:
+The `verification-staleness` workflow (`.github/workflows/verification-staleness.yml`):
 
-1. Parse `validated_on` from each scraper file
-2. Compute `staleness_status`
-3. Fail or warn if `staleness_status == 'STALE'`
-4. Post a comment on PRs with stale scrapers
+1. Parses `validated_on` from each scraper file
+2. Computes `staleness_status`
+3. Fails the check when any scraper is `STALE`
+4. Reports the full bucket breakdown (STALE / AGING / FRESH / UNKNOWN / NO_META) to the workflow Step Summary
+5. Opens a tracking issue when the weekly scheduled run detects `STALE` scrapers
 
 See `tools/livetest.py` for implementation.

@@ -84,6 +84,13 @@ documents:
     layer: repository
     status: active
     intents: [testing, rendered-dom, fixtures]
+  - doc_id: DOC-TEST-52
+    title: Verification Metadata Specification
+    path: docs/verification-metadata.md
+    layer: repository
+    status: active
+    intents: [verification, metadata, staleness]
+    read_after: [DOC-TEST-50, DOC-TEST-51]
   - doc_id: STATUS-LIVE-60
     title: Live Test Status
     path: docs/LIVE_TEST_STATUS.md
@@ -246,6 +253,13 @@ documents:
     layer: skill
     status: active
     intents: [evaluation, regression]
+  - doc_id: REF-VERIFY-62
+    title: Verification Metadata Reference
+    path: skills/stash-scraper-builder/references/verification-metadata-ref.md
+    layer: skill
+    status: active
+    intents: [verification, metadata, staleness]
+    read_after: [REF-VERIFY-60, REF-VERIFY-61]
   - doc_id: REF-OPS-00
     title: Upstream Sources
     path: skills/stash-scraper-builder/references/UPSTREAM_SOURCES.md
