@@ -1,6 +1,11 @@
 name: RGBEE
 # Rendered-DOM verified 2026-10-02 on product pages 16709, 3698, and 10772.
-# Raw HTTP was not fetched. Search results and /cast/ pages were not snapshotted.
+# Live check 2026-10-02: plain HTTP from Stash returns 403 Forbidden (anti-bot edge),
+# so this scraper requires CDP with a visible Chrome; it will return nothing without it.
+# Search results and /cast/ pages were not snapshotted.
+driver:
+  useCDP: true
+
 sceneByURL:
   - action: scrapeXPath
     url:
