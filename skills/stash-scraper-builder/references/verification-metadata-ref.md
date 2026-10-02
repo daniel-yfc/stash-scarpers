@@ -30,7 +30,7 @@ Quick access to the verification metadata specification and related tooling.
 
 ## Tooling
 
-- [livetest.py](../../../tools/livetest.py) — staleness detector; parses metadata blocks and reports STALE / AGING / FRESH / NO_META
+- [staleness_check.py](../../../tools/staleness_check.py) — staleness detector; parses metadata blocks and reports STALE / AGING / FRESH / NO_META
 - [scraper-quality-gate.sh](../../../tools/scraper-quality-gate.sh) — full quality gate runner
 
 ## Quick Reference: Evidence Levels

@@ -6,7 +6,7 @@ layer: skill
 owner: maintainer
 audience:
   - agent
-last_verified: "2026-09-09"
+last_verified: "2026-10-02"
 authority: canonical
 routing:
   intents:
@@ -45,6 +45,7 @@ Read repository-level routing before skill-level guidance.
 | Dates/post-processing  | `date-formats.md` → `post-processing.md`                               |
 | Advanced patterns      | `advanced-patterns.md`                                                 |
 | Regression/evaluation  | `eval-pack.md` → repository `tools/tests/` and validation commands     |
+| Verification metadata  | `verification-metadata-ref.md` → `docs/verification-metadata.md`       |
 | Live-site verification | repository `docs/06_Testing_Guide.md` → `docs/LIVE_TEST_STATUS.md`     |
 
 ## Before editing

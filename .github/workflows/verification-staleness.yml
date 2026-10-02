@@ -28,7 +28,7 @@ jobs:
       - name: Run staleness check
         id: check
         continue-on-error: true
-        run: python tools/livetest.py > staleness-report.txt 2>&1; cat staleness-report.txt
+        run: python tools/staleness_check.py > staleness-report.txt 2>&1; cat staleness-report.txt
 
       - name: Report to Step Summary
         if: always()

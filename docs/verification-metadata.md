@@ -96,7 +96,7 @@ name: ACCEED
 
 ## Machine Parsing
 
-Tools (e.g., `tools/livetest.py`) parse these comments using a whitelist of known metadata keys. General comments such as `# Last Updated:` are intentionally ignored:
+Tools (e.g., `tools/staleness_check.py`) parse these comments using a whitelist of known metadata keys. General comments such as `# Last Updated:` are intentionally ignored:
 
 ```python
 import re
@@ -141,4 +141,4 @@ The `verification-staleness` workflow (`.github/workflows/verification-staleness
 4. Reports the full bucket breakdown (STALE / AGING / FRESH / UNKNOWN / NO_META) to the workflow Step Summary
 5. Opens a tracking issue when the weekly scheduled run detects `STALE` scrapers
 
-See `tools/livetest.py` for implementation.
+See `tools/staleness_check.py` for implementation.
