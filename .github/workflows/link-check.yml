@@ -1,42 +1,29 @@
-name: Advisory Documentation Links
+name: Link Check
 
 on:
-  schedule:
-    - cron: "0 0 * * 0" # Weekly, Sunday 00:00 UTC
-  workflow_dispatch:
+  push:
+    branches: [main]
   pull_request:
-    paths:
-      - "*.md"
-      - "**/*.md"
-      - ".github/workflows/link-check.yml"
-
-permissions:
-  contents: read
-
-concurrency:
-  group: link-check-${{ github.ref }}
-  cancel-in-progress: true
+    branches: [main]
 
 jobs:
   link-check:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
 
-      - name: Check repository Markdown links (advisory)
-        uses: lycheeverse/lychee-action@v2
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          args: "--verbose --no-progress './**/*.md' './.github/**/*.md'"
-          fail: false
-          failIfEmpty: true
+          python-version: "3.11"
 
-      - name: Upload link report
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: lychee-results
-          path: lychee/out.md
-          if-no-files-found: ignore
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run link check
+        run: python tools/check_docs_index.py
+
+      - name: Check verification metadata staleness
+        run: python tools/livetest.py
+        continue-on-error: true
