@@ -1,0 +1,106 @@
+name: RGBEE
+# Rendered-DOM verified 2026-10-02 on product pages 16709, 3698, and 10772.
+# Raw HTTP was not fetched. Search results and /cast/ pages were not snapshotted.
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - rgbee.net/product/
+    scraper: sceneScraper
+
+# UNVERIFIED: queryURL is the live search form (action=/search, name=kw).
+# Result selectors are the catalog article.card used on product pages, not a search-page snapshot.
+sceneByName:
+  action: scrapeXPath
+  queryURL: https://www.rgbee.net/search?kw={}
+  scraper: sceneSearch
+
+sceneByQueryFragment:
+  action: scrapeXPath
+  queryURL: https://www.rgbee.net/search?kw={}
+  scraper: sceneSearch
+
+# UNVERIFIED: no /cast/ snapshot. Name assumes an h1; URL is the input URL.
+performerByURL:
+  - action: scrapeXPath
+    url:
+      - rgbee.net/cast/
+    scraper: performerScraper
+
+xPathScrapers:
+  sceneScraper:
+    scene:
+      Title: //meta[@property='og:title']/@content | //section[@id='purchase']//h1
+      Code: //section[@id='purchase']/@data-product-id
+      Details:
+        selector: //div[@id='about-full']/text()
+        concat: "\n"
+        postProcess:
+          - replace:
+              - regex: (?i)<br\s*/?>
+                with: "\n"
+              - regex: <[^>]+>
+                with: ""
+      Date:
+        # 發行 is the release date, not the studio.
+        selector: //section[@id='facts']//dt[normalize-space()='發行']/following-sibling::dd[1]
+        postProcess:
+          - parseDate: "2006-01-02"
+      Duration:
+        selector: //section[@id='facts']//dt[normalize-space()='影片長度']/following-sibling::dd[1]
+        postProcess:
+          - javascript: |
+              var parts = value.trim().split(':').map(function (part) { return parseInt(part, 10) || 0; });
+              if (parts.length === 3) return String(parts[0] * 3600 + parts[1] * 60 + parts[2]);
+              if (parts.length === 2) return String(parts[0] * 60 + parts[1]);
+              return value.replace(/\D/g, '');
+      Image:
+        selector: //meta[@property='og:image']/@content | //section[@id='purchase']//div[contains(@class,'pdp-cover')]//img/@src
+        postProcess:
+          - replace:
+              - regex: /t-
+                with: /
+      URLs: //link[@rel='canonical']/@href
+      Studio:
+        Name: //section[@id='purchase']//p[contains(@class,'by')]//a
+        URL:
+          selector: //section[@id='purchase']//p[contains(@class,'by')]//a/@href
+          postProcess:
+            - replace:
+                - regex: ^/
+                  with: https://www.rgbee.net/
+      Performers:
+        Name: //section[@id='facts']//dt[normalize-space()='主角']/following-sibling::dd[1]/a
+        URL:
+          selector: //section[@id='facts']//dt[normalize-space()='主角']/following-sibling::dd[1]/a/@href
+          postProcess:
+            - replace:
+                - regex: ^/
+                  with: https://www.rgbee.net/
+      Tags:
+        Name:
+          selector: //section[@id='facts']//nav[@aria-label='標籤']/a
+          postProcess:
+            - replace:
+                - regex: ^#
+                  with: ""
+
+  sceneSearch:
+    common:
+      $card: //article[contains(@class,'card')]
+    scene:
+      Title: $card//div[contains(@class,'t')]/a
+      URL:
+        selector: $card//div[contains(@class,'t')]/a/@href
+        postProcess:
+          - replace:
+              - regex: ^/
+                with: https://www.rgbee.net/
+      Image: $card//img[contains(@class,'art-img')]/@src
+
+  performerScraper:
+    performer:
+      Name: //h1
+      URLs:
+        fixed: "{inputURL}"
+
+# Last Updated 2026-10-02
