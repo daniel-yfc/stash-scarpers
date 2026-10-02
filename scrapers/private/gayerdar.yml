@@ -12,11 +12,7 @@ name: Gayerdar
 sceneByURL:
   - action: scrapeXPath
     url:
-      - gayerdar.com/en-US/videos/
-      - gayerdar.com/en-us/videos/
-      - gayerdar.com/videos/
-      - gayerdar.com/zh-TW/videos/
-      - gayerdar.com/zh-tw/videos/
+      - "gayerdar.com/zh-TW/videos/"
     queryURL: "{url}"
     queryURLReplace:
       url:
@@ -24,9 +20,13 @@ sceneByURL:
           with: "gayerdar.com/zh-TW/videos/"
     scraper: sceneScraper
 
+sceneByFragment:
+  action: scrapeXPath
+  scraper: sceneScraper
+
 sceneByName:
   action: scrapeXPath
-  queryURL: "https://gayerdar.com/zh-TW/search?query={}"
+  queryURL: "{url}"
   scraper: sceneSearchScraper
 
 sceneByQueryFragment:
@@ -41,11 +41,7 @@ sceneByQueryFragment:
 performerByURL:
   - action: scrapeXPath
     url:
-      - gayerdar.com/en-US/models/
-      - gayerdar.com/en-us/models/
-      - gayerdar.com/models/
-      - gayerdar.com/zh-TW/models/
-      - gayerdar.com/zh-tw/models/
+      - "gayerdar.com/zh-TW/models/"
     queryURL: "{url}"
     queryURLReplace:
       url:
@@ -53,58 +49,51 @@ performerByURL:
           with: "gayerdar.com/zh-TW/models/"
     scraper: performerScraper
 
+performerByFragment:
+  action: scrapeXPath
+  scraper: performerScraper
+
 performerByName:
   action: scrapeXPath
-  queryURL: "https://gayerdar.com/zh-TW/search?query={}"
+  queryURL: "{url}"
   scraper: performerSearchScraper
 
 xPathScrapers:
   sceneScraper:
-    scene:
-      Title:
-        selector: //title/text()
-        postProcess:
-          - replace:
-              - regex: "｜.*$"
-                with: ""
-              - regex: "\\|.*$"
-                with: ""
+    common:
+      common:
+        Title:
+          selector: //title/text()
+          postProcess:
+            - replace:
+                - regex: "｜.*$"
+                  with: ""
+                - regex: "\\|.*$"
+                  with: ""
       Code:
         selector: //link[@rel="canonical"]/@href
         postProcess:
           - replace:
-              - regex: "^.*/videos/"
-                with: ""
-              - regex: "/$"
-                with: ""
+              - regex: ".*/videos/([^/]+).*"
+                with: "$1"
+              - regex: ".*/clips/([^/]+).*"
+                with: "$1"
       Date:
-        selector: //span[contains(@class,"trending-year")]/text()
+        selector: //meta[@property="video:release_date"]/@content
         postProcess:
-          - parseDate: "20060102"
-      Details:
-        selector: //meta[@name="description"]/@content
-      Tags:
-        Name:
-          selector: //ul[contains(@class,"iq-blogtag")]//a[contains(@class,"title")]/text()
-      Performers:
-        Name:
-          selector: //div[contains(@class,"content-details") and contains(@class,"trending-info")]//a[contains(@href,"/models/")]//h6/text()
+          parseDate: "20060102"
       Image:
-        selector: //div[contains(@class,"iq-main-slider")]//div[contains(@class,"absolute") and contains(@class,"object-cover")]//img[contains(@src,"imagedelivery.net") or contains(@src,"video_covers") or contains(@src,"videocovers")][1]/@src
+        selector: //meta[@property="og:image"]/@content
       Studio:
-        Name:
-          fixed: Gayerdar
-        URL:
-          fixed: "https://gayerdar.com/zh-TW"
-      URL:
-        selector: //link[@rel="canonical"]/@href
-
-  sceneSearchScraper:
-    common:
-      $result: //a[contains(@href,"/videos/")]
+        fixed: "Gayerdar"
+      Tags:
+        selector: //ul[contains(@class,"iq-blogtag")]/li/a[contains(@class,"title")]/text()
+      Performers:
+        selector: //a[contains(@href,"/models/")]
+        subSelector: .//h6[contains(@class,"title")]/text()
     scene:
       URL:
-        selector: $result/@href
+        selector: //link[@rel="canonical"]/@href
         postProcess:
           - replace:
               - regex: "^/"
@@ -113,40 +102,40 @@ xPathScrapers:
                 with: "gayerdar.com/zh-TW/videos/"
 
   performerScraper:
-    performer:
-      Name:
-        selector: //title/text()
-        postProcess:
-          - replace:
-              - regex: "｜.*$"
-                with: ""
-              - regex: "\\|.*$"
-                with: ""
-      Height:
-        selector: //p[contains(@class,"text-D1D0CF")][contains(text(),"cm")]/text()
-        postProcess:
-          - replace:
-              - regex: "[^0-9]"
-                with: ""
-      Weight:
-        selector: //p[contains(@class,"text-D1D0CF")][contains(text(),"kg")]/text()
-        postProcess:
-          - replace:
-              - regex: "[^0-9]"
-                with: ""
-      URLs:
-        selector: //link[@rel="canonical"]/@href | //ul[contains(@class,"widgetsocialmedia")]//a[contains(@href,"twitter.com") or contains(@href,"x.com")]/@href
-      Image:
-        selector: //img[contains(@src,"model_covers") or contains(@src,"model-covers")]/@src
-
-  performerSearchScraper:
     common:
-      $result: //a[contains(@href,"/models/")]
-    performer:
-      Name:
-        selector: $result//img/@alt
+      common:
+        Name:
+          selector: //title/text()
+          postProcess:
+            - replace:
+                - regex: "｜.*$"
+                  with: ""
+                - regex: "\\|.*$"
+                  with: ""
+        Gender:
+          fixed: "male"
+        Country:
+          selector: //p[contains(@class,"text-D1D0CF")][contains(text(),"From")]/text()
+          postProcess:
+            - replace:
+                - regex: ".*From\\s+"
+                  with: ""
+        Height:
+          selector: //p[contains(@class,"text-D1D0CF")][contains(text(),"cm")]/text()
+          postProcess:
+            - replace:
+                - regex: ".*?(\\d+)\\s*cm.*"
+                  with: "$1"
+        Weight:
+          selector: //p[contains(@class,"text-D1D0CF")][contains(text(),"kg")]/text()
+          postProcess:
+            - replace:
+                - regex: ".*?(\\d+)\\s*kg.*"
+                  with: "$1"
+      Image:
+        selector: //meta[@property="og:image"]/@href
       URL:
-        selector: $result/@href
+        selector: //link[@rel="canonical"]/@href
         postProcess:
           - replace:
               - regex: "^/"
@@ -154,10 +143,33 @@ xPathScrapers:
               - regex: "(?i)gayerdar\\.com/(?:en-us|zh-tw)?/?models/"
                 with: "gayerdar.com/zh-TW/models/"
 
+  sceneSearchScraper:
+    scene:
+      Title:
+        selector: .//div[contains(@class,"vitem")][contains(@class,"video-item")][.//a[contains(@href,"/videos/")]]//h6[contains(@class,"title")]/text()
+      Image:
+        selector: .//div[contains(@class,"vitem")][contains(@class,"video-item")][.//a[contains(@href,"/videos/")]]//img[contains(@class,"video-img")][1]/@src
+      URL:
+        selector: .//div[contains(@class,"vitem")][contains(@class,"video-item")][.//a[contains(@href,"/videos/")]]//a[contains(@href,"/videos/")][1]/@href
+        postProcess:
+          - replace:
+              - regex: "^/"
+                with: "https://gayerdar.com/"
+
+  performerSearchScraper:
+    performer:
+      Name:
+        selector: .//div[contains(@class,"vitem")][contains(@class,"model-item")][.//a[contains(@href,"/models/")]]//h6[contains(@class,"title")]/text()
+      Image:
+        selector: .//div[contains(@class,"vitem")][contains(@class,"model-item")][.//a[contains(@href,"/models/")]]//img[contains(@class,"model-img")][1]/@src
+      URL:
+        selector: .//div[contains(@class,"vitem")][contains(@class,"model-item")][.//a[contains(@href,"/models/")]]//a[contains(@href,"/models/")][1]/@href
+        postProcess:
+          - replace:
+              - regex: "^/"
+                with: "https://gayerdar.com/"
+
 driver:
   useCDP: true
-  headers:
-    - Key: Accept-Language
-      Value: "zh-TW,zh;q=0.9,en;q=0.5"
 
-# Last Updated 2026-09-29
+# Last Updated: 2026-09-29
