@@ -11,7 +11,15 @@
 #
 # Usage:
 #   bash deploy/setup-vm.sh [--with-gsk] [--with-playwright-browsers]
+#
+# Supply-chain policy:
+#   - Node.js comes from the verified NodeSource APT repository
+#     (keyring + signed-by apt source), not a piped shell installer.
+#   - When --with-gsk is used, GENSPARK_CLI_VERSION must be set to an exact
+#     verified version seen via: npm view @genspark/cli version
 set -euo pipefail
+
+GENSPARK_CLI_VERSION="${GENSPARK_CLI_VERSION:-}"
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 WITH_GSK=0
@@ -32,7 +40,15 @@ fi
 sudo apt-get update
 sudo apt-get install -y ca-certificates curl git chromium python3 python3-pip python3-venv
 if ! command -v node >/dev/null 2>&1 || [ "$(node -v | cut -c2- | cut -d. -f1)" -lt 22 ]; then
-    curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+    echo "==> Installing Node.js 22 via the verified NodeSource APT repository"
+    sudo apt-get install -y gnupg
+    sudo install -d -m 0755 /etc/apt/keyrings
+    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
+        | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+    echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_22.x nodistro main" \
+        | sudo tee /etc/apt/sources.list.d/nodesource.list >/dev/null
+    sudo chmod 644 /etc/apt/keyrings/nodesource.gpg /etc/apt/sources.list.d/nodesource.list
+    sudo apt-get update
     sudo apt-get install -y nodejs
 fi
 
@@ -55,7 +71,12 @@ fi
 
 if [ "$WITH_GSK" = "1" ]; then
     echo "==> Genspark CLI (Mode A anonymous crawls; metered — export GSK_API_KEY to use)"
-    sudo npm install -g @genspark/cli
+    if [ -z "$GENSPARK_CLI_VERSION" ]; then
+        echo "ERROR: --with-gsk requires GENSPARK_CLI_VERSION=<exact version>" >&2
+        echo "  Look it up once with: npm view @genspark/cli version" >&2
+        exit 1
+    fi
+    sudo npm install -g "@genspark/cli@${GENSPARK_CLI_VERSION}"
 fi
 
 echo
