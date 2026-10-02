@@ -102,36 +102,35 @@ xPathScrapers:
                 with: "gayerdar.com/zh-TW/videos/"
 
   performerScraper:
-    common:
-      common:
-        Name:
-          selector: //title/text()
-          postProcess:
-            - replace:
-                - regex: "｜.*$"
-                  with: ""
-                - regex: "\\|.*$"
-                  with: ""
-        Gender:
-          fixed: "male"
-        Country:
-          selector: //p[contains(@class,"text-D1D0CF")][contains(text(),"From")]/text()
-          postProcess:
-            - replace:
-                - regex: ".*From\\s+"
-                  with: ""
-        Height:
-          selector: //p[contains(@class,"text-D1D0CF")][contains(text(),"cm")]/text()
-          postProcess:
-            - replace:
-                - regex: ".*?(\\d+)\\s*cm.*"
-                  with: "$1"
-        Weight:
-          selector: //p[contains(@class,"text-D1D0CF")][contains(text(),"kg")]/text()
-          postProcess:
-            - replace:
-                - regex: ".*?(\\d+)\\s*kg.*"
-                  with: "$1"
+    performer:
+      Name:
+        selector: //title/text()
+        postProcess:
+          - replace:
+              - regex: "｜.*$"
+                with: ""
+              - regex: "\\|.*$"
+                with: ""
+      Gender:
+        fixed: "male"
+      Country:
+        selector: //p[contains(@class,"text-D1D0CF")][contains(text(),"From")]/text()
+        postProcess:
+          - replace:
+              - regex: ".*From\\s+"
+                with: ""
+      Height:
+        selector: //p[contains(@class,"text-D1D0CF")][contains(text(),"cm")]/text()
+        postProcess:
+          - replace:
+              - regex: ".*?(\\d+)\\s*cm.*"
+                with: "$1"
+      Weight:
+        selector: //p[contains(@class,"text-D1D0CF")][contains(text(),"kg")]/text()
+        postProcess:
+          - replace:
+              - regex: ".*?(\\d+)\\s*kg.*"
+                with: "$1"
       Image:
         selector: //meta[@property="og:image"]/@href
       URL:
