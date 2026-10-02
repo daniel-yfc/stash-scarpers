@@ -1,5 +1,9 @@
 name: RGBEE
 # Rendered-DOM verified 2026-10-02 on product pages 16709, 3698, and 10772.
+# Gallery (Album/ebook) heads verified 2026-10-02 on products 28934, 30976, 34891,
+# and 39054 (Album+Video combined): og:title, og:image, canonical, ld+json
+# sku/brand all match the shared template; body sections (facts dl, chipbar)
+# were not captured on gallery products.
 # Live check 2026-10-02: plain HTTP from Stash returns 403 Forbidden (anti-bot edge),
 # so this scraper requires CDP with a visible Chrome; it will return nothing without it.
 # Search results and /cast/ pages were not snapshotted.
@@ -25,6 +29,16 @@ sceneByQueryFragment:
   queryURL: "{url}"
   scraper: sceneScraper
 
+# Head-verified on gallery products 28934, 30976, 34891, 39054 (og:title/og:image/canonical);
+# body fields rely on the shared product template verified on the video pages.
+# rgbee.net serves galleries and videos from the same /product/ URL space; the same
+# release may be split into separate Album/Video product IDs (e.g. No.391: 39052/39053/39054).
+galleryByURL:
+  - action: scrapeXPath
+    url:
+      - rgbee.net/product/
+    scraper: galleryScraper
+
 # UNVERIFIED: no /cast/ snapshot. Name assumes an h1; URL is the input URL.
 performerByURL:
   - action: scrapeXPath
@@ -35,9 +49,9 @@ performerByURL:
 xPathScrapers:
   sceneScraper:
     scene:
-      Title: //meta[@property='og:title']/@content | //section[@id='purchase']//h1
-      Code: //section[@id='purchase']/@data-product-id
-      Details:
+      Title: &rgbeeTitle //meta[@property='og:title']/@content | //section[@id='purchase']//h1
+      Code: &rgbeeCode //section[@id='purchase']/@data-product-id
+      Details: &rgbeeDetails
         selector: //div[@id='about-full']/text()
         concat: "\n"
         postProcess:
@@ -46,7 +60,7 @@ xPathScrapers:
                 with: "\n"
               - regex: <[^>]+>
                 with: ""
-      Date:
+      Date: &rgbeeDate
         # 發行 is the release date, not the studio.
         selector: //section[@id='facts']//dt[normalize-space()='發行']/following-sibling::dd[1]
         postProcess:
@@ -59,14 +73,14 @@ xPathScrapers:
               if (parts.length === 3) return String(parts[0] * 3600 + parts[1] * 60 + parts[2]);
               if (parts.length === 2) return String(parts[0] * 60 + parts[1]);
               return value.replace(/\D/g, '');
-      Image:
+      Image: &rgbeeImage
         selector: //meta[@property='og:image']/@content | //section[@id='purchase']//div[contains(@class,'pdp-cover')]//img/@src
         postProcess:
           - replace:
               - regex: /t-
                 with: /
-      URLs: //link[@rel='canonical']/@href
-      Studio:
+      URLs: &rgbeeURLs //link[@rel='canonical']/@href
+      Studio: &rgbeeStudio
         Name: //section[@id='purchase']//p[contains(@class,'by')]//a
         URL:
           selector: //section[@id='purchase']//p[contains(@class,'by')]//a/@href
@@ -74,7 +88,7 @@ xPathScrapers:
             - replace:
                 - regex: ^/
                   with: https://www.rgbee.net/
-      Performers:
+      Performers: &rgbeePerformers
         Name: //section[@id='facts']//dt[normalize-space()='主角']/following-sibling::dd[1]/a
         URL:
           selector: //section[@id='facts']//dt[normalize-space()='主角']/following-sibling::dd[1]/a/@href
@@ -82,13 +96,26 @@ xPathScrapers:
             - replace:
                 - regex: ^/
                   with: https://www.rgbee.net/
-      Tags:
+      Tags: &rgbeeTags
         Name:
           selector: //section[@id='facts']//nav[@aria-label='標籤']/a
           postProcess:
             - replace:
                 - regex: ^#
                   with: ""
+
+  # Gallery object has no Duration field; everything else mirrors sceneScraper.
+  galleryScraper:
+    gallery:
+      Title: *rgbeeTitle
+      Code: *rgbeeCode
+      Details: *rgbeeDetails
+      Date: *rgbeeDate
+      Image: *rgbeeImage
+      URLs: *rgbeeURLs
+      Studio: *rgbeeStudio
+      Performers: *rgbeePerformers
+      Tags: *rgbeeTags
 
   sceneSearch:
     common:
