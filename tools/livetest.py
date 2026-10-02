@@ -1,89 +1,123 @@
 #!/usr/bin/env python3
 """
-Live test harness for stash scrapers with verification metadata parsing.
+Verification metadata staleness harness for stash scrapers.
 
-Parses verification metadata from YAML comment blocks and computes staleness.
+Parses verification metadata from YAML comment blocks and reports:
+  - STALE  : validated_on older than `ttl_days` (default 30) — exit 1
+  - AGING  : validated_on within TTL but ≥ TTL/2             — exit 0, listed
+  - FRESH  : validated_on within TTL                         — summary only
+  - NO_META: no verification metadata block found            — exit 0, listed
+
+Only whitelisted metadata keys are parsed; general comments such as
+`# Last Updated:` are intentionally ignored.
 """
 
 import re
-from datetime import datetime
+from datetime import date
 from pathlib import Path
 from typing import Dict, List
 
-METADATA_PATTERN = re.compile(r'^#\s*(\w+):\s*(.+)$')
+KNOWN_KEYS = {
+    "validated_on",
+    "ttl_days",
+    "staleness_status",
+    "tested_urls",
+    "url_patterns_declared",
+    "url_patterns_tested",
+    "coverage_status",
+    "postprocess_validated",
+    "stash_integration_tested",
+    "value_match_level",
+    "robustness_notes",
+    "last_robustness_check",
+}
+
+_KEY_ALTERNATION = "|".join(sorted(KNOWN_KEYS))
+METADATA_PATTERN = re.compile(r"^#\s*(" + _KEY_ALTERNATION + r"):\s*(.+)$")
+
 
 def parse_verification_metadata(yaml_content: str) -> Dict[str, str]:
-    """Parse verification metadata from YAML comment block."""
-    metadata = {}
-    for line in yaml_content.split('\n'):
-        match = METADATA_PATTERN.match(line)
-        if match:
-            key, value = match.groups()
+    """Extract whitelisted verification metadata from comment lines."""
+    metadata: Dict[str, str] = {}
+    for line in yaml_content.split("\n"):
+        m = METADATA_PATTERN.match(line)
+        if m:
+            key, value = m.groups()
             metadata[key] = value.strip()
     return metadata
 
-def compute_staleness(validated_on: str, ttl_days: int = 30) -> str:
-    """Compute staleness status from validated_on date."""
+
+def classify(validated_on: str, ttl_days: int = 30) -> str:
+    """Classify a verified scraper date into STALE / AGING / FRESH."""
     try:
-        validated = datetime.strptime(validated_on, '%Y-%m-%d')
-        age = (datetime.now() - validated).days
-        if age <= ttl_days:
-            return 'FRESH'
-        elif age <= 90:
-            return 'AGING'
-        else:
-            return 'STALE'
+        validated = date.fromisoformat(validated_on)
     except (ValueError, TypeError):
-        return 'UNKNOWN'
+        return "UNKNOWN"
+    age = (date.today() - validated).days
+    if age < 0:
+        return "UNKNOWN"  # future date — treat as misconfigured
+    if age > ttl_days:
+        return "STALE"
+    if age >= ttl_days / 2:
+        return "AGING"
+    return "FRESH"
+
 
 def load_scraper_metadata(scraper_path: Path) -> Dict:
-    """Load scraper YAML and parse verification metadata."""
-    with open(scraper_path, 'r', encoding='utf-8') as f:
-        content = f.read()
-    
-    # Parse metadata from comments
-    metadata = parse_verification_metadata(content)
-    
-    # Compute staleness
-    if 'validated_on' in metadata:
-        ttl = int(metadata.get('ttl_days', 30))
-        metadata['staleness_status'] = compute_staleness(metadata['validated_on'], ttl)
+    """Load scraper YAML text and extract verification metadata."""
+    content = scraper_path.read_text(encoding="utf-8")
+    meta = parse_verification_metadata(content)
+    if "validated_on" in meta:
+        ttl = int(meta.get("ttl_days", 30))
+        meta["staleness_status"] = classify(meta["validated_on"], ttl)
     else:
-        metadata['staleness_status'] = 'UNKNOWN'
-    
-    return metadata
+        meta["staleness_status"] = "NO_META"
+    return meta
 
-def check_stale_scrapers(scraper_dir: Path) -> List[Dict]:
-    """Find all scrapers with STALE verification status."""
-    stale = []
-    for scraper_file in scraper_dir.glob('*.yml'):
-        metadata = load_scraper_metadata(scraper_file)
-        if metadata.get('staleness_status') == 'STALE':
-            stale.append({
-                'file': scraper_file.name,
-                'validated_on': metadata.get('validated_on', 'UNKNOWN'),
-                'staleness_status': 'STALE'
-            })
-    return stale
 
-def main():
-    scraper_dir = Path(__file__).parent.parent / 'scrapers'
-    
+def scan(scraper_dirs: List[Path]) -> Dict[str, List[Dict]]:
+    """Scan all given directories for scrapers and bucket by staleness."""
+    buckets: Dict[str, List[Dict]] = {
+        "STALE": [], "AGING": [], "FRESH": [], "UNKNOWN": [], "NO_META": [],
+    }
+    for scraper_dir in scraper_dirs:
+        if not scraper_dir.is_dir():
+            continue
+        for f in sorted(scraper_dir.glob("*.yml")) + sorted(scraper_dir.glob("*.yaml")):
+            meta = load_scraper_metadata(f)
+            buckets[meta["staleness_status"]].append(
+                {"file": f.name, "validated_on": meta.get("validated_on", "—")}
+            )
+    return buckets
+
+
+def main() -> None:
+    repo_root = Path(__file__).parent.parent
+    scraper_dirs = [repo_root / "scrapers", repo_root / "scrapers" / "private"]
+
     print("=== Verification Metadata Check ===\n")
-    
-    stale = check_stale_scrapers(scraper_dir)
-    
-    if stale:
-        print(f"⚠️  Found {len(stale)} STALE scraper(s):\n")
-        for s in stale:
-            print(f"  - {s['file']}: validated_on={s['validated_on']}")
-        print(f"\n💡 Action: Re-run live tests on these scrapers to refresh verification status.")
-    else:
-        print("✅ All scrapers are FRESH or have no verification metadata.")
-    
-    # CI exit code
-    if stale:
-        exit(1)
+    buckets = scan(scraper_dirs)
 
-if __name__ == '__main__':
+    for status in ("STALE", "AGING", "FRESH", "UNKNOWN", "NO_META"):
+        entries = buckets[status]
+        if not entries:
+            continue
+        print(f"{status}: {len(entries)} scraper(s)")
+        for e in entries:
+            print(f"  - {e['file']}  (validated_on={e['validated_on']})")
+        print()
+
+    if buckets["STALE"]:
+        print("❌ STALE scrapers found. Re-run live verification to refresh metadata.")
+        raise SystemExit(1)
+
+    if buckets["AGING"]:
+        print("⚠️  AGING scrapers exist — schedule re-verification before they go STALE.")
+    if buckets["NO_META"]:
+        print("ℹ️  Scrapers without metadata are not yet covered by the staleness system.")
+    if not (buckets["STALE"] or buckets["AGING"] or buckets["NO_META"]):
+        print("✅ All tracked scrapers are FRESH.")
+
+
+if __name__ == "__main__":
     main()

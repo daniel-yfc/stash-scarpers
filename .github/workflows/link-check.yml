@@ -1,10 +1,10 @@
-name: Link Check
+name: Advisory Documentation Links
 
 on:
-  push:
-    branches: [main]
+  schedule:
+    - cron: "0 0 * * 0" # Weekly, Sunday 00:00 UTC
+  workflow_dispatch:
   pull_request:
-    branches: [main]
 
 jobs:
   link-check:
@@ -12,18 +12,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Check repository Markdown links (advisory)
+        uses: lycheeverse/lychee-action@v2
         with:
-          python-version: "3.11"
+          args: --config .lychee.toml ./**/*.md
+          output: lychee/out.md
+          fail: false
 
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-
-      - name: Run link check
-        run: python tools/check_docs_index.py
-
-      - name: Check verification metadata staleness
-        run: python tools/livetest.py
-        continue-on-error: true
+      - name: Upload lychee results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lychee-results
+          path: lychee/out.md

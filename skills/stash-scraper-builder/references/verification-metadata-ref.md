@@ -1,21 +1,21 @@
 # Verification Metadata Reference
 
-This reference provides quick access to the verification metadata specification and related tooling.
+Quick access to the verification metadata specification and related tooling.
 
 ## Core Specification
 
-- [Verification Metadata Specification](../../docs/verification-metadata.md) — Complete definition of the four-axis verification framework (temporal, coverage, extraction, robustness)
+- [Verification Metadata Specification](../../../docs/verification-metadata.md) — four-axis framework (temporal, coverage, extraction, robustness)
 
 ## Related References
 
-- [Testing Guide](../../docs/06_Testing_Guide.md) — How to run live tests and interpret results
-- [LIVE_TEST_STATUS](../../docs/LIVE_TEST_STATUS.md) — Current status of all scrapers
-- [Scraper Schema](scraper.schema.json) — Official Stash scraper schema
+- [Testing Guide](../../../docs/06_Testing_Guide.md) — how to run live tests and interpret results
+- [LIVE_TEST_STATUS](../../../docs/LIVE_TEST_STATUS.md) — current status of all scrapers
+- [Scraper Schema](scraper.schema.json) — official Stash scraper schema
 
 ## Tooling
 
-- [livetest.py](../../tools/livetest.py) — Python tool for parsing verification metadata and detecting stale scrapers
-- [scraper-quality-gate.sh](../../tools/scraper-quality-gate.sh) — Shell script for running the full quality gate
+- [livetest.py](../../../tools/livetest.py) — staleness detector; parses metadata blocks and reports STALE / AGING / FRESH / NO_META
+- [scraper-quality-gate.sh](../../../tools/scraper-quality-gate.sh) — full quality gate runner
 
 ## Quick Reference: Evidence Levels
 
@@ -30,9 +30,10 @@ This reference provides quick access to the verification metadata specification 
 
 ## Quick Reference: Staleness Status
 
-| Status | Age | Action |
-|:------:|:---:|:-------|
-| FRESH | ≤30 days | No action needed |
-| AGING | 31–90 days | Schedule re-verification |
-| STALE | >90 days | Re-verify immediately |
-| UNKNOWN | No date | Add verification metadata |
+| Status | Definition | Action |
+|:------:|:-----------|:-------|
+| FRESH | age ≤ ttl_days | No action |
+| AGING | age ≥ ttl_days / 2 | Schedule re-verification |
+| STALE | age > ttl_days | Re-verify immediately |
+| UNKNOWN | Missing/unparseable date | Fix the metadata block |
+| NO_META | No metadata block | Add verification metadata |
