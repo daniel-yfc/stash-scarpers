@@ -31,7 +31,13 @@ Do not duplicate detailed policy here; link to the owning document.
 - Validate all scrapers: `npm run validate`
 - Sort URL arrays: `npm run validate-sort`
 - Check formatting: `npm run format:check`
-- Run Python tests: `python -m pytest tools/tests/`
+- Run Python tests: `python -m pytest tools/tests/ -v`
+- Parse committed scraper YAML: `python tools/parse_committed_yaml.py`
+- Fixture-runner self-test: `node tools/verify-scraper-fixtures.mjs --self-test`
+- Run fixture manifests: `python tools/run_fixture_manifests.py` (add `--expect <path>` when a manifest is claimed)
+- Scan for session material: `python tools/scan_session_material.py`
+- Check evidence labels: `python tools/check_evidence_labels.py`
+- Check evidence contract: `python tools/check_evidence_contract.py`
 - Run quality gate on one scraper: `bash tools/scraper-quality-gate.sh <scraper.yml>`
 - Run quality gate on all scrapers: `bash tools/validate-all.sh`
 - Run live scraper scrutiny: `node tools/scrutiny.js scrapers/<Scraper>.yml --search`
@@ -49,6 +55,7 @@ The official Node/Ajv validator is the only supported validator path. The remove
 - Keep root scraper `name:` and do not emit unsupported `documentHeader` or `$vars` keys.
 - `sceneByFragment` is optional unless the target site verifiably supports it.
 - Official CommunityScrapers schema and validator override local stubs and prose.
+- A validator pass is not a Stash runtime load pass; record loader evidence separately (see `skills/stash-scraper-builder/references/incident-reviews.md`, Incident 3).
 
 ## Skill handoff
 

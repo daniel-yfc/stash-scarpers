@@ -8,6 +8,7 @@ Use this checklist before emitting a scraper YAML file. Run the repository's Nod
 - [ ] File parses as YAML before committing (e.g. `python -c "import yaml,sys;yaml.safe_load(open(sys.argv[1]))" <file>`).
 - [ ] At least one supported entry point (`sceneByURL`, `sceneByName`, etc.).
 - [ ] Each entry has the fields required by its action and entry-point schema.
+- [ ] `queryURLReplace` appears only under `*ByURL` / `*ByFragment` entry points; the current Stash runtime rejects it under `*ByName` (`ByNameDefinition`), even though some upstream corpus files carry the legacy shape.
 - [ ] Fragment XPath/JSON entry points include the action-required `queryURL`; script actions follow their script contract.
 - [ ] No unsupported root keys `documentHeader` or `$vars`.
 - [ ] URL arrays are sorted with the validator's `-s` check.
@@ -20,6 +21,8 @@ Use this checklist before emitting a scraper YAML file. Run the repository's Nod
 ## Scraper Definition
 
 - [ ] All referenced scraper keys exist.
+- [ ] Mapped scrapers place scraped fields under the entity block (`scene:`, `performer:`, `group:`, `gallery:`); `common:` holds only `$name` string fragments, never field maps.
+- [ ] `postProcess` is a list of operations (`- replace:`, `- parseDate:`), not a bare map.
 - [ ] Classify pages before selector assessment: completed target versus challenge, login, paywall, age-gate, 404, application error, or partial render.
 - [ ] Test XPath selectors on completed live pages or sanitized completed rendered-DOM fixtures when JavaScript rendering is required; label the actual evidence type.
 - [ ] Compare raw HTTP and browser-rendered DOM where they differ; do not infer live Stash/CDP success from a snapshot.
@@ -48,19 +51,24 @@ Use this checklist before emitting a scraper YAML file. Run the repository's Nod
 - [ ] Key fields (Title, Date, Studio, Image) match expected values on the pages actually tested.
 - [ ] Untested selectors and assumptions are marked `# UNVERIFIED` with limitations recorded separately.
 - [ ] An ISO `# Last Updated` comment follows repository convention; scraped values remain in the source language.
-- [ ] Schema, URL sorting, policy, pytest, fixture, live search, live detail, live Stash/CDP, and production readiness are recorded as separate states.
+- [ ] Schema, URL sorting, policy, pytest, fixture, runtime load, live search, live detail, live Stash/CDP, and production readiness are recorded as separate states.
+- [ ] A committed scraper that has never been loaded by the Stash runtime has no load evidence; a validator pass is not a loader pass.
 
 ## CI and Local Checks
 
-`validate.yml` runs path-filtered schema, URL sorting, repository policy, Python regression tests, safeguards, and documentation checks. `pr-check.yml` reports changed-scraper policy results. `fixture-manifests.yml`, `evidence-contract.yml`, and `cdp-evidence-gate.yml` have separate evidence scopes. `link-check.yml` is advisory; `scrutiny.yml` is manual raw-response inspection. See [`docs/05_CI_Workflows.md`](../../../docs/05_CI_Workflows.md) for triggers and all seven workflow responsibilities.
+`validate.yml` runs path-filtered schema, URL sorting, repository policy, Python regression tests, fixture-runner self-test, committed-YAML parsing, session-material scan, and documentation checks. `pr-check.yml` reports changed-scraper policy results. `fixture-manifests.yml`, `evidence-contract.yml`, and `cdp-evidence-gate.yml` have separate evidence scopes. `link-check.yml` is advisory; `scrutiny.yml` is manual raw-response inspection. See [`docs/05_CI_Workflows.md`](../../../docs/05_CI_Workflows.md) for triggers and all seven workflow responsibilities.
 
 ```bash
 node validator/index.mjs -a --ci
 node validator/index.mjs -a -s --ci
 bash tools/validate-all.sh
 python -m pytest tools/tests/ -v
+python tools/parse_committed_yaml.py
+node tools/verify-scraper-fixtures.mjs --self-test
+python tools/run_fixture_manifests.py
+python tools/scan_session_material.py
 python tools/check_scraper_docs.py
 python tools/check_docs_index.py
 ```
 
-A passing check covers only its executed scope. No current workflow runs the five-task skill evaluation pack or a live Stash/CDP scrape.
+A passing check covers only its executed scope. No current workflow runs the five-task skill evaluation pack, a Stash runtime load, or a live Stash/CDP scrape.
