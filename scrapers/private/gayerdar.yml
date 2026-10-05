@@ -5,7 +5,7 @@
 #
 # Fragility notes:
 # - performerScraper Height/Weight anchor on Tailwind utility class text-D1D0CF.
-# - sceneSearchScraper $result matches any /videos/ anchor, not only result cards.
+# - sceneSearchScraper per-field card selectors work positionally; not live-verified.
 # - Title selectors split on fullwidth ｜, which depends on zh-TW page chrome.
 name: Gayerdar
 
@@ -60,16 +60,15 @@ performerByName:
 
 xPathScrapers:
   sceneScraper:
-    common:
-      common:
-        Title:
-          selector: //title/text()
-          postProcess:
-            - replace:
-                - regex: "｜.*$"
-                  with: ""
-                - regex: "\\|.*$"
-                  with: ""
+    scene:
+      Title:
+        selector: //title/text()
+        postProcess:
+          - replace:
+              - regex: "｜.*$"
+                with: ""
+              - regex: "\\|.*$"
+                with: ""
       Code:
         selector: //link[@rel="canonical"]/@href
         postProcess:
@@ -81,18 +80,19 @@ xPathScrapers:
       Date:
         selector: //meta[@property="video:release_date"]/@content
         postProcess:
-          parseDate: "20060102"
+          - parseDate: "20060102"
       Image:
         selector: //meta[@property="og:image"]/@content
       Studio:
-        fixed: "Gayerdar"
+        Name:
+          fixed: "Gayerdar"
       Tags:
-        selector: //ul[contains(@class,"iq-blogtag")]/li/a[contains(@class,"title")]/text()
+        Name: //ul[contains(@class,"iq-blogtag")]/li/a[contains(@class,"title")]/text()
       Performers:
-        selector: //a[contains(@href,"/models/")]
-        subSelector: .//h6[contains(@class,"title")]/text()
-    scene:
-      URL:
+        Name:
+          selector: //a[contains(@href,"/models/")]
+          subSelector: .//h6[contains(@class,"title")]/text()
+      URLs:
         selector: //link[@rel="canonical"]/@href
         postProcess:
           - replace:
@@ -133,7 +133,7 @@ xPathScrapers:
                 with: "$1"
       Image:
         selector: //meta[@property="og:image"]/@href
-      URL:
+      URLs:
         selector: //link[@rel="canonical"]/@href
         postProcess:
           - replace:
@@ -171,4 +171,4 @@ xPathScrapers:
 driver:
   useCDP: true
 
-# Last Updated: 2026-09-29
+# Last Updated: 2026-10-05
