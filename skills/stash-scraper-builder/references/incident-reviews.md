@@ -1,6 +1,6 @@
 # Incident Reviews: Transferable Scraper Lessons
 
-**Last reviewed:** 2026-10-02  
+**Last reviewed:** 2026-10-05  
 **Scope:** Scraper authoring, documentation and evidence controls. An incident review is not a schema pass, site fixture pass, live runtime result, or production approval.
 
 ## Incident 1: Schema drift in guidance
@@ -56,6 +56,38 @@ For each prospective reuse, record the actual CMS/framework or rendering behavio
 5. Promote a proposed family pattern to [`best-practices.md`](best-practices.md) or a runtime-specific reference only after an independent site/layout test and a counterexample have been reviewed. Then update [`schema-checklist.md`](schema-checklist.md), relevant executable regression tests, and the owning authoring checklist together. If only one site supports it, keep it in the incident record as a site-specific hypothesis.
 6. Do not mark production ready until the separate A–H evidence in [`04_Production_Gate.md`](../../../docs/04_Production_Gate.md) exists. An audit recommendation or checklist completion is not verification.
 
+## Incident 3: YAML shape defects surfaced only at runtime load
+
+**Date:** 2026-10-05  
+**Provenance:** [`evidence/gayerdar-scraper-development-2026-09-28.md`](../../../evidence/gayerdar-scraper-development-2026-09-28.md); fix commits `268cd046`, `3417a7e9`, `6cf19994`.
+
+### What happened
+
+A scraper YAML that parsed locally reached the Stash runtime and failed to load three times, each with a different Go unmarshal error: `queryURLReplace` is not a valid key under `sceneByName`/`performerByName` (`ByNameDefinition`); `performerScraper` must contain a `performer:` block rather than `common:`; and seven scene fields nested under a doubled `common:` block produced `cannot unmarshal !!map into string` errors. A fourth latent defect — `postProcess` written as a map instead of a list — was corrected during the same repair before it surfaced.
+
+These defects are not site-specific: they are shape violations of the scraper configuration grammar and can occur on any site family.
+
+### Why review missed it
+
+- No verification layer existed between "YAML parses" and "selectors verified"; runtime load was never executed before deployment.
+- Local reconstructions and authoring-time inspection stood in for loading the committed blob in a real Stash instance.
+- Upstream corpus files exist that place `queryURLReplace` under `sceneByName`, which made the shape look precedented even though the running Stash build rejects it.
+
+### Detection and correction
+
+The user's live Stash instance reported loader errors with line numbers; fixes were made one error class at a time and verified only as far as the next error. The loader log, not any checklist, was the first control that caught the defects.
+
+### Transferable rules
+
+- Entry-point key sets differ by mode: verify the allowed keys per mode against the runtime; corpus precedent is not compatibility proof.
+- Mapped scrapers must place scraped fields under `scene:`, `performer:`, `group:`, or `gallery:`; `common:` holds only `$name` string fragments.
+- `postProcess` is a list of operations; `parseDate` is one such list item.
+- Detail scrapers use `URLs` (plural); search scrapers use `URL` (singular) as the required link field. `Studio`, `Tags`, and `Performers` entries need a `Name:` sub-key.
+
+### Feedback loop
+
+Treat "loads in the Stash runtime" as a distinct evidence layer between schema validation and live extraction; record the loader error (or clean load) for the committed blob. Promote nothing past authored status without it.
+
 ## Prevention checklist
 
 - Compare each normative schema claim to the local validator/schema derived from upstream, and consult `UPSTREAM_SOURCES.md` when provenance matters.
@@ -63,4 +95,5 @@ For each prospective reuse, record the actual CMS/framework or rendering behavio
 - Parse and validate complete YAML examples; check the committed file, not only a local reconstruction.
 - Mark `Source:` facts, `Heuristic:` transfers and evidence status distinctly; require a cross-site counterexample before declaring a generic pattern.
 - Classify failure pages before selector work; separate raw, rendered fixture and live runtime evidence.
+- Load the committed scraper in a real Stash instance before recording any status beyond authored; keep loader evidence separate from schema and live-extraction evidence.
 - Run documentation and fixture controls and report what each pass does **not** establish.
