@@ -42,9 +42,9 @@ xPathScrapers:
         concat: " "
         postProcess:
           - replace:
-              - regex: "\\s{2,}"
+              - regex: '\\s{2,}'
                 with: " "
-              - regex: "^\s+|\s+$"
+              - regex: '^\s+|\s+$'
                 with: ""
       URLs:
         selector: "$results/@href"
@@ -76,7 +76,7 @@ xPathScrapers:
         selector: "//div[contains(concat(' ',normalize-space(@class),' '),' detail_product ')]//h2[1] | //title"
         postProcess:
           - replace:
-              - regex: "^\s+|\s+$"
+              - regex: '^\s+|\s+$'
                 with: ""
       Code:
         selector: "$meta/dt[normalize-space(.)='商品コード']/following-sibling::dd[1]"
@@ -89,9 +89,9 @@ xPathScrapers:
         concat: "\n"
         postProcess:
           - replace:
-              - regex: "^\s+|\s+$"
+              - regex: '^\s+|\s+$'
                 with: ""
-              - regex: "\n{3,}"
+              - regex: '\n{3,}'
                 with: "\n\n"
       URLs:
         fixed: "{inputURL}"
@@ -124,14 +124,14 @@ xPathScrapers:
           selector: "$meta/dt[normalize-space(.)='シリーズ']/following-sibling::dd[1]//a[1]"
           postProcess:
             - replace:
-                - regex: "^\s+|\s+$"
+                - regex: '^\s+|\s+$'
                   with: ""
       Tags:
         Name:
           selector: "$meta/dt[normalize-space(.)='カテゴリ']/following-sibling::dd[1]//a | $meta/dt[normalize-space(.)='ジャンル']/following-sibling::dd[1]//a | $meta/dt[normalize-space(.)='キーワード']/following-sibling::dd[1]//a | $meta/dt[normalize-space(.)='モデルタイプ']/following-sibling::dd[1]//a"
           postProcess:
             - replace:
-                - regex: "^\s+|\s+$"
+                - regex: '^\s+|\s+$'
                   with: ""
 
 driver:
