@@ -8,13 +8,13 @@ description: >-
   Do not use for generic web scraping, generic YAML, Identify or stash-box
   scrapers, fabricated search endpoints, or CommunityScrapers PR submission.
 metadata:
-  version: "2026-09-03"
-  canonical-schema: "https://github.com/stashapp/CommunityScrapers/blob/master/src/scraper.schema.json"
+  version: "2026-10-05"
+  canonical-schema: "https://github.com/stashapp/CommunityScrapers/blob/master/validator/scraper.schema.json"
 ---
 
 # Skill: stash-scraper-builder
 
-**Version**: 2026-09-03
+**Version**: 2026-10-05
 **Scope**: Generate Stash scraper YAML files that load and scrape correctly.
 **Canonical runtime**: Official CommunityScrapers validator and schema.
 **Repository workflow**: See [`docs/repository-documentation-architecture.md`](../../docs/repository-documentation-architecture.md).
@@ -33,11 +33,12 @@ sceneByURL:
   - action: scrapeXPath
     url:
       - example.com
-    scraper: xPathScrapers
+    scraper: sceneScraper
 
 xPathScrapers:
-  scene:
-    # ... scraper definition
+  sceneScraper:
+    scene:
+      # ... scraper definition
 ```
 
 ## Authoring workflow
@@ -62,6 +63,7 @@ xPathScrapers:
 - Root `name:` is required and should conventionally match the CamelCase filename.
 - Do not emit unsupported root keys `documentHeader` or `$vars`.
 - For XPath/JSON fragment entry points, provide the action-required `queryURL`; script actions follow their script contract.
+- Mapped scrapers place scraped fields under the entity block (`scene:`, `performer:`, `group:`, `gallery:`); `common:` holds only `$name` string fragments.
 - `sceneByFragment` is not a nil-pointer workaround. Test non-matching fragment input and report upstream runtime failures.
 - Keep public scrapers free of cookies and browser state; use private paths for authenticated variants.
 
@@ -99,6 +101,7 @@ xPathScrapers:
 - [ ] Only verified modes are included.
 - [ ] Required fragment `queryURL` is present for XPath/JSON actions.
 - [ ] Official validator passes, or local-stub limitations are documented.
+- [ ] The committed blob loads in the Stash runtime; a validator pass alone is not load evidence (see `references/incident-reviews.md`, Incident 3).
 - [ ] URL arrays are sorted.
 - [ ] Key fields are verified on the target pages/responses.
 - [ ] No credentials appear in public files.
