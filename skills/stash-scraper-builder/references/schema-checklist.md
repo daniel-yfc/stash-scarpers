@@ -13,6 +13,14 @@ Use this checklist before emitting a scraper YAML file. Run the repository's Nod
 - [ ] No unsupported root keys `documentHeader` or `$vars`.
 - [ ] URL arrays are sorted with the validator's `-s` check.
 
+## Regex, XPath, and YAML Escaping
+
+> **概要（zh-TW）：** 所有 regex、XPath 與 YAML scalar 須以 YAML parser round-trip 交互驗證；雙引號 regex 值中每個要傳給正則引擎的反斜線，檔案內必須寫成 `\`；完整檔案以 `yaml.safe_load()` 驗證可解析。
+
+- [ ] Every `regex:` value, XPath selector, and YAML scalar round-trips through a YAML parser: load the file, then confirm the loaded string equals the string the regex or XPath engine must receive.
+- [ ] In double-quoted `regex:` scalars, each backslash intended for the regex engine is written as `\\` in the file (e.g. `\\d+`, `\\.`); single-quoted scalars need no doubling.
+- [ ] The complete committed file parses with `yaml.safe_load()`; prefer `python tools/parse_committed_yaml.py` so the committed tree, not a local reconstruction, is what gets parsed.
+
 ## Authority
 
 - [ ] The repository's `validator/index.mjs` and `validator/scraper.schema.json` encode schema checks derived from upstream CommunityScrapers; check `UPSTREAM_SOURCES.md` for provenance and compare with upstream when compatibility is in question.
