@@ -4,8 +4,14 @@
 # → /products/detail.php?product_id=42743, 42707, 42727.
 # Card XPath UNVERIFIED ($x not run on list markup).
 # Detail selectors kept from product_id=40277 DOM.
-# Studio = シリーズ，not メーカー. No Groups from シリーズ.
-# Last Updated: 2026-08-28
+# Studio = シリーズ, not メーカー. No Groups from シリーズ.
+# 2026-10-05: removed sceneByFragment. Its queryURL "{url}" only expands
+# when the scene already stores a URL; scraping a URL-less scene passed the
+# literal "{url}" to CDP (Cannot navigate to invalid URL), and the zero-row
+# fragment result triggered the upstream Stash nil-pointer panic in
+# processSceneRelationships (see scraping-failures.md). Use sceneByURL, or
+# sceneByName → sceneByQueryFragment, instead.
+# Last Updated: 2026-10-05
 
 name: KO Shop
 
@@ -26,21 +32,6 @@ sceneByQueryFragment:
   queryURL: "{url}"
   scraper: sceneScraper
 
-sceneByFragment:
-  action: scrapeXPath
-  queryURL: "{url}"
-  queryURLReplace:
-    title:
-      - regex: '\.[^.]+$'
-        with: ""
-      - regex: '[_\.]+'
-        with: " "
-      - regex: '\s{2,}'
-        with: " "
-      - regex: '^\s+|\s+$'
-        with: ""
-  scraper: searchScraper
-
 xPathScrapers:
   searchScraper:
     common:
@@ -53,7 +44,7 @@ xPathScrapers:
           - replace:
               - regex: "\\s{2,}"
                 with: " "
-              - regex: "^\\s+|\\s+$"
+              - regex: "^\s+|\s+$"
                 with: ""
       URLs:
         selector: "$results/@href"
@@ -85,7 +76,7 @@ xPathScrapers:
         selector: "//div[contains(concat(' ',normalize-space(@class),' '),' detail_product ')]//h2[1] | //title"
         postProcess:
           - replace:
-              - regex: "^\\s+|\\s+$"
+              - regex: "^\s+|\s+$"
                 with: ""
       Code:
         selector: "$meta/dt[normalize-space(.)='商品コード']/following-sibling::dd[1]"
@@ -98,9 +89,9 @@ xPathScrapers:
         concat: "\n"
         postProcess:
           - replace:
-              - regex: "^\\s+|\\s+$"
+              - regex: "^\s+|\s+$"
                 with: ""
-              - regex: "\\n{3,}"
+              - regex: "\n{3,}"
                 with: "\n\n"
       URLs:
         fixed: "{inputURL}"
@@ -133,14 +124,14 @@ xPathScrapers:
           selector: "$meta/dt[normalize-space(.)='シリーズ']/following-sibling::dd[1]//a[1]"
           postProcess:
             - replace:
-                - regex: "^\\s+|\\s+$"
+                - regex: "^\s+|\s+$"
                   with: ""
       Tags:
         Name:
           selector: "$meta/dt[normalize-space(.)='カテゴリ']/following-sibling::dd[1]//a | $meta/dt[normalize-space(.)='ジャンル']/following-sibling::dd[1]//a | $meta/dt[normalize-space(.)='キーワード']/following-sibling::dd[1]//a | $meta/dt[normalize-space(.)='モデルタイプ']/following-sibling::dd[1]//a"
           postProcess:
             - replace:
-                - regex: "^\\s+|\\s+$"
+                - regex: "^\s+|\s+$"
                   with: ""
 
 driver:
