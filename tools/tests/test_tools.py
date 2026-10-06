@@ -3,12 +3,10 @@
 import subprocess
 from pathlib import Path
 
+# 已移除：build-site.sh, clean.sh, install.sh
 TOOL_SCRIPTS = [
     "tools/scraper-quality-gate.sh",
     "tools/validate-all.sh",
-    "tools/build-site.sh",
-    "tools/clean.sh",
-    "tools/install.sh",
     "tools/test.sh",
 ]
 

@@ -67,7 +67,7 @@ echo " 失敗時自動退回 .venv；--venv 可強制直接走 venv"
 echo ""
 echo "日誌："
 echo " 每次執行獨立日誌：./.log/runs/<時間>/"
-echo " 執行日誌（通過/ Pass/失敗/ Fail + 時間戳）：./.log/runs/<時間>/run.log"
+echo " 執行日誌（通過/失敗 + 時間戳）：./.log/runs/<時間>/run.log"
 echo " 各檢查完整輸出：./.log/runs/<時間>/<檢查名>.log"
 echo " 最新執行捷徑：./.log/latest/ -> runs/<時間>/"
 echo ""
@@ -113,7 +113,7 @@ logline "SECTION" "$(t "$1" "$2")"
 }
 
 info() {
-echo "${CYAN}[INFO] $1${NC}"
+echo "${CYAN}[說明] $1${NC}"
 logline "INFO" "$1"
 }
 
@@ -145,7 +145,7 @@ local log="$LOGDIR/$logname.log"
 local rc=0
 if "$@" >"$log" 2>&1; then
 PASSED=$((PASSED + 1))
-echo "${GREEN}[通過/ Pass] $label${NC}"
+echo "${GREEN}[通過] $label${NC}"
 logline "PASS" "$label"
 if $VERBOSE; then tail -n 25 "$log"; fi
 return 0
@@ -153,7 +153,7 @@ fi
 rc=$?
 FAILED=$((FAILED + 1))
 FAILED_LABELS+=("$label")
-echo "${RED}[失敗/ Fail] $label${NC} (exit=$rc)"
+echo "${RED}[失敗] $label${NC} (exit=$rc)"
 echo "${YELLOW} $(t "詳情" "details"): $log${NC}"
 logline "FAIL" "$label (exit=$rc, log=$log)"
 if $VERBOSE; then tail -n 40 "$log"; fi
@@ -185,14 +185,14 @@ echo "$(t "最新捷徑" "Latest symlink"): ${LOG_BASE}/latest/"
 # 前置檢查：目錄結構
 for d in validator tools scrapers; do
 if [[ ! -d "$d" ]]; then
-echo "${RED}[失敗/ Fail] $(t "找不到 $d/，請在專案根目錄執行" "missing $d/, run from repo root")${NC}"
+echo "${RED}[失敗] $(t "找不到 $d/，請在專案根目錄執行" "missing $d/, run from repo root")${NC}"
 logline "FAIL" "missing directory: $d"
 exit 1
 fi
 done
 
 # ========== 0. CRLF / 權限修正 ==========
-section "CRLF / 權限修正" "CRLF / Permission Fix"
+section "0. CRLF / 權限修正" "0. CRLF / Permission Fix"
 info "$(t "檢查並修正所有 .sh 檔的 CRLF 與執行權限" "Check and fix CRLF and execute permissions for all .sh files")"
 fix_crlf() {
 local fixed=0
@@ -208,7 +208,7 @@ done
 chmod +x "$PROJECT_ROOT"/tools/*.sh 2>/dev/null
 if [[ $fixed -eq 0 ]]; then
 PASSED=$((PASSED + 1))
-echo "${GREEN}[通過/ Pass] $(t "CRLF 檢查：無需修正" "CRLF check: nothing to fix")${NC}"
+echo "${GREEN}[通過] $(t "CRLF 檢查：無需修正" "CRLF check: nothing to fix")${NC}"
 logline "PASS" "CRLF check: nothing to fix"
 else
 warn_msg "$(t "已自動修正 $fixed 個檔案的 CRLF" "auto-fixed CRLF in $fixed file(s)")"
@@ -220,27 +220,27 @@ fix_crlf
 PY="python3"
 
 # ========== 1. 環境檢查 ==========
-section "環境檢查" "Environment Check"
+section "1. 環境檢查" "1. Environment Check"
 info "$(t "確認 Node.js、npm、Python 3 已安裝" "Verify Node.js, npm, and Python 3 are installed")"
 if ! command -v node >/dev/null 2>&1; then
-echo "${RED}[失敗/ Fail] Node.js $(t "未安裝" "missing")${NC}"; logline "FAIL" "Node.js missing"; exit 1
+echo "${RED}[失敗] Node.js $(t "未安裝" "missing")${NC}"; logline "FAIL" "Node.js missing"; exit 1
 fi
 if ! command -v npm >/dev/null 2>&1; then
-echo "${RED}[失敗/ Fail] npm $(t "未安裝" "missing")${NC}"; logline "FAIL" "npm missing"; exit 1
+echo "${RED}[失敗] npm $(t "未安裝" "missing")${NC}"; logline "FAIL" "npm missing"; exit 1
 fi
 if ! command -v python3 >/dev/null 2>&1; then
-echo "${RED}[失敗/ Fail] Python 3 $(t "未安裝" "missing")${NC}"; logline "FAIL" "python3 missing"; exit 1
+echo "${RED}[失敗] Python 3 $(t "未安裝" "missing")${NC}"; logline "FAIL" "python3 missing"; exit 1
 fi
-echo "${GREEN}[通過/ Pass] Node.js $(node --version)${NC}"
-echo "${GREEN}[通過/ Pass] npm $(npm --version)${NC}"
-echo "${GREEN}[通過/ Pass] $("$PY" --version 2>&1)${NC}"
+echo "${GREEN}[通過] Node.js $(node --version)${NC}"
+echo "${GREEN}[通過] npm $(npm --version)${NC}"
+echo "${GREEN}[通過] $("$PY" --version 2>&1)${NC}"
 logline "PASS" "Node.js $(node --version)"
 logline "PASS" "npm $(npm --version)"
 logline "PASS" "$("$PY" --version 2>&1)"
 confirm "$(t "環境" "Environment")" || exit 1
 
 # ========== 2. 安裝依賴 ==========
-section "安裝依賴" "Dependencies Installation"
+section "2. 安裝依賴" "2. Dependencies Installation"
 info "$(t "安裝 Node.js 與 Python 依賴套件" "Install Node.js and Python dependencies")"
 if [[ "${SKIP_DEPS:-false}" != true ]]; then
 if [[ -f package-lock.json ]]; then
@@ -259,7 +259,7 @@ PY=".venv/bin/python"
 run_check "pip install（venv）" pip-install \
 "$PY" -m pip install --quiet --upgrade pip -r requirements.txt pyyaml jsonschema
 else
-echo "${RED}[失敗/ Fail] $(t "venv 建立失敗" "venv creation failed")${NC}"
+echo "${RED}[失敗] $(t "venv 建立失敗" "venv creation failed")${NC}"
 logline "FAIL" "venv creation failed"
 fi
 else
@@ -277,32 +277,32 @@ PY=".venv/bin/python"
 run_check "pip install（venv 退回）" pip-venv \
 "$PY" -m pip install --quiet --upgrade pip -r requirements.txt pyyaml jsonschema
 else
-echo "${RED}[失敗/ Fail] $(t "venv 建立也失敗" "venv creation also failed")${NC}"
+echo "${RED}[失敗] $(t "venv 建立也失敗" "venv creation also failed")${NC}"
 logline "FAIL" "venv creation also failed"
 fi
 fi
 fi
 confirm "$(t "依賴" "Dependencies")" || exit 1
 else
-section "安裝依賴" "Dependencies Installation"
+section "2. 安裝依賴" "2. Dependencies Installation"
 skip_msg "$(t "已跳過 --skip-deps" "skipped (--skip-deps)")"
 fi
 
 # ========== 3. 安全性檢查 ==========
-section "安全性檢查" "Security Self-Assessment"
+section "3. 安全性檢查" "3. Security Self-Assessment"
 info "$(t "檢查 Python、Shell、JavaScript 工具腳本的安全性" "Check Python, Shell, and JavaScript tool scripts for security risks")"
 run_check "安全性檢查－Python、Shell、JavaScript" self-eval "$PY" tools/self_evaluate.py
 confirm "$(t "安全性檢查" "Security Check")" || exit 1
 
 # ========== 4. 文件檢查 ==========
-section "文件檢查" "Documentation Checks"
+section "4. 文件檢查" "4. Documentation Checks"
 info "$(t "檢查文件索引與 YAML 範例結構" "Check documentation index and YAML example structure")"
 run_check "文件－範例結構" scraper-docs "$PY" tools/check_scraper_docs.py
 run_check "文件－索引清單" docs-index "$PY" tools/check_docs_index.py
 confirm "$(t "文件檢查" "Documentation Check")" || exit 1
 
 # ========== 5. 驗證器檢查 ==========
-section "驗證器檢查" "Validator Checks"
+section "5. 驗證器檢查" "5. Validator Checks"
 info "$(t "執行結構驗證、URL 排序、政策檢查" "Run schema validation, URL sorting, and policy compliance checks")"
 run_check "驗證器－結構驗證" schema node validator/index.mjs -a --ci
 run_check "驗證器－URL 排序" url-sort node validator/index.mjs -a -s --ci
@@ -310,7 +310,7 @@ run_check "政策檢查" gate bash tools/validate-all.sh
 confirm "$(t "驗證器檢查" "Validator Checks")" || exit 1
 
 # ========== 6. Python 測試集 ==========
-section "Python 測試集" "Python Test Suite"
+section "6. Python 測試集" "6. Python Test Suite"
 info "$(t "執行 tools/tests/ 下的所有 pytest 測試" "Run all pytest tests under tools/tests/")"
 if run_check "Python 測試集" pytest "$PY" -m pytest tools/tests -v; then
 :
@@ -321,22 +321,32 @@ fi
 confirm "$(t "測試" "Tests")" || exit 1
 
 # ========== 7. 網站實測 ==========
-section "網站實測" "Live Scrutiny"
+section "7. 網站實測" "7. Live Scrutiny"
 info "$(t "對公開擷取器執行實際網站 XPath 驗證" "Test public scrapers against live websites with XPath validation")"
 if [[ "${SKIP_SCRUTINY:-false}" != true ]]; then
-if [[ -f "scrapers/CK-Download.yml" ]]; then
-run_check "網站實測（CK-Download）" scrutiny node tools/scrutiny.js scrapers/CK-Download.yml --search
+# 測試所有公開擷取器（排除 scrapers/private/）
+PUBLIC_SCRAPERS=$(find scrapers -maxdepth 1 -name '*.yml' | grep -v '^scrapers/private' | sort)
+if [[ -n "$PUBLIC_SCRAPERS" ]]; then
+SCRAPER_COUNT=$(echo "$PUBLIC_SCRAPERS" | wc -l)
+info "$(t "將測試 $SCRAPER_COUNT 個公開擷取器" "Will test $SCRAPER_COUNT public scrapers")"
+# 執行所有公開擷取器
+ALL_PASSED=true
+for scraper in $PUBLIC_SCRAPERS; do
+if ! run_check "網站實測" scrutiny node tools/scrutiny.js "$scraper" --search; then
+ALL_PASSED=false
+fi
+done
+if $ALL_PASSED; then
+:
 else
-FIRST=$(find scrapers -maxdepth 1 -name '*.yml' | grep -v '^scrapers/private' | sort | head -n1)
-if [[ -n "$FIRST" ]]; then
-run_check "網站實測（$FIRST）" scrutiny node tools/scrutiny.js "$FIRST" --search
+warn_msg "$(t "部分擷取器網站實測失敗" "Some scrapers failed live scrutiny")"
+fi
 else
 skip_msg "$(t "無公開擷取器可供實測" "No public scrapers found for scrutiny")"
 fi
-fi
 confirm "$(t "網站實測" "Live Scrutiny")" || exit 1
 else
-section "網站實測" "Live Scrutiny"
+section "7. 網站實測" "7. Live Scrutiny"
 skip_msg "$(t "已跳過 --skip-scrutiny" "skipped (--skip-scrutiny)")"
 fi
 
@@ -346,11 +356,11 @@ echo "${CYAN}========================================================${NC}"
 echo "${CYAN} ${BOLD}$(t "測試總結" "Test Summary")${NC}"
 echo "${CYAN}========================================================${NC}"
 echo ""
-echo " $(t "區段" "Sections") : $TOTAL"
+echo " $(t "總計" "Total")     : $TOTAL"
 echo " ${GREEN}$(t "通過" "Passed") : $PASSED${NC}"
 echo " ${RED}$(t "失敗" "Failed") : $FAILED${NC}"
 echo " ${YELLOW}$(t "跳過" "Skipped"): $SKIPPED${NC}"
-echo " $(t "Python" "Python") : $PY"
+echo " $(t "Python 直譯器" "Python interpreter") : $PY"
 echo ""
 
 logline "SUMMARY" "sections=$TOTAL passed=$PASSED failed=$FAILED skipped=$SKIPPED warnings=$WARNINGS python=$PY"

@@ -5,10 +5,11 @@
 //
 // Run: node tools/scrutiny.js [scraper-name.yml ...]
 //      node tools/scrutiny.js --all
-//      node tools/scrutiny.js --probe=word1,word2 scraper.yml   # custom probes
-//      node tools/scrutiny.js --paginate scraper.yml            # walk pages
-//      node tools/scrutiny.js --search scraper.yml              # test searchScraper
-//      node tools/scrutiny.js --url=<url> scraper.yml           # test specific scene URL
+//      node tools/scrutiny.js --probe=word1,word2 scraper.yml
+//      node tools/scrutiny.js --paginate scraper.yml
+//      node tools/scrutiny.js --search scraper.yml
+//      node tools/scrutiny.js --url=<url> scraper.yml
+//      node tools/scrutiny.js --cookie=<str> scraper.yml
 //      node tools/scrutiny.js --help
 //
 // Network: yes, hits the live upstream sites. Be polite.
@@ -18,7 +19,6 @@ import path from "node:path";
 import yaml from "yaml";
 import { JSDOM, VirtualConsole } from "jsdom";
 
-// Suppress noisy CSS parse warnings from JSDOM (cosmetic, not real errors)
 const quietConsole = new VirtualConsole();
 quietConsole.on("jsdomError", () => {});
 const _origConsoleError = console.error;
@@ -33,31 +33,40 @@ const SCRAPERS = path.join(ROOT, "scrapers");
 const POLITE_UA =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
 
-// XPath result types
-const XP_ALL = 7; // ORDERED_NODE_SNAPSHOT_TYPE
+const XP_ALL = 7;
 
 function showHelp() {
   console.log(`
 Usage: node tools/scrutiny.js [options] [scraper.yml ...]
 
 Options:
-  --all                 Run scrutiny across all scrapers in scrapers/
-  --probe=<csv>         Custom search probe terms (e.g. --probe=sample,2026)
-  --paginate            Walk pages 1-3 when searching candidates
-  --multi               Test multiple candidate scene URLs (up to 5 per probe)
-  --search              Also evaluate searchScraper on search results page
-  --url=<url>           Evaluate sceneScraper directly against a specific URL
-  --cookie=<str>        Provide cookie header string (e.g. --cookie="PHPSESSID=...")
-  --help                Show this help message
+  --all                 Run scrutiny across all scrapers
+  --probe=<csv>         Custom search probe terms
+  --paginate            Walk pages 1-3 when searching
+  --multi               Test multiple candidate scene URLs
+  --search              Also evaluate searchScraper (default: always on)
+  --url=<url>           Evaluate sceneScraper directly
+  --cookie=<str>        Provide cookie header string
+  --help                Show this help
+
+Test Settings File:
+  If scrapers/<scraper-name>.test.yaml exists, it will be auto-loaded.
+  Also supports scrapers/private/<scraper-name>.test.yaml.
+  Test settings are kept alongside the scraper definition.
+
+  Simplified format:
+    - url: string | array (auto-enables multi if array)
+    - probe: string | array (auto-enables multi if array)
+    - cookie: string (auto-detects Netscape or header format)
+    - multi: boolean (default: auto)
+    - search: boolean (default: true, always test search unless false)
 
 Examples:
-  node tools/scrutiny.js scrapers/ACCEED.yml --search
-  node tools/scrutiny.js scrapers/CK-Download.yml --paginate --multi
-  node tools/scrutiny.js scrapers/Mens-RushTV.yml --url='https://www.mensrush.tv/single.php?id=...'
+  node tools/scrutiny.js scrapers/ACCEED.yml
+  node tools/scrutiny.js scrapers/RGBEE.yml  # auto-loads scrapers/RGBEE.test.yaml
 `);
 }
 
-// --- CLI args ---
 function parseArgs(argv) {
   const opts = {
     files: [],
@@ -108,7 +117,6 @@ function parseArgs(argv) {
   return opts;
 }
 
-// --- File listing ---
 function listScrapers() {
   const out = [];
   for (const dir of [SCRAPERS, path.join(SCRAPERS, "private")]) {
@@ -120,7 +128,151 @@ function listScrapers() {
   return out.sort();
 }
 
-// --- HTTP fetch with retries ---
+function loadTestSidecar(scraperFile) {
+  const basename = path.basename(scraperFile, ".yml");
+  const dirname = path.dirname(scraperFile);
+
+  // Try scrapers/RGBEE.test.yaml (same directory as scraper)
+  const sidecarPath = path.join(dirname, `${basename}.test.yaml`);
+
+  if (!fs.existsSync(sidecarPath)) {
+    return null;
+  }
+
+  try {
+    const content = fs.readFileSync(sidecarPath, "utf8");
+    const settings = yaml.parse(content) || {};
+    console.log(`[INFO] Loaded test settings: ${sidecarPath}`);
+    return settings;
+  } catch (e) {
+    console.warn(`[WARN] Failed to load test settings: ${sidecarPath} - ${e.message}`);
+    return null;
+  }
+}
+
+function parseNetscapeCookies(content) {
+  const lines = content.split("\n");
+  const cookies = [];
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+
+    const parts = trimmed.split("\t");
+    if (parts.length >= 7) {
+      const name = parts[parts.length - 2];
+      const value = parts[parts.length - 1];
+
+      try {
+        const decodedValue = decodeURIComponent(value);
+        cookies.push(`${name}=${decodedValue}`);
+      } catch {
+        cookies.push(`${name}=${value}`);
+      }
+    }
+  }
+
+  return cookies.join("; ");
+}
+
+function parseCookieInput(cookieInput) {
+  if (!cookieInput) return "";
+
+  const trimmed = String(cookieInput).trim();
+
+  if (trimmed.includes("\t")) {
+    return parseNetscapeCookies(trimmed);
+  }
+
+  if (trimmed.includes("\n")) {
+    const lines = trimmed.split("\n");
+    const hasTabs = lines.some(line => line.includes("\t"));
+    if (hasTabs) {
+      return parseNetscapeCookies(trimmed);
+    }
+  }
+
+  return trimmed;
+}
+
+function mergeOptions(cliOpts, scraperFile) {
+  const sidecar = loadTestSidecar(scraperFile);
+
+  if (!sidecar) {
+    return cliOpts;
+  }
+
+  const merged = { ...cliOpts };
+
+  // URL: sidecar takes precedence if CLI didn't specify
+  if (!merged.url) {
+    let sidecarUrl = null;
+    if (sidecar.urls && Array.isArray(sidecar.urls) && sidecar.urls.length > 0) {
+      sidecarUrl = sidecar.urls;
+    } else if (sidecar.url) {
+      sidecarUrl = Array.isArray(sidecar.url) ? sidecar.url : [sidecar.url];
+    }
+
+    if (sidecarUrl) {
+      merged._urls = sidecarUrl;
+      merged.url = merged._urls[0];
+    }
+  } else if (!merged._urls) {
+    merged._urls = [merged.url];
+  }
+
+  // Probe: sidecar takes precedence if CLI didn't specify
+  if (!merged.probe) {
+    let sidecarProbe = null;
+    if (sidecar.probes && Array.isArray(sidecar.probes)) {
+      sidecarProbe = sidecar.probes;
+    } else if (sidecar.probe) {
+      sidecarProbe = Array.isArray(sidecar.probe) ? sidecar.probe : [sidecar.probe];
+    }
+
+    if (sidecarProbe) {
+      merged.probe = sidecarProbe;
+    }
+  } else if (!Array.isArray(merged.probe)) {
+    merged.probe = [merged.probe];
+  }
+
+  // Cookie: parse and merge
+  if (sidecar.cookie) {
+    const parsedCookie = parseCookieInput(sidecar.cookie);
+    if (parsedCookie) {
+      merged.cookie = parsedCookie;
+    }
+  }
+
+  // Auto-detect multi mode
+  const hasMultipleUrls = merged._urls && merged._urls.length > 1;
+  const hasMultipleProbes = merged.probe && merged.probe.length > 1;
+
+  if (sidecar.multi === true) {
+    merged.multiUrl = true;
+  } else if (sidecar.multi === false) {
+    merged.multiUrl = false;
+  } else {
+    merged.multiUrl = hasMultipleUrls || hasMultipleProbes;
+  }
+
+  // Search: default true (always test search unless explicitly disabled)
+  // Search and URL tests are independent
+  if (sidecar.search === false) {
+    merged.searchReport = false;
+  } else {
+    merged.searchReport = true;  // Default: always test search
+  }
+
+  // Flags: sidecar overrides defaults (if explicitly set)
+  if (typeof sidecar.paginate === "boolean") {
+    merged.paginate = sidecar.paginate;
+  }
+
+  return merged;
+}
+
 async function fetchHTML(url, cookie, attempt = 1) {
   const headers = {
     "User-Agent": POLITE_UA,
@@ -144,7 +296,6 @@ async function fetchHTML(url, cookie, attempt = 1) {
   }
 }
 
-// --- Build a probe URL from a scraper's search config ---
 function buildProbeURL(template, probe, page) {
   let url = template
     .replaceAll("{}", encodeURIComponent(probe))
@@ -168,11 +319,21 @@ function buildProbeURL(template, probe, page) {
   return url;
 }
 
-// --- Default probes by domain/family ---
 function defaultProbes(scraperDoc) {
   const queryURL = (scraperDoc.sceneByName || scraperDoc.sceneByFragment || {}).queryURL || "";
-  const probes = ["a", "DVD", "2026", "sample"];
-  if (/acceed/i.test(queryURL)) probes.unshift("ACST", "ノンケ");
+
+  // 通用預設關鍵字
+  // 預期有結果：中出、ノンケ
+  // 預期無結果：蔣中正馮翊綱一條龍、臣亮言先帝創業未半而中道崩殂
+  const probes = [
+    "中出",
+    "ノンケ",
+    "蔣中正馮翊綱一條龍",
+    "臣亮言先帝創業未半而中道崩殂",
+  ];
+
+  // 特定網站的額外關鍵字
+  if (/acceed/i.test(queryURL)) probes.unshift("ACST", "ACCEED");
   if (/ck-download/i.test(queryURL)) probes.unshift("CK", "男");
   if (/games-video/i.test(queryURL)) probes.unshift("GV-OAV", "GVO");
   if (/mensrush/i.test(queryURL)) probes.unshift("MR-");
@@ -182,7 +343,6 @@ function defaultProbes(scraperDoc) {
   return probes;
 }
 
-// --- Extract candidate scene URLs from search HTML via searchScraper ---
 function extractSceneURLs(searchHTML, scraperDoc, baseURL, probe, page) {
   const dom = new JSDOM(searchHTML, { virtualConsole: quietConsole });
   const xdoc = dom.window.document;
@@ -228,7 +388,6 @@ function extractSceneURLs(searchHTML, scraperDoc, baseURL, probe, page) {
     // evaluate failed
   }
 
-  // Fallback heuristic: find all <a> matching sceneByURL patterns
   if (candidates.length === 0) {
     const patterns = (scraperDoc.sceneByURL || []).map((s) => s.url);
     const snap = xdoc.evaluate("//a[@href]/@href", xdoc, null, XP_ALL, null);
@@ -262,7 +421,6 @@ function extractSceneURLs(searchHTML, scraperDoc, baseURL, probe, page) {
   return deduped;
 }
 
-// --- Find test scene URLs for a scraper ---
 async function findSceneURLs(scraperDoc, opts) {
   const sb = scraperDoc.sceneByName || scraperDoc.sceneByFragment;
   if (!sb || !sb.queryURL) {
@@ -288,9 +446,6 @@ async function findSceneURLs(scraperDoc, opts) {
         lastReason = `search fetch failed: ${e.message}`;
         continue;
       }
-      // A true login gate removes search results; look for a login form/redirect
-      // while also confirming no usable results are present. Some sites keep a
-      // persistent "guest / login" header even on public search pages.
       const hasLoginGate =
         /(?:window\.location|location\.href)\s*=\s*["'][^"']*login\.(?:php|html)/i.test(html) ||
         /<form[^>]+action=["'][^"']*login\.(?:php|html)["']/i.test(html) ||
@@ -339,7 +494,6 @@ async function findSceneURLs(scraperDoc, opts) {
   };
 }
 
-// --- Evaluate an XPath against JSDOM document ---
 function runXPath(selector, ctx) {
   const { doc, common } = ctx;
   let sel = selector;
@@ -423,7 +577,6 @@ function countTotal(fields) {
   return n;
 }
 
-// --- Test one scraper against scene URLs ---
 async function testScraper(file, opts) {
   const rel = path.relative(ROOT, file);
   const doc = yaml.parse(fs.readFileSync(file, "utf8"));
@@ -432,7 +585,14 @@ async function testScraper(file, opts) {
   let tested = [];
   let found = { urls: [] };
 
-  if (opts.url) {
+  if (opts._urls && opts._urls.length > 0) {
+    tested = opts._urls.map((url, i) => ({
+      url,
+      probe: "config",
+      page: opts._urls.length > 1 ? i : null,
+    }));
+    entry.urlCandidates = opts._urls.length;
+  } else if (opts.url) {
     tested = [{ url: opts.url, probe: "direct", page: null }];
     entry.urlCandidates = 1;
   } else {
@@ -564,7 +724,6 @@ function printFields(fields) {
   }
 }
 
-// --- Main ---
 async function main() {
   const opts = parseArgs(process.argv.slice(2));
   if (opts.help) {
@@ -584,7 +743,9 @@ async function main() {
 
   const summary = [];
   for (const f of files) {
-    const entry = await testScraper(f, opts);
+    const mergedOpts = mergeOptions(opts, f);
+
+    const entry = await testScraper(f, mergedOpts);
     summary.push(entry);
     printEntry(entry);
   }
