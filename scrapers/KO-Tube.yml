@@ -1,144 +1,116 @@
-# KO-Tube
-# Last Updated: 2026-10-02
-# Verification status (2026-10-02, anonymous fetch):
-#   Site reachability: https://ko-tube.com/ refused the anonymous automated
-#   probe (age gate / bot filtering); serving status not directly confirmed.
-#   Selectors UNVERIFIED against live pages — no live detail-page or
-#   search-page verification recorded. Verify with a CDP browser session
-#   before relying on them.
-# Validator fixes:
-#   - added sceneByQueryFragment (required by sceneByName)
-#   - replaced invalid `trim` postProcess with replace-regex trim
-#   - converted YAML list selectors (Image/URLs/FrontImage) to single selectors
-#   - removed `Scenes` and `Performers` from groupScraper (not valid groupObject fields)
-
 name: KO-Tube
-
 sceneByURL:
-  - action: scrapeXPath
-    url:
-      - ko-tube.com/package/index/
-      - ko-tube.com/product/index/
-      - ko-tube.com/product/index2/
-    scraper: sceneScraper
-
+- action: scrapeXPath
+  url:
+  - ko-tube.com/package/index/
+  - ko-tube.com/product/index/
+  - ko-tube.com/product/index2/
+  scraper: sceneScraper
 sceneByName:
   action: scrapeXPath
-  queryURL: "https://www.ko-tube.com/search/index?kw={}&sk=0"
+  queryURL: https://www.ko-tube.com/search/index?kw={}&sk=0
   scraper: sceneSearch
-
 sceneByQueryFragment:
   action: scrapeXPath
-  queryURL: "{url}"
+  queryURL: '{url}'
   scraper: sceneScraper
-
 groupByURL:
-  - action: scrapeXPath
-    url:
-      - ko-tube.com/package/index/
-    scraper: groupScraper
-
+- action: scrapeXPath
+  url:
+  - ko-tube.com/package/index/
+  scraper: groupScraper
 xPathScrapers:
   sceneSearch:
     common:
-      $item: '//a[contains(@href, "/product/index") or contains(@href, "/package/index/")]'
+      $item: //a[contains(@href, "/product/index") or contains(@href, "/package/index/")]
     scene:
       Title: $item
-      URL: $item/@href
       Image: $item//img/@src
-
+      URLs: $item/@href
   sceneScraper:
     scene:
-      Title: '//h1[contains(@class, "title") or contains(text(), "作品詳細") or contains(text(), "パッケージ")]/text()'
+      Title: //h1[contains(@class, "title") or contains(text(), "作品詳細") or contains(text(), "パッケージ")]/text()
       Code:
-        selector: '//td[contains(text(), "作品番号")]/following-sibling::td[1]/text()'
+        selector: //td[contains(text(), "作品番号")]/following-sibling::td[1]/text()
         postProcess:
-          - replace:
-              - regex: '^\s+|\s+$'
-                with: ""
+        - replace:
+          - regex: ^\s+|\s+$
+            with: ''
       Date:
-        selector: '//td[contains(text(), "DVD 発売") or contains(text(), "発売")]/following-sibling::td[1]/text()'
+        selector: //td[contains(text(), "DVD 発売") or contains(text(), "発売")]/following-sibling::td[1]/text()
         postProcess:
-          - replace:
-              - regex: "([0-9]{4}) 年 ([0-9]{1,2}) 月"
-                with: "$1-$2-01"
-          - javascript: |
-              var p = value.split("-");
-              if (p.length >= 2) {
-                return p[0] + "-" + ("0" + p[1]).slice(-2) + "-" + (p[2] ? ("0" + p[2]).slice(-2) : "01");
-              }
-              return value;
-          - parseDate: "2006-01-02"
+        - replace:
+          - regex: ([0-9]{4}) 年 ([0-9]{1,2}) 月
+            with: $1-$2-01
+        - javascript: "var p = value.split(\"-\");\nif (p.length >= 2) {\n  return p[0] + \"-\" + (\"0\" + p[1]).slice(-2) + \"-\" + (p[2] ? (\"0\" + p[2]).slice(-2) : \"01\");\n}\nreturn value;\n"
+        - parseDate: '2006-01-02'
       Details:
-        selector: '//div[contains(@class, "description") or contains(@class, "detail")]//text()'
-        concat: "\n"
-      Image: '//img[contains(@src, "/picture/parent/") and contains(@src, "_3.jpg")]/@src | //img[contains(@src, "/picture/")]/@src'
+        selector: //div[contains(@class, "description") or contains(@class, "detail")]//text()
+        concat: '
+
+          '
+      Image: //img[contains(@src, "/picture/parent/") and contains(@src, "_3.jpg")]/@src | //img[contains(@src, "/picture/")]/@src
       Studio:
         Name:
-          selector: '//td[contains(text(), "レーベル")]/following-sibling::td[1]/text()'
+          selector: //td[contains(text(), "レーベル")]/following-sibling::td[1]/text()
           postProcess:
-            - replace:
-                - regex: '^\s+|\s+$'
-                  with: ""
+          - replace:
+            - regex: ^\s+|\s+$
+              with: ''
       Tags:
         Name:
-          selector: '//td[contains(text(), "プレイ")]/following-sibling::td[1]/text()'
+          selector: //td[contains(text(), "プレイ")]/following-sibling::td[1]/text()
           postProcess:
-            - replace:
-                - regex: '^\s+|\s+$'
-                  with: ""
-          split: "、"
+          - replace:
+            - regex: ^\s+|\s+$
+              with: ''
+          split: 、
       Performers:
         Name:
-          selector: '//td[contains(text(), "モデル")]/following-sibling::td[1]/text()'
+          selector: //td[contains(text(), "モデル")]/following-sibling::td[1]/text()
           postProcess:
-            - replace:
-                - regex: '^\s+|\s+$'
-                  with: ""
-          split: "、"
-      URLs: '//a[contains(@href, "ko-video.com")]/@href'
+          - replace:
+            - regex: ^\s+|\s+$
+              with: ''
+          split: 、
+      URLs: //a[contains(@href, "ko-video.com")]/@href
       Groups:
-        Name: '//h1[contains(@class, "title")]/text()'
-
+        Name: //h1[contains(@class, "title")]/text()
   groupScraper:
     group:
-      Name: '//h1[contains(@class, "title") or contains(text(), "パッケージ")]/text()'
+      Name: //h1[contains(@class, "title") or contains(text(), "パッケージ")]/text()
       Date:
-        selector: '//td[contains(text(), "DVD 発売") or contains(text(), "発売")]/following-sibling::td[1]/text()'
+        selector: //td[contains(text(), "DVD 発売") or contains(text(), "発売")]/following-sibling::td[1]/text()
         postProcess:
-          - replace:
-              - regex: "([0-9]{4}) 年 ([0-9]{1,2}) 月"
-                with: "$1-$2-01"
-          - javascript: |
-              var p = value.split("-");
-              if (p.length >= 2) {
-                return p[0] + "-" + ("0" + p[1]).slice(-2) + "-" + (p[2] ? ("0" + p[2]).slice(-2) : "01");
-              }
-              return value;
-          - parseDate: "2006-01-02"
+        - replace:
+          - regex: ([0-9]{4}) 年 ([0-9]{1,2}) 月
+            with: $1-$2-01
+        - javascript: "var p = value.split(\"-\");\nif (p.length >= 2) {\n  return p[0] + \"-\" + (\"0\" + p[1]).slice(-2) + \"-\" + (p[2] ? (\"0\" + p[2]).slice(-2) : \"01\");\n}\nreturn value;\n"
+        - parseDate: '2006-01-02'
       Synopsis:
-        selector: '//div[contains(@class, "description") or contains(@class, "detail")]//text()'
-        concat: "\n"
-      FrontImage: '//img[contains(@src, "/picture/parent/") and contains(@src, "_3.jpg")]/@src | //img[contains(@src, "/picture/")]/@src'
+        selector: //div[contains(@class, "description") or contains(@class, "detail")]//text()
+        concat: '
+
+          '
+      FrontImage: //img[contains(@src, "/picture/parent/") and contains(@src, "_3.jpg")]/@src | //img[contains(@src, "/picture/")]/@src
       Studio:
         Name:
-          selector: '//td[contains(text(), "レーベル")]/following-sibling::td[1]/text()'
+          selector: //td[contains(text(), "レーベル")]/following-sibling::td[1]/text()
           postProcess:
-            - replace:
-                - regex: '^\s+|\s+$'
-                  with: ""
+          - replace:
+            - regex: ^\s+|\s+$
+              with: ''
       Tags:
         Name:
-          selector: '//td[contains(text(), "プレイ")]/following-sibling::td[1]/text()'
+          selector: //td[contains(text(), "プレイ")]/following-sibling::td[1]/text()
           postProcess:
-            - replace:
-                - regex: '^\s+|\s+$'
-                  with: ""
-          split: "、"
-      URLs: '//a[contains(@href, "ko-video.com")]/@href'
-
+          - replace:
+            - regex: ^\s+|\s+$
+              with: ''
+          split: 、
+      URLs: //a[contains(@href, "ko-video.com")]/@href
 driver:
   useCDP: true
   headers:
-    - Key: User-Agent
-      Value: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36
+  - Key: User-Agent
+    Value: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36

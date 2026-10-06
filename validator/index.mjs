@@ -34,12 +34,17 @@ export class Validator {
 
     const schemaPath = path.resolve(import.meta.dirname, "./scraper.schema.json");
     this.schema = JSON.parse(fs.readFileSync(schemaPath, "utf8"));
-    this.ajv = new Ajv({
-      // allErrors: true,
-      strict: true,
-    });
-    addFormats(this.ajv);
+this.ajv = new Ajv({
+  strict: true,
+});
 
+this.ajv.addKeyword({
+  keyword: "deprecationMessage",
+  schemaType: "string",
+  valid: true,
+});
+
+addFormats(this.ajv);
     this.mappingPattern = /^([a-z]+)By(Fragment|Name|URL)$/;
   }
 

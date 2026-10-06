@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
-# Scraper Quality Gate
-# Usage: bash tools/scraper-quality-gate.sh <scraper.yml>
+# 擷取器品質閘門
+# 用法：bash tools/scraper-quality-gate.sh <擷取器.yml>
 #
-# Optional schema validation uses the official stashapp/CommunityScrapers
-# validator. Set CS_VALIDATOR_DIR to a prepared upstream checkout containing
-# validator/index.mjs, validator/scraper.schema.json, and installed Node
-# dependencies. Without it, only the repository policy checks run.
+# 可選的官方 schema 驗證使用 stashapp/CommunityScrapers 驗證器。
+# 設定 CS_VALIDATOR_DIR 指向已複製的 upstream 目錄，該目錄需包含：
+# - validator/index.mjs
+# - validator/scraper.schema.json
+# - 已安裝的 Node 依賴
+# 未設定時僅執行本倉庫的政策檢查。
 
 set -uo pipefail
 
@@ -13,74 +15,75 @@ SCRAPER_FILE="${1:-}"
 FAILED=0
 
 fail() {
+  # 中英雙語錯誤訊息，供 validate-all.sh 抽取
   echo "::error file=${SCRAPER_FILE}::$1"
   FAILED=1
 }
 
 if [[ -z "${SCRAPER_FILE}" ]]; then
   echo "Usage: bash tools/scraper-quality-gate.sh <scraper.yml>" >&2
+  echo "用法：bash tools/scraper-quality-gate.sh <擷取器.yml>" >&2
   exit 2
 fi
 
 if [[ ! -f "${SCRAPER_FILE}" ]]; then
   echo "::error::Scraper file not found: ${SCRAPER_FILE}" >&2
+  echo "::error::找不到擷取器檔案：${SCRAPER_FILE}" >&2
   exit 2
 fi
 
 if [[ "${SCRAPER_FILE}" != scrapers/*.yml ]]; then
-  fail "Expected a .yml scraper path under scrapers/: ${SCRAPER_FILE}"
+  fail "Expected a .yml scraper path under scrapers/ | 預期路徑為 scrapers/ 下的 .yml 擷取器檔案"
 fi
 
-# Optional official schema validation (stashapp/CommunityScrapers).
+# 可選的官方 schema 驗證（stashapp/CommunityScrapers）
 if [[ -n "${CS_VALIDATOR_DIR:-}" ]]; then
   if [[ ! -f "${CS_VALIDATOR_DIR}/validator/index.mjs" ]]; then
-    echo "::error::CS_VALIDATOR_DIR does not contain validator/index.mjs: ${CS_VALIDATOR_DIR}" >&2
+    echo "::error::CS_VALIDATOR_DIR does not contain validator/index.mjs | CS_VALIDATOR_DIR 未包含 validator/index.mjs" >&2
     exit 2
   fi
   if [[ ! -f "${CS_VALIDATOR_DIR}/validator/scraper.schema.json" ]]; then
-    echo "::error::CS_VALIDATOR_DIR does not contain validator/scraper.schema.json: ${CS_VALIDATOR_DIR}" >&2
+    echo "::error::CS_VALIDATOR_DIR does not contain validator/scraper.schema.json | CS_VALIDATOR_DIR 未包含 validator/scraper.schema.json" >&2
     exit 2
   fi
   mkdir -p "${CS_VALIDATOR_DIR}/$(dirname "${SCRAPER_FILE}")"
   cp "${SCRAPER_FILE}" "${CS_VALIDATOR_DIR}/${SCRAPER_FILE}"
   if ! (cd "${CS_VALIDATOR_DIR}" && node validator/index.mjs "${SCRAPER_FILE}"); then
-    fail "Official CommunityScrapers validation failed"
+    fail "Official CommunityScrapers schema validation failed | 官方 CommunityScrapers schema 驗證失敗"
   fi
 fi
 
-# XPath scrapers must have a non-empty root name. Anchoring at column 0
-# excludes nested metadata Name: fields from this check.
+# XPath 擷取器必須在根層包含非空的 name: 欄位（以行首錨定，排除巢狀 metadata）
 if grep -qE '^[[:space:]]*xPathScrapers:' "${SCRAPER_FILE}" && ! grep -qE '^name:[[:space:]]*[^[:space:]#]' "${SCRAPER_FILE}"; then
-  fail "XPath scrapers require a non-empty root name: field"
+  fail "XPath scrapers require a non-empty root 'name:' field | XPath 擷取器必須在根層包含非空的 'name:' 欄位"
 fi
 
-# sceneByQueryFragment is a direct URL scraping path. If declared, it must
-# preserve the incoming URL instead of routing it through a search endpoint.
+# sceneByQueryFragment 必須保留原始 URL，不可經過搜尋端點重新路由
 if grep -qE '^sceneByQueryFragment:' "${SCRAPER_FILE}"; then
   QUERY_FRAGMENT_BLOCK=$(sed -n '/^sceneByQueryFragment:/,/^[^[:space:]#][^:]*:/p' "${SCRAPER_FILE}")
   if ! grep -qE "^[[:space:]]*queryURL:[[:space:]]*['\"]?\{url\}['\"]?[[:space:]]*(#.*)?$" <<< "${QUERY_FRAGMENT_BLOCK}"; then
-    fail "sceneByQueryFragment must contain queryURL: \"{url}\""
+    fail "sceneByQueryFragment must contain 'queryURL: "{url}"' | sceneByQueryFragment 必須包含 'queryURL: "{url}"'"
   fi
 fi
 
-# Public root scraper files must never contain session cookies. Private files
-# under scrapers/private/ are exempt per repository policy.
+# 公開擷取器（scrapers/*.yml）不得包含 cookies；私有擷取器（scrapers/private/）除外
 if [[ "${SCRAPER_FILE}" =~ ^scrapers/[^/]+\.yml$ ]] && grep -qE '^[[:space:]]*cookies:' "${SCRAPER_FILE}"; then
-  fail "Public scraper files must not contain driver.cookies; move session-dependent scrapers under scrapers/private/"
+  fail "Public scraper files must not contain 'cookies:'; move to scrapers/private/ | 公開擷取器不得包含 'cookies:'；請移至 scrapers/private/"
 fi
 
-# parseDate must use Go reference-time layouts (2006-01-02). Reject common
-# non-Go tokens: YYYY/YY/DD (Moment-style) and %Y/%m/%d (strftime-style).
+# parseDate 必須使用 Go 參考時間格式（2006-01-02），拒絕 YYYY/YY/DD 或 %Y/%m/%d 等非 Go 格式
 while IFS= read -r layout; do
   [[ -z "${layout}" ]] && continue
   if grep -qiE 'yyyy|yy|dd|%[a-z]' <<< "${layout}"; then
-    fail "parseDate must use a Go layout (e.g. 2006-01-02); found ${layout}"
+    fail "parseDate must use a Go layout (e.g. 2006-01-02); found '${layout}' | parseDate 必須使用 Go 格式（例如 2006-01-02）；發現 '${layout}'"
   fi
 done < <(sed -nE "s/^[[:space:]]*-[[:space:]]*parseDate:[[:space:]]*['\"]?([^'\"[:space:]#]+).*/\1/p" "${SCRAPER_FILE}")
 
 if [[ "${FAILED}" -ne 0 ]]; then
   echo "Quality gate failed: ${SCRAPER_FILE}" >&2
+  echo "品質閘門失敗：${SCRAPER_FILE}" >&2
   exit 1
 fi
 
 echo "Quality gate passed: ${SCRAPER_FILE}"
+echo "品質閘門通過：${SCRAPER_FILE}"
