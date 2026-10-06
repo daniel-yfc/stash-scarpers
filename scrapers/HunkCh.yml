@@ -3,7 +3,9 @@
 # Search verified 2026-08-27: /search.php?s=雄穴&fromSearch=on
 # cards in #newmovie tables (GV-OND28001, TR-CS007, KPP-1122).
 # Detail: guest HTML has ブランド/発売日/ストーリー; cover/title h2 need login+CDP.
-# common keys are independent XPath (no $data: $product//...).
+# common keys are parenthesized unions: Stash substitutes $var by string
+# replacement, so a bare `A | B` used as `$var//x` would parse as
+# `A | B//x` and match the container itself. Always keep the parens.
 # 2026-10-06: re-verified healthy on 3 detail pages; search probes
 # (陸翔 / CR-0945_DL / 夏ハメ2026) all HIT.
 # Last Updated: 2026-10-06
@@ -95,11 +97,11 @@ xPathScrapers:
 
   groupScraper:
     common:
-      $product: "//div[contains(concat(' ',normalize-space(@class),' '),' product_detail_centre ')] | //table[@id='product']"
-      $data: "//div[contains(concat(' ',normalize-space(@class),' '),' data ')] | //p[contains(.,'発売日') and contains(.,'ブランド')]"
+      $product: "(//div[contains(concat(' ',normalize-space(@class),' '),' product_detail_centre ')] | //table[@id='product'])"
+      $data: "(//div[contains(concat(' ',normalize-space(@class),' '),' data ')] | //p[contains(.,'発売日') and contains(.,'ブランド')])"
     group:
       Name:
-        selector: "$product//h2[1] | //img[@title='ストーリー']/following::p[1] | //title"
+        selector: "$product//h2[1]"
         postProcess:
           - replace:
               - regex: "^\\s+|\\s+$"
@@ -159,11 +161,11 @@ xPathScrapers:
 
   sceneScraper:
     common:
-      $product: "//div[contains(concat(' ',normalize-space(@class),' '),' product_detail_centre ')] | //table[@id='product']"
-      $data: "//div[contains(concat(' ',normalize-space(@class),' '),' data ')] | //p[contains(.,'発売日') and contains(.,'ブランド')]"
+      $product: "(//div[contains(concat(' ',normalize-space(@class),' '),' product_detail_centre ')] | //table[@id='product'])"
+      $data: "(//div[contains(concat(' ',normalize-space(@class),' '),' data ')] | //p[contains(.,'発売日') and contains(.,'ブランド')])"
     scene:
       Title:
-        selector: "$product//h2[1] | //img[@title='ストーリー']/following::p[1] | //title"
+        selector: "$product//h2[1]"
         postProcess:
           - replace:
               - regex: "^\\s+|\\s+$"
