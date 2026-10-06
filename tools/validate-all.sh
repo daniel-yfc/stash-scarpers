@@ -3,8 +3,8 @@
 # 用法：bash tools/validate-all.sh
 #
 # 對 scrapers/ 下所有 *.yml（含 scrapers/private/）執行品質閘門。
-# 設定 CS_VALIDATOR_DIR 指向 stashapp/CommunityScrapers 複製目錄，可額外執行官方 schema 驗證。
-# 該目錄需包含 validator/index.mjs、validator/scraper.schema.json 與已安裝的 Node 依賴。
+# 品質閘門預設使用本倉庫內建 validator 做官方 schema 驗證；
+# 設定 CS_VALIDATOR_DIR 可改用上游 stashapp/CommunityScrapers 複製目錄驗證。
 #
 # 輸出：
 # - 每個擷取器一行：[PASS/FAIL] <路徑>

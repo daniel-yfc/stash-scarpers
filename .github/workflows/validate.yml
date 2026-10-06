@@ -67,6 +67,9 @@ jobs:
       - name: Validate scraper schemas
         run: node validator/index.mjs -a --ci
 
+      - name: Validate template schemas
+        run: node validator/index.mjs --ci templates/*.yml
+
       - name: Check URL array sorting
         run: node validator/index.mjs -a -s --ci
 

@@ -2,12 +2,13 @@
 # 擷取器品質閘門
 # 用法：bash tools/scraper-quality-gate.sh <擷取器.yml>
 #
-# 可選的官方 schema 驗證使用 stashapp/CommunityScrapers 驗證器。
-# 設定 CS_VALIDATOR_DIR 指向已複製的 upstream 目錄，該目錄需包含：
+# 官方 schema 驗證預設使用本倉庫內建的 validator（validator/index.mjs）。
+# 設定 CS_VALIDATOR_DIR 可改用上游 stashapp/CommunityScrapers 複製目錄驗證，
+# 該目錄需包含：
 # - validator/index.mjs
 # - validator/scraper.schema.json
 # - 已安裝的 Node 依賴
-# 未設定時僅執行本倉庫的政策檢查。
+# 未設定 CS_VALIDATOR_DIR 時使用本倉庫 validator；其餘為本倉庫的政策檢查。
 
 set -uo pipefail
 
@@ -36,21 +37,25 @@ if [[ "${SCRAPER_FILE}" != scrapers/*.yml ]]; then
   fail "Expected a .yml scraper path under scrapers/ | 預期路徑為 scrapers/ 下的 .yml 擷取器檔案"
 fi
 
-# 可選的官方 schema 驗證（stashapp/CommunityScrapers）
+# 官方 schema 驗證：預設使用本倉庫內建 validator；
+# 設定 CS_VALIDATOR_DIR 可改用上游 stashapp/CommunityScrapers 複製目錄驗證。
+VALIDATOR_DIR="${CS_VALIDATOR_DIR:-.}"
+if [[ ! -f "${VALIDATOR_DIR}/validator/index.mjs" ]]; then
+  echo "::error::validator/index.mjs not found under ${VALIDATOR_DIR} | 在 ${VALIDATOR_DIR} 找不到 validator/index.mjs" >&2
+  exit 2
+fi
+if [[ ! -f "${VALIDATOR_DIR}/validator/scraper.schema.json" ]]; then
+  echo "::error::validator/scraper.schema.json not found under ${VALIDATOR_DIR} | 在 ${VALIDATOR_DIR} 找不到 validator/scraper.schema.json" >&2
+  exit 2
+fi
 if [[ -n "${CS_VALIDATOR_DIR:-}" ]]; then
-  if [[ ! -f "${CS_VALIDATOR_DIR}/validator/index.mjs" ]]; then
-    echo "::error::CS_VALIDATOR_DIR does not contain validator/index.mjs | CS_VALIDATOR_DIR 未包含 validator/index.mjs" >&2
-    exit 2
-  fi
-  if [[ ! -f "${CS_VALIDATOR_DIR}/validator/scraper.schema.json" ]]; then
-    echo "::error::CS_VALIDATOR_DIR does not contain validator/scraper.schema.json | CS_VALIDATOR_DIR 未包含 validator/scraper.schema.json" >&2
-    exit 2
-  fi
   mkdir -p "${CS_VALIDATOR_DIR}/$(dirname "${SCRAPER_FILE}")"
   cp "${SCRAPER_FILE}" "${CS_VALIDATOR_DIR}/${SCRAPER_FILE}"
-  if ! (cd "${CS_VALIDATOR_DIR}" && node validator/index.mjs "${SCRAPER_FILE}"); then
+  if ! (cd "${CS_VALIDATOR_DIR}" && node validator/index.mjs --ci "${SCRAPER_FILE}"); then
     fail "Official CommunityScrapers schema validation failed | 官方 CommunityScrapers schema 驗證失敗"
   fi
+elif ! node validator/index.mjs --ci "${SCRAPER_FILE}"; then
+  fail "Schema validation failed (repo validator) | Schema 驗證失敗（本倉庫 validator）"
 fi
 
 # XPath 擷取器必須在根層包含非空的 name: 欄位（以行首錨定，排除巢狀 metadata）

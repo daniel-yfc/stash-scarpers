@@ -13,9 +13,9 @@ xPathScrapers:
       Gender:
       URLs:
       Birthdate:
-        selector:
+        selector: "//your-date-xpath-here"
         postProcess:
-          - parseDate: January 2, 2006
+          - parseDate: "January 2, 2006"
       Ethnicity:
       Country:
       EyeColor:
@@ -30,9 +30,9 @@ xPathScrapers:
       Aliases:
       Details:
       DeathDate:
-        selector:
+        selector: "//your-date-xpath-here"
         postProcess:
-          - parseDate: January 2, 2006
+          - parseDate: "January 2, 2006"
       HairColor:
       Weight:
 # Last Updated February XX, 2025

@@ -39,6 +39,7 @@ The main `validate.yml` checkout sets up Node and Python, then executes these re
 ```bash
 npm ci || npm install
 node validator/index.mjs -a --ci
+node validator/index.mjs --ci templates/*.yml
 node validator/index.mjs -a -s --ci
 bash tools/validate-all.sh
 python -m pytest tools/tests/ -v

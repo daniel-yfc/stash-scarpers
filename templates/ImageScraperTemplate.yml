@@ -13,9 +13,9 @@ xPathScrapers:
       Photographer:
       URLs:
       Date:
-        selector:
+        selector: "//your-date-xpath-here"
         postProcess:
-          - parseDate: January 2, 2006
+          - parseDate: "January 2, 2006"
       Studio:
         Name:
       Tags:
