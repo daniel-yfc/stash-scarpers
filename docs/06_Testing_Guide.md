@@ -10,7 +10,7 @@ audience:
 applies_to:
   - testing
   - validator
-last_verified: "2026-10-02"
+last_verified: "2026-10-06"
 authority: canonical
 routing:
   intents:
@@ -57,6 +57,28 @@ node tools/scrutiny.js scrapers/CK-Download.yml --url="<detail-url>"
 ```
 
 `tools/scrutiny.js` fetches HTTP and parses with JSDOM; it does not execute website JavaScript, complete an interactive login, or prove a live Stash/CDP extraction. Record response date, source URL, response type, access state, extracted values, and failures. A search result does not verify its detail scraper unless the detail page is tested separately.
+
+### Test sidecar files (`*.test.yaml`)
+
+`tools/scrutiny.js` auto-loads `scrapers/<name>.test.yaml` (same directory as the
+scraper, including `scrapers/private/`) when present. Sidecars keep reusable
+live-test inputs next to the scraper so `test-all.sh` can rerun the suite.
+Supported keys:
+
+| Key        | Type            | Meaning                                                          |
+| ---------- | --------------- | ---------------------------------------------------------------- |
+| `url`      | string \| array | Detail URL(s) to evaluate (array auto-enables multi)             |
+| `urls`     | array           | Alias for multiple detail URLs                                   |
+| `probe`    | string \| array | Custom search probe term(s): performer name, code, partial title |
+| `probes`   | array           | Alias for multiple probe terms                                   |
+| `multi`    | boolean         | Test multiple candidate scene URLs (default: auto)               |
+| `search`   | boolean         | Evaluate searchScraper (default true; `false` disables)          |
+| `paginate` | boolean         | Walk search result pages                                         |
+
+Rules: never store credentials, cookies, or session material in a sidecar —
+use a logged-in browser session or `--cookie` at runtime. Prefer at least three
+detail URLs and one probe each of performer name, code, and partial title per
+site where the site supports search.
 
 Before assessing selectors, classify the fetched page as a completed target page, bot-management challenge, login/paywall/age gate, not-found or HTTP error, or client-side application error/partial render. Inspect document title, canonical URL, a main body marker, and known failure markers. Do not score target-field coverage against a failure page.
 

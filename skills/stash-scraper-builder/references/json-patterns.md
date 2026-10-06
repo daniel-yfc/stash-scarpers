@@ -31,6 +31,7 @@ sceneByName:
 sceneByQueryFragment:
   action: scrapeJson
   queryURL: "{url}"
+  scraper: sceneJson
 ```
 
 ## GJSON patterns

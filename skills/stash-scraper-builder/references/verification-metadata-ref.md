@@ -6,7 +6,7 @@ layer: skill
 owner: maintainer
 audience:
   - agent
-last_verified: "2026-10-02"
+last_verified: "2026-10-06"
 authority: derived
 routing:
   intents:
@@ -35,21 +35,21 @@ Quick access to the verification metadata specification and related tooling.
 
 ## Quick Reference: Evidence Levels
 
-| Level | Name | Description |
-|:-----:|:-----|:------------|
-| L1 | SCHEMA_VALID | Only schema validation passed |
-| L2 | TESTED_STATIC | Static HTML reviewed |
-| L3 | TESTED_RENDERED | Rendered DOM snapshot reviewed |
-| L4 | VERIFIED_PUBLIC | Anonymous live fetch verified |
-| L5 | VERIFIED_AUTH | Logged-in browser session verified |
-| L6 | VERIFIED_BY_VALUE | Expected values matched actual values (strongest) |
+| Level | Name              | Description                                       |
+| :---: | :---------------- | :------------------------------------------------ |
+|  L1   | SCHEMA_VALID      | Only schema validation passed                     |
+|  L2   | TESTED_STATIC     | Static HTML reviewed                              |
+|  L3   | TESTED_RENDERED   | Rendered DOM snapshot reviewed                    |
+|  L4   | VERIFIED_PUBLIC   | Anonymous live fetch verified                     |
+|  L5   | VERIFIED_AUTH     | Logged-in browser session verified                |
+|  L6   | VERIFIED_BY_VALUE | Expected values matched actual values (strongest) |
 
 ## Quick Reference: Staleness Status
 
-| Status | Definition | Action |
-|:------:|:-----------|:-------|
-| FRESH | age ≤ ttl_days | No action |
-| AGING | age ≥ ttl_days / 2 | Schedule re-verification |
-| STALE | age > ttl_days | Re-verify immediately |
-| UNKNOWN | Missing/unparseable date | Fix the metadata block |
-| NO_META | No metadata block | Add verification metadata |
+| Status  | Definition               | Action                    |
+| :-----: | :----------------------- | :------------------------ |
+|  FRESH  | age ≤ ttl_days           | No action                 |
+|  AGING  | age ≥ ttl_days / 2       | Schedule re-verification  |
+|  STALE  | age > ttl_days           | Re-verify immediately     |
+| UNKNOWN | Missing/unparseable date | Fix the metadata block    |
+| NO_META | No metadata block        | Add verification metadata |

@@ -38,7 +38,7 @@ sceneByURL:
 xPathScrapers:
   sceneScraper:
     scene:
-      # ... scraper definition
+      Title: //h1/text()
 ```
 
 ## Authoring workflow

@@ -10,7 +10,7 @@ audience:
 applies_to:
   - ci
   - testing
-last_verified: "2026-10-02"
+last_verified: "2026-10-06"
 authority: canonical
 routing:
   intents:
@@ -24,13 +24,13 @@ This map describes the seven workflow definitions in `.github/workflows/` review
 
 ## Repository checks
 
-| Workflow file (display name) | Trigger | Scope and result |
-| --- | --- | --- |
-| `validate.yml` (Validate Scrapers) | Path-filtered push to `main` and PR | Main schema, URL sort, repository quality gate, regression tests, safeguards, and documentation checks. Only the commands actually executed are passes; its fixture self-test is not a site fixture. |
-| `pr-check.yml` (Changed Scraper PR Check) | Path-filtered PR | Changed scraper files pass the per-file quality gate; documentation examples check separately. PR comment is feedback, not additional verification. |
-| `fixture-manifests.yml` (Fixture Manifest Verification) | Fixture/runner-related push to `main` or PR | Discovers and executes committed fixture manifests. When none exist, discovery reports `UNVERIFIED` despite a successful workflow exit. A pass covers only present cases and assertions. |
-| `evidence-contract.yml` (Evidence Contract) | Evidence/contract-related push to `main` or PR; weekly; manual | Checks structured evidence metadata, artifact paths and digests. Does not prove a site's live behavior. |
-| `cdp-evidence-gate.yml` (Live CDP Evidence Gate) | Evidence/checker-related push to `main`; manual | Rejects certain unsupported CDP claims. Does not launch Stash or a browser and cannot produce live-CDP verification. |
+| Workflow file (display name)                            | Trigger                                                        | Scope and result                                                                                                                                                                                     |
+| ------------------------------------------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `validate.yml` (Validate Scrapers)                      | Path-filtered push to `main` and PR                            | Main schema, URL sort, repository quality gate, regression tests, safeguards, and documentation checks. Only the commands actually executed are passes; its fixture self-test is not a site fixture. |
+| `pr-check.yml` (Changed Scraper PR Check)               | Path-filtered PR                                               | Changed scraper files pass the per-file quality gate; documentation examples check separately. PR comment is feedback, not additional verification.                                                  |
+| `fixture-manifests.yml` (Fixture Manifest Verification) | Fixture/runner-related push to `main` or PR                    | Discovers and executes committed fixture manifests. When none exist, discovery reports `UNVERIFIED` despite a successful workflow exit. A pass covers only present cases and assertions.             |
+| `evidence-contract.yml` (Evidence Contract)             | Evidence/contract-related push to `main` or PR; weekly; manual | Checks structured evidence metadata, artifact paths and digests. Does not prove a site's live behavior.                                                                                              |
+| `cdp-evidence-gate.yml` (Live CDP Evidence Gate)        | Evidence/checker-related push to `main`; manual                | Rejects certain unsupported CDP claims. Does not launch Stash or a browser and cannot produce live-CDP verification.                                                                                 |
 
 ## Validation commands
 
@@ -56,9 +56,9 @@ python tools/check_docs_index.py
 
 ## Manual and scheduled checks
 
-| Workflow file (display name) | Trigger | Scope and result |
-| --- | --- | --- |
-| `scrutiny.yml` (Live Raw-Response Scrutiny) | Manual | Fetches HTTP and evaluates via JSDOM. Does not execute site JavaScript, render a browser DOM, or perform live Stash/CDP extraction. |
+| Workflow file (display name)                    | Trigger                          | Scope and result                                                                                                                                                                                           |
+| ----------------------------------------------- | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `scrutiny.yml` (Live Raw-Response Scrutiny)     | Manual                           | Fetches HTTP and evaluates via JSDOM. Does not execute site JavaScript, render a browser DOM, or perform live Stash/CDP extraction.                                                                        |
 | `link-check.yml` (Advisory Documentation Links) | Markdown-path PR; weekly; manual | Checks repository Markdown links, including hidden `.github` documentation. `fail: false` keeps broken external links advisory: inspect the report; a green workflow is not proof that all links resolved. |
 
 ## Evidence boundaries

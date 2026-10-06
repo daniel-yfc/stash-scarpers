@@ -10,7 +10,7 @@ audience:
 applies_to:
   - scrapers
   - ci
-last_verified: "2026-10-02"
+last_verified: "2026-10-06"
 authority: canonical
 routing:
   intents:
@@ -35,18 +35,18 @@ routing:
 
 ## 驗證層級
 
-| 層級 | 指令或工具 | 僅能證明 |
-| --- | --- | --- |
-| Schema | `node validator/index.mjs -a --ci` | YAML 符合本儲存庫由 CommunityScrapers 上游衍生的 validator/schema 要求 |
-| URL ordering | `node validator/index.mjs -a -s --ci` | URL array 排序通過 |
-| Repository policy | `bash tools/validate-all.sh` | 指定 scraper 通過儲存庫政策 |
-| Python regression | `python -m pytest tools/tests/ -v` | 實際執行的回歸測試通過 |
-| Documentation | `python tools/check_scraper_docs.py` | 檢查器所涵蓋的文件範例及矛盾規則 |
-| Documentation index | `python tools/check_docs_index.py` | 登錄範圍內的文件 ID、路徑與索引 |
-| Raw scrutiny | `node tools/scrutiny.js scrapers/<Scraper>.yml --search` | HTTP 加 JSDOM 的原始回應檢查；不執行站點 JavaScript |
-| Fixture control | `node tools/verify-scraper-fixtures.mjs --self-test` | 檢查器自測，非站點 fixture 驗證 |
-| Fixture manifests | `python tools/run_fixture_manifests.py` | 已提交 manifest 中實際存在的案例；無 manifest 為 `UNVERIFIED` |
-| Evidence/CDP claim gates | `python tools/check_evidence_contract.py`、`python tools/check_live_cdp_status.py` | 證據來源與聲稱檢查；非 live Stash/CDP 執行 |
+| 層級                     | 指令或工具                                                                         | 僅能證明                                                               |
+| ------------------------ | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| Schema                   | `node validator/index.mjs -a --ci`                                                 | YAML 符合本儲存庫由 CommunityScrapers 上游衍生的 validator/schema 要求 |
+| URL ordering             | `node validator/index.mjs -a -s --ci`                                              | URL array 排序通過                                                     |
+| Repository policy        | `bash tools/validate-all.sh`                                                       | 指定 scraper 通過儲存庫政策                                            |
+| Python regression        | `python -m pytest tools/tests/ -v`                                                 | 實際執行的回歸測試通過                                                 |
+| Documentation            | `python tools/check_scraper_docs.py`                                               | 檢查器所涵蓋的文件範例及矛盾規則                                       |
+| Documentation index      | `python tools/check_docs_index.py`                                                 | 登錄範圍內的文件 ID、路徑與索引                                        |
+| Raw scrutiny             | `node tools/scrutiny.js scrapers/<Scraper>.yml --search`                           | HTTP 加 JSDOM 的原始回應檢查；不執行站點 JavaScript                    |
+| Fixture control          | `node tools/verify-scraper-fixtures.mjs --self-test`                               | 檢查器自測，非站點 fixture 驗證                                        |
+| Fixture manifests        | `python tools/run_fixture_manifests.py`                                            | 已提交 manifest 中實際存在的案例；無 manifest 為 `UNVERIFIED`          |
+| Evidence/CDP claim gates | `python tools/check_evidence_contract.py`、`python tools/check_live_cdp_status.py` | 證據來源與聲稱檢查；非 live Stash/CDP 執行                             |
 
 ## CI 工作流
 

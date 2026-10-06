@@ -10,7 +10,7 @@ audience:
 applies_to:
   - scrapers
   - testing
-last_verified: "2026-10-02"
+last_verified: "2026-10-06"
 authority: canonical
 routing:
   intents:
@@ -27,46 +27,46 @@ This document defines the structured metadata format for scraper verification st
 
 Four orthogonal axes define verification completeness:
 
-| Axis | Purpose | Fields |
-|------|---------|--------|
-| **Temporal** | When was it last verified, and is it still fresh? | `validated_on`, `ttl_days`, `staleness_status` |
-| **Coverage** | Which URLs and page types were actually tested? | `tested_urls`, `url_patterns_declared`, `url_patterns_tested`, `coverage_status` |
-| **Extraction** | Are postProcess chains and Stash integration validated? | `postprocess_validated`, `stash_integration_tested`, `value_match_level` |
-| **Robustness** | Known failure modes, rate limits, geo-blocks? | `robustness_notes`, `last_robustness_check` |
+| Axis           | Purpose                                                 | Fields                                                                           |
+| -------------- | ------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| **Temporal**   | When was it last verified, and is it still fresh?       | `validated_on`, `ttl_days`, `staleness_status`                                   |
+| **Coverage**   | Which URLs and page types were actually tested?         | `tested_urls`, `url_patterns_declared`, `url_patterns_tested`, `coverage_status` |
+| **Extraction** | Are postProcess chains and Stash integration validated? | `postprocess_validated`, `stash_integration_tested`, `value_match_level`         |
+| **Robustness** | Known failure modes, rate limits, geo-blocks?           | `robustness_notes`, `last_robustness_check`                                      |
 
 ## Field Definitions
 
 ### Temporal
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `validated_on` | `YYYY-MM-DD` | ISO date of last successful verification |
-| `ttl_days` | `INTEGER` | Days before verification is considered stale (recommended: 30) |
-| `staleness_status` | `ENUM` | Auto-computed: `FRESH` (≤30d), `AGING` (31–90d), `STALE` (>90d), `UNKNOWN` |
+| Field              | Type         | Description                                                                |
+| ------------------ | ------------ | -------------------------------------------------------------------------- |
+| `validated_on`     | `YYYY-MM-DD` | ISO date of last successful verification                                   |
+| `ttl_days`         | `INTEGER`    | Days before verification is considered stale (recommended: 30)             |
+| `staleness_status` | `ENUM`       | Auto-computed: `FRESH` (≤30d), `AGING` (31–90d), `STALE` (>90d), `UNKNOWN` |
 
 ### Coverage
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `tested_urls` | `[URL]` | List of actual URLs tested |
+| Field                   | Type      | Description                                              |
+| ----------------------- | --------- | -------------------------------------------------------- |
+| `tested_urls`           | `[URL]`   | List of actual URLs tested                               |
 | `url_patterns_declared` | `INTEGER` | Number of URL patterns declared in `scraper.schema.json` |
-| `url_patterns_tested` | `INTEGER` | Number of patterns with at least one tested URL |
-| `coverage_status` | `ENUM` | `COMPLETE` (all patterns tested), `PARTIAL`, `NONE` |
+| `url_patterns_tested`   | `INTEGER` | Number of patterns with at least one tested URL          |
+| `coverage_status`       | `ENUM`    | `COMPLETE` (all patterns tested), `PARTIAL`, `NONE`      |
 
 ### Extraction
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `postprocess_validated` | `BOOLEAN` | Whether postProcess chains (replace/parseDate/javascript) were validated |
-| `stash_integration_tested` | `BOOLEAN` | Whether scrape results were verified in Stash UI |
-| `value_match_level` | `ENUM` | Evidence level: `L1` (schema only) through `L6` (value-level match) |
+| Field                      | Type      | Description                                                              |
+| -------------------------- | --------- | ------------------------------------------------------------------------ |
+| `postprocess_validated`    | `BOOLEAN` | Whether postProcess chains (replace/parseDate/javascript) were validated |
+| `stash_integration_tested` | `BOOLEAN` | Whether scrape results were verified in Stash UI                         |
+| `value_match_level`        | `ENUM`    | Evidence level: `L1` (schema only) through `L6` (value-level match)      |
 
 ### Robustness
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `robustness_notes` | `TEXT` | Known issues: age gates, rate limits, geo-blocks, delisted content |
-| `last_robustness_check` | `YYYY-MM-DD` | Date of last robustness assessment |
+| Field                   | Type         | Description                                                        |
+| ----------------------- | ------------ | ------------------------------------------------------------------ |
+| `robustness_notes`      | `TEXT`       | Known issues: age gates, rate limits, geo-blocks, delisted content |
+| `last_robustness_check` | `YYYY-MM-DD` | Date of last robustness assessment                                 |
 
 ## Example Scraper Header
 
@@ -124,12 +124,14 @@ def parse_verification_metadata(yaml_content: str) -> dict:
 
 ## Integration with LIVE_TEST_STATUS.md
 
-The `LIVE_TEST_STATUS.md` table should include these columns:
+The `LIVE_TEST_STATUS.md` table should include these columns
+(illustrative example — values below are placeholders, not live status;
+see `docs/LIVE_TEST_STATUS.md` for the current table):
 
-| Scraper | Schema | Search card | Detail core | validated_on | ttl_days | staleness | coverage | postprocess | stash_int |
-|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| ACCEED | Pass | L4 | UNVERIFIED | 2026-09-06 | 30 | FRESH | COMPLETE | false | false |
-| Games-Video | Pass | n/a | L4 | 2026-09-06 | 30 | STALE | PARTIAL | false | false |
+| Scraper     | Schema | Search card | Detail core | validated_on | ttl_days | staleness | coverage | postprocess | stash_int |
+| :---------- | :----: | :---------: | :---------: | :----------: | :------: | :-------: | :------: | :---------: | :-------: |
+| ACCEED      |  Pass  |     L4      | UNVERIFIED  |  2026-09-06  |    30    |   FRESH   | COMPLETE |    false    |   false   |
+| Games-Video |  Pass  |     n/a     |     L4      |  2026-09-06  |    30    |   STALE   | PARTIAL  |    false    |   false   |
 
 ## CI Integration
 

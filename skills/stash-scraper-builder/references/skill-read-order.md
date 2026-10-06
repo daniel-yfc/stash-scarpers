@@ -6,7 +6,7 @@ layer: skill
 owner: maintainer
 audience:
   - agent
-last_verified: "2026-10-02"
+last_verified: "2026-10-06"
 authority: canonical
 routing:
   intents:
@@ -36,17 +36,21 @@ Read repository-level routing before skill-level guidance.
 
 ## Specialized references
 
-| Task                   | Read                                                                   |
-| ---------------------- | ---------------------------------------------------------------------- |
-| New XPath scraper      | `xpath-patterns.md` → `schema-checklist.md` → `post-processing.md`     |
-| New JSON scraper       | `json-patterns.md` → `schema-checklist.md` → `post-processing.md`      |
-| Script scraper         | `script-actions.md` → `template-workflow.md` → `schema-checklist.md`   |
-| CDP/login scraper      | `cdp-workflow.md` → `phase0-secrets-policy.md` → `schema-checklist.md` |
-| Dates/post-processing  | `date-formats.md` → `post-processing.md`                               |
-| Advanced patterns      | `advanced-patterns.md`                                                 |
-| Regression/evaluation  | `eval-pack.md` → repository `tools/tests/` and validation commands     |
-| Verification metadata  | `verification-metadata-ref.md` → `docs/verification-metadata.md`       |
-| Live-site verification | repository `docs/06_Testing_Guide.md` → `docs/LIVE_TEST_STATUS.md`     |
+| Task                   | Read                                                                                   |
+| ---------------------- | -------------------------------------------------------------------------------------- |
+| New XPath scraper      | `xpath-patterns.md` → `schema-checklist.md` → `post-processing.md`                     |
+| New JSON scraper       | `json-patterns.md` → `json-examples.md` → `schema-checklist.md` → `post-processing.md` |
+| Script scraper         | `script-actions.md` → `template-workflow.md` → `schema-checklist.md`                   |
+| CDP/login scraper      | `cdp-workflow.md` → `phase0-secrets-policy.md` → `schema-checklist.md`                 |
+| Dates/post-processing  | `date-formats.md` → `post-processing.md`                                               |
+| Field quality          | `title-patterns.md` → `performer-cleaning.md` → `post-processing.md`                   |
+| Examples               | `examples.md` → `json-examples.md`                                                     |
+| Best practices         | `best-practices.md` → `advanced-patterns.md` → `multi-site-network-scrapers.md`        |
+| Debugging failures     | `scraping-failures.md` → `incident-reviews.md`                                         |
+| Advanced patterns      | `advanced-patterns.md`                                                                 |
+| Regression/evaluation  | `eval-pack.md` → repository `tools/tests/` and validation commands                     |
+| Verification metadata  | `verification-metadata-ref.md` → `docs/verification-metadata.md`                       |
+| Live-site verification | repository `docs/06_Testing_Guide.md` → `docs/LIVE_TEST_STATUS.md`                     |
 
 ## Before editing
 

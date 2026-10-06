@@ -10,7 +10,7 @@ audience:
 applies_to:
   - testing
   - fixtures
-last_verified: "2026-09-29"
+last_verified: "2026-10-06"
 authority: canonical
 routing:
   intents:
@@ -57,14 +57,14 @@ The current runner requires a completed case, a recognized failure case, and an 
 
 Record evidence separately:
 
-| Label | Meaning |
-|---|---|
-| Schema validation | YAML shape accepted by the authoritative validator |
-| Policy gate | Repository policy checks accepted the file |
-| Rendered fixture verification | Selectors matched a captured completed browser DOM for the cases actually present |
-| Live raw-response verification | Selectors matched direct HTTP response HTML |
-| Live CDP verification | Stash or an equivalent CDP runtime fetched and extracted live data |
-| Production readiness | All required evidence has been recorded; not implied by any single row |
+| Label                          | Meaning                                                                           |
+| ------------------------------ | --------------------------------------------------------------------------------- |
+| Schema validation              | YAML shape accepted by the authoritative validator                                |
+| Policy gate                    | Repository policy checks accepted the file                                        |
+| Rendered fixture verification  | Selectors matched a captured completed browser DOM for the cases actually present |
+| Live raw-response verification | Selectors matched direct HTTP response HTML                                       |
+| Live CDP verification          | Stash or an equivalent CDP runtime fetched and extracted live data                |
+| Production readiness           | All required evidence has been recorded; not implied by any single row            |
 
 ## Commands
 
