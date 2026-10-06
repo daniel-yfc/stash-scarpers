@@ -98,7 +98,7 @@ For meaningful site coverage, include detail layouts where variation is plausibl
 
 ## CI workflow map
 
-`validate.yml` runs path-filtered schema, URL sort, repository policy, pytest, safeguards, and documentation checks. `pr-check.yml` gives changed-scraper policy feedback. `fixture-manifests.yml`, `evidence-contract.yml`, and `cdp-evidence-gate.yml` have distinct fixture/claim scopes. `scrutiny.yml` is deliberately manual and raw-response only; `link-check.yml` is an advisory Markdown link check on Markdown PRs, weekly, and manually. Read [`05_CI_Workflows.md`](05_CI_Workflows.md) for the exact seven-workflow inventory, triggers, and proof boundaries.
+`validate.yml` runs path-filtered schema, URL sort, repository policy, pytest, safeguards, and documentation checks. `pr-check.yml` gives changed-scraper policy feedback. `fixture-manifests.yml`, `evidence-contract.yml`, and `cdp-evidence-gate.yml` have distinct fixture/claim scopes. `scrutiny.yml` is deliberately manual and raw-response only; `link-check.yml` is an advisory Markdown link check on Markdown PRs, weekly, and manually. Read [`05_CI_Workflows.md`](05_CI_Workflows.md) for the exact eight-workflow inventory, triggers, and proof boundaries.
 
 The five-task authoring evaluation in [`eval-pack.md`](../skills/stash-scraper-builder/references/eval-pack.md) is not an executable GitHub Actions evaluation. No workflow result should be represented as its 5/5 score. Neither fixture control nor the CDP claim gate launches a live Stash browser session.
 

@@ -64,7 +64,7 @@ Use this checklist before emitting a scraper YAML file. Run the repository's Nod
 
 ## CI and Local Checks
 
-`validate.yml` runs path-filtered schema, URL sorting, repository policy, Python regression tests, fixture-runner self-test, committed-YAML parsing, session-material scan, and documentation checks. `pr-check.yml` reports changed-scraper policy results. `fixture-manifests.yml`, `evidence-contract.yml`, and `cdp-evidence-gate.yml` have separate evidence scopes. `link-check.yml` is advisory; `scrutiny.yml` is manual raw-response inspection. See [`docs/05_CI_Workflows.md`](../../../docs/05_CI_Workflows.md) for triggers and all seven workflow responsibilities.
+`validate.yml` runs path-filtered schema, URL sorting, repository policy, Python regression tests, fixture-runner self-test, committed-YAML parsing, session-material scan, and documentation checks. `pr-check.yml` reports changed-scraper policy results. `fixture-manifests.yml`, `evidence-contract.yml`, and `cdp-evidence-gate.yml` have separate evidence scopes. `link-check.yml` is advisory; `scrutiny.yml` is manual raw-response inspection. See [`docs/05_CI_Workflows.md`](../../../docs/05_CI_Workflows.md) for triggers and all eight workflow responsibilities.
 
 ```bash
 node validator/index.mjs -a --ci
