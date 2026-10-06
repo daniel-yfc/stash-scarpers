@@ -9,7 +9,7 @@
 # when the scene already stores a URL; scraping a URL-less scene passed the
 # literal "{url}" to CDP (Cannot navigate to invalid URL), and the zero-row
 # fragment result triggered the upstream Stash nil-pointer panic in
-# processSceneRelationships (see scraping-failures.md). Use sceneByURL, or
+# processSceneRelationships (see debugging.md). Use sceneByURL, or
 # sceneByName → sceneByQueryFragment, instead.
 # 2026-10-06: fixed Details class undercol → under_col and Tags headings
 # (モデルタイプ / キーワード) against live DOM.

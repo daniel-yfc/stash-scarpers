@@ -62,7 +62,7 @@ These templates contain placeholders and may not extract data until implementati
 | Script YAML and Python I/O contract | [`references/script-actions.md`](../skills/stash-scraper-builder/references/script-actions.md)       |
 | Schema and entry-point checklist    | [`references/schema-checklist.md`](../skills/stash-scraper-builder/references/schema-checklist.md)   |
 | Five-task regression pack           | [`references/eval-pack.md`](../skills/stash-scraper-builder/references/eval-pack.md)                 |
-| Skill-local template checklist      | [`references/template-workflow.md`](../skills/stash-scraper-builder/references/template-workflow.md) |
+| Skill-local template checklist      | [`references/authoring-checklist.md`](../skills/stash-scraper-builder/references/authoring-checklist.md) |
 
 ## Naming and format rules
 

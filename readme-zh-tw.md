@@ -27,7 +27,7 @@ routing:
 
 ## 建置流程
 
-1. 先讀 [AGENTS.md](AGENTS.md)、[SKILL.md](skills/stash-scraper-builder/SKILL.md) 與 [閱讀順序](skills/stash-scraper-builder/references/skill-read-order.md)；再按需求讀 [來源選擇](skills/stash-scraper-builder/references/source-selection.md) 與 [機密政策](skills/stash-scraper-builder/references/phase0-secrets-policy.md)。
+1. 先讀 [AGENTS.md](AGENTS.md)、[SKILL.md](skills/stash-scraper-builder/SKILL.md) 與 [閱讀順序](skills/stash-scraper-builder/references/skill-read-order.md)；再按需求讀 [執行環境選擇](skills/stash-scraper-builder/SKILL.md#runtime-selection) 與 [機密政策](skills/stash-scraper-builder/references/phase0-secrets-policy.md)。
 2. 檢查目標網站真正的 URL、回應格式、語系及存取限制，保存來源 URL 與日期。不要虛構搜尋端點、模式或 selector；無法存取時標記 `UNVERIFIED`。
 3. 從 [templates/](templates/README.md) 或已驗證的相近檔案起步。公開 YAML 放在 `scrapers/<CamelCaseName>.yml`，保留根層 `name:`；不得在任何版本、fixture 或報告內重現憑證、cookie、token 或瀏覽器設定檔內容。
 4. 選用已證實足夠的最簡執行方式：XPath → 真正的 JSON 回應 → 必要的 script → 必須渲染或獲准互動時才用 CDP。HTML 中內嵌 JSON 不會自動變成 `scrapeJson` 可讀的 JSON 回應。僅實作網站確實支援的入口，保留來源語言。

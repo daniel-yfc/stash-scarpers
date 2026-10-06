@@ -151,7 +151,7 @@ Before deploying any scraper:
 - Skill documentation: [`skills/stash-scraper-builder/`](../skills/stash-scraper-builder/)
 - CDP workflow: [`../skills/stash-scraper-builder/references/cdp-workflow.md`](../skills/stash-scraper-builder/references/cdp-workflow.md)
 - Schema checklist: [`../skills/stash-scraper-builder/references/schema-checklist.md`](../skills/stash-scraper-builder/references/schema-checklist.md)
-- Scraping failures: [`../skills/stash-scraper-builder/references/scraping-failures.md`](../skills/stash-scraper-builder/references/scraping-failures.md)
+- Scraping failures: [`../skills/stash-scraper-builder/references/debugging.md`](../skills/stash-scraper-builder/references/debugging.md)
 - CommunityScrapers canonical reference: https://deepwiki.com/stashapp/CommunityScrapers/
 
 ## Questions?

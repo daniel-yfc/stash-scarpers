@@ -55,7 +55,7 @@ The official Node/Ajv validator is the only supported validator path. The remove
 - Keep root scraper `name:` and do not emit unsupported `documentHeader` or `$vars` keys.
 - `sceneByFragment` is optional unless the target site verifiably supports it.
 - Official CommunityScrapers schema and validator override local stubs and prose.
-- A validator pass is not a Stash runtime load pass; record loader evidence separately (see `skills/stash-scraper-builder/references/incident-reviews.md`, Incident 3).
+- A validator pass is not a Stash runtime load pass; record loader evidence separately (see `skills/stash-scraper-builder/references/debugging.md`, Incident 3).
 
 ## Skill handoff
 

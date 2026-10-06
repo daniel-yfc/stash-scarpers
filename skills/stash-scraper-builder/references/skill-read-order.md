@@ -31,7 +31,7 @@ Read repository-level routing before skill-level guidance.
 
 7. `SKILL.md` — skill contract and authoring workflow
 8. `references/out-of-scope.md` — confirm the task belongs to the skill
-9. `references/source-selection.md` — select XPath, JSON, script, or CDP
+9. `SKILL.md` § Runtime selection — select XPath, JSON, script, or CDP
 10. `references/phase0-secrets-policy.md` — when authentication or private paths are involved
 
 ## Specialized references
@@ -40,16 +40,15 @@ Read repository-level routing before skill-level guidance.
 | ---------------------- | -------------------------------------------------------------------------------------- |
 | New XPath scraper      | `xpath-patterns.md` → `schema-checklist.md` → `post-processing.md`                     |
 | New JSON scraper       | `json-patterns.md` → `json-examples.md` → `schema-checklist.md` → `post-processing.md` |
-| Script scraper         | `script-actions.md` → `template-workflow.md` → `schema-checklist.md`                   |
+| Script scraper         | `script-actions.md` → `authoring-checklist.md` → `schema-checklist.md`                 |
 | CDP/login scraper      | `cdp-workflow.md` → `phase0-secrets-policy.md` → `schema-checklist.md`                 |
-| Dates/post-processing  | `date-formats.md` → `post-processing.md`                                               |
-| Field quality          | `title-patterns.md` → `performer-cleaning.md` → `post-processing.md`                   |
+| Dates/post-processing  | `post-processing.md` (§ Date formats)                                                  |
+| Field quality          | `field-quality.md` → `post-processing.md`                                              |
 | Examples               | `examples.md` → `json-examples.md`                                                     |
-| Best practices         | `best-practices.md` → `advanced-patterns.md` → `multi-site-network-scrapers.md`        |
-| Debugging failures     | `scraping-failures.md` → `incident-reviews.md`                                         |
-| Advanced patterns      | `advanced-patterns.md`                                                                 |
+| Best practices         | `best-practices.md` → `multi-site-network-scrapers.md`                                 |
+| Debugging failures     | `debugging.md`                                                                         |
 | Regression/evaluation  | `eval-pack.md` → repository `tools/tests/` and validation commands                     |
-| Verification metadata  | `verification-metadata-ref.md` → `docs/verification-metadata.md`                       |
+| Verification metadata  | `docs/verification-metadata.md`                                                        |
 | Live-site verification | repository `docs/06_Testing_Guide.md` → `docs/LIVE_TEST_STATUS.md`                     |
 
 ## Before editing

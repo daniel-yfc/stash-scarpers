@@ -71,3 +71,36 @@ Image:
 - Use `concat` when several nodes should become one string (Details, mixed `<br>`).
 - Use `split` when one string should become an array.
 - Avoid `subScraper` unless the value exists only on a second page.
+
+## Date formats
+
+Stash uses Go-style reference time layouts for `parseDate`. The reference time is `Mon Jan 2 15:04:05 MST 2006`.
+
+| Site format       | Go layout         | Example input    |
+| ----------------- | ----------------- | ---------------- |
+| `2006-01-02`      | `2006-01-02`      | `2024-03-15`     |
+| `02 Jan 2006`     | `02 Jan 2006`     | `15 Mar 2024`    |
+| `January 2, 2006` | `January 2, 2006` | `March 15, 2024` |
+| `02/01/2006`      | `02/01/2006`      | `15/03/2024`     |
+
+Broken vs. fixed:
+
+```yaml
+# Broken — uses non-Go tokens, will silently produce wrong or empty dates
+parseDate: "YYYY-MM-DD"
+
+# Fixed — uses Go reference time
+parseDate: "2006-01-02"
+```
+
+Always apply `replace` before `parseDate` when the raw date string contains noise:
+
+```yaml
+Date:
+  selector: //span[@class="date"]/text()
+  postProcess:
+    - replace:
+        regex: "Published: "
+        with: ""
+    - parseDate: "January 2, 2006"
+```

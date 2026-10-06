@@ -8,7 +8,7 @@ REFS_DIR = SKILL_DIR / "references"
 CORE_REFERENCES = [
     "xpath-patterns.md",
     "json-patterns.md",
-    "date-formats.md",
+    "post-processing.md",
     "schema-checklist.md",
     "scraper.schema.json",
     "script-actions.md",

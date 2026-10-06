@@ -6,7 +6,7 @@ This repository builds and verifies Stash scraper YAML. It is not the upstream S
 
 ## Build a scraper
 
-1. Read [repository boundaries](AGENTS.md), the [scraper skill](skills/stash-scraper-builder/SKILL.md), and its [read order](skills/stash-scraper-builder/references/skill-read-order.md). Select the relevant references; use [source selection](skills/stash-scraper-builder/references/source-selection.md) and [security policy](skills/stash-scraper-builder/references/phase0-secrets-policy.md).
+1. Read [repository boundaries](AGENTS.md), the [scraper skill](skills/stash-scraper-builder/SKILL.md), and its [read order](skills/stash-scraper-builder/references/skill-read-order.md). Select the relevant references; use [runtime selection](skills/stash-scraper-builder/SKILL.md#runtime-selection) and [security policy](skills/stash-scraper-builder/references/phase0-secrets-policy.md).
 2. Inspect actual target URLs and responses. Record the entity, supported entry points, page language, source URL, access restrictions, and a known detail page. Do not invent search endpoints, modes, or selectors. If access fails, label the behavior unverified.
 3. Copy the matching scaffold from [templates](templates/README.md) or a verified analogous file. Put public YAML in `scrapers/<CamelCaseName>.yml`; keep root `name:` and repository naming/date conventions. Do not copy credentials or session material, even into private files.
 4. Use the smallest demonstrated runtime: public HTML with XPath → an actual JSON response with `scrapeJson` → a necessary script action → CDP only for demonstrated rendering or authorized interaction. Embedded JSON in HTML is not automatically a JSON response. Add only supported entry points and keep scraped values in the source language.

@@ -53,10 +53,19 @@ xPathScrapers:
 
 ## Runtime selection
 
-- Public HTML → `scrapeXPath` with `xPathScrapers`.
-- Real JSON body → `scrapeJson` with `jsonScrapers`.
-- Existing shared Python implementation → `script`.
-- Login, paywall, JavaScript-only, or human-check flow → top-level `driver.useCDP: true` after reading `references/cdp-workflow.md`.
+Choose the simplest viable implementation path before writing any scraper.
+
+| Situation                                            | Approach                                                               | Avoid when                                     |
+| ---------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------- |
+| Public HTML, stable fields                           | `scrapeXPath` with `xPathScrapers`                                     | Content is JavaScript-only or requires login   |
+| Real JSON body or endpoint                           | `scrapeJson` with `jsonScrapers`                                       | Response only appears after browser automation |
+| Existing shared Python implementation                | `script`                                                               | A simpler declarative scraper is enough        |
+| Login, paywall, JavaScript-only, or human-check flow | CDP (`driver.useCDP: true`) after reading `references/cdp-workflow.md` | Direct HTTP scraping already works             |
+
+- Start with the least complex path that reliably extracts the target metadata.
+- Prefer declarative YAML over scripts when XPath or JSON selectors are sufficient.
+- Use CDP only when direct requests are blocked by login, JavaScript rendering, or anti-bot interstitials.
+- Stash-box / Stash GraphQL is out of scope for this skill (see `references/out-of-scope.md`).
 
 ## Core constraints
 
@@ -69,23 +78,23 @@ xPathScrapers:
 
 ## Reference map
 
-| Need                        | Reference                                                                                                      |
-| --------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| Read order and ownership    | `references/skill-read-order.md`                                                                               |
-| Source selection & scope    | `references/source-selection.md`, `references/out-of-scope.md`                                                 |
-| Security & secrets policy   | `references/phase0-secrets-policy.md`                                                                          |
-| Template workflow           | `references/template-workflow.md`                                                                              |
-| XPath extraction            | `references/xpath-patterns.md`                                                                                 |
-| JSON extraction             | `references/json-patterns.md` and `references/json-examples.md`                                                |
-| Script actions              | `references/script-actions.md`                                                                                 |
-| CDP / Headless workflow     | `references/cdp-workflow.md`                                                                                   |
-| Dates & formatting          | `references/date-formats.md`                                                                                   |
-| Post-processing             | `references/post-processing.md`                                                                                |
-| Field quality               | `references/title-patterns.md`, `references/performer-cleaning.md`                                             |
-| Best practices & patterns   | `references/best-practices.md`, `references/advanced-patterns.md`, `references/multi-site-network-scrapers.md` |
-| Failures & incident reviews | `references/scraping-failures.md`, `references/incident-reviews.md`                                            |
-| Examples & validation       | `references/examples.md`, `references/schema-checklist.md`, `references/eval-pack.md`                          |
-| Upstream sources            | `references/UPSTREAM_SOURCES.md`                                                                               |
+| Need                      | Reference                                                                             |
+| ------------------------- | ------------------------------------------------------------------------------------- |
+| Read order and ownership  | `references/skill-read-order.md`                                                      |
+| Source selection & scope  | `SKILL.md` § Runtime selection, `references/out-of-scope.md`                          |
+| Security & secrets policy | `references/phase0-secrets-policy.md`                                                 |
+| Authoring checklist       | `references/authoring-checklist.md`                                                   |
+| XPath extraction          | `references/xpath-patterns.md`                                                        |
+| JSON extraction           | `references/json-patterns.md` and `references/json-examples.md`                       |
+| Script actions            | `references/script-actions.md`                                                        |
+| CDP / Headless workflow   | `references/cdp-workflow.md`                                                          |
+| Dates & formatting        | `references/post-processing.md` (§ Date formats)                                      |
+| Post-processing           | `references/post-processing.md`                                                       |
+| Field quality             | `references/field-quality.md`                                                         |
+| Best practices & patterns | `references/best-practices.md`, `references/multi-site-network-scrapers.md`           |
+| Debugging                 | `references/debugging.md`                                                             |
+| Examples & validation     | `references/examples.md`, `references/schema-checklist.md`, `references/eval-pack.md` |
+| Upstream sources          | `references/UPSTREAM_SOURCES.md`                                                      |
 
 ## Output contract
 
@@ -101,7 +110,7 @@ xPathScrapers:
 - [ ] Only verified modes are included.
 - [ ] Required fragment `queryURL` is present for XPath/JSON actions.
 - [ ] Official validator passes, or local-stub limitations are documented.
-- [ ] The committed blob loads in the Stash runtime; a validator pass alone is not load evidence (see `references/incident-reviews.md`, Incident 3).
+- [ ] The committed blob loads in the Stash runtime; a validator pass alone is not load evidence (see `references/debugging.md`, Incident 3).
 - [ ] URL arrays are sorted.
 - [ ] Key fields are verified on the target pages/responses.
 - [ ] No credentials appear in public files.

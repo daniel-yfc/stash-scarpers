@@ -6,7 +6,29 @@ Canonical reference:
 
 ## Structure & reuse
 
-- Use YAML anchors (`&` / `*`) for shared scene/group selectors **only within the same file**, and only when a block is reused **3+ times**.
+- Use YAML anchors (`&` / `*`) for shared scene/group selectors **only within the same file**, and only when a block is reused **3+ times**. Anchors live inside the **root-level** `xPathScrapers` block; entry points reference it via `scraper:` (entry points have `additionalProperties: false` and must not carry an inline `xPathScrapers:`).
+
+```yaml
+name: ExampleAnchors
+
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - https://example.test
+    scraper: sceneScraper
+
+sceneByFragment:
+  action: scrapeXPath
+  queryURL: https://example.test/search?q={url}
+  scraper: sceneScraper
+
+xPathScrapers:
+  sceneScraper: &scene_selectors
+    scene:
+      Title: //h1/text()
+      Date: //span[@class="date"]/text()
+```
+
 - Use `fixed:` studio for single-studio sites; use `map` for known variants (missed keys pass through unchanged).
 - Add `# Last Updated YYYY-MM-DD` at the **end of the file** (EOF).
 - Filename: CamelCase (site or network name).
@@ -18,6 +40,8 @@ Build a small matrix: domain → display name, handling:
 - Apostrophe / hyphen variants (`Staggers'`, `Staggers-`)
 - HD / POV casing (`HD`, `POV`)
 - Parent / child studio relationships
+
+Normalize site names to canonical studio names with `map` inside `Name.postProcess` (the official `studioObject` allows only `Name` / `URL` / `URLs`, so `map` cannot be a sibling of `Name:`).
 
 ```yaml
 Studio:
@@ -40,8 +64,14 @@ Studio:
 
 - Overly deep or fragile XPath (`/html/body/div[3]/...`)
 - Assuming every field exists on every page
-- Using `subScraper` by default (see `advanced-patterns.md`)
+- Using `subScraper` by default (see Legacy patterns below)
 - Not testing with recent, old, and edge-case scenes
+
+## Legacy patterns
+
+`subScraper` chains a second scraper call to enrich initial results. It is no longer recommended for new scrapers because it adds maintenance complexity.
+
+If you encounter an existing scraper that uses `subScraper`, prefer rewriting it as a script action or a single consolidated XPath/JSON scraper unless the chained lookup is genuinely unavoidable.
 
 ## Minimal Nubiles-style template (G1)
 

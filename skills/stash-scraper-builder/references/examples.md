@@ -21,18 +21,6 @@ xPathScrapers:
 
 Use `performerByFragment` only with `action: script`, when that mode is actually supported by the target and the required script dependency exists. `action: stash` is outside this skill's scope. Entry-point mappings reference root-level scraper definitions; they do not contain an inline `xPathScrapers` block.
 
-## parseDate — broken vs. fixed
-
-```yaml
-# Broken — not a Go layout, will silently fail or produce wrong dates
-parseDate: "YYYY-MM-DD"
-
-# Fixed — use Go-style reference time: Mon Jan 2 15:04:05 MST 2006
-parseDate: "2006-01-02"
-```
-
-Common Go layout tokens: `2006` = year, `01` = month, `02` = day, `15` = 24h hour, `04` = minute, `05` = second.
-
 ## CJK / performer separator fixtures
 
 When testing scrapers against Japanese or Chinese sites, include at least one fixture with:

@@ -151,12 +151,6 @@ documents:
     layer: skill
     status: active
     intents: [agent-routing, read-order]
-  - doc_id: REF-CORE-10
-    title: Source Selection
-    path: skills/stash-scraper-builder/references/source-selection.md
-    layer: skill
-    status: active
-    intents: [runtime-selection]
   - doc_id: REF-CORE-15
     title: Best Practices
     path: skills/stash-scraper-builder/references/best-practices.md
@@ -217,30 +211,24 @@ documents:
     layer: skill
     status: active
     intents: [examples]
-  - doc_id: REF-FIELD-50
-    title: Date Formats
-    path: skills/stash-scraper-builder/references/date-formats.md
-    layer: skill
-    status: active
-    intents: [dates, post-processing]
   - doc_id: REF-FIELD-51
     title: Post Processing
     path: skills/stash-scraper-builder/references/post-processing.md
     layer: skill
     status: active
     intents: [post-processing]
-  - doc_id: REF-FIELD-52
-    title: Title Patterns
-    path: skills/stash-scraper-builder/references/title-patterns.md
+  - doc_id: REF-FIELD-54
+    title: Field Quality
+    path: skills/stash-scraper-builder/references/field-quality.md
     layer: skill
     status: active
-    intents: [titles, field-quality]
-  - doc_id: REF-FIELD-53
-    title: Performer Cleaning
-    path: skills/stash-scraper-builder/references/performer-cleaning.md
+    intents: [titles, performers, field-quality]
+  - doc_id: REF-OPS-72
+    title: Debugging
+    path: skills/stash-scraper-builder/references/debugging.md
     layer: skill
     status: active
-    intents: [performers, field-quality]
+    intents: [debugging, failures, incidents]
   - doc_id: REF-VERIFY-60
     title: Schema Checklist
     path: skills/stash-scraper-builder/references/schema-checklist.md
@@ -253,12 +241,6 @@ documents:
     layer: skill
     status: active
     intents: [evaluation, regression]
-  - doc_id: REF-VERIFY-62
-    title: Verification Metadata Reference
-    path: skills/stash-scraper-builder/references/verification-metadata-ref.md
-    layer: skill
-    status: active
-    intents: [verification, metadata, staleness]
     read_after: [REF-VERIFY-60, REF-VERIFY-61]
   - doc_id: REF-OPS-00
     title: Upstream Sources
@@ -266,27 +248,9 @@ documents:
     layer: skill
     status: active
     intents: [upstream-sources, provenance]
-  - doc_id: REF-OPS-70
-    title: Scraping Failures
-    path: skills/stash-scraper-builder/references/scraping-failures.md
-    layer: skill
-    status: active
-    intents: [debugging, failures]
-  - doc_id: REF-OPS-71
-    title: Incident Reviews
-    path: skills/stash-scraper-builder/references/incident-reviews.md
-    layer: skill
-    status: active
-    intents: [incidents, debugging]
-  - doc_id: REF-ADV-80
-    title: Advanced Patterns
-    path: skills/stash-scraper-builder/references/advanced-patterns.md
-    layer: skill
-    status: active
-    intents: [advanced-patterns]
   - doc_id: REF-TPL-90
-    title: Skill Template Workflow
-    path: skills/stash-scraper-builder/references/template-workflow.md
+    title: Authoring Checklist
+    path: skills/stash-scraper-builder/references/authoring-checklist.md
     layer: skill
     status: active
     intents: [templates, workflow]

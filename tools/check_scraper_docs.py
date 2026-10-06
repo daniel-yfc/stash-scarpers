@@ -39,7 +39,7 @@ def main():
 
     for path in sorted(DOC_ROOT.rglob("*.md")):
         text = path.read_text(encoding="utf-8")
-        if path.name != "incident-reviews.md":
+        if path.name != "debugging.md":
             if "No root `name" in text or "禁止 root `name" in text:
                 failures.append(f"{path}: documentation still forbids root name")
             if "sceneByFragment` prevents" in text:

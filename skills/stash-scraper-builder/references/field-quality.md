@@ -1,12 +1,59 @@
-# Performer name cleaning
+# Field quality
 
-**Load when:** building Performer Name (and optionally Gender).
+**Load when:** building Title cleaning or Performer Name (and optionally Gender).
 
-> **概要（zh-TW）：** 漢字 > 英語 > 假名。保留 `・` / `-`。無明確性別欄位時預設不寫 Gender；單性別站才用 `fixed`。別名用 `replace` 去掉 `/` 後段。
+> **概要（zh-TW）：** Title 有序 `replace`：去標籤括號 → 去副檔名 → 折疊空白 → trim；Performer 漢字 > 英語 > 假名，保留 `・` / `-`，無明確性別欄位時不寫 Gender。
 
 Canonical reference: https://deepwiki.com/stashapp/CommunityScrapers/10.3-best-practices
 
-## Priority
+## Title patterns
+
+Apply in this order. Do not hard-code expected titles.
+
+```yaml
+postProcess:
+  - replace:
+      # 1. Strip bracket tags that are not part of the real title
+      - regex: "\\s*\\[.*?\\]\\s*$"
+        with: ""
+      - regex: "\\s*【.*?】\\s*$"
+        with: ""
+      - regex: "\\s*（.*?）\\s*$"
+        with: ""
+      # 2. Strip file extensions
+      - regex: "\\.(mp4|mkv|avi|wmv|flv|ts|mpg|mpeg|rmvb|mov|m4v|iso)\\s*$"
+        with: ""
+      # 3. Collapse whitespace
+      - regex: "\\s{2,}"
+        with: " "
+      # 4. Trim
+      - regex: "^\\s+|\\s+$"
+        with: ""
+```
+
+## Site-specific studio prefix
+
+If the site always prefixes titles with the studio/brand, add one more `replace` before step 3:
+
+```yaml
+- regex: "^(BrandName\\s*[:：-]?\\s*)"
+  with: ""
+```
+
+Do not translate the remaining title. Keep the source language.
+
+## CJK punctuation
+
+For sites that mix full/half-width punctuation, adjust step 1 to include full-width brackets or add a dedicated pass:
+
+```yaml
+- regex: "\\s*[\u3000-\u303f].*?\\s*$"
+  with: ""
+```
+
+Tune per site; do not apply blindly.
+
+## Performer name cleaning
 
 | Input                              | Output     | Pattern                    |
 | ---------------------------------- | ---------- | -------------------------- |

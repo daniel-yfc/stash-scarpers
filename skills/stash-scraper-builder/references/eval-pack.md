@@ -11,7 +11,7 @@
 - [ ] `sceneByName` ⇒ `sceneByQueryFragment` present; otherwise both omitted.
 - [ ] Every selector is either verified on a real page/response or marked `# UNVERIFIED` with an explanation.
 - [ ] Official CommunityScrapers validator passes (or local stub with known limitations noted).
-- [ ] The complete YAML loads in the Stash runtime (loader pass). A validator pass alone is not load evidence (see `incident-reviews.md`, Incident 3).
+- [ ] The complete YAML loads in the Stash runtime (loader pass). A validator pass alone is not load evidence (see `debugging.md`, Incident 3).
 - [ ] Script tasks include the three install prerequisites in the **response**.
 - [ ] CDP task includes visible-CDP setup steps (or explicitly states "out of scope").
 
@@ -48,9 +48,9 @@ A scraper that returns the wrong studio is a fail, even if the YAML is valid.
 **Requirements:**
 
 - `sceneByURL` required; add `sceneByFragment` only if the site verifiably supports fragment scraping (never as a nil-pointer workaround).
-- Title cleaning from `title-patterns.md`.
+- Title cleaning from `field-quality.md`.
 - Date with `parseDate` (Go layout matching the site).
-- Performers with canonical JS from `performer-cleaning.md`; `Gender` omitted unless explicit.
+- Performers with canonical JS from `field-quality.md`; `Gender` omitted unless explicit.
 - Studio `Name` only (or `fixed` for single-brand).
 
 **Expected output:** one complete YAML, all selectors verified or marked `# UNVERIFIED`.
