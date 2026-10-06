@@ -106,14 +106,13 @@ xPathScrapers:
                 - regex: ^#
                   with: ""
 
-  # Gallery object has no Duration field; everything else mirrors sceneScraper.
+  # Gallery object has no Duration or Image field; everything else mirrors sceneScraper.
   galleryScraper:
     gallery:
       Title: *rgbeeTitle
       Code: *rgbeeCode
       Details: *rgbeeDetails
       Date: *rgbeeDate
-      Image: *rgbeeImage
       URLs: *rgbeeURLs
       Studio: *rgbeeStudio
       Performers: *rgbeePerformers

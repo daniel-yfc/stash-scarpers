@@ -1,5 +1,5 @@
-# Gayerdar scraper. Historical zh-TW rendered-DOM inspection is recorded in
-# evidence/gayerdar-scraper-development-2026-09-28.md. Reproducible fixture
+# Gayerdar scraper. Historical zh-TW rendered-DOM inspection (2026-09-28,
+# record not committed to this repo). Reproducible fixture
 # verification and live Stash/CDP verification are not established.
 # No cookies, credentials, tokens, or browser profile data.
 #
@@ -25,6 +25,7 @@ sceneByURL:
 
 sceneByFragment:
   action: scrapeXPath
+  queryURL: "{url}"
   scraper: sceneScraper
 
 sceneByName:
@@ -54,6 +55,7 @@ performerByURL:
 
 performerByFragment:
   action: scrapeXPath
+  queryURL: "{url}"
   scraper: performerScraper
 
 performerByName:
@@ -103,8 +105,7 @@ xPathScrapers:
                   with: ""
       Performers:
         Name:
-          selector: //a[contains(@href,"/models/")]
-          subSelector: .//h6[contains(@class,"title")]/text()
+          selector: //a[contains(@href,"/models/")]//h6[contains(@class,"title")]/text()
       URLs:
         selector: //link[@rel="canonical"]/@href
         postProcess:
