@@ -1,20 +1,18 @@
-# Last Updated: 2026-09-06
 # ACCEED (acceed.jp) — public CDP version.
-# Verification status (2026-09-06, anonymous fetch):
-#   searchScraper: VERIFIED against https://acceed.jp/search.php?s=ACST
-#     - cards: div.item_img (class also carries movie_new/dvd_new variants)
-#     - title: h6.overflow > a (first h6 in div.des)
-#     - link:  a[href^='/detail.'] ; image: ./pic_base/product/{CODE}/…_pickup.jpg
-#     - tags:  div.index-label a.btn (search.php?c=) + models (search.php?model=on&c=)
-#   sceneScraper: UNVERIFIED — detail pages redirect anonymous sessions to
-#     /login.php (session-gated). Selectors kept from prior research; verify
-#     via CDP with a logged-in browser before relying on them.
-# Test URLs from ACCEED-2.md:
-#   - https://acceed.jp/detail.ACST424.html
-#   - https://acceed.jp/detail.ACST426.html
-#   - https://acceed.jp/detail.OCON059.html
+# Verification status:
+#   searchScraper: VERIFIED 2026-09-06 against https://acceed.jp/search.php?s=ACST
+#     - cards: div.item_img; title: h6.overflow > a; link: a[href^='/detail.']
+#   sceneScraper: REWRITTEN 2026-10-06 against live rendered DOM (logged in),
+#     detail.ACSM344_1.html + detail.ACSM051.html:
+#     - title: div#content4 > div.title > blockquote > h2
+#     - cover: div.show > a.jacket1/@href ({CODE}_l.jpg)
+#     - spec: ul.thongso > li > div.trai + div.phai; code in hidden
+#       input[name=product_code]; NO canonical on detail pages
+#     - one ul.select with li.cf section headers
+#       (シリーズ/出演モデル/モデルタイプ/プレイ内容/…)
 # Search URL: https://acceed.jp/search.php?s={keyword}
 # Expected fields: Title, Date, Image, Code, URL, Tags, Details, Studio, Performer
+# Last Updated: 2026-10-06
 
 name: ACCEED
 
@@ -101,13 +99,24 @@ xPathScrapers:
                   with: ""
 
   sceneScraper:
+    # Live DOM verified 2026-10-06 (logged in) against
+    # detail.ACSM344_1.html and detail.ACSM051.html:
+    # - title: main > div#content4 > div.title > blockquote > h2
+    # - cover: div.show > a.jacket1/@href ({CODE}_l.jpg)
+    # - spec table: ul.thongso > li > div.trai (label) + div.phai (value);
+    #   hidden input[name=product_code] inside the cart form
+    # - categories: ONE ul.select, sections split by li.cf headers
+    #   (シリーズ / 出演モデル / モデルタイプ / プレイ内容 / …)
+    # - NO link[rel=canonical] on detail pages
+    # - series (Studio) absent on some pages (e.g. ACSM344)
     common:
-      $detail: "//div[contains(@class,'detail_box')]"
-      $info: "//div[@id='main']"
-
+      $spec: "//ul[contains(@class,'thongso')]"
+      $cats: "//ul[contains(@class,'select')]"
     scene:
       Title:
-        selector: "//h1[@id='title'] | //h1[contains(@class,'product_title')]"
+        # h2 embeds the favorite-button span (with text) — take the first
+        # text node only.
+        selector: //div[@id='content4']//blockquote/h2/text()[normalize-space()][1]
         postProcess:
           - replace:
               - regex: "\\s{2,}"
@@ -116,39 +125,17 @@ xPathScrapers:
                 with: ""
 
       Code:
-        selector: "//div[contains(@class,'product_code')] | //p[contains(.,'商品コード')]"
+        selector: "$spec//input[@name='product_code']/@value"
         postProcess:
-          - javascript: |
-              var v = value || "";
-              var m = v.match(/([A-Z]{2,}\d{3,})/i);
-              return m ? m[1].toUpperCase() : "";
+          - replace:
+              - regex: "^\\s+|\\s+$"
+                with: ""
 
       URLs:
-        selector: "//link[@rel='canonical']/@href | //meta[@property='og:url']/@content"
-        concat: "\n"
-        postProcess:
-          - javascript: |
-              var seen = {};
-              var out = [];
-              function add(u) {
-                u = (u || "").replace(/^\s+|\s+$/g, "");
-                if (!u) return;
-                u = u.replace(/^\/\//, "https://");
-                u = u.replace(/^http:\/\//i, "https://");
-                if (u.indexOf("http") !== 0) {
-                  if (u.charAt(0) !== "/") return;
-                  u = "https://acceed.jp" + u;
-                }
-                if (seen[u]) return;
-                seen[u] = true;
-                out.push(u);
-              }
-              (value || "").split(/\n/).forEach(add);
-              return out.join("\n");
-        split: "\n"
+        fixed: "{inputURL}"
 
       Date:
-        selector: "//div[contains(@class,'release_date')] | //p[contains(.,'発売日')]"
+        selector: "$spec//li[div[contains(@class,'trai')][contains(.,'DVD発売')]]/div[contains(@class,'phai')]/text()"
         postProcess:
           - javascript: |
               var v = value || "";
@@ -162,33 +149,39 @@ xPathScrapers:
           - parseDate: "2006-01-02"
 
       Details:
-        selector: "$detail//div[contains(@class,'description')]//text()[normalize-space()] | $detail//p[contains(@class,'comment')]//text()[normalize-space()]"
-        concat: "\n"
+        # Blurb sits right after ul.select ends (exact wrapper unconfirmed);
+        # page template sometimes repeats it — paragraphs deduped below.
+        selector: "$cats/following-sibling::p//text()[normalize-space()] | $cats/following-sibling::text()[normalize-space()]"
+        concat: "\n\n"
         postProcess:
           - javascript: |
               var v = value || "";
               v = v.replace(/\r\n/g, "\n");
               v = v.replace(/[ \t]+\n/g, "\n");
-              v = v.replace(/^\s*商品説明\s*/g, "");
-              v = v.replace(/\n{3,}/g, "\n\n");
-              return v.replace(/^\s+|\s+$/g, "");
+              v = v.replace(/\n{3,}/g, "\n\n").trim();
+              var seen = {}, out = [];
+              v.split(/\n\n+/).forEach(function (p) {
+                var k = p.trim();
+                if (k && !seen[k]) { seen[k] = 1; out.push(k); }
+              });
+              return out.join("\n\n");
 
       Image:
-        selector: "//div[@id='detail_image']//img[contains(@src,'/pic_base/')]/@src | //meta[@property='og:image']/@content"
+        selector: "//div[contains(@class,'show')]//a[contains(@class,'jacket1')]/@href"
         postProcess:
           - javascript: |
               var v = value || "";
               if (!v) return "";
               v = v.replace(/\?.*$/, "");
               v = v.replace(/^\/\//, "https://");
-              v = v.replace(/^http:\/\//i, "https://");
+              v = v.replace(/^\.\//, "https://acceed.jp/");
               if (/^https?:/i.test(v)) return v;
               if (v.charAt(0) === "/") return "https://acceed.jp" + v;
               return "https://acceed.jp/" + v;
 
       Studio:
         Name:
-          selector: "//div[contains(@class,'maker')]//a | //p[contains(.,'メーカー')]//a"
+          selector: "$spec//li[div[contains(@class,'trai')][normalize-space()='シリーズ']]/div[contains(@class,'phai')]/text()"
           postProcess:
             - replace:
                 - regex: "^\\s+|\\s+$"
@@ -196,7 +189,8 @@ xPathScrapers:
 
       Tags:
         Name:
-          selector: "$detail//div[contains(@class,'category')]//a | $detail//p[contains(@class,'tag')]//a"
+          # Skip the シリーズ section (that's Studio, not a tag).
+          selector: "$cats/li[not(contains(@class,'cf'))][not(preceding-sibling::li[contains(@class,'cf')][1]/a[@title='シリーズ'])]//a[contains(@href,'search.php?c=') and not(contains(@href,'model=on'))]/text()"
           postProcess:
             - replace:
                 - regex: "^\\s+|\\s+$"
@@ -204,11 +198,17 @@ xPathScrapers:
 
       Performers:
         Name:
-          selector: "$detail//div[contains(@class,'actor')]//a | $detail//p[contains(.,'出演者')]//a | //a[contains(@href,'/search.php?model=')]"
+          selector: "$cats//a[contains(@href,'search.php?model=on')]/text()"
           postProcess:
             - replace:
                 - regex: "^\\s+|\\s+$"
                   with: ""
+        URL:
+          selector: "$cats//a[contains(@href,'search.php?model=on')]/@href"
+          postProcess:
+            - replace:
+                - regex: "^/"
+                  with: "https://acceed.jp/"
 
 driver:
   useCDP: true

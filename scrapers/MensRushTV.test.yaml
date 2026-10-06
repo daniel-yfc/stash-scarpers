@@ -1,0 +1,15 @@
+# MensRushTV live-test fixtures (provided 2026-10-06)
+# search: https://www.mensrush.tv/list.php?keyword={keyword}
+# model: https://www.mensrush.tv/list.php?mid={id} (1 ~ c.a. 145)
+# custom probes (verified 2026-10-06, all HIT): performer=HIDETO, code=REO-073_DL, partial title=フレッシュサッカー部
+probes:
+  - HIDETO
+  - REO-073_DL
+  - フレッシュサッカー部
+urls:
+  - https://www.mensrush.tv/single.php?id=MR-KR2247_DL
+  - https://www.mensrush.tv/single.php?id=GT-2641_DL
+  - https://www.mensrush.tv/single.php?id=ARGA-126_DL
+  - https://www.mensrush.tv/single.php?id=NAO-512_DL
+  - https://www.mensrush.tv/single.php?id=RCHS-068_DL
+multi: true

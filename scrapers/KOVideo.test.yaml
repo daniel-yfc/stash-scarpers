@@ -1,0 +1,28 @@
+# KOVideo live-test fixtures (provided 2026-10-06)
+# search: https://ko-video.com/products/list.php?name={keyword}
+# model list: https://ko-video.com/fanspace/model_list.php?disp_number=132
+# model page examples:
+#   https://ko-video.com/products/model.php?model_id=405
+#   https://ko-video.com/products/model.php?model_id=427
+#   https://ko-video.com/products/model.php?model_id=448
+#   https://ko-video.com/products/model.php?model_id=408
+#   https://ko-video.com/products/model.php?model_id=430
+#   https://ko-video.com/products/model.php?model_id=571
+#   https://ko-video.com/products/model.php?model_id=469
+# custom probes (verified 2026-10-06, all HIT): performer=斎藤士熊, code=KERO256_DVD, partial title=デカマラグール
+probes:
+  - 斎藤士熊
+  - KERO256_DVD
+  - デカマラグール
+urls:
+  - https://ko-video.com/products/detail.php?product_code=KKE0149_DVD
+  - https://ko-video.com/products/detail.php?product_code=KKUR154_DVD
+  - https://ko-video.com/products/detail.php?product_code=KLIN038_DVD
+  - https://ko-video.com/products/detail.php?product_code=KDE101_DVD
+  - https://ko-video.com/products/detail.php?product_code=KG499_DVD
+  - https://ko-video.com/products/detail.php?product_code=KSF232_DVD
+  - https://ko-video.com/products/detail.php?product_code=KPAN121B_DVD
+  - https://ko-video.com/products/detail.php?product_code=KKE0311_DVD
+  - https://ko-video.com/products/detail.php?product_code=KBEA392_DVD
+  - https://ko-video.com/products/detail.php?product_code=KERO254_DVD
+multi: true

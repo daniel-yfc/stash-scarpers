@@ -3,7 +3,8 @@
 # Search verified 2026-08-27 from rendered /product/result?kw=雄穴
 # (ul.title_list cards: /product/detail/34124, 34114, 27341).
 # Detail sceneScraper UNVERIFIED on guest pages — product table is login-gated.
-# Last Updated: 2026-08-28
+# 2026-10-06: Image gained div.set_photo branch (set pages) against live DOM.
+# Last Updated: 2026-10-06
 
 name: CK-Download
 
@@ -128,7 +129,9 @@ xPathScrapers:
         selector: "//div[contains(@class,'intro_text')]//p[string-length(normalize-space(.)) > 10 and not(contains(@style,'color'))]//text()[normalize-space()]"
         concat: "\n\n"
       Image:
-        selector: "//div[contains(@class,'photo_flexslider')]//img[not(contains(@src,'no_image'))][1]/@src | //meta[@property='og:image']/@content"
+        # Live DOM (2026-10-06): set pages render covers in div.set_photo
+        # instead of the flexslider; og:image does not exist.
+        selector: "//div[contains(@class,'photo_flexslider')]//img[not(contains(@src,'no_image'))][1]/@src | //div[contains(@class,'set_photo')]//img[not(contains(@src,'no_image'))][1]/@src | //meta[@property='og:image']/@content"
         postProcess:
           - javascript: |
               var v = value || "";

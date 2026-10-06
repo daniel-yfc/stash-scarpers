@@ -11,7 +11,9 @@
 # fragment result triggered the upstream Stash nil-pointer panic in
 # processSceneRelationships (see scraping-failures.md). Use sceneByURL, or
 # sceneByName → sceneByQueryFragment, instead.
-# Last Updated: 2026-10-05
+# 2026-10-06: fixed Details class undercol → under_col and Tags headings
+# (モデルタイプ / キーワード) against live DOM.
+# Last Updated: 2026-10-06
 
 name: KO Shop
 
@@ -85,7 +87,7 @@ xPathScrapers:
               var v = value || "";
               return v.replace(/^[\s:：]+|[\s\u00a0]+$/gu, "").trim();
       Details:
-        selector: "//div[contains(concat(' ',normalize-space(@class),' '),' undercol ')]/div[contains(concat(' ',normalize-space(@class),' '),' ma_b30 ')][1]//text()[normalize-space()]"
+        selector: "//div[contains(concat(' ',normalize-space(@class),' '),' under_col ')]/div[contains(concat(' ',normalize-space(@class),' '),' ma_b30 ')][1]//text()[normalize-space()]"
         concat: "\n"
         postProcess:
           - replace:
@@ -128,7 +130,9 @@ xPathScrapers:
                   with: ""
       Tags:
         Name:
-          selector: "$meta/dt[normalize-space(.)='カテゴリ']/following-sibling::dd[1]//a | $meta/dt[normalize-space(.)='ジャンル']/following-sibling::dd[1]//a | $meta/dt[normalize-space(.)='キーワード']/following-sibling::dd[1]//a | $meta/dt[normalize-space(.)='モデルタイプ']/following-sibling::dd[1]//a"
+          # Live DOM (2026-10-06): headings are モデルタイプ / キーワード
+          # (カテゴリ / ジャンル do not exist on detail pages).
+          selector: "$meta/dt[normalize-space(.)='モデルタイプ']/following-sibling::dd[1]//a | $meta/dt[normalize-space(.)='キーワード']/following-sibling::dd[1]//a"
           postProcess:
             - replace:
                 - regex: '^\s+|\s+$'

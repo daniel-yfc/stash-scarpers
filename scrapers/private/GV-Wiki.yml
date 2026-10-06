@@ -1,7 +1,9 @@
 # GV-Wiki
 # Private scraper: requires session cookie. Do NOT commit to public scrapers/.
-# Verification: UNVERIFIED against live Stash.
-# Last Updated: 2026-09-05
+# Verification: live-DOM verified 2026-10-06 (Title/Image/Details fixed).
+# 2026-10-06: Details fixed — #plot-box holds text nodes + <br>, no <p>.
+# (Title/Image already used the robust class-token pattern.)
+# Last Updated: 2026-10-06
 # Validator fixes:
 #   - removed CookieURL (not allowed when useCDP is true)
 #   - sceneByURL regex -> simple prefix (url items are plain strings)
@@ -88,7 +90,14 @@ xPathScrapers:
                 with: ""
           - parseDate: "2006-01-02"
       Details:
-        selector: "$main//*[@id='plot-box']//p"
+        # Live DOM (2026-10-06): #plot-box holds text nodes + <br>, no <p>
+        # elements — the old //p selector never matched. Grab text nodes.
+        selector: "$main//*[@id='plot-box']//text()[normalize-space()]"
+        concat: "\n"
+        postProcess:
+          - replace:
+              - regex: '^\s+|\s+$'
+                with: ""
       Image:
         selector: "$main//div[contains(concat(' ', normalize-space(@class), ' '), ' swiper-slide ')][1]//img/@src"
         postProcess:

@@ -1,0 +1,7 @@
+# BRAVO live-test fixtures (browser verified 2026-10-06)
+# NOTE: site has no search box; custom keyword probes N/A.
+urls:
+  - https://www.bravo-japan.com/clips/284
+  - https://www.bravo-japan.com/clips/282
+  - https://www.bravo-japan.com/clips/283
+multi: true

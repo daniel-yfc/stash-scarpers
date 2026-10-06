@@ -62,6 +62,8 @@ xPathScrapers:
                 with: ""
       Date: &rgbeeDate
         # 發行 is the release date, not the studio.
+        # Page-dependent (verified 2026-10-06): pages without a 發行 field in
+        # section#facts legitimately return no date — not a selector bug.
         selector: //section[@id='facts']//dt[normalize-space()='發行']/following-sibling::dd[1]
         postProcess:
           - parseDate: "2006-01-02"
@@ -136,4 +138,6 @@ xPathScrapers:
       URLs:
         fixed: "{inputURL}"
 
-# Last Updated 2026-10-02
+# 2026-10-06: Date documented as page-dependent (no 發行 field on some pages);
+# search probes (筋肉大叔 / MJD-P418 / 刺青猛男) all HIT.
+# Last Updated: 2026-10-06

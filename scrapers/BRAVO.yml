@@ -18,8 +18,10 @@
 # Selector risk: Wix comp- IDs are template-stable but a site redesign
 # breaks them; re-verify comp ids against a fresh page before trusting.
 # Date/Studio: no verifiable per-clip date; studio brand omitted rather than
-# invented (site covers BRAVO/GMPD/etc. lines).
-# Last Updated: 2026-09-06
+# fabricated/invented (site covers BRAVO/GMPD/etc. lines).
+# 2026-10-06: re-verified against /clips/284, /clips/282, /clips/283 —
+# all detail selectors healthy; site has no search box (probes N/A).
+# Last Updated: 2026-10-06
 
 name: Bravo-Japan
 

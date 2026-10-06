@@ -1,0 +1,19 @@
+# KOShop live-test fixtures (provided 2026-10-06)
+# search: https://www.ko-shop.com/products/list.php?word={keyword}&class_id={labelid}
+# custom probes (verified 2026-10-06, all HIT): performer=斎藤士熊, code=KERO256, partial title=士熊M待
+probes:
+  - 斎藤士熊
+  - KERO256
+  - 士熊M待
+urls:
+  - https://www.ko-shop.com/products/detail.php?product_id=35803
+  - https://www.ko-shop.com/products/detail.php?product_id=41979
+  - https://www.ko-shop.com/products/detail.php?product_id=42411
+  - https://www.ko-shop.com/products/detail.php?product_id=40445
+  - https://www.ko-shop.com/products/detail.php?product_id=41033
+  - https://www.ko-shop.com/products/detail.php?product_id=40388
+  - https://www.ko-shop.com/products/detail.php?product_id=36210
+  - https://www.ko-shop.com/products/detail.php?product_id=36344
+  - https://www.ko-shop.com/products/detail.php?product_id=40065
+  - https://www.ko-shop.com/products/detail.php?product_id=40496
+multi: true

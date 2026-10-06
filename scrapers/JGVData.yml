@@ -1,5 +1,8 @@
 # JGVData
-# Last Updated: 2026-09-05
+# 2026-10-06: scrutiny.js 8/8 scene + 2/2 search passed; 3 detail pages
+# re-verified healthy; search probes (KEN / HBM-954 / 本番解禁) all HIT.
+# NOTE: use https://www.jgvdata.com/ (bare domain redirects to ad parking).
+# Last Updated: 2026-10-06
 # Validator fixes:
 #   - sceneByURL regex -> simple prefix (url items are plain strings)
 #   - {query} -> {} (Stash sceneByName only substitutes the {} placeholder)

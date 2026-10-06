@@ -6,6 +6,8 @@
 #
 # This site uses age-gate / login. Public CDP version requires browser session.
 # See: skills/stash-scraper-builder/references/scraping-failures.md
+# 2026-10-06: fixed Title selector (div.title_bar is a sibling of
+# div.detail_main_col, not a descendant) against live DOM.
 # Last Updated: 2026-10-06
 
 name: KO Video
@@ -90,7 +92,9 @@ xPathScrapers:
       $performers: //div[contains(@class,'model_performance')][1]//div[contains(@class,'owl-carousel')]//div[@class='item']//a/span/text()
     scene:
       Title:
-        selector: //div[contains(@class,'detail_main_col')]//div[@class='title_bar'][1]/h2[1]/text()
+        # Live DOM (2026-10-06): div.title_bar is a SIBLING of div.detail_main_col,
+        # not a descendant — the old ancestor path never matched.
+        selector: //div[contains(concat(' ',normalize-space(@class),' '),' title_bar ')][1]/h2[1]/text()
         postProcess:
         - replace:
           - regex: \s*\|\s*ゲイ DVD「KO カンパニー」公式ウェブサイト\s*KO\s*VIDEO\s*$

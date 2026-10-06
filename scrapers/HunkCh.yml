@@ -4,7 +4,9 @@
 # cards in #newmovie tables (GV-OND28001, TR-CS007, KPP-1122).
 # Detail: guest HTML has ブランド/発売日/ストーリー; cover/title h2 need login+CDP.
 # common keys are independent XPath (no $data: $product//...).
-# Last Updated: 2026-09-06
+# 2026-10-06: re-verified healthy on 3 detail pages; search probes
+# (陸翔 / CR-0945_DL / 夏ハメ2026) all HIT.
+# Last Updated: 2026-10-06
 # Validator fix: Code no longer combines `fixed` with `postProcess` (schema
 # fixed-value nodeSelector allows only 'fixed'). Uses canonical/og:url selector,
 # same pattern as the existing Aliases field.

@@ -34,7 +34,8 @@
 #   Studio   レーベル text (WILD GAMES, HUNK, …)
 #   Performers: detail pages have no performer list (model.php is nav only)
 #   — omitted intentionally.
-# Last Updated: 2026-09-06
+# 2026-10-06: URLs gained og:url fallback (no canonical on detail pages).
+# Last Updated: 2026-10-06
 
 name: Games-Video
 
@@ -117,7 +118,8 @@ xPathScrapers:
         selector: "//div[@id='main_contents']//form//input[@name='code']/@value"
 
       URLs:
-        selector: "//link[@rel='canonical']/@href"
+        # Live DOM (2026-10-06): no canonical link on detail pages; fall back to og:url.
+        selector: "//link[@rel='canonical']/@href | //meta[@property='og:url']/@content"
 
       Date:
         selector: "$prop//td[contains(text(),'発売日')]/text()"

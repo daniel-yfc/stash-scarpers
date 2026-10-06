@@ -1,11 +1,12 @@
 # yaml-language-server: $schema=../validator/scraper.schema.json
 # fc2 (adult.contents.fc2.com) — FC2 adult contents marketplace.
-# Verification status (2026-10-02, anonymous fetch):
-#   Site reachable: https://adult.contents.fc2.com/ responds (live marketplace).
-#   Selectors UNVERIFIED — no live detail-page verification recorded for
-#   sceneScraper or movieScraper. Verify against a live /article/ page
-#   before relying on them.
-# Last Updated: 2026-10-02
+# Verification status (2026-10-06, live rendered DOM):
+#   9/9 scene selectors HIT on 3 loaded article pages
+#   (4988302, 4979753, 4772001 — incl. 18 tags on 4772001).
+#   eKYC wall is INTERMITTENT and rate-triggered (first page loads,
+#   subsequent requests get walled); login does not clear it.
+#   No search endpoint on site — sceneByURL only.
+# Last Updated: 2026-10-06
 
 name: fc2
 

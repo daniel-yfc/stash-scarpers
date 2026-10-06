@@ -1,28 +1,39 @@
 # CLUB CK / COAT (coat.co.jp) — public CDP version.
-# Verification status: UNVERIFIED against live Stash.
+# Verification status (2026-10-06, live rendered DOM of product_id=3272/3265):
+#   - Title h2.margin-none, Studio = last #topicpath link (レーベル),
+#     Code in span#product_code_default (script fallback kept),
+#     Image #jacket, Details #products_description,
+#     Tags = ul.relative_cat2 [2..] (モデルタイプ/プレイ内容),
+#     Performers = ul.relative_cat2 [1] (★出演モデル★; empty when uncredited).
+#   - Search endpoint user-confirmed 2026-10-06:
+#     /products/list.php?mode=search&name={keyword} (matches sceneByName).
+#   - Model list: /user_data/model/ ; label list: /user_data/label/
+#     (labels treated as sub-studios per user convention — captured via
+#     Studio; Stash scene schema has no sub-studio field).
 # SAMPLE1 (product_id=3264) confirmed:
 #   - login-gated rendered DOM
 #   - h1 is hidden "20DVD" (do not use)
 #   - last #topicpath a[normalize-space()] = SPARK
 #   - eccube.classCategories product_code = COCODV563
 #   - #jacket exists; #eyecatch is pickup, not cover
-# CK href, 発売日，details, tags, search cards: not fully
-# readable from the 132KB snapshot via crawler. Marked UNVERIFIED.
 #
 # Public CDP version: driver.useCDP: true; no driver.cookies.
 #
 # Field rules (source language, not translated):
 #   Title   h2.margin-none as-is (keep ADULT / Jump!; 3264 has no SPARK)
 #   Studio  last non-empty #topicpath link (レーベル)
-#   Code    eccube.classCategories product_code (COCODV563, not COCO563-HD)
+#   Code    span#product_code_default, else eccube.classCategories
+#           product_code (COCODV563, not COCO563-HD)
 #   Date    発売日，not CK "2026.08.06 UP"
 #   Image   #jacket /upload/save_image/{CODE}.jpg (strip EC-CUBE *h.jpg)
 #   URLs    canonical detail + first ck-download.com/product/detail/{id}
 #           (ignore footer homepage ck-download.com)
 #   Details intro blurb only; cut numbered 1.〈 scene list
-#   Tags    category chips; keep イケメン/アイドル as one tag
+#   Tags    category chips (モデルタイプ/プレイ内容); keep イケメン/アイドル as one tag;
+#           出演モデル block excluded (performers live there)
+#   Performers  出演モデル links (first ul.relative_cat2 in #products_description2)
 # Search does not paginate. Stash only sees the first result page.
-# Last Updated: 2026-08-28
+# Last Updated: 2026-10-06
 
 name: ClubCK COAT
 
@@ -118,12 +129,16 @@ xPathScrapers:
                 with: ""
 
       Code:
-        selector: "//script[contains(.,'eccube.classCategories')]"
+        # Live DOM (2026-10-06): product code also sits in
+        # span#product_code_default (e.g. COCODV1008); keep the
+        # eccube.classCategories script as fallback.
+        selector: //span[@id='product_code_default']/text() | //script[contains(.,'eccube.classCategories')]
         postProcess:
           - javascript: |
               var v = value || "";
               var m = v.match(/"product_code"\s*:\s*"([A-Z0-9]+)"/);
-              return m ? m[1] : "";
+              if (m) return m[1];
+              return v.replace(/^\s+|\s+$/g, "");
 
       URLs:
         selector: "//link[@rel='canonical']/@href | //meta[@property='og:url']/@content | //a[contains(@href,'ck-download.com/product/detail/')]/@href"
@@ -213,11 +228,33 @@ xPathScrapers:
 
       Tags:
         Name:
-          selector: "//ul[contains(@class,'relative_cat2')]//a[normalize-space()] | //div[contains(@class,'relative_cat')]//a[normalize-space()]"
+          # Live DOM (2026-10-06): #products_description2 holds three
+          # ul.relative_cat2 blocks — [1] 出演モデル (performers),
+          # [2] モデルタイプ, [3] プレイ内容. Exclude [1] so performer
+          # names don't leak into tags.
+          selector: //div[@id='products_description2']/ul[contains(@class,'relative_cat2')][position()>1]//a[normalize-space()] | //div[contains(@class,'relative_cat')]//a[normalize-space()]
           postProcess:
             - replace:
                 - regex: "^\\s+|\\s+$"
                   with: ""
+
+      Performers:
+        Name:
+          # Live DOM (2026-10-06): 出演モデル links live in the FIRST
+          # ul.relative_cat2 inside #products_description2
+          # (template comment ★出演モデル★). Empty on pages without
+          # credited performers — then the field is legitimately empty.
+          selector: //div[@id='products_description2']/ul[contains(@class,'relative_cat2')][1]//a[normalize-space()]/text()
+          postProcess:
+            - replace:
+                - regex: "^\\s+|\\s+$"
+                  with: ""
+        URL:
+          selector: //div[@id='products_description2']/ul[contains(@class,'relative_cat2')][1]//a[normalize-space()]/@href
+          postProcess:
+            - replace:
+                - regex: "^/"
+                  with: "https://www.coat.co.jp/"
 
 driver:
   useCDP: true

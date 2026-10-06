@@ -1,0 +1,17 @@
+# HunkCh live-test fixtures (provided 2026-10-06)
+# search: https://www.hunk-ch.com/search.php?s={keyword}&fromSearch=on
+# custom probes (verified 2026-10-06, all HIT): performer=陸翔, code=CR-0945_DL, partial title=夏ハメ2026
+probes:
+  - 陸翔
+  - CR-0945_DL
+  - 夏ハメ2026
+urls:
+  - https://www.hunk-ch.com/movie_detail.php?code=JTS-JT013S5A
+  - https://www.hunk-ch.com/movie_detail.php?code=SET-638
+  - https://www.hunk-ch.com/movie_detail.php?code=TR-MA001
+  - https://www.hunk-ch.com/movie_detail.php?code=GV-OAV1343
+  - https://www.hunk-ch.com/movie_detail.php?code=KSP-062
+  - https://www.hunk-ch.com/movie_detail.php?code=BKY-003
+  - https://www.hunk-ch.com/movie_detail.php?code=INS-1223
+  - https://www.hunk-ch.com/movie_detail.php?code=BKG-0279
+multi: true

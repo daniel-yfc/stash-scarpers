@@ -1,0 +1,15 @@
+# ClubCK live-test fixtures (provided 2026-10-06)
+# search: https://www.coat.co.jp/products/list.php?mode=search&name={keyword}
+# model list: https://www.coat.co.jp/user_data/model/
+# label list (treated as sub-studio): https://www.coat.co.jp/user_data/label/
+# NOTE (2026-10-06): coat.co.jp bot-blocks this browser (blank head-only responses);
+# multi-URL DOM verification blocked. Field availability confirmed by user:
+# TITLE, CODE, STUDIO, IMAGE, PERFORMER, TAG, URL, DETAIL.
+urls:
+  - https://www.coat.co.jp/products/detail.php?product_id=3269
+  - https://www.coat.co.jp/products/detail.php?product_id=2221
+  - https://www.coat.co.jp/products/detail.php?product_id=3266
+  - https://www.coat.co.jp/products/detail.php?product_id=3031
+  - https://www.coat.co.jp/products/detail.php?product_id=2186
+  - https://www.coat.co.jp/products/detail.php?product_id=2811
+multi: true

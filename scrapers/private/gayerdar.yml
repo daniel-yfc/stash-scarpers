@@ -7,6 +7,9 @@
 # - performerScraper Height/Weight anchor on Tailwind utility class text-D1D0CF.
 # - sceneSearchScraper per-field card selectors work positionally; not live-verified.
 # - Title selectors split on fullwidth ｜, which depends on zh-TW page chrome.
+# 2026-10-06: Tags gained plain-text li fallback (some pages render tags
+# without links) against live DOM.
+# Last Updated: 2026-10-06
 name: Gayerdar
 
 sceneByURL:
@@ -87,7 +90,17 @@ xPathScrapers:
         Name:
           fixed: "Gayerdar"
       Tags:
-        Name: //ul[contains(@class,"iq-blogtag")]/li/a[contains(@class,"title")]/text()
+        # Live DOM (2026-10-06): linked variant is ul.iq-blogtag li a.title
+        # (the <a> has no href); some pages render plain-text li nodes
+        # instead — union both, strip separators.
+        Name:
+          selector: //ul[contains(@class,"iq-blogtag")]/li/a[contains(@class,"title")]/text() | //ul[contains(@class,"iq-blogtag")]/li/text()[normalize-space()]
+          postProcess:
+            - replace:
+                - regex: '^[，、,]\s*|\s*[，、,]$'
+                  with: ""
+                - regex: '^\s+|\s+$'
+                  with: ""
       Performers:
         Name:
           selector: //a[contains(@href,"/models/")]
@@ -171,4 +184,4 @@ xPathScrapers:
 driver:
   useCDP: true
 
-# Last Updated: 2026-10-05
+# Last Updated: 2026-10-06

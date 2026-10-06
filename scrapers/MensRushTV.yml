@@ -11,7 +11,10 @@
 #
 # Detail pages for NAO/RCHS product codes appear to be session/purchased-only;
 # the search index still returns them, but single.php only renders a title.
-# Last Updated: 2026-09-07
+# 2026-10-06: Performers fixed to a[href^='list.php?mid='] (old selector hit the
+# description paragraph); Image covers both player renders (<video poster>
+# and <img class="no-save" src>); Date documented as page-dependent.
+# Last Updated: 2026-10-06
 
 name: Men's Rush TV
 
@@ -131,6 +134,9 @@ xPathScrapers:
         fixed: "{inputURL}"
 
       Date:
+        # Page-dependent (verified 2026-10-06): some detail pages carry no
+        # release-date element at all (e.g. single.php?id=MS-629_DL) — the
+        # field is then legitimately empty, not a selector bug.
         selector: //div[@class='movie_detail'][1]//p[contains(.,'発売') or contains(.,'配信')]
         postProcess:
           - javascript: |
@@ -156,29 +162,14 @@ xPathScrapers:
 
       Performers:
         Name:
-          selector: //div[@class='movie_detail'][1]//p[contains(normalize-space(.),'モデル')][1]//text()[normalize-space()]
-          concat: " "
+          # Live DOM (2026-10-06): performer links are a[href^='list.php?mid=']
+          # inside div.movie_detail. The old "p contains モデル" selector also
+          # matched the description paragraph mentioning the name (false positive).
+          selector: //div[@class='movie_detail'][1]//a[starts-with(@href,'list.php?mid=')]/text()
           postProcess:
-            - javascript: |
-                var v = value || "";
-                if (!v) return "";
-                var text = v.replace(/\s+/g, ' ').trim();
-                text = text.replace(/^.*?モデル[:：]\s*/u, '');
-                text = text.replace(/\s*メーカー[:：].*$/u, '');
-                var out = [];
-                var push = function(n) {
-                  n = (n || '').trim().replace(/ 君$/u, '');
-                  n = n.replace(/\s*[（(][぀-ゟ゠-ハー]+[)）]/gu, '').trim();
-                  var kanaLead = n.match(/^[぀-ゟ゠-ハー]+\s+(.+)$/u);
-                  if (kanaLead) n = kanaLead[1].trim();
-                  var mixed = n.match(/^([^\x00-\x7F]+)\s+[A-Za-z\s]+$/u);
-                  if (mixed) n = mixed[1].trim();
-                  if (!n) return;
-                  if (out.indexOf(n) < 0) out.push(n);
-                };
-                text.split(/[｜|\/,、]/u).forEach(push);
-                return out.join(',');
-          split: ","
+            - replace:
+                - regex: '^\s+|\s+$'
+                  with: ""
 
       Tags:
         Name:
@@ -193,7 +184,11 @@ xPathScrapers:
         concat: "\n\n"
 
       Image:
-        selector: //div[@id='movie_area']//div[contains(@class,'player')]//img[1]/@src
+        # Live DOM (2026-10-06): player renders EITHER <video poster="...">
+        # or <img class="no-save" src="..."> depending on render state —
+        # union both. Poster/img URL carries a session query (?s=<digits>),
+        # stripped below.
+        selector: //video[1]/@poster | //div[@id='movie_area']//div[contains(@class,'player')]//img[1]/@src
         postProcess:
           - javascript: |
               var v = value || "";
@@ -209,4 +204,4 @@ driver:
   headers:
     - Key: User-Agent
       Value: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
-# Last Updated: 2026-09-07
+# Last Updated: 2026-10-06
