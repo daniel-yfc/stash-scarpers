@@ -17,6 +17,16 @@ This skill covers CommunityScrapers-style YAML, JSON, and script scrapers only.
 - Stash GraphQL API usage and `ApiKey`-based authentication
 - Generic third-party API-auth scraper patterns (unless added as a separate future expansion)
 
+### `action: stash` reference (excluded from authoring)
+
+For completeness: the official docs define a `stash` action that uses another
+Stash server as a scrape source. It requires a top-level `stashServer` field
+with `url` (may embed `username:password@host`, or use `apiKey`
+authentication). It applies only to `performerByName`, `performerByFragment`,
+`sceneByName`, `sceneByQueryFragment`, and `sceneByFragment`. This skill does
+not author `stash`-action scrapers; see the official ScraperDevelopment page
+for the full specification.
+
 ## Reading guidance for upstream docs
 
 | Upstream doc                           | Treatment                                                             |

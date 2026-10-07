@@ -100,7 +100,7 @@ Gender:
   fixed: "Female" # all performers on this site are female
 ```
 
-When an explicit field exists, map to the schema enum (case-insensitive; capitalize output):
+When an explicit field exists, map to the schema enum (case-insensitive; capitalize output). Valid values: `male`, `female`, `transgender_male`, `transgender_female`, `intersex`, `non_binary`.
 
 ```yaml
 Gender:

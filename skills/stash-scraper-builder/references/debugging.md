@@ -6,6 +6,12 @@
 
 ## Common failure catalog
 
+### Dump raw HTML/JSON
+
+Add `debug: printHTML: true` to the scraper YAML to print the received
+HTML/JSON to the Stash log file. Useful when selectors return nothing and
+you need to see what Stash actually received.
+
 ### All fields empty
 
 **Symptoms:** All scraped fields return empty/null values.

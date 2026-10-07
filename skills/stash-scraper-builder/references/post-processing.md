@@ -26,7 +26,7 @@ A broad `replace` first can destroy the date or studio token the later step need
 ## Supported operations
 
 - `replace` — regex or plain. Unmatched → original string passes through.
-- `parseDate` — Go reference layout (`2006-01-02`). Failed parse → field becomes **empty** (no error).
+- `parseDate` — Go reference layout (`2006-01-02`). Failed parse → field becomes **empty** (no error). Also accepts the strings `Today` / `Yesterday` and unix timestamps; output is always `YYYY-MM-DD`.
 - `map` — exact-key remap (studio / gender). Prefer `map` over a long `replace` list for known variants. Unmatched key → original usually passes through; still list every real variant.
 - `subScraper` — extra HTTP request; do not use by default.
 - `javascript` — goja; `return` a string from `value`.

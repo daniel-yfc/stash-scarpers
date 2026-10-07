@@ -43,7 +43,7 @@ Read repository-level routing before skill-level guidance.
 | Script scraper         | `script-actions.md` → `authoring-checklist.md` → `schema-checklist.md`                 |
 | CDP/login scraper      | `cdp-workflow.md` → `phase0-secrets-policy.md` → `schema-checklist.md`                 |
 | Dates/post-processing  | `post-processing.md` (§ Date formats)                                                  |
-| Field quality          | `field-quality.md` → `post-processing.md`                                              |
+| Field quality          | `field-quality.md` → `entity-fields.md` → `post-processing.md`                         |
 | Examples               | `examples.md` → `json-examples.md`                                                     |
 | Best practices         | `best-practices.md` → `multi-site-network-scrapers.md`                                 |
 | Debugging failures     | `debugging.md`                                                                         |

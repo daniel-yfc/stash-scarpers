@@ -223,6 +223,13 @@ documents:
     layer: skill
     status: active
     intents: [titles, performers, field-quality]
+  - doc_id: REF-FIELD-55
+    title: Entity Fields
+    path: skills/stash-scraper-builder/references/entity-fields.md
+    layer: skill
+    status: active
+    intents: [entity-fields, object-fields, required-fields]
+    read_after: [REF-FIELD-54]
   - doc_id: REF-OPS-72
     title: Debugging
     path: skills/stash-scraper-builder/references/debugging.md

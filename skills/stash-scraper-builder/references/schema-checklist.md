@@ -2,6 +2,33 @@
 
 Use this checklist before emitting a scraper YAML file. Run the repository's Node validator against its schema; its expectations derive from upstream CommunityScrapers (see `UPSTREAM_SOURCES.md`). A checklist is not a validator result.
 
+## Top-Level Entry Points
+
+Official top-level fields (`name` is mandatory, all others optional).
+Each entry point needs at least an `action` field; remaining fields depend
+on the action. See `references/entity-fields.md` for the per-entity field lists.
+
+| Entry point            | Scrapes                                                        |
+| ---------------------- | -------------------------------------------------------------- |
+| `performerByName`      | Performer by name search                                       |
+| `performerByFragment`  | Performer by file fragment (script action only for XPath/JSON) |
+| `performerByURL`       | Performer by URL                                               |
+| `sceneByName`          | Scene by name search                                           |
+| `sceneByQueryFragment` | Scene by query fragment                                        |
+| `sceneByFragment`      | Scene by file fragment                                         |
+| `sceneByURL`           | Scene by URL                                                   |
+| `groupByURL`           | Group by URL (replaces deprecated `movieByURL`)                |
+| `galleryByFragment`    | Gallery by file fragment                                       |
+| `galleryByURL`         | Gallery by URL                                                 |
+| `imageByFragment`      | Image by file fragment                                         |
+| `imageByURL`           | Image by URL                                                   |
+
+`movieByURL` is deprecated; use `groupByURL`.
+
+URL-based entry points accept multiple configurations, each with a `url`
+field. Stash compares them in order and executes the first configuration
+whose `url` value is contained in the target URL.
+
 ## Required Structure
 
 - [ ] Root `name` is present; matching the CamelCase filename is a repository convention, not an additional upstream schema requirement.

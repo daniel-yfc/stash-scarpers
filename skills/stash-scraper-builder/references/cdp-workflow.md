@@ -34,6 +34,35 @@ Without steps 2–4, a gated `useCDP: true` scraper can return nothing. Always e
 - `useCDP: true` forbids `CookieURL` on every `driver.cookies` entry when enforced by the validator; the attached browser session already carries the cookies.
 - `useCDP: false` or omitted requires `CookieURL` on every cookie when cookies are used.
 
+### Cookie entry fields
+
+Each `driver.cookies` entry uses these fields:
+
+```yaml
+driver:
+  cookies:
+    - Name: session_id
+      Value: abc123
+      Domain: example.com
+      Path: /
+      CookieURL: https://example.com/ # required when useCDP is false/omitted; must share the cookie domain
+```
+
+Use `ValueRandom: <positive integer>` instead of `Value` to have Stash
+generate a random string of that length.
+
+## Headers
+
+`driver.headers` accepts `Key` / `Value` pairs (an empty `Key` is ignored).
+Applies to direct, CDP, and JSON scrapers. A scraper-defined `User-Agent`
+overrides the global Stash setting.
+
+````yaml
+driver:
+  headers:
+    - Key: User-Agent
+      Value: "Mozilla/5.0 ..."
+
 ## `clicks` need `sleep`
 
 Click items use `xpath` with an optional `sleep` (seconds). **`waitTillPresent` does not exist** — no Stash source (verified against v0.31.1) and no upstream schema (click items allow only `xpath` + `sleep`) support it; do not emit it. Any `driver.clicks` entry that triggers navigation or AJAX must set `sleep` (seconds) so the DOM settles before extraction. A click without `sleep` may scrape the pre-click page.
@@ -44,4 +73,4 @@ driver:
   clicks:
     - xpath: "//button[@id='age-confirm']"
       sleep: 2
-```
+````
