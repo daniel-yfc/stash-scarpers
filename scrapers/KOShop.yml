@@ -95,6 +95,9 @@ xPathScrapers:
                 with: ""
               - regex: '\n{3,}'
                 with: "\n\n"
+              # Strip trailing shop boilerplate when present (2026-10-07).
+              - regex: "\\s*商品説明\\s*オフィシャル購入で限定特典DISCが選べる!\\s*OFFICIALサイトへは↓画像のリンクから!\\s*$"
+                with: ""
       URLs:
         fixed: "{inputURL}"
       Date:
