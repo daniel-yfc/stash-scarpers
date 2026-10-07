@@ -84,3 +84,51 @@ describe("Validator - _collectConfigMappingErrors", () => {
     );
   });
 });
+
+describe("Validator - _collectScraperDefinitionErrors sceneByQueryFragment", () => {
+  const validator = new Validator(["-a"]);
+
+  test("validates scraper reference in sceneByQueryFragment", () => {
+    const mockData = {
+      name: "TestScraper",
+      sceneByQueryFragment: {
+        action: "scrapeXPath",
+        queryURL: "{url}",
+        scraper: "missing",
+      },
+      xPathScrapers: {
+        existing: {
+          scene: {
+            Title: { selector: "//h1" },
+          },
+        },
+      },
+    };
+
+    const errors = validator._collectScraperDefinitionErrors(mockData);
+    const scraperErrors = errors.filter((e) => e.dataPath?.includes("sceneByQueryFragment"));
+    assert.ok(scraperErrors.length > 0, "should report missing scraper for sceneByQueryFragment");
+  });
+
+  test("accepts valid sceneByQueryFragment scraper reference", () => {
+    const mockData = {
+      name: "TestScraper",
+      sceneByQueryFragment: {
+        action: "scrapeXPath",
+        queryURL: "{url}",
+        scraper: "existing",
+      },
+      xPathScrapers: {
+        existing: {
+          scene: {
+            Title: { selector: "//h1" },
+          },
+        },
+      },
+    };
+
+    const errors = validator._collectScraperDefinitionErrors(mockData);
+    const scraperErrors = errors.filter((e) => e.dataPath?.includes("sceneByQueryFragment"));
+    assert.strictEqual(scraperErrors.length, 0);
+  });
+});

@@ -43,6 +43,8 @@ Do not duplicate detailed policy here; link to the owning document.
 - Run live scraper scrutiny: `node tools/scrutiny.js scrapers/<Scraper>.yml --search`
 - Run documentation checker: `python tools/check_scraper_docs.py`
 - Run documentation-index checker: `python tools/check_docs_index.py`
+- Check docs-vs-schema alignment: `python3 tools/check_docs_official.py`
+- Check scraper semantics: `python3 tools/check_scraper_semantics.py`
 
 The official Node/Ajv validator is the only supported validator path. The removed localized Deno validator must not be reintroduced as a fallback.
 

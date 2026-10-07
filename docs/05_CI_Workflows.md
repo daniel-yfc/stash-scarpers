@@ -51,6 +51,8 @@ python tools/check_live_cdp_status.py
 python tools/self_evaluate.py
 python tools/check_scraper_docs.py
 python tools/check_docs_index.py
+python3 tools/check_docs_official.py
+python3 tools/check_scraper_semantics.py
 ```
 
 `tools/verify-scraper-fixtures.mjs --self-test` tests only the fixture runner. Site-specific manifest discovery and assertions belong to `fixture-manifests.yml`; the absence of manifests is `UNVERIFIED`, even if its discovery command exits successfully. `npm run format:check` is a separate local formatting check, not a `validate.yml` step.

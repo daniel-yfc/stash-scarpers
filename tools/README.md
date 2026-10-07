@@ -4,10 +4,10 @@ Repository tooling: quality gate, documentation checker, local build/test helper
 
 ## Quality gate
 
-| Script | Purpose |
-| --- | --- |
+| Script                    | Purpose                                                                                                     |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | `scraper-quality-gate.sh` | Per-scraper policy checks, plus upstream CommunityScrapers schema validation when `CS_VALIDATOR_DIR` is set |
-| `validate-all.sh` | Run the gate over every `scrapers/**/*.yml` (including `scrapers/private/`) |
+| `validate-all.sh`         | Run the gate over every `scrapers/**/*.yml` (including `scrapers/private/`)                                 |
 
 ```bash
 bash tools/scraper-quality-gate.sh scrapers/ACCEED.yml
@@ -28,8 +28,8 @@ python tools/check_scraper_docs.py
 
 `scrutiny.js` probes direct HTTP responses using JSDOM. It does not execute website JavaScript or prove rendered-DOM or live Stash/CDP extraction. Classify challenge, login, age-gate, not-found, and application-error pages before interpreting missing selectors.
 
-| Script | Purpose |
-| --- | --- |
+| Script        | Purpose                                                                                                     |
+| ------------- | ----------------------------------------------------------------------------------------------------------- |
 | `scrutiny.js` | Raw-response inspection of `sceneScraper` and `searchScraper` with probe terms and field coverage reporting |
 
 ```bash
@@ -44,16 +44,16 @@ node tools/scrutiny.js scrapers/CK-Download.yml --url="https://www.ck-download.c
 
 Run these from the repository root. A command's pass proves only its named check. Manifest and structured-evidence verification run in separate workflows, not the main `validate.yml` job.
 
-| Script | What it checks |
-| --- | --- |
-| `parse_committed_yaml.py` | YAML parses in the checked-out scraper tree; not a schema pass |
-| `verify-scraper-fixtures.mjs --self-test` | Fixture runner behavior; not site fixture coverage |
-| `run_fixture_manifests.py` | Executes committed `tests/fixtures/**/*-fixtures.yml`; no manifests reports `UNVERIFIED`; `--expect` fails if a claimed manifest is missing |
-| `scan_session_material.py` | Pattern scan of scraper, fixture, evidence, and log files; prints rule and path, never matched values |
-| `check_evidence_labels.py` | Rejects certain unsupported prose claims in top-level evidence records |
-| `check_evidence_contract.py` | Validates structured evidence states and artifact provenance, not live runtime truth |
-| `check_live_cdp_status.py` | Checks CDP claims for artifact references; does not launch Stash or verify extraction |
-| `self_evaluate.py` | Aggregates controls and labels their evidence boundaries |
+| Script                                    | What it checks                                                                                                                              |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `parse_committed_yaml.py`                 | YAML parses in the checked-out scraper tree; not a schema pass                                                                              |
+| `verify-scraper-fixtures.mjs --self-test` | Fixture runner behavior; not site fixture coverage                                                                                          |
+| `run_fixture_manifests.py`                | Executes committed `tests/fixtures/**/*-fixtures.yml`; no manifests reports `UNVERIFIED`; `--expect` fails if a claimed manifest is missing |
+| `scan_session_material.py`                | Pattern scan of scraper, fixture, evidence, and log files; prints rule and path, never matched values                                       |
+| `check_evidence_labels.py`                | Rejects certain unsupported prose claims in top-level evidence records                                                                      |
+| `check_evidence_contract.py`              | Validates structured evidence states and artifact provenance, not live runtime truth                                                        |
+| `check_live_cdp_status.py`                | Checks CDP claims for artifact references; does not launch Stash or verify extraction                                                       |
+| `self_evaluate.py`                        | Aggregates controls and labels their evidence boundaries                                                                                    |
 
 ```bash
 python tools/parse_committed_yaml.py
@@ -81,12 +81,14 @@ See [`docs/05_CI_Workflows.md`](../docs/05_CI_Workflows.md) for the eight-workfl
 
 ## Local helpers
 
-| Script | Purpose |
-| --- | --- |
-| `tools/scraper-quality-gate.sh <scraper.yml>` | Run quality gate on one scraper |
-| `tools/validate-all.sh` | Run quality gate on all scrapers |
-| `python -m pytest tools/tests/ -v` | Run the pytest suite in `tools/tests/` |
-| `python tools/check_evidence_contract.py` | Check evidence labels contract |
+| Script                                        | Purpose                                                           |
+| --------------------------------------------- | ----------------------------------------------------------------- |
+| `tools/scraper-quality-gate.sh <scraper.yml>` | Run quality gate on one scraper                                   |
+| `tools/validate-all.sh`                       | Run quality gate on all scrapers                                  |
+| `python -m pytest tools/tests/ -v`            | Run the pytest suite in `tools/tests/`                            |
+| `python tools/check_evidence_contract.py`     | Check evidence labels contract                                    |
+| `python3 tools/check_docs_official.py`        | Docs-vs-schema alignment (entity fields, entry points, operators) |
+| `python3 tools/check_scraper_semantics.py`    | Gender enum, movieByURL deprecation, parseDate layout             |
 
 ## Tests
 
@@ -96,10 +98,10 @@ python3 -m pytest tools/tests/ -v
 
 ## Standalone utilities
 
-| File | Purpose |
-| --- | --- |
-| `SPB-2.0.html` | Scraper pattern builder (open in a browser) |
-| `SRB-2.0-documentation.md` | Documentation for the SRB tool |
+| File                       | Purpose                                     |
+| -------------------------- | ------------------------------------------- |
+| `SPB-2.0.html`             | Scraper pattern builder (open in a browser) |
+| `SRB-2.0-documentation.md` | Documentation for the SRB tool              |
 
 ## Dependencies
 

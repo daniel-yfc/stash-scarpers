@@ -1,136 +1,138 @@
 # Entity Field Reference
 
-Complete field lists for the seven scraped object types, per the official
-Stash ScraperDevelopment documentation. Field names are case-sensitive and
-must match the Go struct fields.
+Complete field lists for the seven scraped object types, verified against
+`validator/scraper.schema.json` (the validation ground truth).
+Field names are case-sensitive.
+
+"Schema required" = enforced by the validator.
+"Runtime required" = enforced by Stash at scrape time per the official
+ScraperDevelopment docs (not in the schema).
 
 Source: https://docs.stashapp.cc/in-app-manual/scraping/scraperdevelopment/
-(Official docs are ground truth; this file is a convenient index.)
 
 ## Scene
 
-`Title` is required only when scraping fileless (no file attached).
-Otherwise all fields are optional.
-
-| Field      | Notes                                    |
-| ---------- | ---------------------------------------- |
-| Code       |                                          |
-| Date       | Use `parseDate` with Go reference layout |
-| Details    |                                          |
-| Director   |                                          |
-| Groups     | Relationship                             |
-| Image      | Cover image URL                          |
-| Performers | Relationship                             |
-| Studio     | Relationship                             |
-| Tags       | Relationship                             |
-| Title      | Required if fileless                     |
-| URLs       |                                          |
+| Field | Notes |
+|---|---|
+| Code | |
+| Date | Use `parseDate` with Go reference layout |
+| Details | |
+| Director | |
+| Duration | |
+| Groups | Relationship |
+| Image | Cover image URL |
+| Movies | Relationship |
+| Performers | Relationship |
+| ProductionDate | |
+| Studio | Relationship |
+| Tags | Relationship |
+| Title | Runtime required if fileless |
+| URL | Singular |
+| URLs | Plural |
 
 ## Performer
 
-`Name` is required.
-
-| Field          | Notes                                                                                                         |
-| -------------- | ------------------------------------------------------------------------------------------------------------- |
-| Aliases        |                                                                                                               |
-| Birthdate      |                                                                                                               |
-| CareerLength   |                                                                                                               |
-| Circumcised    |                                                                                                               |
-| Country        |                                                                                                               |
-| DeathDate      |                                                                                                               |
-| Details        |                                                                                                               |
-| Disambiguation |                                                                                                               |
-| Ethnicity      |                                                                                                               |
-| EyeColor       |                                                                                                               |
-| FakeTits       |                                                                                                               |
-| Gender         | Enum: `male`, `female`, `transgender_male`, `transgender_female`, `intersex`, `non_binary` (case-insensitive) |
-| HairColor      |                                                                                                               |
-| Height         |                                                                                                               |
-| Measurements   |                                                                                                               |
-| Name           | **Required**                                                                                                  |
-| PenisLength    |                                                                                                               |
-| Piercings      |                                                                                                               |
-| Tags           | Relationship                                                                                                  |
-| Tattoos        |                                                                                                               |
-| URLs           |                                                                                                               |
-| Weight         |                                                                                                               |
+| Field | Notes |
+|---|---|
+| Aliases | |
+| Birthdate | |
+| CareerEnd | |
+| CareerLength | |
+| CareerStart | |
+| Circumcised | |
+| Country | |
+| DeathDate | |
+| Details | |
+| Disambiguation | |
+| Ethnicity | |
+| EyeColor | |
+| FakeTits | |
+| Gender | Enum: `male`, `female`, `transgender_male`, `transgender_female`, `intersex`, `non_binary` (case-insensitive) |
+| HairColor | |
+| Height | |
+| Image | |
+| Images | |
+| Measurements | |
+| Name | **Schema required** |
+| PenisLength | |
+| Piercings | |
+| Tags | Relationship |
+| Tattoos | |
+| Twitter | |
+| URL | Singular |
+| URLs | Plural |
+| Weight | |
 
 ## Group
 
-`Name` is required. Replaces the deprecated `movieByURL` action.
+Replaces the deprecated `movieByURL` action.
 
-| Field      | Notes        |
-| ---------- | ------------ |
-| Aliases    |              |
-| BackImage  |              |
-| Date       |              |
-| Director   |              |
-| Duration   |              |
-| FrontImage |              |
-| Name       | **Required** |
-| Rating     |              |
-| Studio     | Relationship |
-| Synopsis   |              |
-| Tags       | Relationship |
-| URLs       |              |
+| Field | Notes |
+|---|---|
+| Aliases | |
+| BackImage | |
+| Date | |
+| Director | |
+| Duration | |
+| FrontImage | |
+| Name | Runtime required |
+| Studio | Relationship |
+| Synopsis | |
+| Tags | Relationship |
+| URL | Singular |
+| URLs | Plural |
 
 ## Gallery
 
-`Title` is required.
-
-| Field        | Notes        |
-| ------------ | ------------ |
-| Code         |              |
-| Date         |              |
-| Details      |              |
-| Performers   | Relationship |
-| Photographer |              |
-| Rating       |              |
-| Studio       | Relationship |
-| Tags         | Relationship |
-| Title        | **Required** |
-| URLs         |              |
+| Field | Notes |
+|---|---|
+| Code | |
+| Date | |
+| Details | |
+| Performers | Relationship |
+| Photographer | |
+| Studio | Relationship |
+| Tags | Relationship |
+| Title | **Schema required** |
+| URL | Singular |
+| URLs | Plural |
 
 ## Image
 
-No required fields.
-
-| Field        | Notes        |
-| ------------ | ------------ |
-| Code         |              |
-| Date         |              |
-| Details      |              |
-| Performers   | Relationship |
-| Photographer |              |
-| Rating       |              |
-| Studio       | Relationship |
-| Tags         | Relationship |
-| Title        |              |
-| URLs         |              |
+| Field | Notes |
+|---|---|
+| Code | |
+| Date | |
+| Details | |
+| Performers | Relationship |
+| Photographer | |
+| Studio | Relationship |
+| Tags | Relationship |
+| Title | |
+| URLs | Plural |
 
 ## Studio
 
-`Name` is required.
-
-| Field   | Notes                 |
-| ------- | --------------------- |
-| Aliases |                       |
-| Details |                       |
-| Name    | **Required**          |
-| Tags    | Relationship          |
-| URL     | Singular (not `URLs`) |
+| Field | Notes |
+|---|---|
+| Aliases | |
+| Details | |
+| Image | |
+| Name | **Schema required** |
+| URL | Singular |
+| URLs | Plural |
 
 ## Tag
 
-`Name` is required.
+The schema defines no properties for tags; only `Name` is used at runtime.
 
-| Field | Notes        |
-| ----- | ------------ |
-| Name  | **Required** |
+| Field | Notes |
+|---|---|
+| Name | Runtime required (sole tag field) |
 
 ## Relationships vs plain fields
 
-Fields marked "Relationship" (Performers, Tags, Studio, Groups) are processed
-by `processSceneRelationships` and related functions, not by the plain
-field-mapping path. See `references/debugging.md` for the nil-pointer
+Fields marked "Relationship" (Performers, Tags, Studio, Groups, Movies) are
+processed by `processSceneRelationships` and related functions, not by the
+plain field-mapping path. See `references/debugging.md` for the nil-pointer
 incident when a scrape returns zero plain fields but defines relationships.

@@ -45,7 +45,7 @@ this.ajv.addKeyword({
 });
 
 addFormats(this.ajv);
-    this.mappingPattern = /^([a-z]+)By(Fragment|Name|URL)$/;
+    this.mappingPattern = /^([a-z]+)By(QueryFragment|Fragment|Name|URL)$/;
   }
 
   run(files) {
