@@ -104,11 +104,11 @@ xPathScrapers:
         selector: "$product//h2[1]"
         postProcess:
           - replace:
+              # Trim series prefix like 【JUSTICE：Full HD】 first (2026-10-07).
+              - regex: '^\s*【[^】]+】\s*'
+                with: ""
               # Strip "パッケージ販売：" prefix on PKG pages (2026-10-07).
               - regex: "^\\s*パッケージ販売：\\s*"
-                with: ""
-              # Trim series prefix like 【オリジナル：Full HD】 (2026-10-07).
-              - regex: '^\s*【[^】]+】\s*'
                 with: ""
               - regex: "^\\s+|\\s+$"
                 with: ""
