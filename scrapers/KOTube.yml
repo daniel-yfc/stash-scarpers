@@ -41,13 +41,21 @@ xPathScrapers:
           - regex: ^\s+|\s+$
             with: ''
       Code:
-        selector: //th[contains(text(), "作品番号")]/following-sibling::td[1]/text()
+        # Package pages lack 作品番号; fall back to the DVD link's
+        # product_code (strip _DVD suffix) — verified 2026-10-07.
+        selector: //th[contains(text(), "作品番号")]/following-sibling::td[1]/text() | //a[@class='btn_dvd']/@href
         postProcess:
         - replace:
+          - regex: ^.*?[?&]product_code=([A-Za-z0-9]+).*$
+            with: $1
+          - regex: _DVD$
+            with: ''
           - regex: ^\s+|\s+$
             with: ''
       Date:
-        selector: //th[contains(text(), "DVD 発売") or contains(text(), "発売")]/following-sibling::td[1]/text()
+        # div.date (2017.06.18) is more precise than the spec table's
+        # 2017年06月 and sorts first in document order — 2026-10-07.
+        selector: //div[@class='date']/text() | //th[contains(text(), "DVD 発売") or contains(text(), "発売")]/following-sibling::td[1]/text()
         postProcess:
         - replace:
           - regex: (\d{4})\.(\d{1,2})\.(\d{1,2})
@@ -60,10 +68,12 @@ xPathScrapers:
       Details:
         selector: //div[contains(concat(' ',normalize-space(@class),' '),' sub_data ')]/p//text()[normalize-space()] | //div[contains(concat(' ',normalize-space(@class),' '),' intro_text ')]/p//text()[normalize-space()]
         concat: "\n\n"
-      Image: //img[contains(@src, "/picture/parent/") and contains(@src, "_3.jpg")]/@src | //img[contains(@src, "/picture/")]/@src
+      Image: //div[@class='pack_photo']//img/@src | //img[contains(@src, "/picture/parent/") and contains(@src, "_3.jpg")]/@src | //img[contains(@src, "/picture/")]/@src
       Studio:
         Name:
-          selector: //th[contains(text(), "レーベル")]/following-sibling::td[1]/text()
+          # Label value sits inside an <a>, not a direct text node —
+          # use descendant text (2026-10-07).
+          selector: //th[contains(text(), "レーベル")]/following-sibling::td[1]//text()[normalize-space()]
           postProcess:
           - replace:
             - regex: ^\s+|\s+$
@@ -114,7 +124,9 @@ xPathScrapers:
       FrontImage: //img[contains(@src, "/picture/parent/") and contains(@src, "_3.jpg")]/@src | //img[contains(@src, "/picture/")]/@src
       Studio:
         Name:
-          selector: //th[contains(text(), "レーベル")]/following-sibling::td[1]/text()
+          # Label value sits inside an <a>, not a direct text node —
+          # use descendant text (2026-10-07).
+          selector: //th[contains(text(), "レーベル")]/following-sibling::td[1]//text()[normalize-space()]
           postProcess:
           - replace:
             - regex: ^\s+|\s+$
