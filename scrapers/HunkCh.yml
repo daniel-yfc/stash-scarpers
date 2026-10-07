@@ -140,7 +140,7 @@ xPathScrapers:
               - regex: "^\\s+|\\s+$"
                 with: ""
               # Trim blindfold disclaimer (2026-10-07).
-              - regex: "\\s*本編メインモデルに目隠しはございません。(ケモデルの射精シーンはございません。)?\\s*$"
+              - regex: "\\s*本編メインモデルに目隠しはございません。(ウケモデルの射精シーンはございません。)?\\s*$"
                 with: ""
               # Trim related videos boilerplate (2026-10-07).
               - regex: "\\s*この作品の関連無料動画はこちらです。\\s*$"
@@ -200,7 +200,7 @@ xPathScrapers:
               - regex: "^\\s+|\\s+$"
                 with: ""
               # Trim blindfold disclaimer (2026-10-07).
-              - regex: "\\s*本編メインモデルに目隠しはございません。(ケモデルの射精シーンはございません。)?\\s*$"
+              - regex: "\\s*本編メインモデルに目隠しはございません。(ウケモデルの射精シーンはございません。)?\\s*$"
                 with: ""
               # Trim related videos boilerplate (2026-10-07).
               - regex: "\\s*この作品の関連無料動画はこちらです。\\s*$"
