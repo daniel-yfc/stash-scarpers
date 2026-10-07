@@ -139,6 +139,9 @@ xPathScrapers:
           - replace:
               - regex: "^\\s+|\\s+$"
                 with: ""
+              # Trim blindfold disclaimer (2026-10-07).
+              - regex: "\\s*本編メインモデルに目隠しはございません。\\s*$"
+                with: ""
       Studio:
         Name:
           # Map series prefix from title to Studio (2026-10-07).
@@ -154,6 +157,7 @@ xPathScrapers:
                 "【オリジナル：Full HD】": "HUNK オリジナル"
                 "【GAMES：Full HD】": "GAMES"
                 "【ガッチンコ!!：Full HD】": "ガッチンコ!!"
+                "【HUNKオリジナル：Full HD】": "HUNKオリジナル"
                 "【バーチャルWEBデート：Full HD】": "バーチャルWEBデート"
       Tags:
         Name:
@@ -201,6 +205,9 @@ xPathScrapers:
           - replace:
               - regex: "^\\s+|\\s+$"
                 with: ""
+              # Trim blindfold disclaimer (2026-10-07).
+              - regex: "\\s*本編メインモデルに目隠しはございません。\\s*$"
+                with: ""
       URLs:
         fixed: "{inputURL}"
       Date:
@@ -236,6 +243,7 @@ xPathScrapers:
                 "【オリジナル：Full HD】": "HUNK オリジナル"
                 "【GAMES：Full HD】": "GAMES"
                 "【ガッチンコ!!：Full HD】": "ガッチンコ!!"
+                "【HUNKオリジナル：Full HD】": "HUNKオリジナル"
                 "【バーチャルWEBデート：Full HD】": "バーチャルWEBデート"
       Tags:
         Name:
