@@ -247,7 +247,7 @@ xPathScrapers:
           selector: "$product//h2[1]"
           postProcess:
             - replace:
-                - regex: '^.*([一-龯]{2})[\(（][^\)）]*[\)）].*$'
+                - regex: '^.*?([一-龯]{1,2})[\(（][^\)）]*[\)）].*$'
                   with: "$1"
                 # Clear if no match (full title is long)
                 - regex: "^.{3,}$"
