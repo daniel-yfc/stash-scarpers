@@ -87,7 +87,8 @@ xPathScrapers:
               var v = value || "";
               return v.replace(/^[\s:：]+|[\s\u00a0]+$/gu, "").trim();
       Details:
-        selector: "//div[contains(concat(' ',normalize-space(@class),' '),' under_col ')]/div[contains(concat(' ',normalize-space(@class),' '),' ma_b30 ')][1]//text()[normalize-space()]"
+        # Exclude the h2.ma_b10 "商品説明" header (2026-10-07).
+        selector: "//div[contains(concat(' ',normalize-space(@class),' '),' under_col ')]/div[contains(concat(' ',normalize-space(@class),' '),' ma_b30 ')][1]//text()[normalize-space()][not(parent::h2)]"
         concat: "\n"
         postProcess:
           - replace:
@@ -140,6 +141,22 @@ xPathScrapers:
             - replace:
                 - regex: '^\s+|\s+$'
                   with: ""
+      Performers:
+        Name:
+          # Live DOM (2026-10-07): CAST line sits in the Details div as
+          # "CAST : 名1 | 名2 | ... ほか" — extract names, drop ほか.
+          selector: "//div[contains(concat(' ',normalize-space(@class),' '),' under_col ')]/div[contains(concat(' ',normalize-space(@class),' '),' ma_b30 ')][1]//text()[contains(.,'CAST')]"
+          postProcess:
+            - replace:
+                - regex: "[\\s\\S]*?CAST\\s*:\\s*"
+                  with: ""
+                - regex: "\\s*ほか\\s*$"
+                  with: ""
+                - regex: "\\s*\\|\\s*"
+                  with: "|"
+                - regex: "^\\s+|\\s+$"
+                  with: ""
+          split: "|"
 
 driver:
   useCDP: true
