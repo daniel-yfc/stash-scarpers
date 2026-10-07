@@ -151,8 +151,8 @@ xPathScrapers:
                   with: ""
       Tags:
         Name:
-          # Exclude "Full HD" quality marker (2026-10-07).
-          selector: "$data//a[contains(@href,'search.php?c=')][normalize-space(.)!='Full HD']"
+          # Exclude the その他 category (e.g. Full HD) (2026-10-07).
+          selector: "$data//span[contains(@style,'table-row')][not(./span[1][normalize-space(.)='その他'])]//a[contains(@href,'search.php?c=')]"
           postProcess:
             - replace:
                 - regex: "^\\s+|\\s+$"
@@ -228,8 +228,8 @@ xPathScrapers:
                   with: ""
       Tags:
         Name:
-          # Exclude "Full HD" quality marker (2026-10-07).
-          selector: "$data//a[contains(@href,'search.php?c=')][normalize-space(.)!='Full HD']"
+          # Exclude the その他 category (e.g. Full HD) (2026-10-07).
+          selector: "$data//span[contains(@style,'table-row')][not(./span[1][normalize-space(.)='その他'])]//a[contains(@href,'search.php?c=')]"
           postProcess:
             - replace:
                 - regex: "^\\s+|\\s+$"
