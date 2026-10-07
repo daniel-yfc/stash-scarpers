@@ -107,6 +107,9 @@ xPathScrapers:
               # Strip "パッケージ販売：" prefix on PKG pages (2026-10-07).
               - regex: "^\\s*パッケージ販売：\\s*"
                 with: ""
+              # Trim series prefix like 【オリジナル：Full HD】 (2026-10-07).
+              - regex: '^\s*【[^】]+】\s*'
+                with: ""
               - regex: "^\\s+|\\s+$"
                 with: ""
       Aliases:
@@ -138,11 +141,19 @@ xPathScrapers:
                 with: ""
       Studio:
         Name:
-          selector: "$data//a[contains(@href,'search.php?b=')]"
+          # Map series prefix from title to Studio (2026-10-07).
+          # Titles without a 【...】 prefix yield empty Studio.
+          selector: "$product//h2[1]"
           postProcess:
             - replace:
-                - regex: "^\\s+|\\s+$"
+                - regex: "^.*?(【[^】]+】).*$"
+                  with: "$1"
+                - regex: "^[^【].*$"
                   with: ""
+            - map:
+                "【オリジナル：Full HD】": "HUNK オリジナル"
+                "【GAMES：Full HD】": "GAMES"
+                "【ガッチンコ!!：Full HD】": "ガッチンコ!!"
       Tags:
         Name:
           selector: "$data//a[contains(@href,'search.php?c=')]"
@@ -171,6 +182,9 @@ xPathScrapers:
         selector: "$product//h2[1]"
         postProcess:
           - replace:
+              # Trim series prefix like 【オリジナル：Full HD】 (2026-10-07).
+              - regex: '^\s*【[^】]+】\s*'
+                with: ""
               - regex: "^\\s+|\\s+$"
                 with: ""
       Code:
@@ -208,11 +222,19 @@ xPathScrapers:
               return "https://www.hunk-ch.com/" + v;
       Studio:
         Name:
-          selector: "$data//a[contains(@href,'search.php?b=')]"
+          # Map series prefix from title to Studio (2026-10-07).
+          # Titles without a 【...】 prefix yield empty Studio.
+          selector: "$product//h2[1]"
           postProcess:
             - replace:
-                - regex: "^\\s+|\\s+$"
+                - regex: "^.*?(【[^】]+】).*$"
+                  with: "$1"
+                - regex: "^[^【].*$"
                   with: ""
+            - map:
+                "【オリジナル：Full HD】": "HUNK オリジナル"
+                "【GAMES：Full HD】": "GAMES"
+                "【ガッチンコ!!：Full HD】": "ガッチンコ!!"
       Tags:
         Name:
           selector: "$data//a[contains(@href,'search.php?c=')]"
