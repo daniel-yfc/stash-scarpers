@@ -68,7 +68,16 @@ xPathScrapers:
       Details:
         selector: //div[contains(concat(' ',normalize-space(@class),' '),' sub_data ')]/p//text()[normalize-space()] | //div[contains(concat(' ',normalize-space(@class),' '),' intro_text ')]/p//text()[normalize-space()]
         concat: "\n\n"
-      Image: //div[@class='pack_photo']//img/@src | //img[contains(@src, "/picture/parent/") and contains(@src, "_3.jpg")]/@src | //img[contains(@src, "/picture/")]/@src
+      Image:
+        selector: //div[@class='pack_photo']//img/@src | //img[contains(@src, "/picture/parent/") and contains(@src, "_3.jpg")]/@src | //img[contains(@src, "/picture/")]/@src
+        postProcess:
+          - javascript: |
+              var v = value || "";
+              if (!v) return "";
+              v = v.replace(/^\/\//, "https://");
+              if (/^https?:/i.test(v)) return v;
+              if (v.charAt(0) === "/") return "https://www.ko-tube.com" + v;
+              return "https://www.ko-tube.com/" + v
       Studio:
         Name:
           # Label value sits inside an <a>, not a direct text node —
@@ -91,11 +100,15 @@ xPathScrapers:
           # Live DOM (2026-10-06): single-product pages use the spec-table
           # th[モデル] row; package pages list performers in a standalone
           # 出演モデル block as a[href^='/search/index?ml='] + h6 pairs.
+          # concat first: Stash's split only processes the FIRST text node
+          # and returns early, dropping the rest (2026-10-07).
           selector: //th[contains(text(), "モデル")]/following-sibling::td[1]/text() | //a[starts-with(@href,'/search/index?ml=')]/following-sibling::h6[1]/text()
+          concat: "、"
           postProcess:
           - replace:
             - regex: ^\s+|\s+$
               with: ''
+          split: 、
           split: 、
       # Panic guard (2026-10-07): fixed URLs guarantees scrapeScene never
       # returns zero results — Stash nil-panics on empty results
