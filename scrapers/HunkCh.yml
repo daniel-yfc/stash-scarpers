@@ -122,7 +122,7 @@ xPathScrapers:
         selector: "$data"
         postProcess:
           - replace:
-              - regex: "^.*?(?:収録時間 | 時間)：\\s*(\\d+).*$"
+              - regex: "^.*?(?:収録時間|時間)\\s*：\\s*(\\d+).*$"
                 with: "$1"
       Date:
         selector: "$data"
