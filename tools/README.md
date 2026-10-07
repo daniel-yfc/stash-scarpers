@@ -89,6 +89,7 @@ See [`docs/05_CI_Workflows.md`](../docs/05_CI_Workflows.md) for the eight-workfl
 | `python tools/check_evidence_contract.py`     | Check evidence labels contract                                    |
 | `python3 tools/check_docs_official.py`        | Docs-vs-schema alignment (entity fields, entry points, operators) |
 | `python3 tools/check_scraper_semantics.py`    | Gender enum, movieByURL deprecation, parseDate layout             |
+| `bash tools/run-all-checks.sh`                | Interactive all-in-one local test runner (13 levels, Chinese UI)  |
 
 ## Tests
 

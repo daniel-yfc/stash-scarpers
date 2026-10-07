@@ -39,6 +39,7 @@ This directory contains repository-level workflow, architecture, testing, and ma
 | [`LIVE_TEST_STATUS.md`](LIVE_TEST_STATUS.md)                                           | Live-site verification status                             |
 | [`template-workflow.md`](template-workflow.md)                                         | Template-to-scraper workflow                              |
 | [`test-report-template.md`](test-report-template.md)                                   | Full-suite test report format                             |
+| [`evaluation-report-template.md`](evaluation-report-template.md)                       | Local evaluation report format (standalone)               |
 | [`verification-metadata.md`](verification-metadata.md)                                 | Verification metadata contract                            |
 | [`repository-documentation-architecture.md`](repository-documentation-architecture.md) | Documentation naming, metadata, routing, formatter policy |
 | [`../scrapers/README.md`](../scrapers/README.md)                                       | Public versus private scrapers and security               |

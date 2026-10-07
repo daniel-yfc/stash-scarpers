@@ -109,6 +109,12 @@ documents:
     layer: template
     status: active
     intents: [test-report]
+  - doc_id: TPL-REPORT-72
+    title: Evaluation Report Template
+    path: docs/evaluation-report-template.md
+    layer: template
+    status: active
+    intents: [test-report, evaluation, local-testing]
   - doc_id: DOC-SCRAPERS-00
     title: Scrapers README
     path: scrapers/README.md

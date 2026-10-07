@@ -57,11 +57,12 @@ generate a random string of that length.
 Applies to direct, CDP, and JSON scrapers. A scraper-defined `User-Agent`
 overrides the global Stash setting.
 
-````yaml
+```yaml
 driver:
   headers:
     - Key: User-Agent
       Value: "Mozilla/5.0 ..."
+```
 
 ## `clicks` need `sleep`
 
@@ -73,4 +74,4 @@ driver:
   clicks:
     - xpath: "//button[@id='age-confirm']"
       sleep: 2
-````
+```
