@@ -77,16 +77,16 @@ No completed Gayerdar fixture or live Stash/CDP pass is implied by these command
 - `cdp-evidence-gate.yml` rejects unsupported CDP claims; it is not a live CDP test.
 - `scrutiny.yml` is a manual raw-response check; `link-check.yml` is advisory link inspection for Markdown PRs, weekly, and manually.
 
-See [`docs/05_CI_Workflows.md`](../docs/05_CI_Workflows.md) for the seven-workflow inventory and verification boundaries. No workflow currently executes the five-task skill evaluation pack.
+See [`docs/05_CI_Workflows.md`](../docs/05_CI_Workflows.md) for the eight-workflow inventory and verification boundaries. No workflow currently executes the five-task skill evaluation pack.
 
 ## Local helpers
 
 | Script | Purpose |
 | --- | --- |
-| `install.sh` | Install Python (`requirements.txt`) and Node dependencies |
-| `build-site.sh` | Build the static `site/` directory |
-| `clean.sh` | Remove `site/` and `.cache/` |
-| `test.sh` | Run the pytest suite in `tools/tests/` |
+| `tools/scraper-quality-gate.sh <scraper.yml>` | Run quality gate on one scraper |
+| `tools/validate-all.sh` | Run quality gate on all scrapers |
+| `python -m pytest tools/tests/ -v` | Run the pytest suite in `tools/tests/` |
+| `python tools/check_evidence_contract.py` | Check evidence labels contract |
 
 ## Tests
 

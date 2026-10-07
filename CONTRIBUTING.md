@@ -46,7 +46,7 @@ Thanks for contributing to Stash Scraper Builder!
 - `fixture-manifests.yml`, `evidence-contract.yml`, and `cdp-evidence-gate.yml` check distinct evidence contracts on their configured triggers.
 - `link-check.yml` runs on Markdown PRs, weekly, and manually, but broken external links are advisory (`fail: false`).
 - `scrutiny.yml` is a deliberate manual raw-response check, not browser-rendered or live Stash/CDP verification.
-- Read the exact trigger, scope, and proof boundary for all seven current workflows in [`docs/05_CI_Workflows.md`](docs/05_CI_Workflows.md). Only actually executed required checks can pass; an advisory green job is not a guarantee that every link resolved.
+- Read the exact trigger, scope, and proof boundary for all eight current workflows in [`docs/05_CI_Workflows.md`](docs/05_CI_Workflows.md). Only actually executed required checks can pass; an advisory green job is not a guarantee that every link resolved.
 
 ## Code Style
 

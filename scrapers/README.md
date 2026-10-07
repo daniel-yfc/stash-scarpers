@@ -136,8 +136,8 @@ Before deploying any scraper:
 
 ## File Naming
 
-- Public: `Site-Name.yml` (e.g., `CK-Download.yml`)
-- Private: Same name in `private/` subfolder (e.g., `private/CK-Download.yml`)
+- Public: CamelCase `SiteName.yml` (e.g., `ClubCK.yml`); `CK-Download.yml` is a historical hyphenated exception
+- Private: Same name in `private/` subfolder (e.g., `private/ClubCK.yml`)
 - Do not add `-public` or `-private` suffixes to filenames
 
 ## Related Docs

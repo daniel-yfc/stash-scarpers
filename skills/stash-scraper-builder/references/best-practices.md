@@ -30,7 +30,7 @@ xPathScrapers:
 ```
 
 - Use `fixed:` studio for single-studio sites; use `map` for known variants (missed keys pass through unchanged).
-- Add `# Last Updated YYYY-MM-DD` at the **end of the file** (EOF).
+- Add `# Last Updated: YYYY-MM-DD` in the file header (top comment block).
 - Filename: CamelCase (site or network name).
 
 ## Studio normalization (G3)
@@ -110,8 +110,7 @@ xPathScrapers:
           selector: "//a[contains(@href,'/category/')]/text()"
 ```
 
-## Header / Footer (G4)
+## Header (G4)
 
-- **Header** (top comment): list restrictions — UA, cookie, CDP, Python prerequisites.
-- **Footer**: `# Last Updated YYYY-MM-DD`.
+- **Header** (top comment): list restrictions — UA, cookie, CDP, Python prerequisites — and `# Last Updated: YYYY-MM-DD`.
 - Cookie scrapers: note that users must edit the YAML file to refresh cookies.

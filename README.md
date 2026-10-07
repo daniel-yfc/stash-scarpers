@@ -29,6 +29,7 @@ node tools/verify-scraper-fixtures.mjs --self-test
 python tools/run_fixture_manifests.py
 python tools/scan_session_material.py
 python tools/check_evidence_labels.py
+python tools/check_evidence_contract.py
 python tools/check_live_cdp_status.py
 python tools/check_scraper_docs.py
 python tools/check_docs_index.py
@@ -50,7 +51,7 @@ node tools/scrutiny.js scrapers/<Scraper>.yml --url="<detail-url>"
 
 For each requested mode, record the scraper path and revision, date, target source URL, response type (raw HTTP, JSON, rendered DOM, or live Stash/CDP), site access state, exact command and result, expected and actual field values, and unresolved selectors. A useful case set is: completed detail pages with layout variation where plausible; a populated search page and selected detail result for each configured search mode; an optional/missing-field page; locale/language assertions where relevant; and a failure/gate page classified separately. XPath fixtures should assert cardinality and representative values. The runner enforces only its documented manifest contract, not every authoring expectation.
 
-Keep distinct labels for **schema**, URL sort, **policy**, automated tests, snapshot/fixture verification, live-search verification, live-detail verification, and production readiness. Record skipped or blocked checks as `UNVERIFIED`, not pass. Use [live status](docs/LIVE_TEST_STATUS.md) and the [test-report template](docs/test-report-template.md) for provenance and limitations; historical [evidence](evidence/) is not current policy. A checklist or audit recommendation is not test evidence.
+Keep distinct labels for **schema**, URL sort, **policy**, automated tests, snapshot/fixture verification, live-search verification, live-detail verification, and production readiness. Record skipped or blocked checks as `UNVERIFIED`, not pass. Use [live status](docs/LIVE_TEST_STATUS.md) and the [test-report template](docs/test-report-template.md) for provenance and limitations; historical `evidence/` is not current policy. A checklist or audit recommendation is not test evidence.
 
 ## Repository map
 

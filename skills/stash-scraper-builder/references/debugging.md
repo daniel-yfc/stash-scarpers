@@ -67,9 +67,10 @@
 - Test fragment modes against non-matching input before deployment
 - Verify fragment scrapers return valid results on test scenes
 - If a site doesn't support fragment scraping, omit `sceneByFragment`
-- Report upstream to Stash issue tracker if encountered
 
-**Reference:** Stash issue #6921 (https://github.com/stashapp/stash/issues/6921)
+**Upstream fix:** Stash PR #6857 (merged 2026-05-28 into `develop`) initializes the scene result to prevent the nil dereference. Stash v0.31.1 and earlier are still affected; upgrade to a release containing the fix, or use the `development` Docker tag.
+
+**Reference:** Stash issue #6921 (https://github.com/stashapp/stash/issues/6921), fix PR #6857 (https://github.com/stashapp/stash/pull/6857)
 
 ### 403 / Access denied
 

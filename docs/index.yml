@@ -241,7 +241,7 @@ documents:
     layer: skill
     status: active
     intents: [evaluation, regression]
-    read_after: [REF-VERIFY-60, REF-VERIFY-61]
+    read_after: [REF-VERIFY-60]
   - doc_id: REF-OPS-00
     title: Upstream Sources
     path: skills/stash-scraper-builder/references/UPSTREAM_SOURCES.md

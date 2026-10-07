@@ -22,7 +22,7 @@ The YAML operation arguments and the Python operation dispatcher must remain syn
 4. For script scrapers, copy the Python file into the matching `scrapers/` dependency directory and update every YAML script path.
 5. Remove modes the site does not support. Do not invent search endpoints.
 6. Implement real extraction functions, dependency imports, and operation dispatch.
-7. Verify the input/output contract in `references/script-actions.md`.
+7. Verify the input/output contract in [`../skills/stash-scraper-builder/references/script-actions.md`](../skills/stash-scraper-builder/references/script-actions.md).
 8. Run the schema checklist and official validator.
 9. Run the repository tests and quality gate.
 10. Mark untested selectors or site assumptions explicitly; do not present placeholder metadata as verified.

@@ -31,7 +31,7 @@ A broad `replace` first can destroy the date or studio token the later step need
 - `subScraper` — extra HTTP request; do not use by default.
 - `javascript` — goja; `return` a string from `value`.
 - `subtractDays` — after a day-count extract.
-- `feetToCm` / `lbToKg` / `dimensionToMetric` — performer units, not dates.
+- `feetToCm` / `lbToKg` — performer units, not dates. (`dimensionToMetric` is not a Stash postProcess operator.)
 
 Deprecated: inline `replace` / `parseDate` / `subScraper` outside `postProcess`.
 

@@ -81,7 +81,6 @@
         "map": {"type": "object"},
         "subScraper": {"$ref": "#/definitions/nodeSelector"},
         "feetToCm": {"type": "boolean"},
-        "dimensionToMetric": {"type": "boolean"},
         "lbToKg": {"type": "boolean"},
         "subtractDays": {"type": "boolean"},
         "javascript": {"type": "string"}

@@ -50,6 +50,7 @@ node tools/verify-scraper-fixtures.mjs --self-test
 python tools/run_fixture_manifests.py
 python tools/scan_session_material.py
 python tools/check_evidence_labels.py
+python tools/check_evidence_contract.py
 python tools/check_live_cdp_status.py
 python tools/check_scraper_docs.py
 python tools/check_docs_index.py
@@ -71,4 +72,15 @@ node tools/scrutiny.js scrapers/<Scraper>.yml --url="<detail-url>"
 
 逐一記下擷取器路徑、修訂版、日期、來源 URL、回應種類（原始 HTTP、JSON、渲染 DOM、live Stash/CDP）、存取狀態、實際命令與結果、欄位預期值與實得值、尚未驗證的 selector。建議案例包含有版面差異時的兩筆詳情、每種已設定搜尋模式的有結果頁與詳情結果、可選欄位缺失案例，以及適用的語系斷言；挑戰或錯誤頁要獨立分類。XPath fixture 應斷言匹配數量及代表值。這些撰寫期望不全是 runner 強制規則。
 
-務必分開記錄 schema、URL 排序、政策閘門、自動測試、快照／fixture、live-search、live-detail 與生產就緒；未執行或遭封鎖的項目標為 `UNVERIFIED`。使用 [實測狀態](docs/LIVE_TEST_STATUS.md) 與 [報告範本](docs/test-report-template.md)記錄來源和限制。歷史 [evidence/](evidence/) 不是現行政策，清單或審計建議也不能代替測試。
+務必分開記錄 schema、URL 排序、政策閘門、自動測試、快照／fixture、live-search、live-detail 與生產就緒；未執行或遭封鎖的項目標為 `UNVERIFIED`。使用 [實測狀態](docs/LIVE_TEST_STATUS.md) 與 [報告範本](docs/test-report-template.md)記錄來源和限制。歷史 `evidence/` 不是現行政策，清單或審計建議也不能代替測試。
+
+## 儲存庫地圖
+
+- `scrapers/` 與 `scrapers/private/`：分別為公開與私有 YAML；兩者都不是存放真實密鑰的地方。
+- `templates/`：鷹架，非已驗證的網站 scraper。
+- `skills/stash-scraper-builder/`：撰寫合約與專門參考文件。
+- `validator/` 與 `tools/`：schema 驗證、品質檢查、fixture 與審查。
+- `docs/README.md` 與 `docs/index.yml`：人工與機器文件路由。
+- `CONTRIBUTING.md`：貢獻與審查流程。
+
+新增的 Markdown 使用小寫 kebab-case 檔名，已存在的編號 `docs/` 系列除外。依循[文件架構](docs/repository-documentation-architecture.md)處理 metadata、ID、索引與格式。

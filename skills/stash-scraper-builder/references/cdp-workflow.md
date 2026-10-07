@@ -34,8 +34,6 @@ Without steps 2–4, a gated `useCDP: true` scraper can return nothing. Always e
 - `useCDP: true` forbids `CookieURL` on every `driver.cookies` entry when enforced by the validator; the attached browser session already carries the cookies.
 - `useCDP: false` or omitted requires `CookieURL` on every cookie when cookies are used.
 
-Full table in `schema-checklist.md`.
-
 ## `clicks` need `sleep`
 
 Click items use `xpath` with an optional `sleep` (seconds). **`waitTillPresent` does not exist** — no Stash source (verified against v0.31.1) and no upstream schema (click items allow only `xpath` + `sleep`) support it; do not emit it. Any `driver.clicks` entry that triggers navigation or AJAX must set `sleep` (seconds) so the DOM settles before extraction. A click without `sleep` may scrape the pre-click page.

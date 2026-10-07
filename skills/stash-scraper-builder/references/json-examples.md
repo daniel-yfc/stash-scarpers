@@ -57,7 +57,7 @@ jsonScrapers:
         selector: "results.#.cover_url"
 ```
 
-If search hits omit a detail API URL, rewrite `{url}` with `queryURL` + `queryURLReplace` on `sceneByQueryFragment` (see `json-patterns.md`). Never set fragment `queryURL` to `.../search?q={title}`.
+If search hits omit a detail API URL, rewrite `{url}` with `queryURL` + `queryURLReplace` on `sceneByQueryFragment` (see `json-patterns.md`). Never set `sceneByQueryFragment`'s `queryURL` to `.../search?q={title}`.
 
 ## 2. Page URL → API (`queryURLReplace`)
 

@@ -25,7 +25,7 @@ routing:
 
 Use rendered-DOM fixtures for sites where the needed DOM appears only after JavaScript execution, CDP rendering, SPA routing, or an approved browser session. This complements raw-response scrutiny; it does not replace schema validation, policy gates, or a live Stash runtime test.
 
-The `last_verified` field above records the historical documentation review. The runner was changed after that date; its new behavior and GitHub Actions result have not been verified by this field.
+The `last_verified` field above records when this document was reviewed (2026-10-06). Note: the fixture runner was modified after that review; the runner's new behavior and its GitHub Actions results are not covered by this date and await re-verification.
 
 ## Failure-page classification
 

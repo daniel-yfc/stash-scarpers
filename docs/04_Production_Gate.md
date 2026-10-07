@@ -1,3 +1,19 @@
+---
+doc_id: DOC-OPS-30
+title: Production Gate
+status: active
+layer: repository
+owner: maintainer
+audience:
+  - agent
+  - maintainer
+last_verified: "2026-10-07"
+authority: canonical
+routing:
+  intents:
+    - production-readiness
+---
+
 # Production Gate
 
 ## Overview
@@ -100,5 +116,4 @@ A completed checklist is not production readiness by itself. Schema validation, 
 
 ---
 
-**Last Updated**: 2026-09-30
 **Status**: ✅ Active
