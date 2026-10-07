@@ -161,7 +161,7 @@ xPathScrapers:
                 - regex: "^\\s+|\\s+$"
                   with: ""
       FrontImage:
-        selector: "$product//div[contains(concat(' ',normalize-space(@class),' '),' flexslider ')]//img[1]/@src | //meta[@property='og:image']/@content"
+        selector: "($product//div[contains(concat(' ',normalize-space(@class),' '),' flexslider ')]//img)[1]/@src | //meta[@property='og:image']/@content"
         postProcess:
           - javascript: |
               var v = value || "";
@@ -215,7 +215,7 @@ xPathScrapers:
                 with: "$1"
           - parseDate: "2006-01-02"
       Image:
-        selector: "$product//div[contains(concat(' ',normalize-space(@class),' '),' flexslider ')]//img[1]/@src | //meta[@property='og:image']/@content"
+        selector: "($product//div[contains(concat(' ',normalize-space(@class),' '),' flexslider ')]//img)[1]/@src | //meta[@property='og:image']/@content"
         postProcess:
           - javascript: |
               var v = value || "";
