@@ -142,6 +142,9 @@ xPathScrapers:
               # Trim blindfold disclaimer (2026-10-07).
               - regex: "\\s*本編メインモデルに目隠しはございません。(ケモデルの射精シーンはございません。)?\\s*$"
                 with: ""
+              # Trim related videos boilerplate (2026-10-07).
+              - regex: "\\s*この作品の関連無料動画はこちらです。\\s*$"
+                with: ""
       Studio:
         Name:
           selector: "$data//a[contains(@href,'search.php?b=')]"
@@ -199,6 +202,9 @@ xPathScrapers:
               # Trim blindfold disclaimer (2026-10-07).
               - regex: "\\s*本編メインモデルに目隠しはございません。(ケモデルの射精シーンはございません。)?\\s*$"
                 with: ""
+              # Trim related videos boilerplate (2026-10-07).
+              - regex: "\\s*この作品の関連無料動画はこちらです。\\s*$"
+                with: ""
       URLs:
         fixed: "{inputURL}"
       Date:
@@ -233,6 +239,18 @@ xPathScrapers:
           postProcess:
             - replace:
                 - regex: "^\\s+|\\s+$"
+                  with: ""
+      Performers:
+        Name:
+          # Extract performer name as 2 kanji before ( : e.g. 元貴(もとき)
+          # (2026-10-07).
+          selector: "$product//h2[1]"
+          postProcess:
+            - replace:
+                - regex: "^.*([一-龯]{2})\\([^)]*\\).*$"
+                  with: "$1"
+                # Clear if no match (full title is long)
+                - regex: "^.{3,}$"
                   with: ""
 
 driver:
