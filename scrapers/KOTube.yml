@@ -109,7 +109,6 @@ xPathScrapers:
             - regex: ^\s+|\s+$
               with: ''
           split: 、
-          split: 、
       # Panic guard (2026-10-07): fixed URLs guarantees scrapeScene never
       # returns zero results — Stash nil-panics on empty results
       # (pkg/scraper/mapped.go processSceneRelationships).
