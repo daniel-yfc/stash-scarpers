@@ -87,7 +87,11 @@ xPathScrapers:
             - regex: ^\s+|\s+$
               with: ''
           split: 、
-      URLs: //a[contains(@href, "ko-video.com")]/@href
+      # Panic guard (2026-10-07): fixed URLs guarantees scrapeScene never
+      # returns zero results — Stash nil-panics on empty results
+      # (pkg/scraper/mapped.go processSceneRelationships).
+      URLs:
+        fixed: "{inputURL}"
       Groups:
         Name: //div[@id='Contents']//h3[1]/text()
   groupScraper:
