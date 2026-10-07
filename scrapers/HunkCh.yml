@@ -104,6 +104,9 @@ xPathScrapers:
         selector: "$product//h2[1]"
         postProcess:
           - replace:
+              # Strip "パッケージ販売：" prefix on PKG pages (2026-10-07).
+              - regex: "^\\s*パッケージ販売：\\s*"
+                with: ""
               - regex: "^\\s+|\\s+$"
                 with: ""
       Aliases:
