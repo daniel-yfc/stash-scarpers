@@ -34,6 +34,15 @@ sceneByQueryFragment:
   queryURL: "{url}"
   scraper: sceneScraper
 
+# Same product URLs double as Group (package) pages — Stash picks the
+# scraper by context (Scene vs Group). Verified 2026-10-07.
+groupByURL:
+  - action: scrapeXPath
+    url:
+      - ko-shop.com/products/detail.php
+      - www.ko-shop.com/products/detail.php
+    scraper: groupScraper
+
 xPathScrapers:
   searchScraper:
     common:
@@ -157,6 +166,82 @@ xPathScrapers:
                 - regex: "^\\s+|\\s+$"
                   with: ""
           split: "|"
+
+  # Group view of the same product page (2026-10-07):
+  # - Code goes to Aliases, not Code
+  # - Duration from 収録時間 (minutes → seconds)
+  # - Image goes to FrontImage
+  groupScraper:
+    common:
+      $meta: "//div[contains(concat(' ',normalize-space(@class),' '),' detail_product ')]//dl[1]"
+    group:
+      Name:
+        selector: "//div[contains(concat(' ',normalize-space(@class),' '),' detail_product ')]//h2[1] | //title"
+        postProcess:
+          - replace:
+              - regex: '^\s+|\s+$'
+                with: ""
+      Aliases:
+        selector: "$meta/dt[normalize-space(.)='商品コード']/following-sibling::dd[1]"
+        postProcess:
+          - javascript: |
+              var v = value || "";
+              return v.replace(/^[\s:：]+|[\s\u00a0]+$/gu, "").trim();
+      Duration:
+        selector: "$meta/dt[normalize-space(.)='収録時間']/following-sibling::dd[1]"
+        postProcess:
+          - javascript: |
+              var v = (value || "").replace(/[\s\u00a0:：]/g, "");
+              // "107分" -> 6420, "1時間47分" -> 6420
+              var m = v.match(/(?:(\d+)時間)?(?:(\d+)分)?/);
+              if (!m || (!m[1] && !m[2])) return "";
+              var mins = (parseInt(m[1] || "0", 10) * 60) + parseInt(m[2] || "0", 10);
+              if (!mins) return "";
+              return String(mins * 60);
+      FrontImage:
+        selector: "//div[contains(concat(' ',normalize-space(@class),' '),' detail_main_img ')]//a[contains(@href,'upload/save_image/') or contains(@href,'uploadsaveimage')][1]/@href"
+        postProcess:
+          - javascript: |
+              var v = value || "";
+              if (!v) return "";
+              v = v.replace(/\?.*$/, "");
+              v = v.replace(/^\/\//, "https://");
+              if (/^https?:/i.test(v)) return v;
+              if (v.charAt(0) === "/") return "https://www.ko-shop.com" + v;
+              return "https://www.ko-shop.com/" + v;
+      Date:
+        selector: "$meta/dt[normalize-space(.)='発売日']/following-sibling::dd[1]"
+        postProcess:
+          - javascript: |
+              var v = (value || "").replace(/[\s\u00a0]/g, "");
+              if (!v) return "";
+              var m = v.match(/(\d{4})[年\/\-. ]?(\d{1,2})[月\/\-. ]?(\d{1,2})/);
+              if (!m) m = v.match(/(\d{4})(\d{2})(\d{2})/);
+              if (!m) return "";
+              var mm = ("0" + m[2]).slice(-2);
+              var dd = ("0" + m[3]).slice(-2);
+              return m[1] + "-" + mm + "-" + dd;
+          - parseDate: "2006-01-02"
+      Synopsis:
+        selector: "//div[contains(concat(' ',normalize-space(@class),' '),' under_col ')]/div[contains(concat(' ',normalize-space(@class),' '),' ma_b30 ')][1]//text()[normalize-space()][not(parent::h2)]"
+        concat: "\n"
+        postProcess:
+          - replace:
+              - regex: '^\s+|\s+$'
+                with: ""
+              - regex: '\n{3,}'
+                with: "\n\n"
+              - regex: "\\s*商品説明\\s*オフィシャル購入で限定特典DISCが選べる!\\s*OFFICIALサイトへは↓画像のリンクから!\\s*$"
+                with: ""
+      Studio:
+        Name:
+          selector: "$meta/dt[normalize-space(.)='シリーズ']/following-sibling::dd[1]//a[1]"
+          postProcess:
+            - replace:
+                - regex: '^\s+|\s+$'
+                  with: ""
+      URLs:
+        fixed: "{inputURL}"
 
 driver:
   useCDP: true
