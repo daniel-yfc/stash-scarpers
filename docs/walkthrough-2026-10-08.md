@@ -385,3 +385,34 @@ Title／Date／Studio／Tags／Details 抽查 3 頁全 MATCH。無剩餘問題�
 皆為同一模板（首 li 為 clone、次 li 為封面、末 li 為封面 clone），第一分支
 正確回傳第一個非 clone li 的 `_top.jpg`，`og:image` 備援未被使用。
 Duration／Code／Title 3 頁全 MATCH。無剩餘功能性問題。
+
+### Hunk's Channel（第四輪）
+
+關鍵字筆數：親父 216 件、不倫 19 件、援助 5 件。
+安全：援助 5 件全為學園／師生主題全數跳過；不倫的學生／老師主題、
+親父的「子供帰り」描述、原擬用的 KO-BEAST185（学園主題）亦跳過。
+
+| 頁面 | URL | Image V2 | Duration | Code | Title |
+|---|---|---|---|---|---|
+| 1 | …/movie_detail.php?code=KO-KURUU080 | MATCH（`ko-kuruu080_top.jpg`） | 137 分 | MATCH | MATCH |
+| 2 | …/movie_detail.php?code=ACD-172 | MATCH（`acd-172_top.jpg`） | 29 分 | MATCH（canonical 備援） | MATCH |
+| 3 | …/movie_detail.php?code=TR-AS005 | MATCH（`tr-as005_top.jpg`） | 24 分 | MATCH（canonical 備援） | MATCH |
+
+裁定：**Image V2 再次 confirmed**（3 頁，clone 排除邏輯實際被行使）。
+觀察：三頁 `<head>` 皆無 `og:image`，備援分支不觸發，FlexSlider 分支為唯一
+生效路徑 —— 非阻擋問題。Duration／Code／Title 3 頁全 MATCH。
+
+## 全輪次最終裁定
+
+| 站 | R1 修正 | R2 | R3 | R4 | 終態 |
+|---|---|---|---|---|---|
+| KO Tube | Image 排除 `#include_title` | confirmed | — | — | ✅ |
+| KO Video | Image 排除 clone；Performers 多版型 | ＋`model.php?model_id=` 分支 | ＋`ul#main_item` 分支、`/span/text()` | 兩項皆 confirmed | ✅ |
+| CK Download | Title／Image | 兩項 confirmed | — | — | ✅ |
+| KO Shop | Details | v1 壞 → v2 | V2 confirmed | — | ✅ |
+| Men's Rush TV | Studio／Details | 兩項 confirmed | — | — | ✅ |
+| ACCEED | Date | Date confirmed；Details＋`chitiet` | V2 confirmed | — | ✅ |
+| Hunk's Channel | Image／Duration／Code | Image 括號未閉 → v2 | V2 confirmed | V2 再 confirmed | ✅（括號修正已加回本地，待 push） |
+
+四輪共 4 組關鍵字、35 個不同商品頁。HunkCh 括號修正本地已就緒，
+待 Chen 實機測試完其他站後再 push。
