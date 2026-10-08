@@ -151,7 +151,9 @@ xPathScrapers:
 
       Studio:
         Name:
-          selector: //div[@class='movie_detail'][1]//p//a[contains(@href,'list.php?maid=')][1]/text() | //div[@class='movie_detail'][1]//p//a[contains(@href,'fansme.jp/user/')][1]/text()
+          # A page can list two makers (e.g. ARGA-134_DL) — collect all
+          # maid links, not just the first. Verified 2026-10-08.
+          selector: //div[@class='movie_detail'][1]//p//a[contains(@href,'list.php?maid=')]/text() | //div[@class='movie_detail'][1]//p//a[contains(@href,'fansme.jp/user/')][1]/text()
           postProcess:
             - replace:
                 - regex: "^FansMe（(.+)）$"
@@ -180,7 +182,9 @@ xPathScrapers:
                   with: ""
 
       Details:
-        selector: //div[@class='movie_detail']/h3[1]/following-sibling::p[1]//text()[normalize-space()]
+        # Some pages split the blurb into a short summary p[1] + full text
+        # p[2] — take all following paragraphs. Verified 2026-10-08.
+        selector: //div[@class='movie_detail']/h3[1]/following-sibling::p//text()[normalize-space()]
         concat: "\n\n"
         postProcess:
           # Strip the trailing file-size disclaimer when present

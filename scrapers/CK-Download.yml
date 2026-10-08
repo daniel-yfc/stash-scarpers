@@ -85,7 +85,10 @@ xPathScrapers:
       $cats: "//div[contains(@class,'prod_category')][1]"
     scene:
       Title:
-        selector: "$data//th[normalize-space(.)='DVD タイトル']/following-sibling::td[1] | //h1[normalize-space()] | //title"
+        # th text is 'DVDタイトル' (no space); DVDタイトル td may be empty for
+        # streaming-only items — fall back to the h3 product title (h1 is the
+        # site slogan, not the product). Verified 2026-10-08 via walkthrough.
+        selector: "$data//th[normalize-space(.)='DVDタイトル']/following-sibling::td[1][normalize-space()] | //div[@id='Contents']/h3[normalize-space()]/text() | //title"
         postProcess:
           - replace:
               - regex: "^\\s+|\\s+$"
@@ -131,7 +134,9 @@ xPathScrapers:
       Image:
         # Live DOM (2026-10-06): set pages render covers in div.set_photo
         # instead of the flexslider; og:image does not exist.
-        selector: "//div[contains(@class,'photo_flexslider')]//img[not(contains(@src,'no_image'))][1]/@src | //div[contains(@class,'set_photo')]//img[not(contains(@src,'no_image'))][1]/@src | //meta[@property='og:image']/@content"
+        # FlexSlider injects li.clone nodes (copies of the last slide) — exclude
+        # them and take the global first match. Verified 2026-10-08.
+        selector: "(//div[contains(@class,'photo_flexslider')]//ul[contains(@class,'slides')]/li[not(contains(@class,'clone'))]//img[not(contains(@src,'no_image'))])[1]/@src | //div[contains(@class,'set_photo')]//img[not(contains(@src,'no_image'))][1]/@src | //meta[@property='og:image']/@content"
         postProcess:
           - javascript: |
               var v = value || "";

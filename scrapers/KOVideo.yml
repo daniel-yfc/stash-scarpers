@@ -89,7 +89,10 @@ xPathScrapers:
   sceneScraper:
     common:
       $meta: //div[contains(@class,'detail_product')][1]//dl[1]
-      $performers: //div[contains(@class,'model_performance')][1]//div[contains(@class,'owl-carousel')]//div[@class='item']//a/span/text()
+      $performers: //div[contains(@class,'model_performance')][1]//div[contains(@class,'owl-carousel')]//div[@class='item']//a/span/text() | //h3[contains(.,'男子学園モデル')]/following-sibling::a/text() | //a[contains(@href,'model_detail.php')]/text()
+      # Performer block varies: carousel, 「男子学園モデル」h3 + external links,
+      # or 「出演モデル」 section with /fanspace/model_detail.php links.
+      # Absent on some pages — field is optional. Verified 2026-10-08.
     scene:
       Title:
         # Live DOM (2026-10-06): div.title_bar is a SIBLING of div.detail_main_col,
@@ -150,7 +153,9 @@ xPathScrapers:
         selector: //p[@class='deitail_txt']/text()[normalize-space()]
         concat: "\n"
       Image:
-        selector: //div[contains(@class,'detail_main_col')]//a[contains(@class,'fancybox') and not(contains(@href,'/gallery/'))][1]/@href
+        # bxSlider clones li.bx-clone nodes (copies of gallery images) — exclude
+        # them and /gallery/ links. Verified 2026-10-08 via walkthrough.
+        selector: //div[contains(@class,'detail_main_col')]//li[not(contains(@class,'bx-clone'))]//a[contains(@class,'fancybox') and not(contains(@href,'/gallery/'))][1]/@href
         postProcess:
           - javascript: 'var v = value || "";
 

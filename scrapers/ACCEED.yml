@@ -135,7 +135,9 @@ xPathScrapers:
         fixed: "{inputURL}"
 
       Date:
-        selector: "$spec//li[div[contains(@class,'trai')][contains(.,'DVD発売')]]/div[contains(@class,'phai')]/text()"
+        # Streaming items use 配信開始 instead of DVD発売 — match both.
+        # Verified 2026-10-08 via logged-in walkthrough (3 detail pages).
+        selector: "$spec//li[div[contains(@class,'trai')][contains(.,'発売') or contains(.,'配信')]]/div[contains(@class,'phai')]/text()"
         postProcess:
           - javascript: |
               var v = value || "";

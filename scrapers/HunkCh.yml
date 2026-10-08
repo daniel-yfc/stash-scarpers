@@ -119,10 +119,12 @@ xPathScrapers:
               - regex: "^.*?[?&]code=([^&]+).*$"
                 with: "$1"
       Duration:
+        # (?s): $data spans multiple lines; without it ^.*?$ cannot reach
+        # the 収録時間 line. Verified 2026-10-08 via walkthrough.
         selector: "$data"
         postProcess:
           - replace:
-              - regex: "^.*?(?:収録時間|時間)\\s*：\\s*(\\d+).*$"
+              - regex: "(?s)^.*?(?:収録時間|時間)\\s*：\\s*(\\d+).*$"
                 with: "$1"
       Date:
         selector: "$data"
@@ -161,7 +163,9 @@ xPathScrapers:
                 - regex: "^\\s+|\\s+$"
                   with: ""
       FrontImage:
-        selector: "($product//div[contains(concat(' ',normalize-space(@class),' '),' flexslider ')]//img)[1]/@src | //meta[@property='og:image']/@content"
+        # FlexSlider injects li.clone nodes in live DOM — exclude them.
+        # Verified 2026-10-08 via walkthrough (3 detail pages).
+        selector: "($product//div[contains(concat(' ',normalize-space(@class),' '),' flexslider ')]//ul[contains(@class,'slides')]/li[not(contains(@class,'clone'))][1]//img/@src | //meta[@property='og:image']/@content"
         postProcess:
           - javascript: |
               var v = value || "";
@@ -187,11 +191,15 @@ xPathScrapers:
               - regex: "^\\s+|\\s+$"
                 with: ""
       Code:
-        selector: "//link[@rel='canonical']/@href | //meta[@property='og:url']/@content"
+        # Code also lives in input[name=code] (value like ACD-180_STINF).
+        # Verified 2026-10-08 via walkthrough.
+        selector: "//input[@name='code']/@value | //link[@rel='canonical']/@href | //meta[@property='og:url']/@content"
         postProcess:
           - replace:
               - regex: "^.*?[?&]code=([^&]+).*$"
                 with: "$1"
+              - regex: "_STINF$"
+                with: ""
       Details:
         selector: "//img[@title='ストーリー']/following::p[1]"
         concat: "\n"
@@ -215,7 +223,9 @@ xPathScrapers:
                 with: "$1"
           - parseDate: "2006-01-02"
       Image:
-        selector: "($product//div[contains(concat(' ',normalize-space(@class),' '),' flexslider ')]//img)[1]/@src | //meta[@property='og:image']/@content"
+        # FlexSlider injects li.clone nodes in live DOM — exclude them.
+        # Verified 2026-10-08 via walkthrough (3 detail pages).
+        selector: "($product//div[contains(concat(' ',normalize-space(@class),' '),' flexslider ')]//ul[contains(@class,'slides')]/li[not(contains(@class,'clone'))][1]//img/@src | //meta[@property='og:image']/@content"
         postProcess:
           - javascript: |
               var v = value || "";

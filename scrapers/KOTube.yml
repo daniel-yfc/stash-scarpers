@@ -69,7 +69,9 @@ xPathScrapers:
         selector: //div[contains(concat(' ',normalize-space(@class),' '),' sub_data ')]/p//text()[normalize-space()] | //div[contains(concat(' ',normalize-space(@class),' '),' intro_text ')]/p//text()[normalize-space()]
         concat: "\n\n"
       Image:
-        selector: //div[@class='pack_photo']//img/@src | //img[contains(@src, "/picture/parent/") and contains(@src, "_3.jpg")]/@src | //img[contains(@src, "/picture/")]/@src
+        # On package pages the _3.jpg fallback catches included-work thumbnails
+        # inside #include_title — exclude them. Verified 2026-10-08.
+        selector: //div[@class='pack_photo']//img/@src | //img[contains(@src, "/picture/parent/") and contains(@src, "_3.jpg") and not(ancestor::*[@id='include_title'])]/@src | //img[contains(@src, "/picture/")]/@src
         postProcess:
           - javascript: |
               var v = value || "";
