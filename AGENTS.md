@@ -43,6 +43,8 @@ Do not duplicate detailed policy here; link to the owning document.
 - Run live scraper scrutiny: `node tools/scrutiny.js scrapers/<Scraper>.yml --search`
 - Run documentation checker: `python tools/check_scraper_docs.py`
 - Run all local checks (interactive): `bash tools/run-all-checks.sh`
+- Auto-generate evaluation report: `bash tools/run-all-checks.sh --report [output]`
+  (fills `docs/evaluation-report-template.md`; default `docs/reports/evaluation-*.md`, gitignored)
 - Run documentation-index checker: `python tools/check_docs_index.py`
 - Check docs-vs-schema alignment: `python3 tools/check_docs_official.py`
 - Check scraper semantics: `python3 tools/check_scraper_semantics.py`

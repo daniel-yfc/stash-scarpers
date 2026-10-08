@@ -13,3 +13,4 @@ lib
 coverage/
 dist/
 build/
+docs/reports/
