@@ -219,3 +219,19 @@ h3（兩頁驗證），td 非空時命中主分支（一頁驗證）。編號／
 **v2 修正**：`//div[contains(concat(' ',normalize-space(@class),' '),' under_col ')]/div[contains(concat(' ',normalize-space(@class),' '),' ma_b30 ')][h2[contains(.,'商品説明')]]/text()[normalize-space()]`
 —— 取 `div.ma_b30` 的直接文字節點，可排除內層宣傳連結／樣本圖／相關商品文字。
 Title／Code／Date／Image／Studio／Tags 抽查 3 頁全 MATCH。
+
+### Men's Rush TV
+
+關鍵字筆數：童顏 851 件、生徒 109 件、発展 273 件。
+
+| 頁面 | URL | Studio（修正版） | Details（修正版） |
+|---|---|---|---|
+| 1 | single.php?id=ACD-163_DL | MATCH（1 家全取） | MATCH（長描述＋宣傳段） |
+| 2 | single.php?id=STR-451_DL | MATCH（1 家全取） | MATCH（短摘要＋全文雙段落——最具證明力） |
+| 3 | single.php?id=DIG-104_DL | MATCH（1 家全取） | MATCH（LINEUP＋宣傳段） |
+| 4 | single.php?id=CAPY-1083_DL | MATCH（1 家全取） | MATCH（長描述＋宣傳段） |
+
+裁定：**Details fix confirmed**（STR-451_DL 證明雙段落皆取到，舊版只取第一段）。
+**Studio fix 結構上確認**（移除 `[1]` 後按文件順序回傳全部 `maid` 連結）；
+雙廠商同列情境本輪未再遇到（第一輪 ARGA-134_DL 為證），留待端到端確認。
+Title／Code／Tags／Image 抽查 4 頁全 MATCH，無迴歸。
