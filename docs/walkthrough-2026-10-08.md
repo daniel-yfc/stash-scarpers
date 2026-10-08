@@ -290,3 +290,23 @@ clone 排除邏輯本身驗證正確（`li[not(contains(@class,'clone'))][1]` �
 教訓：schema validator 不檢查 XPath 語法；`contains(@class,' padded ')` 類字串
 必須搭配 `concat(' ',normalize-space(@class),' ')`，否則單一 token 的 class
 屬性永不命中。兩處皆為同類錯誤，v2 已修。
+
+## 第三輪驗證（V2 修正站）
+
+關鍵字：野狼／極太／先生。僅針對第二輪有 V2 修正的 4 站。
+
+### KO Shop（第三輪）
+
+關鍵字筆數：野狼 0 件、極太 264 件、先生 246 件。
+安全：「先生」結果中標題含「未性児」的兩筆已跳過未開。
+
+| 頁面 | URL | Details V2 | 排除確認 |
+|---|---|---|---|
+| 1 | …/detail.php?product_id=41815 | MATCH（描述僅「極太土建屋2」6 字） | ✅ |
+| 2 | …/detail.php?product_id=42733 | MATCH（「快楽堕ちする美尻少年たち…」開頭） | ✅（預告片區塊在巢狀 div，正確排除） |
+| 3 | …/detail.php?product_id=42633 | MATCH（「「患者さんのチンポドクドクしとるよ?」…」開頭） | ✅（同上） |
+
+裁定：**Details V2 confirmed**（3 頁）。預告片／樣本圖／相關商品／圖示說明
+皆為巢狀或兄弟節點，非 `div.ma_b30` 直接文字節點，正確排除。
+Title／Code／Date／Image／Studio／Tags 抽查：41815 缺 `キーワード` 欄
+（頁面資料缺失，非 selector 問題），其餘全 MATCH。
