@@ -310,3 +310,19 @@ clone 排除邏輯本身驗證正確（`li[not(contains(@class,'clone'))][1]` �
 皆為巢狀或兄弟節點，非 `div.ma_b30` 直接文字節點，正確排除。
 Title／Code／Date／Image／Studio／Tags 抽查：41815 缺 `キーワード` 欄
 （頁面資料缺失，非 selector 問題），其餘全 MATCH。
+
+### ACCEED（第三輪，登入態）
+
+關鍵字筆數：野狼 0 件、極太 56 件、先生 20 件。安全：含 少年／18歳／童顔／
+あどけない／幼さ 等字樣的結果一律跳過未開。
+
+| 頁面 | URL | Details V2 | 命中分支 |
+|---|---|---|---|
+| 1（串流） | detail.ACST396.html | MATCH（「ACCEED初登場！イケメンで筋肉質で…」開頭） | `div.chitiet` 備援分支 ✅ |
+| 2（DVD） | detail.ACSM360.html | MATCH（「６年振りとなる『BLACK HOLE』最新作。」開頭） | 裸文字節點分支 |
+| 3（DVD） | detail.ACSM337_1.html | MATCH（「ACCEEDの大人気シリーズ【俺たち妄想族】…」開頭） | 裸文字節點分支 |
+
+裁定：**Details V2 confirmed**（3 頁），`div.chitiet` 備援分支在串流頁實際觸發。
+Title／Code／Date／Image／Studio／Tags／Performers 抽查 3 頁全 MATCH。
+備註：ACST396 串流頁實際有 `シリーズ` 列（ノンケ喰い），與第二輪「串流頁無此列」
+不同 —— 頁面資料差異，非 selector 問題。
