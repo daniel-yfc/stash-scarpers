@@ -37,9 +37,9 @@ These catch normalisation bugs in `replace`, `concat`, and post-processing rules
 
 | Example  | Source                                                                                               | Pattern demonstrated                                          |
 | -------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| KOVideo  | [../../../scrapers/KOVideo.yml](../../../scrapers/KOVideo.yml)                                       | XPath union fallbacks; slider-clone exclusion                 |
-| ACCEED   | [../../../scrapers/ACCEED.yml](../../../scrapers/ACCEED.yml)                                         | CDP + commented login-cookie template                         |
-| HunkCh   | [../../../scrapers/HunkCh.yml](../../../scrapers/HunkCh.yml)                                         | FlexSlider clone exclusion; parenthesized union               |
+| KOVideo  | [KOVideo](https://github.com/daniel-yfc/stash-scarpers/blob/main/scrapers/KOVideo.yml)               | XPath union fallbacks; slider-clone exclusion                 |
+| ACCEED   | [ACCEED](https://github.com/daniel-yfc/stash-scarpers/blob/main/scrapers/ACCEED.yml)                 | CDP + commented login-cookie template                         |
+| HunkCh   | [HunkCh](https://github.com/daniel-yfc/stash-scarpers/blob/main/scrapers/HunkCh.yml)                 | FlexSlider clone exclusion; parenthesized union               |
 | Andomark | [upstream](https://github.com/stashapp/CommunityScrapers/blob/master/scrapers/Andomark/Andomark.yml) | Multi-site network: URL groups → named scrapers; studio `map` |
 | AyloAPI  | [upstream](https://github.com/stashapp/CommunityScrapers/tree/master/scrapers/AyloAPI)               | Script action + Python dependency package                     |
 

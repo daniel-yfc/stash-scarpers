@@ -1,6 +1,6 @@
 # Template Workflow Checklist
 
-Use this checklist when starting from a file in `templates/`.
+**Repo-only**: use this checklist when starting from a file in the `stash-scarpers` repo's `templates/`. Standalone, start from the upstream [`templates/`](https://github.com/stashapp/CommunityScrapers/tree/master/templates) instead.
 
 ## Select
 
@@ -24,7 +24,7 @@ Use this checklist when starting from a file in `templates/`.
 - [ ] `*ByName` returns a list; other operations return the expected object shape.
 - [ ] Dependencies and relative paths exist.
 - [ ] Run the official validator and URL sorting checks.
-- [ ] Run `python -m pytest tools/tests/` and the repository quality gate.
+- [ ] Run `python -m pytest tools/tests/` and the repository quality gate (**repo-only**).
 - [ ] Mark untested assumptions as `# UNVERIFIED`.
 
 ## Documentation relationships
@@ -34,6 +34,6 @@ Use this checklist when starting from a file in `templates/`.
 - Script operations: `references/script-actions.md`
 - Schema checks: `references/schema-checklist.md`
 - Regression tests: `references/eval-pack.md`
-- Repository workflow: `docs/template-workflow.md`
+- Repository workflow (**repo-only**): `docs/template-workflow.md`
 
 Templates are scaffolds, not verified scrapers. The official CommunityScrapers schema and validator override local examples and offline stubs.

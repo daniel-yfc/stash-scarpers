@@ -1,7 +1,7 @@
 # Entity Field Reference
 
 Complete field lists for the seven scraped object types, verified against
-`validator/scraper.schema.json` (the validation ground truth).
+the official CommunityScrapers validator schema (**repo-only** local copy: `validator/scraper.schema.json`).
 Field names are case-sensitive.
 
 "Schema required" = enforced by the validator.

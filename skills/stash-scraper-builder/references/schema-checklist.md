@@ -46,7 +46,7 @@ whose `url` value is contained in the target URL.
 
 - [ ] Every `regex:` value, XPath selector, and YAML scalar round-trips through a YAML parser: load the file, then confirm the loaded string equals the string the regex or XPath engine must receive.
 - [ ] In double-quoted `regex:` scalars, each backslash intended for the regex engine is written as `\\` in the file (e.g. `\\d+`, `\\.`); single-quoted scalars need no doubling.
-- [ ] The complete committed file parses with `yaml.safe_load()`; prefer `python tools/parse_committed_yaml.py` so the committed tree, not a local reconstruction, is what gets parsed.
+- [ ] The complete committed file parses with `yaml.safe_load()` (**repo-only**: prefer `python tools/parse_committed_yaml.py` so the committed tree, not a local reconstruction, is what gets parsed).
 
 ## Authority
 
@@ -85,11 +85,13 @@ whose `url` value is contained in the target URL.
 
 - [ ] Key fields (Title, Date, Studio, Image) match expected values on the pages actually tested.
 - [ ] Untested selectors and assumptions are marked `# UNVERIFIED` with limitations recorded separately.
-- [ ] An ISO `# Last Updated` comment follows repository convention; scraped values remain in the source language.
+- [ ] An ISO `# Last Updated` comment is present; scraped values remain in the source language.
 - [ ] Schema, URL sorting, policy, pytest, fixture, runtime load, live search, live detail, live Stash/CDP, and production readiness are recorded as separate states.
 - [ ] A committed scraper that has never been loaded by the Stash runtime has no load evidence; a validator pass is not a loader pass.
 
 ## CI and Local Checks
+
+**Repo-only** (stash-scarpers): the commands below. Standalone, validate with the official CommunityScrapers validator and schema instead.
 
 `validate.yml` runs path-filtered schema, URL sorting, repository policy, Python regression tests, fixture-runner self-test, committed-YAML parsing, session-material scan, and documentation checks. `pr-check.yml` reports changed-scraper policy results. `fixture-manifests.yml`, `evidence-contract.yml`, and `cdp-evidence-gate.yml` have separate evidence scopes. `link-check.yml` is advisory; `scrutiny.yml` is manual raw-response inspection. See [`docs/05_CI_Workflows.md`](../../../docs/05_CI_Workflows.md) for triggers and all eight workflow responsibilities.
 

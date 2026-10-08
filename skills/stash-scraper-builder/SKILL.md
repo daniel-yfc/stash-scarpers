@@ -17,11 +17,11 @@ metadata:
 **Version**: 2026-10-09
 **Scope**: Generate Stash scraper YAML files that load and scrape correctly.
 **Canonical runtime**: Official CommunityScrapers validator and schema.
-**Repository workflow**: See [`docs/repository-documentation-architecture.md`](../../docs/repository-documentation-architecture.md).
+**Standalone use**: This skill works outside the `stash-scarpers` repo. Steps marked **repo-only** apply inside that repo; otherwise use the official CommunityScrapers validator/schema and skip repo-specific commands.
 
 ## When to use
 
-Use this skill when a repository task requires authoring, modifying, validating, or debugging a Stash scraper. For repository setup, CI, contribution, or project-wide documentation, use the root README and `docs/` instead.
+Use this skill when authoring, modifying, validating, or debugging a Stash scraper. **Repo-only**: for repository setup, CI, contribution, or project-wide documentation, see [`docs/repository-documentation-architecture.md`](../../docs/repository-documentation-architecture.md), the root README, and `docs/` instead.
 
 ## Entry contract
 
@@ -114,7 +114,7 @@ Choose the simplest viable implementation path before writing any scraper.
 - [ ] URL arrays are sorted.
 - [ ] Key fields are verified on the target pages/responses.
 - [ ] No credentials appear in public files.
-- [ ] Repository tests and quality gates are run when the task changes repository files.
+- [ ] **Repo-only**: repository tests and quality gates are run when the task changes repository files.
 
 ## Notes
 

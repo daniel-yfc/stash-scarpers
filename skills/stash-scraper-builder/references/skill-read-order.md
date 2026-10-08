@@ -1,8 +1,8 @@
 # Skill Read Order
 
-Read repository-level routing before skill-level guidance.
+**Repo-only**: when using this skill inside the `stash-scarpers` repo, read repository-level routing before skill-level guidance. Standalone, start at "Skill second".
 
-## Repository first
+## Repository first (repo-only)
 
 1. `README.md` — project purpose, canonical commands, and directory map
 2. `AGENTS.md` — repository-wide agent and safety rules
@@ -31,14 +31,12 @@ Read repository-level routing before skill-level guidance.
 | Examples               | `examples.md` → `json-examples.md`                                                     |
 | Best practices         | `best-practices.md` → `multi-site-network-scrapers.md`                                 |
 | Debugging failures     | `debugging.md` → `incident-reviews.md` (past incidents)                                |
-| Regression/evaluation  | `eval-pack.md` → repository `tools/tests/` and validation commands                     |
-| Verification metadata  | `docs/verification-metadata.md`                                                        |
-| Live-site verification | repository `docs/06_Testing_Guide.md` → `docs/LIVE_TEST_STATUS.md`                     |
+| Regression/evaluation  | `eval-pack.md` → **repo-only**: repository `tools/tests/` and validation commands    |
+| Verification metadata  | **Repo-only**: `docs/verification-metadata.md`                                         |
+| Live-site verification | **Repo-only**: `docs/06_Testing_Guide.md` → `docs/LIVE_TEST_STATUS.md`                 |
 
 ## Before editing
 
 - Check `UPSTREAM_SOURCES.md` for the owning source.
 - Confirm every referenced path exists.
-- Use the canonical repository commands from `docs/repository-documentation-architecture.md`.
-- Register new or renamed Markdown documents in `docs/index.yml`.
-- Keep repository governance in repository-level docs and scraper semantics in skill-level docs.
+- **Repo-only**: use the canonical repository commands from `docs/repository-documentation-architecture.md`; register new or renamed Markdown documents in `docs/index.yml`; keep repository governance in repository-level docs and scraper semantics in skill-level docs.
