@@ -128,6 +128,7 @@
 | 2 | Duration 空白：`$data` 含換行，正則 `^.*?$` 無 `(?s)` 跨不了行（根因） | 加 `(?s)` |
 | 3 | Code 僅靠 canonical／og:url | 加 `input[name='code']` 備援，並 strip `_STINF` 後綴 |
 
+
 ---
 
 ## 四、共通模式
@@ -144,3 +145,43 @@ server-side 抓取（無 JS）理論上無 clone，但 live DOM 驗證仍應排�
 - `bash tools/validate-all.sh`：16/16 通過
 - `python3 tools/check_scraper_semantics.py`：通過
 - `python3 -m pytest tools/tests/ -q`：30/30 通過
+
+---
+
+## 六、第二輪驗證（2026-10-08）
+
+新關鍵字：童顏／生徒／発展。每站 ≥3 件**與第一輪不同**的商品，
+驗證修正後（`dd393c2`）的 selector。
+
+### KO Tube
+
+關鍵字筆數：童顏 514 件、生徒 306 件、発展 640 件。
+
+| 頁面 | URL | Image（修正版） | 其他 |
+|---|---|---|---|
+| A（套裝） | /package/index/28498 | MATCH（`_C.jpg`，經 pack_photo 分支） | Code/Tags NO MATCH（套裝頁固無此欄） |
+| B（單品） | /product/index/95764 | MATCH（`_3.jpg`，分支二） | 全 MATCH |
+| C（套裝） | /package/index/28207 | MATCH（`_C.jpg`；`#include_title` 縮圖已被排除） | Code/Tags NO MATCH（套裝頁固有） |
+
+裁定：**fix confirmed**。套裝頁 pack_photo 在文件順序上先於 `#include_title`，
+union 首命中必為 `_C.jpg` 封面。Code／Tags 在套裝頁的 NO MATCH 屬頁面結構
+差異（套裝頁無作品番号／プレイ列），非 selector 失效。
+
+次要發現：單品頁 bxSlider 首個 li 為 bx-clone，union 首命中可能為 `-20_3.jpg`
+而非 `-01_3.jpg`（仍為該作品主圖，資料正確）。
+
+### KO Video
+
+關鍵字筆數：童顏 73 件、生徒 87 件、発展 144 件。
+
+| 頁面 | URL | Image（修正版） | Performers（修正版） |
+|---|---|---|---|
+| 1 | …/detail.php?product_code=KKE0318_DVD | MATCH（排除 bx-clone，取到封面 jpg） | 三分支皆 NO MATCH（本頁無演員連結） |
+| 2 | …/detail.php?product_code=KERO250_DVD | MATCH | 分支 1 MATCH（5 名） |
+| 3 | …/detail.php?product_code=KLIN034_DVD | MATCH | 分支 1 MATCH（2 名） |
+
+裁定：**Image fix confirmed**（3 頁皆正確取到封面）。Performers 分支 1 確認；
+新發現：實際演員連結為 `/products/model.php?model_id=`，`model_detail.php`
+分支疑似 dead branch —— 已追加 `model.php?model_id=` 分支（commit 待）。
+Title／Date／Studio／Tags／Details 抽查 3 頁全 MATCH。
+
