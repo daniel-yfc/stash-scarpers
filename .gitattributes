@@ -1,0 +1,8 @@
+# 強制換行風格，避免 Windows checkout 產生 CRLF 導致 shell 腳本失效
+*.sh text eol=lf
+*.py text eol=lf
+*.mjs text eol=lf
+*.js text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.md text eol=lf
