@@ -115,6 +115,12 @@ documents:
     layer: template
     status: active
     intents: [test-report, evaluation, local-testing]
+  - doc_id: DOC-WALKTHROUGH-73
+    title: Live Walkthrough QA Report 2026-10-08
+    path: docs/walkthrough-2026-10-08.md
+    layer: status
+    status: active
+    intents: [walkthrough, qa, selector-verification]
   - doc_id: DOC-SCRAPERS-00
     title: Scrapers README
     path: scrapers/README.md
