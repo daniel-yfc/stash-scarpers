@@ -96,10 +96,11 @@ xPathScrapers:
               var v = value || "";
               return v.replace(/^[\s:：]+|[\s\u00a0]+$/gu, "").trim();
       Details:
-        # Description div follows the h2.ma_b10 "商品説明" header inside
-        # div.ma_b30 — scope to it to exclude sample images / related items.
-        # Verified 2026-10-08 via walkthrough (3 detail pages).
-        selector: "//div[contains(concat(' ',normalize-space(@class),' '),' under_col ')]/div[contains(concat(' ',normalize-space(@class),' '),' ma_b30 ')][1]/h2[contains(.,'商品説明')]/following-sibling::div[1]//text()[normalize-space()]"
+        # Description is direct text nodes of div.ma_b30 (with <br>), NOT a
+        # following div — h2/following-sibling::div[1] never matches.
+        # Use concat(' ',normalize-space(@class),' ') for class matching.
+        # Verified 2026-10-08 round 2 (3 detail pages).
+        selector: "//div[contains(concat(' ',normalize-space(@class),' '),' under_col ')]/div[contains(concat(' ',normalize-space(@class),' '),' ma_b30 ')][h2[contains(.,'商品説明')]]/text()[normalize-space()]"
         concat: "\n"
         postProcess:
           - replace:

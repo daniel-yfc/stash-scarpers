@@ -200,3 +200,22 @@ Title／Date／Studio／Tags／Details 抽查 3 頁全 MATCH。
 h3（兩頁驗證），td 非空時命中主分支（一頁驗證）。編號／日期／工作室／
 タグ／簡介抽查 3 頁全 MATCH。
 
+### KO Shop
+
+關鍵字筆數：童顏 126 件、生徒 122 件、発展 189 件。
+
+| 頁面 | URL | Details（修正版 v1） |
+|---|---|---|
+| P1 | …/detail.php?product_id=40722 | v1 NO MATCH（見下） |
+| P2 | …/detail.php?product_id=42509 | v1 NO MATCH（見下） |
+| P3 | …/detail.php?product_id=41012 | v1 NO MATCH（見下） |
+
+**v1 修正仍壞掉**，兩個原因：(a) class 比對字串 `' under_col '`／`' ma_b30 '`
+含前後空白，但 `contains(@class,…)` 未包 `concat(' ',normalize-space(@class),' ')`，
+實際 class 恰為 `under_col`／`ma_b30` 時永不成立；(b) 即使修掉空白，
+`h2/following-sibling::div[1]` 仍無結果 —— 說明文字是 `div.ma_b30` 的直接
+文字節點（＋`<br>`），h2 後並無 div 兄弟節點。
+
+**v2 修正**：`//div[contains(concat(' ',normalize-space(@class),' '),' under_col ')]/div[contains(concat(' ',normalize-space(@class),' '),' ma_b30 ')][h2[contains(.,'商品説明')]]/text()[normalize-space()]`
+—— 取 `div.ma_b30` 的直接文字節點，可排除內層宣傳連結／樣本圖／相關商品文字。
+Title／Code／Date／Image／Studio／Tags 抽查 3 頁全 MATCH。
