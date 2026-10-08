@@ -151,3 +151,15 @@ driver:
   headers:
     - Key: User-Agent
       Value: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:133.0) Gecko/20100101 Firefox/133.0
+  # 登入用 cookie 範本：未登入僅能看到 no_image 佔位圖。取消註解並填入
+  # 你自己的值，切勿提交真實值到公開 repo。移除每行開頭的 "# " 即可啟用。
+#  cookies:
+#    - Cookies:
+#        - Name: "USER_AUTO_LOGIN"
+#          Value: "請填入實際值"
+#          Domain: ".ck-download.com"
+#          Path: "/"
+#        - Name: "COAT"
+#          Value: "請填入實際值"
+#          Domain: ".ck-download.com"
+#          Path: "/"
