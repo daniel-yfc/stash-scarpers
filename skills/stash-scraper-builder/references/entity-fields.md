@@ -1,5 +1,7 @@
 # Entity Field Reference
 
+**Load when:** you need the complete field list or required-vs-optional status for an entity type.
+
 Complete field lists for the seven scraped object types, verified against
 the official CommunityScrapers validator schema (**repo-only** local copy: `validator/scraper.schema.json`).
 Field names are case-sensitive.
@@ -9,6 +11,17 @@ Field names are case-sensitive.
 ScraperDevelopment docs (not in the schema).
 
 Source: https://docs.stashapp.cc/in-app-manual/scraping/scraperdevelopment/
+
+## Contents
+
+- [Scene](#scene)
+- [Performer](#performer)
+- [Group](#group)
+- [Gallery](#gallery)
+- [Image](#image)
+- [Studio](#studio)
+- [Tag](#tag)
+- [Relationships vs plain fields](#relationships-vs-plain-fields)
 
 ## Scene
 

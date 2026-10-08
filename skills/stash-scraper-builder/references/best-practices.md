@@ -1,8 +1,20 @@
 # Best practices for maintainable scrapers
 
+**Load when:** choosing structural patterns (anchors, studio maps, header) for a new scraper.
+
 Canonical reference:
 
 - https://deepwiki.com/stashapp/CommunityScrapers/10.3-best-practices
+
+## Contents
+
+- [Structure & reuse](#structure-reuse)
+- [Studio normalization (G3)](#studio-normalization-g3)
+- [Selector stability](#selector-stability)
+- [Anti-patterns](#anti-patterns)
+- [Legacy patterns](#legacy-patterns)
+- [Minimal scene template (G1)](#minimal-scene-template-g1)
+- [Header (G4)](#header-g4)
 
 ## Structure & reuse
 
@@ -73,42 +85,9 @@ Studio:
 
 If you encounter an existing scraper that uses `subScraper`, prefer rewriting it as a script action or a single consolidated XPath/JSON scraper unless the chained lookup is genuinely unavoidable.
 
-## Minimal Nubiles-style template (G1)
+## Minimal scene template (G1)
 
-```yaml
-# @meta
-# Last Updated: 2026-08-26
-# requires: py_common (if using script)
-
-name: Nubiles
-
-sceneByURL:
-  - action: scrapeXPath
-    url:
-      - "nubiles.net/video/watch/"
-    scraper: sceneScraper
-
-xPathScrapers:
-  sceneScraper:
-    scene:
-      Title:
-        selector: "//h1[@itemprop='name']//text()"
-      Date:
-        selector: "//span[@itemprop='datePublished']//text()"
-        postProcess:
-          - parseDate: "2 Jan 2006"
-      Image:
-        selector: "//meta[@property='og:image']/@content"
-      Studio:
-        Name:
-          fixed: "Nubiles"
-      Performers:
-        Name:
-          selector: "//a[contains(@href,'/model/')]/text()"
-      Tags:
-        Name:
-          selector: "//a[contains(@href,'/category/')]/text()"
-```
+Copy [`assets/scene-xpath-template.yml`](../assets/scene-xpath-template.yml) as the starting skeleton — it carries the Title/Date/Image/Studio/Performers/Tags shape with `parseDate` in Go reference layout. Fill in selectors verified against the target site.
 
 ## Header (G4)
 

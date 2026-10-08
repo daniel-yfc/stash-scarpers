@@ -6,56 +6,7 @@
 
 ## 1. Scene + search (real JSON API)
 
-```yaml
-name: ExampleJson
-# Last Updated: YYYY-MM-DD
-sceneByURL:
-  - action: scrapeJson
-    url:
-      - "api.examplesite.test/v1/scene/"
-    scraper: sceneJson
-
-sceneByName:
-  action: scrapeJson
-  queryURL: "https://api.examplesite.test/search?q={}"
-  scraper: sceneSearch
-
-sceneByQueryFragment:
-  action: scrapeJson
-  queryURL: "{url}"
-  scraper: sceneJson
-
-jsonScrapers:
-  sceneJson:
-    scene:
-      Title:
-        selector: "data.title"
-      Date:
-        selector: "data.release_date"
-        postProcess:
-          - parseDate: "2006-01-02"
-      Details:
-        selector: "data.description"
-      Image:
-        selector: "data.cover_url"
-      Studio:
-        Name:
-          selector: "data.studio.name"
-      Performers:
-        Name:
-          selector: "data.performers.#.name"
-      Tags:
-        Name:
-          selector: "data.tags.#.name"
-  sceneSearch:
-    scene:
-      Title:
-        selector: "results.#.title"
-      URL:
-        selector: "results.#.url"
-      Image:
-        selector: "results.#.cover_url"
-```
+Copy [`assets/scene-json-template.yml`](../assets/scene-json-template.yml) as the starting skeleton — complete `scrapeJson` file with `sceneByURL`, `sceneByName`, and `sceneByQueryFragment`. Fill in GJSON selectors verified against a real API response.
 
 If search hits omit a detail API URL, rewrite `{url}` with `queryURL` + `queryURLReplace` on `sceneByQueryFragment` (see `json-patterns.md`). Never set `sceneByQueryFragment`'s `queryURL` to `.../search?q={title}`.
 

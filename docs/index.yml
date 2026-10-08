@@ -175,12 +175,6 @@ documents:
     layer: skill
     status: active
     intents: [scope]
-  - doc_id: REF-SEC-30
-    title: Phase 0 Secrets Policy
-    path: skills/stash-scraper-builder/references/phase0-secrets-policy.md
-    layer: skill
-    status: active
-    intents: [authentication, secrets-policy]
   - doc_id: REF-MODE-40
     title: XPath Patterns
     path: skills/stash-scraper-builder/references/xpath-patterns.md

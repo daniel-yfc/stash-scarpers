@@ -1,6 +1,20 @@
 # Schema Validation Checklist
 
+**Load when:** doing the final pre-emit verification pass.
+
 Use this checklist before emitting a scraper YAML file. Run the repository's Node validator against its schema; its expectations derive from upstream CommunityScrapers (see `UPSTREAM_SOURCES.md`). A checklist is not a validator result.
+
+## Contents
+
+- [Top-Level Entry Points](#top-level-entry-points)
+- [Required Structure](#required-structure)
+- [Regex, XPath, and YAML Escaping](#regex-xpath-and-yaml-escaping)
+- [Authority](#authority)
+- [Scraper Definition](#scraper-definition)
+- [Data Model and Selectors](#data-model-and-selectors)
+- [Driver and Session Safety](#driver-and-session-safety)
+- [Output and Evidence](#output-and-evidence)
+- [CI and Local Checks](#ci-and-local-checks)
 
 ## Top-Level Entry Points
 

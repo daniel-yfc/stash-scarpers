@@ -6,6 +6,18 @@
 
 > **概要（zh-TW）：** 五個任務，各對應一種失敗模式。每題都要輸出完整 YAML、勾選 checklist、標記 selector 驗證狀態（`# UNVERIFIED` 加註解說明原因）。
 
+## Contents
+
+- [Pass criteria (all tasks)](#pass-criteria-all-tasks)
+- [Test matrix (H1 / #31)](#test-matrix-h1-31)
+- [Verification checklist (Expected vs Actual)](#verification-checklist-expected-vs-actual)
+- [Task 1 — New XPath site (public HTML)](#task-1-new-xpath-site-public-html)
+- [Task 2 — New `scrapeJson` site (real JSON API)](#task-2-new-scrapejson-site-real-json-api)
+- [Task 3 — Script + dependency](#task-3-script-dependency)
+- [Task 4 — Date `&nbsp;` fix (complete file)](#task-4-date-nbsp-fix-complete-file)
+- [Task 5 — Login-gated site](#task-5-login-gated-site)
+- [Scoring](#scoring)
+
 ## Pass criteria (all tasks)
 
 - [ ] Output is a **complete** YAML file (no fragments, no "unchanged" placeholders).

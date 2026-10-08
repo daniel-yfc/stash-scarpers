@@ -1,0 +1,37 @@
+# Stash XPath scene scraper skeleton.
+# Copy this file and fill in selectors verified against the target site.
+# Selector guidance: references/xpath-patterns.md
+# Field reference: references/entity-fields.md
+# Mark anything unverified with: # UNVERIFIED
+
+name: SiteName # CamelCase, matches the filename (e.g. SiteName.yml)
+# Last Updated: YYYY-MM-DD
+
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - example.com/watch/
+    scraper: sceneScraper
+
+xPathScrapers:
+  sceneScraper:
+    scene:
+      Title:
+        selector: "//h1/text()"
+      Date:
+        selector: "//span[@class='date']/text()"
+        postProcess:
+          - parseDate: "2 Jan 2006" # Go reference layout, not YYYY-MM-DD
+      Details:
+        selector: "//div[@class='description']/text()"
+      Image:
+        selector: "//meta[@property='og:image']/@content"
+      Studio:
+        Name:
+          fixed: "SiteName" # single-studio site; use map for variants
+      Performers:
+        Name:
+          selector: "//a[contains(@href,'/model/')]/text()"
+      Tags:
+        Name:
+          selector: "//a[contains(@href,'/category/')]/text()"

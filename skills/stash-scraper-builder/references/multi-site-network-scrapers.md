@@ -1,5 +1,7 @@
 # Multi-site network scrapers
 
+**Load when:** one scraper must cover multiple sites or a site network.
+
 Canonical reference:
 
 - https://deepwiki.com/stashapp/CommunityScrapers/4.2-multi-site-network-scrapers

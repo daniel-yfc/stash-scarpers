@@ -4,6 +4,21 @@
 
 > **概要（zh-TW）：** 先查常見故障表（空值、日期 nil、403、nil pointer），再讀事件回顧裡的可遷移教訓。修復前先分類失敗頁面；證據分層記錄（raw / rendered / live runtime）。
 
+## Contents
+
+- [Common failure catalog](#common-failure-catalog)
+  - [Dump raw HTML/JSON](#dump-raw-htmljson)
+  - [All fields empty](#all-fields-empty)
+  - [Only Date is nil](#only-date-is-nil)
+  - [Studio or Details wrong](#studio-or-details-wrong)
+  - [Nil pointer dereference](#nil-pointer-dereference)
+  - [403 / Access denied](#403-access-denied)
+  - [Turnstile / reCAPTCHA](#turnstile-recaptcha)
+  - [Fragment queryURL note](#fragment-queryurl-note)
+- [Incident reviews](#incident-reviews)
+  - [Prevention checklist](#prevention-checklist)
+- [Further references](#further-references)
+
 ## Common failure catalog
 
 ### Dump raw HTML/JSON

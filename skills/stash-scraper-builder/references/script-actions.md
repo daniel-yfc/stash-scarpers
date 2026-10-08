@@ -4,6 +4,19 @@
 
 > **概要（zh-TW）：** `*ByName` 回傳陣列、其餘回傳物件。`# requires:` 為檔案第一行註解；root `name:` 為官方 schema 必填（通常與 CamelCase 檔名一致）。每次輸出都要寫安裝前置。`performerByFragment` 僅限 script（有時 stash）；無 Python 套件就省略該模式。
 
+## Contents
+
+- [YAML shape](#yaml-shape)
+- [Mode coverage (E1)](#mode-coverage-e1)
+- [I/O contract (E4)](#io-contract-e4)
+- [Script quality (E5)](#script-quality-e5)
+- [Pagination (script only — B3)](#pagination-script-only-b3)
+- [API error field (B4)](#api-error-field-b4)
+- [Install prerequisites (every script-action response)](#install-prerequisites-every-script-action-response)
+- [Directory](#directory)
+- [Full mode skeleton](#full-mode-skeleton)
+- [Python entry (when writing a script)](#python-entry-when-writing-a-script)
+
 ## YAML shape
 
 ```yaml

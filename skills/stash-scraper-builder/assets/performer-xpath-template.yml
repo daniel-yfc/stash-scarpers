@@ -1,0 +1,19 @@
+# Stash XPath performer scraper skeleton.
+# Copy this file and fill in selectors verified against the target site.
+# The official schema does not permit scrapeXPath/scrapeJson for
+# performerByFragment (script-only). Mark unverified with # UNVERIFIED.
+
+name: ExamplePerformer # CamelCase, matches the filename
+# Last Updated: YYYY-MM-DD
+
+performerByURL:
+  - action: scrapeXPath
+    url:
+      - example.com/performers/
+    scraper: performerScraper
+
+xPathScrapers:
+  performerScraper:
+    performer:
+      Name:
+        selector: "//h1[@class='performer-name']/text()"

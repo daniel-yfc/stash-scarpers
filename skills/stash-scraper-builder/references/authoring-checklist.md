@@ -1,5 +1,7 @@
 # Template Workflow Checklist
 
+**Load when:** starting a new scraper from a template (`assets/` or repo `templates/`).
+
 **Repo-only**: use this checklist when starting from a file in the `stash-scarpers` repo's `templates/`. Standalone, start from the upstream [`templates/`](https://github.com/stashapp/CommunityScrapers/tree/master/templates) instead.
 
 ## Select

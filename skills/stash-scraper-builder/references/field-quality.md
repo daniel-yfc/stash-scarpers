@@ -6,6 +6,18 @@
 
 Canonical reference: https://deepwiki.com/stashapp/CommunityScrapers/10.3-best-practices
 
+## Contents
+
+- [Title patterns](#title-patterns)
+- [Site-specific studio prefix](#site-specific-studio-prefix)
+- [CJK punctuation](#cjk-punctuation)
+- [Performer name cleaning](#performer-name-cleaning)
+- [Canonical block (copy verbatim)](#canonical-block-copy-verbatim)
+- [Preserve symbols](#preserve-symbols)
+- [Gender](#gender)
+- [Aliases](#aliases)
+- [Unmatched regex](#unmatched-regex)
+
 ## Title patterns
 
 Apply in this order. Do not hard-code expected titles.

@@ -1,5 +1,7 @@
 # Out of Scope
 
+**Load when:** you are unsure whether a task belongs to this skill.
+
 This skill covers CommunityScrapers-style YAML, JSON, and script scrapers only.
 
 ## Included

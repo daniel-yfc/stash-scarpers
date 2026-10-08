@@ -1,5 +1,7 @@
 # Skill Read Order
 
+**Load when:** you need the repository reading sequence (repo-only).
+
 **Repo-only**: when using this skill inside the `stash-scarpers` repo, read repository-level routing before skill-level guidance. Standalone, start at "Skill second".
 
 ## Repository first (repo-only)
@@ -13,27 +15,12 @@
 
 ## Skill second
 
-7. `SKILL.md` — skill contract and authoring workflow
-8. `references/out-of-scope.md` — confirm the task belongs to the skill
-9. `SKILL.md` § Runtime selection — select XPath, JSON, script, or CDP
-10. `references/phase0-secrets-policy.md` — when authentication or private paths are involved
+`SKILL.md` is the primary router — its Reference map lists every reference with an explicit read trigger. The short path:
 
-## Specialized references
-
-| Task                   | Read                                                                                   |
-| ---------------------- | -------------------------------------------------------------------------------------- |
-| New XPath scraper      | `xpath-patterns.md` → `schema-checklist.md` → `post-processing.md`                     |
-| New JSON scraper       | `json-patterns.md` → `json-examples.md` → `schema-checklist.md` → `post-processing.md` |
-| Script scraper         | `script-actions.md` → `authoring-checklist.md` → `schema-checklist.md`                 |
-| CDP/login scraper      | `cdp-workflow.md` → `phase0-secrets-policy.md` → `schema-checklist.md`                 |
-| Dates/post-processing  | `post-processing.md` (§ Date formats)                                                  |
-| Field quality          | `field-quality.md` → `entity-fields.md` → `post-processing.md`                         |
-| Examples               | `examples.md` → `json-examples.md`                                                     |
-| Best practices         | `best-practices.md` → `multi-site-network-scrapers.md`                                 |
-| Debugging failures     | `debugging.md` → `incident-reviews.md` (past incidents)                                |
-| Regression/evaluation  | `eval-pack.md` → **repo-only**: repository `tools/tests/` and validation commands    |
-| Verification metadata  | **Repo-only**: `docs/verification-metadata.md`                                         |
-| Live-site verification | **Repo-only**: `docs/06_Testing_Guide.md` → `docs/LIVE_TEST_STATUS.md`                 |
+1. `SKILL.md` — skill contract and authoring workflow
+2. `references/out-of-scope.md` — confirm the task belongs to the skill
+3. `SKILL.md` § Runtime selection — select XPath, JSON, script, or CDP
+4. `SKILL.md` § Security — before any authentication, cookie, or CDP work
 
 ## Before editing
 

@@ -1,5 +1,7 @@
 # JSON Patterns
 
+**Load when:** writing GJSON selectors or JSON entry points.
+
 Patterns and guidance for JSON-based scrapers.
 
 ## queryURL rules

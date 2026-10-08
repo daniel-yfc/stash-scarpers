@@ -1,6 +1,16 @@
 # Post-processing pipeline
 
+**Load when:** transforming scraped values (replace, parseDate, map, concat, javascript).
+
 Canonical reference: https://deepwiki.com/stashapp/CommunityScrapers/3.3-post-processing-pipeline
+
+## Contents
+
+- [Order of operations](#order-of-operations)
+- [Operator order (quality)](#operator-order-quality)
+- [Supported operations](#supported-operations)
+- [Patterns](#patterns)
+- [Date formats](#date-formats)
 
 ## Order of operations
 

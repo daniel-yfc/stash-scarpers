@@ -1,0 +1,55 @@
+# Stash JSON scene scraper skeleton (real JSON API or endpoint).
+# Copy this file and fill in GJSON selectors verified against a real response.
+# scrapeJson definitions go in jsonScrapers, never xPathScrapers.
+# GJSON guidance: references/json-patterns.md (filters use #(...) syntax)
+# Mark anything unverified with: # UNVERIFIED
+
+name: SiteName # CamelCase, matches the filename (e.g. SiteName.yml)
+# Last Updated: YYYY-MM-DD
+
+sceneByURL:
+  - action: scrapeJson
+    url:
+      - "api.example.com/v1/scene/"
+    scraper: sceneJson
+
+sceneByName:
+  action: scrapeJson
+  queryURL: "https://api.example.com/search?q={}" # only if the API has a real search endpoint
+  scraper: sceneSearch
+
+sceneByQueryFragment:
+  action: scrapeJson
+  queryURL: "{url}" # only with sceneByName
+  scraper: sceneJson
+
+jsonScrapers:
+  sceneJson:
+    scene:
+      Title:
+        selector: "data.title"
+      Date:
+        selector: "data.release_date"
+        postProcess:
+          - parseDate: "2006-01-02" # Go reference layout, not YYYY-MM-DD
+      Details:
+        selector: "data.description"
+      Image:
+        selector: "data.cover_url"
+      Studio:
+        Name:
+          selector: "data.studio.name"
+      Performers:
+        Name:
+          selector: "data.performers.#.name"
+      Tags:
+        Name:
+          selector: "data.tags.#.name"
+  sceneSearch:
+    scene:
+      Title:
+        selector: "results.#.title"
+      URL:
+        selector: "results.#.url"
+      Image:
+        selector: "results.#.cover_url"

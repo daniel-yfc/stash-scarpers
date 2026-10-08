@@ -2,22 +2,7 @@
 
 ## Minimal performer entry point
 
-For an XPath performer scraper, use `performerByURL`; the official schema does not permit `scrapeXPath` or `scrapeJson` for `performerByFragment`.
-
-```yaml
-name: ExamplePerformer
-performerByURL:
-  - action: scrapeXPath
-    url:
-      - example.test/performers/
-    scraper: performerScraper
-
-xPathScrapers:
-  performerScraper:
-    performer:
-      Name:
-        selector: "//h1[@class='performer-name']/text()"
-```
+For an XPath performer scraper, use `performerByURL`; the official schema does not permit `scrapeXPath` or `scrapeJson` for `performerByFragment`. Copy [`assets/performer-xpath-template.yml`](../assets/performer-xpath-template.yml) as the starting skeleton.
 
 Use `performerByFragment` only with `action: script`, when that mode is actually supported by the target and the required script dependency exists. `action: stash` is outside this skill's scope. Entry-point mappings reference root-level scraper definitions; they do not contain an inline `xPathScrapers` block.
 
