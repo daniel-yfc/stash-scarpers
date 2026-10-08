@@ -165,7 +165,7 @@ xPathScrapers:
       FrontImage:
         # FlexSlider injects li.clone nodes in live DOM — exclude them.
         # Verified 2026-10-08 via walkthrough (3 detail pages).
-        selector: "($product//div[contains(concat(' ',normalize-space(@class),' '),' flexslider ')]//ul[contains(@class,'slides')]/li[not(contains(@class,'clone'))][1]//img/@src | //meta[@property='og:image']/@content)"
+        selector: "($product//div[contains(concat(' ',normalize-space(@class),' '),' flexslider ')]//ul[contains(@class,'slides')]/li[not(contains(@class,'clone'))][1]//img/@src | //meta[@property='og:image']/@content"
         postProcess:
           - javascript: |
               var v = value || "";
@@ -225,7 +225,7 @@ xPathScrapers:
       Image:
         # FlexSlider injects li.clone nodes in live DOM — exclude them.
         # Verified 2026-10-08 via walkthrough (3 detail pages).
-        selector: "($product//div[contains(concat(' ',normalize-space(@class),' '),' flexslider ')]//ul[contains(@class,'slides')]/li[not(contains(@class,'clone'))][1]//img/@src | //meta[@property='og:image']/@content)"
+        selector: "($product//div[contains(concat(' ',normalize-space(@class),' '),' flexslider ')]//ul[contains(@class,'slides')]/li[not(contains(@class,'clone'))][1]//img/@src | //meta[@property='og:image']/@content"
         postProcess:
           - javascript: |
               var v = value || "";
