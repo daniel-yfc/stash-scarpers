@@ -159,9 +159,9 @@ server-side 抓取（無 JS）理論上無 clone，但 live DOM 驗證仍應排�
 
 | 頁面 | URL | Image（修正版） | 其他 |
 |---|---|---|---|
-| A（套裝） | /package/index/28498 | MATCH（`_C.jpg`，經 pack_photo 分支） | Code/Tags NO MATCH（套裝頁固無此欄） |
-| B（單品） | /product/index/95764 | MATCH（`_3.jpg`，分支二） | 全 MATCH |
-| C（套裝） | /package/index/28207 | MATCH（`_C.jpg`；`#include_title` 縮圖已被排除） | Code/Tags NO MATCH（套裝頁固有） |
+| A（套裝） | https://www.ko-tube.com/package/index/28498 | MATCH（`_C.jpg`，經 pack_photo 分支） | Code/Tags NO MATCH（套裝頁固無此欄） |
+| B（單品） | https://www.ko-tube.com/product/index/95764 | MATCH（`_3.jpg`，分支二） | 全 MATCH |
+| C（套裝） | https://www.ko-tube.com/package/index/28207 | MATCH（`_C.jpg`；`#include_title` 縮圖已被排除） | Code/Tags NO MATCH（套裝頁固有） |
 
 裁定：**fix confirmed**。套裝頁 pack_photo 在文件順序上先於 `#include_title`，
 union 首命中必為 `_C.jpg` 封面。Code／Tags 在套裝頁的 NO MATCH 屬頁面結構
@@ -253,3 +253,40 @@ Title／Code／Tags／Image 抽查 4 頁全 MATCH，無迴歸。
 —— 已追加 `//div[contains(@class,'chitiet')]//text()[normalize-space()]` 聯集（v2）。
 Studio 在串流頁根本無 `シリーズ` 欄（欄位不存在，非 selector 問題）。
 Title／Code／Image／Tags／Performers 4 頁全 MATCH。
+
+### Hunk's Channel
+
+關鍵字筆數：童顏 463 件、生徒 114 件、発展 243 件。
+
+| 頁面 | URL | Image（修正版 v1） | Duration（修正版） | Code（修正版） |
+|---|---|---|---|---|
+| 1 | …/movie_detail.php?code=SB-N0533 | NO MATCH（見下） | MATCH（23 分） | MATCH |
+| 2 | …/movie_detail.php?code=IDS-105274 | NO MATCH（見下） | MATCH（26 分） | MATCH |
+| 3 | …/movie_detail.php?code=KO-BEAST184 | NO MATCH（見下） | MATCH（128 分） | MATCH |
+| 4 | …/movie_detail.php?code=ACD-171 | NO MATCH（見下） | MATCH（23 分） | MATCH |
+
+**Image v1 仍壞掉**：`"… | //meta[@property='og:image']/@content"` 開頭括號 `(` 未閉合，
+XPath 語法無效（schema validator 不檢查 XPath 語法，故 CI 未攔截）。
+clone 排除邏輯本身驗證正確（`li[not(contains(@class,'clone'))][1]` 正確跳過首個 clone li）；
+`contains(concat(' ',normalize-space(@class),' '),' flexslider ')` 的 token 比對亦正確。
+**v2 修正**：補上結尾 `)`。Title（h2）4 頁全 MATCH。
+備註：src 為相對路徑（`./video/img/…`），Stash 會以頁面 URL absolutize；
+`og:url` 分支 4 頁皆不存在，保留作無害備援。
+
+## 第二輪最終裁定
+
+7 站 × 3 新關鍵字（童顏／生徒／発展）× 3–4 新商品頁，共 23 頁，全部驗證完畢。
+
+| 站 | 第一輪修正 | 第二輪結果 | V2 |
+|---|---|---|---|
+| KO Tube | Image 排除 `#include_title` 縮圖 | confirmed（3 頁） | — |
+| KO Video | Image 排除 bx-clone；Performers 多版型 | Image confirmed；Performers 追加 `model.php?model_id=` 分支 | ✅ |
+| CK Download | Title `DVDタイトル`＋h3；Image 排除 clone | 兩項皆 confirmed（3 頁，主／退回分支全觸發） | — |
+| KO Shop | Details 限「商品説明」後 div | v1 仍壞（class 空白＋無 div 兄弟）；v2 改取 `div.ma_b30` 直接文字節點 | ✅ |
+| Men's Rush TV | Studio 全取；Details 全段落 | 兩項皆 confirmed（4 頁） | — |
+| ACCEED | Date 兼顧発売／配信 | Date confirmed；Details 串流模板追加 `div.chitiet` 備援 | ✅ |
+| Hunk's Channel | Image 排除 clone；Duration `(?s)`；Code hidden input | Duration／Code confirmed；Image v1 括號未閉合 → v2 補 `)` | ✅ |
+
+教訓：schema validator 不檢查 XPath 語法；`contains(@class,' padded ')` 類字串
+必須搭配 `concat(' ',normalize-space(@class),' ')`，否則單一 token 的 class
+屬性永不命中。兩處皆為同類錯誤，v2 已修。
