@@ -326,3 +326,27 @@ Title／Code／Date／Image／Studio／Tags 抽查：41815 缺 `キーワード`
 Title／Code／Date／Image／Studio／Tags／Performers 抽查 3 頁全 MATCH。
 備註：ACST396 串流頁實際有 `シリーズ` 列（ノンケ喰い），與第二輪「串流頁無此列」
 不同 —— 頁面資料差異，非 selector 問題。
+
+### KO Video（第三輪）
+
+關鍵字筆數：野狼 0 件、極太 113 件、先生 216 件。
+安全：具學生／少年暗示的結果一律跳過未開。
+
+| 頁面 | URL | Image | Performers V2 |
+|---|---|---|---|
+| 1 | …/detail.php?product_code=KRA075_DVD | 需修（見下） | MATCH（分支 1：北尾慎吾、立花康騎） |
+| 2 | …/detail.php?product_code=KJO013_DVD | 需修（見下） | MATCH（分支 1：野原周作） |
+| 3 | …/detail.php?product_code=KBUM062_DVD | 需修（見下） | MATCH（分支 1：けんた、たくや、れんと） |
+
+**Image 需修**：現行 `detail.php` 範本的 bxSlider 位於 `ul#main_item`
+（`div.bx-wrapper` 內），舊分支的容器 predicate 在此範本無命中；
+bx-clone 排除概念仍成立（`ul#main_item` 首尾確為 clone 複製品）。
+**V3 修正**：新增 `//ul[@id='main_item']/li[not(contains(@class,'clone'))][1]//img/@src`
+為第一分支，舊 `div.detail_main_col` 分支保留作備援。
+
+**Performers 分支 3 需修**：`//a[contains(@href,'model.php?model_id=')]/text()`
+取不到名字 —— 名字在子 `<span>` 內，`/text()` 只取到空白。
+**V3 修正**：改為 `//a[contains(@href,'model.php?model_id=')]/span/text()`。
+（本輪 3 頁名字皆由分支 1 取得；分支 3 修後可獨立運作。）
+
+Title／Date／Studio／Tags／Details 抽查 3 頁全 MATCH。

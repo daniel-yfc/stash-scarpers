@@ -89,10 +89,10 @@ xPathScrapers:
   sceneScraper:
     common:
       $meta: //div[contains(@class,'detail_product')][1]//dl[1]
-      $performers: //div[contains(@class,'model_performance')][1]//div[contains(@class,'owl-carousel')]//div[@class='item']//a/span/text() | //h3[contains(.,'男子学園モデル')]/following-sibling::a/text() | //a[contains(@href,'model.php?model_id=')]/text() | //a[contains(@href,'model_detail.php')]/text()
+      $performers: //div[contains(@class,'model_performance')][1]//div[contains(@class,'owl-carousel')]//div[@class='item']//a/span/text() | //h3[contains(.,'男子学園モデル')]/following-sibling::a/text() | //a[contains(@href,'model.php?model_id=')]/span/text() | //a[contains(@href,'model_detail.php')]/text()
       # Performer block varies: carousel, 「男子学園モデル」h3 + external links,
-      # or model.php?model_id= links (the common live pattern — verified
-      # 2026-10-08 round 2). model_detail.php kept as fallback.
+      # or model.php?model_id= links (name sits in a child <span>, so /span/text() —
+      # verified 2026-10-08 round 3). model_detail.php kept as fallback.
       # Absent on some pages — field is optional.
     scene:
       Title:
@@ -155,8 +155,10 @@ xPathScrapers:
         concat: "\n"
       Image:
         # bxSlider clones li.bx-clone nodes (copies of gallery images) — exclude
-        # them and /gallery/ links. Verified 2026-10-08 via walkthrough.
-        selector: //div[contains(@class,'detail_main_col')]//li[not(contains(@class,'bx-clone'))]//a[contains(@class,'fancybox') and not(contains(@href,'/gallery/'))][1]/@href
+        # them and /gallery/ links. Current detail.php template puts the slider
+        # in ul#main_item (first branch); older template used div.detail_main_col
+        # (second branch, kept as fallback). Verified 2026-10-08 round 3.
+        selector: "(//ul[@id='main_item']/li[not(contains(@class,'bx-clone'))][1]//img/@src | //div[contains(@class,'detail_main_col')]//li[not(contains(@class,'bx-clone'))]//a[contains(@class,'fancybox') and not(contains(@href,'/gallery/'))][1]/@href)"
         postProcess:
           - javascript: 'var v = value || "";
 
