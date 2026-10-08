@@ -367,3 +367,21 @@ Title／Date／Studio／Tags／Details 抽查 3 頁全 MATCH。
 分支 3 `/span/text()` 在 3 頁皆可單獨運作（頁 2 的男子学園モデル區塊佐證其必要性
 —— 名字藏在 span 內且被 `<br>` 分隔，分支 2 無法命中）。
 Title／Date／Studio／Tags／Details 抽查 3 頁全 MATCH。無剩餘問題。
+
+### Hunk's Channel（第三輪）
+
+關鍵字筆數：野狼 0 件、極太 708 件、先生 217 件。
+安全：具未成年暗示的搜尋結果（ブレザー男子、School Boys、小●校先生志望、
+りょう(学生)、放課後、セクロス学園、男子◯生、エロ生徒、顧問の先生等）
+一律跳過未開；相關商品列僅為連結未開啟。
+
+| 頁面 | URL | Image V2（括號已閉合） | Duration | Code | Title |
+|---|---|---|---|---|---|
+| 1 | …/movie_detail.php?code=ACD-176 | MATCH（`acd-176_top.jpg`，首尾 clone 皆排除） | MATCH（28 分） | MATCH | MATCH |
+| 2 | …/movie_detail.php?code=KO-BUMP055 | MATCH（`ko-bump055_top.jpg`） | MATCH（134 分） | MATCH | MATCH |
+| 3 | …/movie_detail.php?code=KO-BEAST185 | MATCH（`ko-beast185_top.jpg`） | MATCH（118 分） | MATCH | MATCH |
+
+裁定：**Image V2 confirmed**（3 頁）。括號閉合後語法有效；三頁 FlexSlider
+皆為同一模板（首 li 為 clone、次 li 為封面、末 li 為封面 clone），第一分支
+正確回傳第一個非 clone li 的 `_top.jpg`，`og:image` 備援未被使用。
+Duration／Code／Title 3 頁全 MATCH。無剩餘功能性問題。
