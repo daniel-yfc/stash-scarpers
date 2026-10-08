@@ -350,3 +350,20 @@ bx-clone 排除概念仍成立（`ul#main_item` 首尾確為 clone 複製品）�
 （本輪 3 頁名字皆由分支 1 取得；分支 3 修後可獨立運作。）
 
 Title／Date／Studio／Tags／Details 抽查 3 頁全 MATCH。
+
+### KO Video（第四輪）
+
+關鍵字筆數：親父 26 件、不倫 1 件、援助 10 件。
+安全：援助 10 件全為少年／校園主題，全數跳過；親父結果中含美少年／男子校生／
+制服字樣者亦跳過。
+
+| 頁面 | URL | Image V3（`ul#main_item` 分支） | Performers（`/span/text()` 分支） |
+|---|---|---|---|
+| 1 | …/detail.php?product_code=KKUR155_DVD | MATCH（跳過首尾 bx-clone，取封面 jpg） | 分支 1＋分支 3 皆可獨立運作（5 名） |
+| 2 | …/detail.php?product_code=KBEA369_DVD | MATCH（無 clone，首 li 即封面） | 分支 1＋分支 3 皆可獨立運作（4 名） |
+| 3 | …/detail.php?product_code=KJO012_DVD | MATCH（無 clone，首 li 即封面） | 分支 1＋分支 3 皆可獨立運作（2 名） |
+
+裁定：**V3 兩項皆 confirmed**。Image 新分支在 clone 存在時正確跳過；
+分支 3 `/span/text()` 在 3 頁皆可單獨運作（頁 2 的男子学園モデル區塊佐證其必要性
+—— 名字藏在 span 內且被 `<br>` 分隔，分支 2 無法命中）。
+Title／Date／Studio／Tags／Details 抽查 3 頁全 MATCH。無剩餘問題。
