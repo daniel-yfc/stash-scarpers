@@ -185,3 +185,18 @@ union 首命中必為 `_C.jpg` 封面。Code／Tags 在套裝頁的 NO MATCH 屬
 分支疑似 dead branch —— 已追加 `model.php?model_id=` 分支（commit 待）。
 Title／Date／Studio／Tags／Details 抽查 3 頁全 MATCH。
 
+### CK Download（登入後驗證）
+
+關鍵字筆數：童顏 483 件、生徒 175 件、発展 471 件。
+
+| 頁面 | URL | Image（修正版） | Title（修正版） |
+|---|---|---|---|
+| 1 | /product/detail/34285 | MATCH（`_1.jpg`，排除 clone） | MATCH（td 空 → h3 退回） |
+| 2 | /product/detail/33993 | MATCH（`_1.jpg`） | MATCH（td 空 → h3 退回） |
+| 3 | /product/detail/27171 | MATCH（`_1.jpg`） | MATCH（th 主分支命中） |
+
+裁定：**兩項 fix 皆 confirmed**。Image 排除 `li.clone` 後 3 頁皆回傳單一
+真實封面 `_1.jpg`；Title 的 `DVDタイトル`（無空格）比對正確，td 為空時退回
+h3（兩頁驗證），td 非空時命中主分支（一頁驗證）。編號／日期／工作室／
+タグ／簡介抽查 3 頁全 MATCH。
+
