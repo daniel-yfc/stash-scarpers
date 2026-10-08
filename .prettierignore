@@ -1,6 +1,1 @@
-node_modules/
-package-lock.json
-tools/SPB-2.0.html
-validator/scraper.schema.json
-skills/stash-scraper-builder/references/scraper.schema.json
-evidence/
+references/scraper.schema.json
