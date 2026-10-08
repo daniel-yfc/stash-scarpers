@@ -27,7 +27,7 @@ Merge network sites **only when templates match**. Use:
 - Domain map for studio names.
 - Per-domain overrides when DOM / image host diverges.
 
-Refer to GammaEntertainment, Nubiles, Andomark-style configs as examples.
+Refer to multi-site configs in the upstream CommunityScrapers corpus (e.g. `Andomark.yml`) as structural examples.
 
 ## Filename & URL list (G5)
 

@@ -37,8 +37,10 @@ sceneByQueryFragment:
 ## GJSON patterns
 
 - Use `items.#.field` notation for arrays
-- Filters like `[?(@.type=='scene')]` may return null; prefer direct path or use `script`
-- Test GJSON expressions in validator before deploying
+- Filters use GJSON `#()` syntax, e.g. `items.#(type=="scene")#.title` —
+  `[?(@.type=='scene')]` is JSONPath, not GJSON, and will not work
+- Test GJSON expressions against a real API response before deploying
+  (the schema validator does not execute them)
 
 ## jsonScrapers structure
 

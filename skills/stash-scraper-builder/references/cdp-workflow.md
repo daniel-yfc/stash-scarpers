@@ -36,20 +36,39 @@ Without steps 2–4, a gated `useCDP: true` scraper can return nothing. Always e
 
 ### Cookie entry fields
 
-Each `driver.cookies` entry uses these fields:
+Each `driver.cookies` entry is a **group** holding a `Cookies` list
+(validator-enforced: `cookieOptions` requires `Cookies` and rejects any
+other key on the group item). `CookieURL` lives on the group item, not on
+the cookie:
 
 ```yaml
 driver:
   cookies:
-    - Name: session_id
-      Value: abc123
-      Domain: example.com
-      Path: /
-      CookieURL: https://example.com/ # required when useCDP is false/omitted; must share the cookie domain
+    - CookieURL: https://example.com/ # required when useCDP is false/omitted; must share the cookie domain
+      Cookies:
+        - Name: session_id
+          Value: abc123
+          Domain: example.com
+          Path: /
+```
+
+With CDP (`useCDP: true`) the group has no `CookieURL` — the attached
+browser session already carries the cookies:
+
+```yaml
+driver:
+  useCDP: true
+  cookies:
+    - Cookies:
+        - Name: session_id
+          Value: abc123
+          Domain: example.com
+          Path: /
 ```
 
 Use `ValueRandom: <positive integer>` instead of `Value` to have Stash
-generate a random string of that length.
+generate a random string of that length. `Domain`, `Path`, and `Name`
+are required on every cookie.
 
 ## Headers
 

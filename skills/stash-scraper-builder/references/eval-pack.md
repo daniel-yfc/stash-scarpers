@@ -2,6 +2,8 @@
 
 **Load when:** testing the skill end-to-end.
 
+> **Status:** not wired into CI — run manually. If any task fails, fix the workflow or checklists, then re-run.
+
 > **概要（zh-TW）：** 五個任務，各對應一種失敗模式。每題都要輸出完整 YAML、勾選 checklist、標記 selector 驗證狀態（`# UNVERIFIED` 加註解說明原因）。
 
 ## Pass criteria (all tasks)

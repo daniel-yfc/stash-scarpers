@@ -8,13 +8,13 @@ description: >-
   Do not use for generic web scraping, generic YAML, Identify or stash-box
   scrapers, fabricated search endpoints, or CommunityScrapers PR submission.
 metadata:
-  version: "2026-10-05"
+  version: "2026-10-09"
   canonical-schema: "https://github.com/stashapp/CommunityScrapers/blob/master/validator/scraper.schema.json"
 ---
 
 # Skill: stash-scraper-builder
 
-**Version**: 2026-10-05
+**Version**: 2026-10-09
 **Scope**: Generate Stash scraper YAML files that load and scrape correctly.
 **Canonical runtime**: Official CommunityScrapers validator and schema.
 **Repository workflow**: See [`docs/repository-documentation-architecture.md`](../../docs/repository-documentation-architecture.md).
@@ -90,9 +90,9 @@ Choose the simplest viable implementation path before writing any scraper.
 | CDP / Headless workflow   | `references/cdp-workflow.md`                                                          |
 | Dates & formatting        | `references/post-processing.md` (§ Date formats)                                      |
 | Post-processing           | `references/post-processing.md`                                                       |
-| Field quality             | `references/field-quality.md`                                                         |
+| Field quality             | `references/field-quality.md`, `references/entity-fields.md`                          |
 | Best practices & patterns | `references/best-practices.md`, `references/multi-site-network-scrapers.md`           |
-| Debugging                 | `references/debugging.md`                                                             |
+| Debugging                 | `references/debugging.md`, `references/incident-reviews.md`                           |
 | Examples & validation     | `references/examples.md`, `references/schema-checklist.md`, `references/eval-pack.md` |
 | Upstream sources          | `references/UPSTREAM_SOURCES.md`                                                      |
 

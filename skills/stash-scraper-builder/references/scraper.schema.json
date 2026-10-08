@@ -29,7 +29,7 @@
         "useCDP": {"type": "boolean"},
         "sleep": {"type": "number", "minimum": 1},
         "clicks": {"type": "array"},
-        "cookies": {"type": "array", "items": {"type": "object", "properties": {"Name": {"type": "string"}, "Value": {"type": "string"}, "ValueRandom": {"type": "integer", "minimum": 1}, "Domain": {"type": "string"}, "Path": {"type": "string"}, "CookieURL": {"type": "string", "format": "uri"}}}},
+        "cookies": {"type": "array", "items": {"type": "object", "required": ["Cookies"], "additionalProperties": false, "properties": {"CookieURL": {"type": "string", "format": "uri"}, "Cookies": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["Domain", "Path", "Name"], "additionalProperties": false, "properties": {"Domain": {"type": "string"}, "Name": {"type": "string"}, "Path": {"type": "string"}, "Value": {"type": "string"}, "ValueRandom": {"type": "integer", "minimum": 1}}, "oneOf": [{"required": ["Value"]}, {"required": ["ValueRandom"]}]}}}}},
         "headers": {"type": "array"}
       }
     }

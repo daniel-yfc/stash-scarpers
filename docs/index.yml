@@ -247,7 +247,13 @@ documents:
     path: skills/stash-scraper-builder/references/debugging.md
     layer: skill
     status: active
-    intents: [debugging, failures, incidents]
+    intents: [debugging, failures]
+  - doc_id: REF-OPS-73
+    title: Incident Reviews
+    path: skills/stash-scraper-builder/references/incident-reviews.md
+    layer: skill
+    status: active
+    intents: [incidents, lessons-learned]
   - doc_id: REF-VERIFY-60
     title: Schema Checklist
     path: skills/stash-scraper-builder/references/schema-checklist.md

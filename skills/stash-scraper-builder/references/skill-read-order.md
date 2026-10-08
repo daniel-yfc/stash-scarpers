@@ -1,19 +1,3 @@
----
-doc_id: REF-CORE-00
-title: Skill Read Order
-status: active
-layer: skill
-owner: maintainer
-audience:
-  - agent
-last_verified: "2026-10-06"
-authority: canonical
-routing:
-  intents:
-    - agent-routing
-    - read-order
----
-
 # Skill Read Order
 
 Read repository-level routing before skill-level guidance.
@@ -46,7 +30,7 @@ Read repository-level routing before skill-level guidance.
 | Field quality          | `field-quality.md` → `entity-fields.md` → `post-processing.md`                         |
 | Examples               | `examples.md` → `json-examples.md`                                                     |
 | Best practices         | `best-practices.md` → `multi-site-network-scrapers.md`                                 |
-| Debugging failures     | `debugging.md`                                                                         |
+| Debugging failures     | `debugging.md` → `incident-reviews.md` (past incidents)                                |
 | Regression/evaluation  | `eval-pack.md` → repository `tools/tests/` and validation commands                     |
 | Verification metadata  | `docs/verification-metadata.md`                                                        |
 | Live-site verification | repository `docs/06_Testing_Guide.md` → `docs/LIVE_TEST_STATUS.md`                     |
