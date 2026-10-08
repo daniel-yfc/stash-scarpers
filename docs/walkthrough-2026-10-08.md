@@ -235,3 +235,21 @@ Title／Code／Date／Image／Studio／Tags 抽查 3 頁全 MATCH。
 **Studio fix 結構上確認**（移除 `[1]` 後按文件順序回傳全部 `maid` 連結）；
 雙廠商同列情境本輪未再遇到（第一輪 ARGA-134_DL 為證），留待端到端確認。
 Title／Code／Tags／Image 抽查 4 頁全 MATCH，無迴歸。
+
+### ACCEED（登入後驗證）
+
+關鍵字筆數：童顏 35 件、生徒 14 件、発展 31 件。
+安全：描述含「10代」「幼さ残る」等結果一律跳過未開。
+
+| 頁面 | URL | 關鍵結果 |
+|---|---|---|
+| 1（DVD） | detail.ACSM114.html | 8 選擇器全 MATCH；日期標籤 `DVD発売(配信開始)` |
+| 2（DVD） | detail.ACSM186.html | 8 選擇器全 MATCH |
+| 3（串流） | detail.ACST384.html | Date MATCH（`配信開始`）；Details NO MATCH；Studio 無此欄 |
+| 4（串流） | detail.ACST319.html | Date MATCH（`配信開始`）；Details NO MATCH；Studio 無此欄 |
+
+裁定：**Date fix confirmed**（串流 `配信開始` 與 DVD 合併標籤皆命中）。
+**Details 在串流模板仍漏抓**：簡介改包在 `div.chitiet > p` 而非裸文字節點
+—— 已追加 `//div[contains(@class,'chitiet')]//text()[normalize-space()]` 聯集（v2）。
+Studio 在串流頁根本無 `シリーズ` 欄（欄位不存在，非 selector 問題）。
+Title／Code／Image／Tags／Performers 4 頁全 MATCH。

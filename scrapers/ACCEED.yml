@@ -151,9 +151,10 @@ xPathScrapers:
           - parseDate: "2006-01-02"
 
       Details:
-        # Blurb sits right after ul.select ends (exact wrapper unconfirmed);
-        # page template sometimes repeats it — paragraphs deduped below.
-        selector: "$cats/following-sibling::p//text()[normalize-space()] | $cats/following-sibling::text()[normalize-space()]"
+        # Blurb sits right after ul.select ends as bare text nodes (DVD
+        # template) or inside div.chitiet > p (streaming template).
+        # Verified 2026-10-08 round 2 (4 detail pages, logged-in).
+        selector: "$cats/following-sibling::p//text()[normalize-space()] | $cats/following-sibling::text()[normalize-space()] | //div[contains(@class,'chitiet')]//text()[normalize-space()]"
         concat: "\n\n"
         postProcess:
           - javascript: |
