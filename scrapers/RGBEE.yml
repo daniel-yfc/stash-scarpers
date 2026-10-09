@@ -16,8 +16,12 @@ sceneByURL:
       - rgbee.net/product/
     scraper: sceneScraper
 
-# UNVERIFIED: queryURL is the live search form (action=/search, name=kw).
-# Result selectors are the catalog article.card used on product pages, not a search-page snapshot.
+# Verified 2026-10-09 on the live search page (kw=筋肉: 1,455 results,
+# 35 article.card rendered): cards are article.card children of
+# section.section wrap; title link at .meta/.t/a; hrefs are relative
+# /product/{slug}-{productId}; thumbs are absolute
+# https://staticmedia.rgbee.net/{id}/....jpg on img.art-img src
+# (native loading="lazy", no data-src indirection).
 sceneByName:
   action: scrapeXPath
   queryURL: https://www.rgbee.net/search?kw={}
@@ -120,16 +124,16 @@ xPathScrapers:
 
   sceneSearch:
     common:
-      $card: //article[contains(@class,'card')]
+      $card: //article[contains(concat(' ', normalize-space(@class), ' '), ' card ')]
     scene:
-      Title: $card//div[contains(@class,'t')]/a
+      Title: $card/div[@class='meta']/div[@class='t']/a
       URL:
-        selector: $card//div[contains(@class,'t')]/a/@href
+        selector: $card/div[@class='meta']/div[@class='t']/a/@href
         postProcess:
           - replace:
               - regex: ^/
                 with: https://www.rgbee.net/
-      Image: $card//img[contains(@class,'art-img')]/@src
+      Image: $card//span[@class='art']/img[@class='art-img']/@src
 
   performerScraper:
     performer:
@@ -139,4 +143,6 @@ xPathScrapers:
 
 # 2026-10-06: Date documented as page-dependent (no 發行 field on some pages);
 # search probes (筋肉大叔 / MJD-P418 / 刺青猛男) all HIT.
-# Last Updated: 2026-10-06
+# 2026-10-09: sceneSearch selectors verified against the live search page
+# (kw=筋肉, article.card > .meta/.t/a + img.art-img/@src); UNVERIFIED tag removed.
+# Last Updated: 2026-10-09
