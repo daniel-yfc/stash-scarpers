@@ -137,6 +137,11 @@ xPathScrapers:
               if (/^https?:/i.test(v)) return v;
               if (v.charAt(0) === "/") return "https://www.ko-shop.com" + v;
               return "https://www.ko-shop.com/" + v;
+      # Studio convention: label/brand-level field → Studio (sub-studio model,
+      # StashDB amateur-studios).
+      # Studio URLs mapped from the same anchor as Studio Name for Identify URL-matching.
+      # Parent studio (platform/network) assigned manually once; Ignore Auto-Tag
+      # recommended for short label names.
       Studio:
         Name:
           selector: "$meta/dt[normalize-space(.)='シリーズ']/following-sibling::dd[1]//a[1]"
@@ -144,6 +149,16 @@ xPathScrapers:
             - replace:
                 - regex: '^\s+|\s+$'
                   with: ""
+        URLs:
+          selector: "$meta/dt[normalize-space(.)='シリーズ']/following-sibling::dd[1]//a[1]/@href"
+          postProcess:
+            - javascript: |
+                var v = value || "";
+                if (!v) return "";
+                v = v.replace(/^\/\//, "https://");
+                if (/^https?:/i.test(v)) return v;
+                if (v.charAt(0) === "/") return "https://www.ko-shop.com" + v;
+                return "https://www.ko-shop.com/" + v;
       Tags:
         Name:
           # Live DOM (2026-10-06): headings are モデルタイプ / キーワード
@@ -236,6 +251,11 @@ xPathScrapers:
                 with: "\n\n"
               - regex: "\\s*商品説明\\s*オフィシャル購入で限定特典DISCが選べる!\\s*OFFICIALサイトへは↓画像のリンクから!\\s*$"
                 with: ""
+      # Studio convention: label/brand-level field → Studio (sub-studio model,
+      # StashDB amateur-studios).
+      # Studio URLs mapped from the same anchor as Studio Name for Identify URL-matching.
+      # Parent studio (platform/network) assigned manually once; Ignore Auto-Tag
+      # recommended for short label names.
       Studio:
         Name:
           selector: "$meta/dt[normalize-space(.)='シリーズ']/following-sibling::dd[1]//a[1]"
@@ -243,6 +263,16 @@ xPathScrapers:
             - replace:
                 - regex: '^\s+|\s+$'
                   with: ""
+        URLs:
+          selector: "$meta/dt[normalize-space(.)='シリーズ']/following-sibling::dd[1]//a[1]/@href"
+          postProcess:
+            - javascript: |
+                var v = value || "";
+                if (!v) return "";
+                v = v.replace(/^\/\//, "https://");
+                if (/^https?:/i.test(v)) return v;
+                if (v.charAt(0) === "/") return "https://www.ko-shop.com" + v;
+                return "https://www.ko-shop.com/" + v;
       URLs:
         fixed: "{inputURL}"
 

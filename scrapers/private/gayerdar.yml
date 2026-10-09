@@ -79,11 +79,18 @@ xPathScrapers:
           - parseDate: "20060102"
       Image:
         selector: //meta[@property="og:image"]/@content
+      # Studio convention: label/brand-level field → Studio (sub-studio model,
+      # StashDB amateur-studios).
+      # Studio URLs mapped from the same anchor as Studio Name for Identify URL-matching.
+      # Parent studio (platform/network) assigned manually once; Ignore Auto-Tag
+      # recommended for short label names.
       Studio:
         # Gayerdar is the producing studio for this site's own content
         # (maintainer-confirmed 2026-10-10).
         Name:
           fixed: "Gayerdar"
+        URLs:
+          fixed: "https://gayerdar.com/zh-TW/"
       Tags:
         # Live DOM (2026-10-06): linked variant is ul.iq-blogtag li a.title
         # (the <a> has no href); some pages render plain-text li nodes

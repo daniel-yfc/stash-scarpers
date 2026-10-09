@@ -107,6 +107,11 @@ xPathScrapers:
               }
               return cleaned;
           - parseDate: "2006-01-02"
+      # Studio convention: label/brand-level field → Studio (sub-studio model,
+      # StashDB amateur-studios).
+      # Studio URLs mapped from the same anchor as Studio Name for Identify URL-matching.
+      # Parent studio (platform/network) assigned manually once; Ignore Auto-Tag
+      # recommended for short label names.
       Studio:
         Name:
           selector: "$data//th[normalize-space(.)='レーベル']/following-sibling::td[1]//a[1] | $data//th[normalize-space(.)='メーカー']/following-sibling::td[1]//a[1]"
@@ -114,6 +119,8 @@ xPathScrapers:
             - replace:
                 - regex: "^\\s+|\\s+$"
                   with: ""
+        URLs:
+          selector: "$data//th[normalize-space(.)='レーベル']/following-sibling::td[1]//a[1]/@href | $data//th[normalize-space(.)='メーカー']/following-sibling::td[1]//a[1]/@href"
       Tags:
         Name:
           selector: "$cats//li[strong[normalize-space(.)='プレイ内容']]//a | $cats//li[strong[normalize-space(.)='モデルタイプ']]//a"

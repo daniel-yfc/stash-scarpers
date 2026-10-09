@@ -132,6 +132,11 @@ xPathScrapers:
               return m[1] + "-" + mm + "-" + dd;
           - parseDate: "2006-01-02"
 
+      # Studio convention: label/brand-level field → Studio (sub-studio model,
+      # StashDB amateur-studios).
+      # Studio URLs mapped from the same anchor as Studio Name for Identify URL-matching.
+      # Parent studio (platform/network) assigned manually once; Ignore Auto-Tag
+      # recommended for short label names.
       Studio:
         Name:
           # A page can list two makers (e.g. ARGA-134_DL) — collect all
@@ -145,6 +150,9 @@ xPathScrapers:
                 - regex: '^\\s+|\\s+$'
                   with: ""
 
+        URLs:
+          # Mirror the Name multi-value behaviour: all maid links + FansMe [1].
+          selector: //div[@class='movie_detail'][1]//p//a[contains(@href,'list.php?maid=')]/@href | //div[@class='movie_detail'][1]//p//a[contains(@href,'fansme.jp/user/')][1]/@href
       Performers:
         Name:
           # Live DOM (2026-10-06): performer links are a[href^='list.php?mid=']
