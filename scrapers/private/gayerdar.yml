@@ -24,10 +24,12 @@ sceneByURL:
           with: "gayerdar.com/zh-TW/videos/"
     scraper: sceneScraper
 
-sceneByFragment:
-  action: scrapeXPath
-  queryURL: "{url}"
-  scraper: sceneScraper
+# 2026-10-10: removed sceneByFragment. Its queryURL "{url}" only expands
+# when the scene already stores a URL; scraping a URL-less scene passed the
+# literal "{url}" to CDP (Cannot navigate to invalid URL), and the zero-row
+# fragment result triggered the upstream Stash nil-pointer panic in
+# processSceneRelationships (same as KOShop 2026-10-05). Use sceneByURL
+# or sceneByQueryFragment instead.
 
 sceneByQueryFragment:
   action: scrapeXPath
@@ -49,10 +51,11 @@ performerByURL:
           with: "gayerdar.com/zh-TW/models/"
     scraper: performerScraper
 
-performerByFragment:
-  action: scrapeXPath
-  queryURL: "{url}"
-  scraper: performerScraper
+# 2026-10-10: removed performerByFragment. Its queryURL "{url}" only expands
+# when the performer fragment already carries a URL; scene-level performers
+# here are name-only, so the fragment is URL-less by construction — the
+# literal "{url}" would fail CDP navigation and risk the same upstream
+# nil-pointer panic as sceneByFragment (Rule 4). Use performerByURL instead.
 
 xPathScrapers:
   sceneScraper:
