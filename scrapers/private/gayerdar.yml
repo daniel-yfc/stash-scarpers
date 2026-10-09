@@ -79,10 +79,11 @@ xPathScrapers:
           - parseDate: "20060102"
       Image:
         selector: //meta[@property="og:image"]/@content
-      # Studio: omitted (2026-10-10). Was hardcoded fixed: "Gayerdar" — Gayerdar
-      # is the platform/site, not a production studio, and video pages expose
-      # no studio field. A hardcoded platform name would pollute Studio
-      # entities and AutoTagging; empty is better than wrong.
+      Studio:
+        # Gayerdar is the producing studio for this site's own content
+        # (maintainer-confirmed 2026-10-10).
+        Name:
+          fixed: "Gayerdar"
       Tags:
         # Live DOM (2026-10-06): linked variant is ul.iq-blogtag li a.title
         # (the <a> has no href); some pages render plain-text li nodes
