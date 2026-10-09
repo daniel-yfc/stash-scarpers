@@ -54,6 +54,10 @@ Scripts are tiny, single-purpose, no-network, no-credential helpers. The officia
 
 ## Maintenance
 
+Consumer behavior (Identify, Tagger, Auto Tagging) derives from the official Stash manuals,
+GraphQL scraper types and scraper/Identify source. These integration checks do not
+implement a stash-box publisher.
+
 - Verify material claims against an authoritative upstream source before rewriting a rule.
 - Treat the official schema and current upstream documentation as authoritative over local stubs.
 - Keep issue references current when the audit sequence changes.

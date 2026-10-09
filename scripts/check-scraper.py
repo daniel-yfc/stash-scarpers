@@ -56,6 +56,10 @@ def check_fragment_queryurl(data, results):
             continue
         if isinstance(node, dict) and "queryURL" not in node:
             results.append(("FAIL", f"{action}: missing required queryURL"))
+        elif isinstance(node, dict) and str(node.get("queryURL", "")).strip() == "{url}":
+            results.append(("FAIL", f"{action}: bare queryURL \"{{url}}\" does not expand on "
+                           "URL-less fragments (upstream nil-pointer panic risk); use "
+                           "{{title}}/{{code}}/{{filename}} with queryURLReplace, or omit"))
         else:
             results.append(("PASS", f"{action}: queryURL present"))
 

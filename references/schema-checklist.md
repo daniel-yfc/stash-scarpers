@@ -51,6 +51,7 @@ whose `url` value is contained in the target URL.
 - [ ] Each entry has the fields required by its action and entry-point schema.
 - [ ] `queryURLReplace` appears only under `*ByURL` / `*ByFragment` entry points; the current Stash runtime rejects it under `*ByName` (`ByNameDefinition`), even though some upstream corpus files carry the legacy shape.
 - [ ] Fragment XPath/JSON entry points include the action-required `queryURL`; script actions follow their script contract.
+- [ ] `*ByFragment` queryURLs are never a bare `"{url}"` — it does not expand on URL-less fragments and the zero-row result triggers the upstream Stash nil-pointer panic. Use `{title}`/`{code}`/`{filename}` with `queryURLReplace`, or omit the fragment mode. (`sceneByQueryFragment: "{url}"` is required and safe: Stash invokes it only to preserve an already-selected URL.)
 - [ ] No unsupported root keys `documentHeader` or `$vars`.
 - [ ] URL arrays are sorted with the validator's `-s` check.
 
