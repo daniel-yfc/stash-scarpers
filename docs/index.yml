@@ -6,6 +6,12 @@ documents:
     layer: repository
     status: active
     intents: [identify, tagger, auto-tagging, graphql, metadata-quality]
+  - doc_id: DOC-INTEGRATION-81
+    title: Stash GraphQL API Reference
+    path: docs/08_stash-graphql-api-reference.md
+    layer: repository
+    status: active
+    intents: [graphql, stash-api, api-reference, identify]
   - doc_id: DOC-ROOT-00
     title: Project README
     path: README.md

@@ -39,6 +39,7 @@ This directory contains repository-level workflow, architecture, testing, and ma
 | [`05_CI_Workflows.md`](05_CI_Workflows.md)                                             | CI workflow details                                       |
 | [`06_Testing_Guide.md`](06_Testing_Guide.md)                                           | Testing and live-scrutiny guidance                        |
 | [`07_Rendered_DOM_Fixture_Testing.md`](07_Rendered_DOM_Fixture_Testing.md)             | Rendered DOM fixture contract and authoring expectations  |
+| [`08_stash-graphql-api-reference.md`](08_stash-graphql-api-reference.md)               | Stash GraphQL API reference (endpoint, schema, mutations) |
 | [`LIVE_TEST_STATUS.md`](LIVE_TEST_STATUS.md)                                           | Live-site verification status                             |
 | [`template-workflow.md`](template-workflow.md)                                         | Template-to-scraper workflow                              |
 | [`test-report-template.md`](test-report-template.md)                                   | Full-suite test report format                             |
