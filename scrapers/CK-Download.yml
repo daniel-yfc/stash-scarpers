@@ -88,6 +88,10 @@ xPathScrapers:
           - replace:
               - regex: "^\\s+|\\s+$"
                 with: ""
+      URLs:
+        # Fixed 2026-10-10: was missing, which broke Stash URL-based
+        # re-scrape/identify matching. Same pattern as other scrapers here.
+        fixed: "{inputURL}"
       Date:
         selector: "//div[contains(@class,'add_info')]//div[contains(@class,'date')][1]"
         postProcess:

@@ -84,19 +84,13 @@ xPathScrapers:
               if (v.indexOf("/") === 0) return "https://www.mensrush.tv" + v;
               return v.replace(/_sm\.(webp|jpg)$/, ".$1");
 
-      Date:
-        selector: $results//a[contains(@href,'single.php')]/@href
-        postProcess:
-          - replace:
-              - regex: '^.*?[?&]id=[A-Za-z]+-(\\d+).*?$'
-                with: "$1"
-          - replace:
-              - regex: '^(\\d{2,3})$'
-                with: "20$1-01-01"
-          - parseDate: "2006-01-02"
-        # NOTE: Men's Rush search cards do not expose a real release date on the
-        # public list view. When the code contains a numeric suffix we derive a
-        # best-effort year (e.g. KR2398 -> 2023). Otherwise the field is empty.
+      # Date: omitted for search results. Men's Rush search cards do not expose a
+        # real release date on the public list view. A previous version
+        # synthesized one from the code's numeric suffix ("20$1-01-01"), which
+        # produced invalid or fabricated dates (e.g. suffix 629 -> 20629-01-01,
+        # two-digit suffixes -> wrong/future years). Wrong dates are worse than
+        # empty for Identify matching, so search results carry no Date. Use the
+        # detail page (sceneScraper Date) for a real release date.
 
   sceneScraper:
     scene:
