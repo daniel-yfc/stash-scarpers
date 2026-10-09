@@ -3,7 +3,7 @@
 # Verification: live-DOM verified 2026-10-06 (Title/Image/Details fixed).
 # 2026-10-06: Details fixed — #plot-box holds text nodes + <br>, no <p>.
 # (Title/Image already used the robust class-token pattern.)
-# Last Updated: 2026-10-06
+# Last Updated: 2026-10-10
 # Validator fixes:
 #   - removed CookieURL (not allowed when useCDP is true)
 #   - sceneByURL regex -> simple prefix (url items are plain strings)
@@ -36,10 +36,9 @@ sceneByName:
   queryURL: "https://www.gvwiki.com/search?q={}&r=vm"
   scraper: searchScraper
 
-sceneByFragment:
-  action: scrapeXPath
-  queryURL: "https://www.gvwiki.com/search?q={title}&r=vm"
-  scraper: searchScraper
+# Identify disabled: this entry returned a keyword-results page as one scene.
+# Use sceneByName and select a result for sceneByQueryFragment instead.
+# See docs/metadata-feed-integration.md (2026-10-10).
 
 sceneByQueryFragment:
   action: scrapeXPath

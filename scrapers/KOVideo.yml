@@ -8,7 +8,7 @@
 # See: skills/stash-scraper-builder/references/debugging.md
 # 2026-10-06: fixed Title selector (div.title_bar is a sibling of
 # div.detail_main_col, not a descendant) against live DOM.
-# Last Updated: 2026-10-06
+# Last Updated: 2026-10-10
 
 name: KO Video
 sceneByURL:
@@ -25,20 +25,10 @@ sceneByQueryFragment:
   action: scrapeXPath
   queryURL: "{url}"
   scraper: sceneScraper
-sceneByFragment:
-  action: scrapeXPath
-  queryURL: https://ko-video.com/products/list.php?mode=search&name={title}
-  queryURLReplace:
-    title:
-      - regex: \.[^.]+$
-        with: ""
-      - regex: '[_\.]+'
-        with: " "
-      - regex: \s{2,}
-        with: " "
-      - regex: ^\s+|\s+$
-        with: ""
-  scraper: searchScraper
+# Identify disabled: this entry returned a keyword-results page as one scene.
+# Use sceneByName and select a result for sceneByQueryFragment instead.
+# See docs/metadata-feed-integration.md (2026-10-10).
+
 xPathScrapers:
   searchScraper:
     common:

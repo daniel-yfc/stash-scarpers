@@ -5,13 +5,14 @@
 #
 # Fragility notes:
 # - performerScraper Height/Weight anchor on Tailwind utility class text-D1D0CF.
-# - sceneSearchScraper per-field card selectors work positionally; not live-verified.
 # - Title selectors split on fullwidth ｜, which depends on zh-TW page chrome.
 # 2026-10-06: Tags gained plain-text li fallback (some pages render tags
 # without links) against live DOM.
-# Last Updated: 2026-10-06
+# Last Updated: 2026-10-10
 name: Gayerdar
 
+# Name search omitted: {url} is not substituted by Stash ByName.
+# Restore only after verifying a real keyword endpoint using {}.
 sceneByURL:
   - action: scrapeXPath
     url:
@@ -27,11 +28,6 @@ sceneByFragment:
   action: scrapeXPath
   queryURL: "{url}"
   scraper: sceneScraper
-
-sceneByName:
-  action: scrapeXPath
-  queryURL: "{url}"
-  scraper: sceneSearchScraper
 
 sceneByQueryFragment:
   action: scrapeXPath
@@ -57,11 +53,6 @@ performerByFragment:
   action: scrapeXPath
   queryURL: "{url}"
   scraper: performerScraper
-
-performerByName:
-  action: scrapeXPath
-  queryURL: "{url}"
-  scraper: performerSearchScraper
 
 xPathScrapers:
   sceneScraper:
@@ -156,33 +147,7 @@ xPathScrapers:
               - regex: "(?i)gayerdar\\.com/(?:en-us|zh-tw)?/?models/"
                 with: "gayerdar.com/zh-TW/models/"
 
-  sceneSearchScraper:
-    scene:
-      Title:
-        selector: .//div[contains(@class,"vitem")][contains(@class,"video-item")][.//a[contains(@href,"/videos/")]]//h6[contains(@class,"title")]/text()
-      Image:
-        selector: .//div[contains(@class,"vitem")][contains(@class,"video-item")][.//a[contains(@href,"/videos/")]]//img[contains(@class,"video-img")][1]/@src
-      URL:
-        selector: .//div[contains(@class,"vitem")][contains(@class,"video-item")][.//a[contains(@href,"/videos/")]]//a[contains(@href,"/videos/")][1]/@href
-        postProcess:
-          - replace:
-              - regex: "^/"
-                with: "https://gayerdar.com/"
-
-  performerSearchScraper:
-    performer:
-      Name:
-        selector: .//div[contains(@class,"vitem")][contains(@class,"model-item")][.//a[contains(@href,"/models/")]]//h6[contains(@class,"title")]/text()
-      Image:
-        selector: .//div[contains(@class,"vitem")][contains(@class,"model-item")][.//a[contains(@href,"/models/")]]//img[contains(@class,"model-img")][1]/@src
-      URL:
-        selector: .//div[contains(@class,"vitem")][contains(@class,"model-item")][.//a[contains(@href,"/models/")]]//a[contains(@href,"/models/")][1]/@href
-        postProcess:
-          - replace:
-              - regex: "^/"
-                with: "https://gayerdar.com/"
-
 driver:
   useCDP: true
 
-# Last Updated: 2026-10-06
+# Last Updated: 2026-10-10

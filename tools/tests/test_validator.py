@@ -1,4 +1,5 @@
 import subprocess
+import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -32,7 +33,7 @@ def test_sort_check_runs():
 
 def test_validator_unit_tests():
     result = subprocess.run(
-        ["npm", "test"],
+        [shutil.which("npm") or "npm", "test"],
         cwd=ROOT,
         capture_output=True,
         text=True,

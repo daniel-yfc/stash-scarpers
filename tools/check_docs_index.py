@@ -46,9 +46,9 @@ def expected_markdown_paths() -> set[str]:
         "validator/README.md",
         "skills/stash-scraper-builder/SKILL.md",
     }
-    expected.update(str(path.relative_to(ROOT)) for path in (ROOT / "docs").glob("*.md"))
+    expected.update(path.relative_to(ROOT).as_posix() for path in (ROOT / "docs").glob("*.md"))
     expected.update(
-        str(path.relative_to(ROOT))
+        path.relative_to(ROOT).as_posix()
         for path in (ROOT / "skills" / "stash-scraper-builder" / "references").glob("*.md")
     )
     return expected
@@ -110,7 +110,7 @@ def main() -> int:
             fail(errors, f"{doc_id}: path must be a non-empty string")
             continue
 
-        normalized_path = str(Path(path_value))
+        normalized_path = Path(path_value).as_posix()
         if normalized_path in seen_paths:
             fail(errors, f"duplicate indexed path: {normalized_path}")
         seen_paths.add(normalized_path)

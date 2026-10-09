@@ -1,6 +1,7 @@
 """Smoke tests for the consolidated tools/ directory."""
 
 import subprocess
+import shutil
 from pathlib import Path
 
 # 已移除：build-site.sh, clean.sh, install.sh, test.sh
@@ -25,7 +26,7 @@ def test_tool_files_exist():
 def test_shell_scripts_syntax():
     """Shell 腳本通過 bash -n 語法檢查"""
     for script in TOOL_SCRIPTS:
-        result = subprocess.run(["bash", "-n", script], capture_output=True, text=True)
+        result = subprocess.run([shutil.which("bash") or "bash", "-n", script], capture_output=True, text=True)
         assert result.returncode == 0, f"{script} 語法錯誤：{result.stderr}"
 
 

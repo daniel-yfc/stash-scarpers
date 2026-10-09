@@ -1,5 +1,11 @@
 version: 1
 documents:
+  - doc_id: DOC-INTEGRATION-80
+    title: Metadata Feed Integration
+    path: docs/metadata-feed-integration.md
+    layer: repository
+    status: active
+    intents: [identify, tagger, auto-tagging, graphql, metadata-quality]
   - doc_id: DOC-ROOT-00
     title: Project README
     path: README.md
