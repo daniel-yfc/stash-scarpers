@@ -4,6 +4,11 @@
 
 This repository builds and verifies Stash scraper YAML. It is not the upstream Stash application or CommunityScrapers. Its validator and schema expectations derive from CommunityScrapers; see [upstream provenance](skills/stash-scraper-builder/references/UPSTREAM_SOURCES.md) and the local [validator schema](validator/scraper.schema.json). A template, schema pass, or green CI run does not prove a scraper works on a live site.
 
+For Identify, Scene Tagger, Auto Tagging and GraphQL integration, see the
+[metadata feed contract](docs/metadata-feed-integration.md). Website scrapers do
+not automatically publish to stash-box. Generate the declared support inventory
+with `python tools/check_metadata_feed.py --inventory`.
+
 ## Build a scraper
 
 1. Read [repository boundaries](AGENTS.md), the [scraper skill](skills/stash-scraper-builder/SKILL.md), and its [read order](skills/stash-scraper-builder/references/skill-read-order.md). Select the relevant references; use [runtime selection](skills/stash-scraper-builder/SKILL.md#runtime-selection) and [security policy](skills/stash-scraper-builder/references/phase0-secrets-policy.md).
@@ -33,6 +38,7 @@ python tools/check_evidence_contract.py
 python tools/check_live_cdp_status.py
 python tools/check_scraper_docs.py
 python tools/check_docs_index.py
+python tools/check_metadata_feed.py
 npm run format:check
 ```
 

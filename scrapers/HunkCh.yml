@@ -8,7 +8,7 @@
 # `A | B//x` and match the container itself. Always keep the parens.
 # 2026-10-06: re-verified healthy on 3 detail pages; search probes
 # (陸翔 / CR-0945_DL / 夏ハメ2026) all HIT.
-# Last Updated: 2026-10-06
+# Last Updated: 2026-10-10
 # Validator fix: Code no longer combines `fixed` with `postProcess` (schema
 # fixed-value nodeSelector allows only 'fixed'). Uses canonical/og:url selector,
 # same pattern as the existing Aliases field.
@@ -41,20 +41,9 @@ sceneByQueryFragment:
   queryURL: "{url}"
   scraper: sceneScraper
 
-sceneByFragment:
-  action: scrapeXPath
-  queryURL: "https://www.hunk-ch.com/search.php?s={title}&fromSearch=on"
-  queryURLReplace:
-    title:
-      - regex: '\.[^.]+$'
-        with: ""
-      - regex: '[_\.]+'
-        with: " "
-      - regex: '\s{2,}'
-        with: " "
-      - regex: '^\s+|\s+$'
-        with: ""
-  scraper: searchScraper
+# Identify disabled: this entry returned a keyword-results page as one scene.
+# Use sceneByName and select a result for sceneByQueryFragment instead.
+# See docs/metadata-feed-integration.md (2026-10-10).
 
 xPathScrapers:
   searchScraper:

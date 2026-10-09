@@ -35,7 +35,7 @@
 #   Performers: detail pages have no performer list (model.php is nav only)
 #   — omitted intentionally.
 # 2026-10-06: URLs gained og:url fallback (no canonical on detail pages).
-# Last Updated: 2026-10-06
+# Last Updated: 2026-10-10
 
 name: Games-Video
 
@@ -56,20 +56,9 @@ sceneByQueryFragment:
   queryURL: "{url}"
   scraper: sceneScraper
 
-sceneByFragment:
-  action: scrapeXPath
-  queryURL: "https://www.games-video.co.jp/search.php?s={title}"
-  queryURLReplace:
-    title:
-      - regex: '\.[^.]+$'
-        with: ""
-      - regex: '[_\.]+'
-        with: " "
-      - regex: '\s{2,}'
-        with: " "
-      - regex: '^\s+|\s+$'
-        with: ""
-  scraper: searchScraper
+# Identify disabled: this entry returned a keyword-results page as one scene.
+# Use sceneByName and select a result for sceneByQueryFragment instead.
+# See docs/metadata-feed-integration.md (2026-10-10).
 
 xPathScrapers:
   searchScraper:

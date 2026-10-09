@@ -27,6 +27,9 @@ This directory contains repository-level workflow, architecture, testing, and ma
 
 ## Guides
 
+- [Metadata feed integration](metadata-feed-integration.md): consumer boundaries,
+  matching corrections, executable data-quality checks and runtime verification.
+
 | Document                                                                               | Purpose                                                   |
 | -------------------------------------------------------------------------------------- | --------------------------------------------------------- |
 | [`01_System_Architecture.md`](01_System_Architecture.md)                               | Repository architecture and verification layers           |

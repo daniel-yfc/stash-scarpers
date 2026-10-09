@@ -2,7 +2,7 @@
 # 2026-10-06: scrutiny.js 8/8 scene + 2/2 search passed; 3 detail pages
 # re-verified healthy; search probes (KEN / HBM-954 / 本番解禁) all HIT.
 # NOTE: use https://www.jgvdata.com/ (bare domain redirects to ad parking).
-# Last Updated: 2026-10-06
+# Last Updated: 2026-10-10
 # Validator fixes:
 #   - sceneByURL regex -> simple prefix (url items are plain strings)
 #   - {query} -> {} (Stash sceneByName only substitutes the {} placeholder)
@@ -21,10 +21,9 @@ sceneByName:
   queryURL: "https://jgvdata.com/?s={}"
   scraper: searchScraper
 
-sceneByFragment:
-  action: scrapeXPath
-  queryURL: "https://jgvdata.com/?s={title}"
-  scraper: searchScraper
+# Identify disabled: this entry returned a keyword-results page as one scene.
+# Use sceneByName and select a result for sceneByQueryFragment instead.
+# See docs/metadata-feed-integration.md (2026-10-10).
 
 sceneByQueryFragment:
   action: scrapeXPath

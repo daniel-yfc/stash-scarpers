@@ -43,6 +43,11 @@
 
 ## Maintenance
 
+The repository's [metadata feed integration guide](../../../docs/metadata-feed-integration.md)
+derives consumer behavior from the official Stash Identify, Tagger, Auto Tagging
+manuals, GraphQL scraper types and scraper/Identify source linked there. These
+integration checks do not implement a stash-box publisher.
+
 - Verify material claims against an authoritative upstream source before rewriting a rule.
 - Treat the official schema and current upstream documentation as authoritative over local stubs.
 - Keep issue references current when the audit sequence changes.

@@ -27,7 +27,7 @@
 #   Studio/Performers/Code: not present on live pages — omitted intentionally.
 # 2026-10-06: Image gained @src fallback (first slider img lacks data-src on
 # some pages), verified against live DOM.
-# Last Updated: 2026-10-06
+# Last Updated: 2026-10-10
 
 name: Justice01
 
@@ -50,20 +50,9 @@ sceneByQueryFragment:
   queryURL: "{url}"
   scraper: sceneScraper
 
-sceneByFragment:
-  action: scrapeXPath
-  queryURL: "https://www.justice01.com/?s={title}"
-  queryURLReplace:
-    title:
-      - regex: '\.[^.]+$'
-        with: ""
-      - regex: '[_\.]+'
-        with: " "
-      - regex: '\s{2,}'
-        with: " "
-      - regex: '^\s+|\s+$'
-        with: ""
-  scraper: searchScraper
+# Identify disabled: this entry returned a keyword-results page as one scene.
+# Use sceneByName and select a result for sceneByQueryFragment instead.
+# See docs/metadata-feed-integration.md (2026-10-10).
 
 xPathScrapers:
   searchScraper:

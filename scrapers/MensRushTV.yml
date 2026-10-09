@@ -14,7 +14,7 @@
 # 2026-10-06: Performers fixed to a[href^='list.php?mid='] (old selector hit the
 # description paragraph); Image covers both player renders (<video poster>
 # and <img class="no-save" src>); Date documented as page-dependent.
-# Last Updated: 2026-10-06
+# Last Updated: 2026-10-10
 
 name: Men's Rush TV
 
@@ -35,20 +35,9 @@ sceneByQueryFragment:
   queryURL: "{url}"
   scraper: sceneScraper
 
-sceneByFragment:
-  action: scrapeXPath
-  queryURL: "https://www.mensrush.tv/list.php?keyword={title}"
-  queryURLReplace:
-    title:
-      - regex: '\\.[^.]+$'
-        with: ""
-      - regex: '[_\\.]+'
-        with: " "
-      - regex: '\\s{2,}'
-        with: " "
-      - regex: '^\\s+|\\s+$'
-        with: ""
-  scraper: searchScraper
+# Identify disabled: this entry returned a keyword-results page as one scene.
+# Use sceneByName and select a result for sceneByQueryFragment instead.
+# See docs/metadata-feed-integration.md (2026-10-10).
 
 xPathScrapers:
   searchScraper:
@@ -214,4 +203,4 @@ driver:
   headers:
     - Key: User-Agent
       Value: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
-# Last Updated: 2026-10-06
+# Last Updated: 2026-10-10
