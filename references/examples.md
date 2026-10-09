@@ -1,10 +1,10 @@
 # Examples
 
+**Load when:** you want to see a pattern applied in a real scraper before writing your own. Prefer copying these shapes over inventing new ones.
+
 ## Minimal performer entry point
 
-For an XPath performer scraper, use `performerByURL`; the official schema does not permit `scrapeXPath` or `scrapeJson` for `performerByFragment`. Copy [`assets/performer-xpath-template.yml`](../assets/performer-xpath-template.yml) as the starting skeleton.
-
-Use `performerByFragment` only with `action: script`, when that mode is actually supported by the target and the required script dependency exists. `action: stash` is outside this skill's scope. Entry-point mappings reference root-level scraper definitions; they do not contain an inline `xPathScrapers` block.
+Start from [`assets/performer-xpath-template.yml`](../assets/performer-xpath-template.yml) (see `SKILL.md` § Entry contract). `performerByFragment` works only with `action: script`, when that mode is actually supported by the target and the required script dependency exists.
 
 ## CJK / performer separator fixtures
 
@@ -17,8 +17,6 @@ When testing scrapers against Japanese or Chinese sites, include at least one fi
 These catch normalisation bugs in `replace`, `concat`, and post-processing rules early.
 
 ## Curated real-world examples
-
-**Load when:** you want to see a pattern applied in a real scraper before writing your own. Prefer copying these shapes over inventing new ones.
 
 | Example  | Source                                                                                               | Pattern demonstrated                                          |
 | -------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |

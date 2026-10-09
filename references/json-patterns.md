@@ -4,6 +4,15 @@
 
 Patterns and guidance for JSON-based scrapers.
 
+## Contents
+
+- [queryURL rules](#queryurl-rules)
+- [GJSON patterns](#gjson-patterns)
+- [jsonScrapers structure](#jsonscrapers-structure)
+- [Common patterns](#common-patterns)
+- [Page URL → API rewrite (worked example)](#page-url--api-rewrite-worked-example)
+- [References](#references)
+
 ## queryURL rules
 
 | Mode                             | queryURL value                                                                                                                                                         |
@@ -83,7 +92,44 @@ Date:
     - parseDate: 2006-01-02
 ```
 
+## Page URL → API rewrite (worked example)
+
+Use when the user pastes an HTML page URL but metadata lives on a JSON endpoint.
+
+```yaml
+name: ExampleJson
+# Last Updated: YYYY-MM-DD
+sceneByURL:
+  - action: scrapeJson
+    url:
+      - "examplesite.test/works/"
+    queryURL: "{url}"
+    queryURLReplace:
+      url:
+        - regex: ".*/works/([^/?#]+).*"
+          with: "https://api.examplesite.test/v1/scene/$1"
+    scraper: sceneJson
+
+jsonScrapers:
+  sceneJson:
+    scene:
+      Title:
+        selector: "data.title"
+      Date:
+        selector: "data.release_date"
+        postProcess:
+          - parseDate: "2006-01-02"
+      Image:
+        selector: "data.cover_url"
+      Studio:
+        Name:
+          fixed: "ExampleSite"
+```
+
+Test the regex against a real page URL before output. `sceneByName` cannot use `queryURLReplace`.
+
+An API `error` field does not crash YAML `scrapeJson`; selectors just come back empty. Checking `error` and returning `{}` belongs in a `script` scraper (`script-actions.md`).
+
 ## References
 
-- `references/json-examples.md` — Complete JSON scraper templates
 - `references/script-actions.md` — When JSON isn't enough, use `script`

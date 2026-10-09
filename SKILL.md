@@ -90,20 +90,24 @@ The three highest-cost mistakes, stated once here so they are read before the si
 
 This table is the primary router. Each reference carries its own `**Load when:**` trigger — read a reference only when its trigger matches.
 
-| Need                      | Read when                                                        | Reference                                                                             |
-| ------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| Source selection & scope  | Unsure the task belongs here, or which runtime to pick           | `SKILL.md` § Runtime selection, `references/out-of-scope.md`                          |
-| Authoring checklist       | Starting from a template                                         | `references/authoring-checklist.md`                                                   |
-| XPath extraction          | Writing XPath selectors or entry points                          | `references/xpath-patterns.md`                                                        |
-| JSON extraction           | Writing GJSON selectors or JSON entry points                     | `references/json-patterns.md`, `references/json-examples.md`                          |
-| Script actions            | Using `action: script` or a dependency package                   | `references/script-actions.md`                                                        |
-| CDP / login workflow      | Login, paywall, JS-only, or human-check flow                     | `references/cdp-workflow.md`                                                          |
-| Dates & post-processing   | Transforming values (replace, parseDate, map, concat)            | `references/post-processing.md`                                                       |
-| Field quality             | Cleaning titles/names; entity field lists                        | `references/field-quality.md`, `references/entity-fields.md`                          |
-| Patterns & best practices | Choosing structural patterns or multi-site design                | `references/best-practices.md`, `references/multi-site-network-scrapers.md`           |
-| Debugging a failure       | Empty fields, nil dates, 403s, loader errors                     | `references/debugging.md` (+ `references/incident-reviews.md` for past incidents)     |
-| Examples & validation     | Want a real-world example; final pre-emit check; skill self-test | `references/examples.md`, `references/schema-checklist.md`, `references/eval-pack.md` |
-| Upstream sources          | Need provenance for a rule or file maintenance status            | `references/UPSTREAM_SOURCES.md`                                                      |
+| Need                     | Read when                                                          | Reference                                                                         |
+| ------------------------ | ------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
+| Source selection & scope | Unsure the task belongs here, or which runtime to pick             | `SKILL.md` § Runtime selection, `references/out-of-scope.md`                      |
+| Authoring checklist      | Starting from a template                                           | `references/authoring-checklist.md`                                               |
+| XPath extraction         | Writing XPath selectors or entry points                            | `references/xpath-patterns.md`                                                    |
+| JSON extraction          | Writing GJSON selectors or JSON entry points                       | `references/json-patterns.md`                                                     |
+| Script actions           | Using `action: script` or a dependency package                     | `references/script-actions.md`                                                    |
+| CDP / login workflow     | Login, paywall, JS-only, or human-check flow                       | `references/cdp-workflow.md`                                                      |
+| Dates & post-processing  | Transforming values (replace, parseDate, map, concat)              | `references/post-processing.md`                                                   |
+| Title / name cleaning    | Cleaning titles, performer names, studio prefixes, CJK punctuation | `references/field-quality.md`                                                     |
+| Entity field lists       | Need the complete field list or required-vs-optional status        | `references/entity-fields.md`                                                     |
+| Structural patterns      | Choosing anchors, studio maps, headers, anti-patterns              | `references/best-practices.md`                                                    |
+| Multi-site design        | One scraper must cover multiple sites or a site network            | `references/multi-site-network-scrapers.md`                                       |
+| Debugging a failure      | Empty fields, nil dates, 403s, loader errors                       | `references/debugging.md` (+ `references/incident-reviews.md` for past incidents) |
+| Real-world example       | Want to see a pattern applied in a real scraper                    | `references/examples.md`                                                          |
+| Final pre-emit check     | Final verification pass before emitting YAML                       | `references/schema-checklist.md`                                                  |
+| Skill self-test          | Verifying the skill itself works end-to-end                        | `references/eval-pack.md`                                                         |
+| Upstream sources         | Need provenance for a rule or file maintenance status              | `references/UPSTREAM_SOURCES.md`                                                  |
 
 ## Output contract
 

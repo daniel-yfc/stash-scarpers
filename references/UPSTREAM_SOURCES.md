@@ -19,7 +19,6 @@
 | `incident-reviews.md`            | Incident write-ups and transferable lessons                              | Current                             |
 | `field-quality.md`               | Title and performer cleaning                                             | Current                             |
 | `examples.md`                    | Minimal examples, fixtures, and curated real-world gallery               | Audit with #21/#22/#24              |
-| `json-examples.md`               | JSON scraper examples                                                    | Audit with #21/#26                  |
 | `json-patterns.md`               | JSON selectors, entry points, and placeholders                           | Audit with #21/#22/#24              |
 | `multi-site-network-scrapers.md` | Multi-site and network-source guidance                                   | Audit with #21                      |
 | `out-of-scope.md`                | Explicit skill boundary                                                  | Phase 0 complete                    |

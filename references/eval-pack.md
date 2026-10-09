@@ -1,6 +1,6 @@
 # Eval Pack — 5 Tasks
 
-**Load when:** testing the skill end-to-end.
+**Load when:** you modified the skill itself and need to verify it still works end-to-end, or you were asked to self-test the skill.
 
 > **Status:** not wired into CI — run manually. If any task fails, fix the workflow or checklists, then re-run.
 
