@@ -1,0 +1,119 @@
+name: Pubu
+# Rendered-DOM verified 2026-10-03 on media page 296312 (https://www.pubu.com.tw/media/296312?_l=zh-tw).
+# Selectors re-verified 2026-10-10 against user-supplied snapshots:
+#   media/697540 (all 10 fields HIT, incl. 發行=2026/09/27, 長度=01:11:26),
+#   magazine/697020, magazine/688215, magazine/688214 (all HIT except Duration,
+#   which magazine pages don't have — 字數/頁數 instead; Date format matches),
+#   ebook/663915 x2 (all HIT except Duration), media/688239 (all 10 HIT,
+#   長度=05:27), combo/688217 (all HIT except Duration).
+# Therefore sceneByURL covers /media/, /magazine/, /ebook/, /combo/.
+# NOT covered: /album/ detail pages (no snapshot yet).
+# Author maps to Performers; publisher (fl_pub) maps to Studio (user decision 2026-10-04).
+# The media page renders the info block twice (desktop + mobile col variants); selectors
+# use the first document-order match. The 發行 label sits in a misspelled <sapn> tag on
+# pubu's side, so selectors match the label DIV text, not the inner span.
+# Known gate 2026-10-04: adult media products may redirect through
+# /ebook/agreeTerms?nextUrl=... (observed on media/419774). With CDP, agree once in the
+# visible Chrome; a driver.clicks handler is NOT emitted because the gate page was not
+# snapshotted — add one only with its button selector verified.
+# Live check 2026-10-03: plain HTTP is blocked for this environment; if Stash gets 403
+# on pubu.com.tw, enable CDP as on RGBEE.
+# Search results (general, media tab, adult tab) snapshotted 2026-10-10 via live browser:
+#   - cards: article[data-product]; title: article[data-product] h3 a.text-reset
+#   - cover: article[data-product] img.thumbnail-m (absolute URL in src)
+#   - author: article[data-product] a.author
+#   - detail hrefs are MIXED: /ebook/<id>, /album/<id>, /media/<id>
+#   - adult search URL (supplied by user) loads directly with
+#     AgeRestricted=on&isNewFilter=true; agreeTerms gate NOT triggered.
+# LIMIT: selectors verified on /media/ detail pages only. sceneByURL matches
+#   /media/ alone — /ebook/ and /album/ search hits will not auto-scrape until
+#   their detail-page DOM is snapshotted. Do not add them unverified.
+# Author/publisher pages were not snapshotted.
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - pubu.com.tw/media/
+      - pubu.com.tw/magazine/
+      - pubu.com.tw/ebook/
+      - pubu.com.tw/combo/
+    scraper: sceneScraper
+
+sceneByName:
+  action: scrapeXPath
+  queryURL: "https://www.pubu.com.tw/search/adult?q={}&AgeRestricted=on&isNewFilter=true"
+  scraper: searchScraper
+
+sceneByQueryFragment:
+  action: scrapeXPath
+  queryURL: "{url}"
+  scraper: sceneScraper
+
+sceneByFragment:
+  action: scrapeXPath
+  queryURL: "{url}"
+  scraper: sceneScraper
+
+xPathScrapers:
+  sceneScraper:
+    scene:
+      Title: //div[contains(concat(' ', normalize-space(@class), ' '), ' info-name ')]/h1[normalize-space()]
+      Code:
+        selector: //div[contains(concat(' ', normalize-space(@class), ' '), ' col-4 ')][normalize-space()='ID']/following-sibling::div[contains(concat(' ', normalize-space(@class), ' '), ' col-8 ')][1]
+      Details:
+        selector: //div[@id='info-content']//div[contains(concat(' ', normalize-space(@class), ' '), ' font-base ')]/div/text()
+        concat: "\n"
+        postProcess:
+          - replace:
+              - regex: (?i)<br\s*/?>
+                with: "\n"
+              - regex: <[^>]+>
+                with: ""
+      Date:
+        selector: //div[contains(concat(' ', normalize-space(@class), ' '), ' col-4 ')][normalize-space()='發行']/following-sibling::div[contains(concat(' ', normalize-space(@class), ' '), ' col-8 ')][1]
+        postProcess:
+          - parseDate: "2006/01/02"
+      Duration:
+        selector: //div[contains(concat(' ', normalize-space(@class), ' '), ' col-4 ')][normalize-space()='長度']/following-sibling::div[contains(concat(' ', normalize-space(@class), ' '), ' col-8 ')][1]
+        postProcess:
+          - javascript: |
+              var parts = value.trim().split(':').map(function (part) { return parseInt(part, 10) || 0; });
+              if (parts.length === 3) return String(parts[0] * 3600 + parts[1] * 60 + parts[2]);
+              if (parts.length === 2) return String(parts[0] * 60 + parts[1]);
+              return value.replace(/\D/g, '');
+      Image:
+        selector: //meta[@property='og:image']/@content | //div[contains(concat(' ', normalize-space(@class), ' '), ' cover-block ')]//img/@src
+      URLs: //link[@rel='canonical']/@href
+      Studio:
+        Name: //div[contains(concat(' ', normalize-space(@class), ' '), ' list-metaAuthor ')]//a[contains(@href, 'fl_pub')]
+        URL:
+          selector: //div[contains(concat(' ', normalize-space(@class), ' '), ' list-metaAuthor ')]//a[contains(@href, 'fl_pub')]/@href
+          postProcess:
+            - replace:
+                - regex: ^/
+                  with: https://www.pubu.com.tw/
+      Performers:
+        Name: //div[contains(concat(' ', normalize-space(@class), ' '), ' class-more ')]//a[contains(@href, 'fl_ahr')]
+        URL:
+          selector: //div[contains(concat(' ', normalize-space(@class), ' '), ' class-more ')]//a[contains(@href, 'fl_ahr')]/@href
+          postProcess:
+            - replace:
+                - regex: ^/
+                  with: https://www.pubu.com.tw/
+      Tags:
+        Name: //nav[contains(concat(' ', normalize-space(@class), ' '), ' class-tag ')]/h3/a
+
+  searchScraper:
+    common:
+      $results: "//article[@data-product]"
+    scene:
+      Title:
+        selector: "$results//h3/a"
+      URLs:
+        selector: "$results//h3/a/@href"
+        postProcess:
+          - replace:
+              - regex: ^/
+                with: https://www.pubu.com.tw/
+      Image:
+        selector: "$results//img[contains(@class,'thumbnail-m')]/@src"
+# Last Updated 2026-10-10
