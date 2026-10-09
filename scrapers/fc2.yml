@@ -73,10 +73,17 @@ xPathScrapers:
               - regex: ^//
                 with: https://
 
+      # Studio convention: label/brand-level field → Studio (sub-studio model,
+      # StashDB amateur-studios).
+      # Studio URLs mapped from the same anchor as Studio Name for Identify URL-matching.
+      # Parent studio (platform/network) assigned manually once; Ignore Auto-Tag
+      # recommended for short label names.
       Studio:
         Name:
           selector: //section[contains(concat(' ', normalize-space(@class), ' '), ' items_comment_sellerBox ')]//h4/a/text()
 
+        URLs:
+          selector: //section[contains(concat(' ', normalize-space(@class), ' '), ' items_comment_sellerBox ')]//h4/a/@href
       Code:
         selector: //meta[@name='description']/@content
         postProcess:
@@ -121,10 +128,17 @@ xPathScrapers:
               - regex: ^//
                 with: https://
 
+      # Studio convention: label/brand-level field → Studio (sub-studio model,
+      # StashDB amateur-studios).
+      # Studio URLs mapped from the same anchor as Studio Name for Identify URL-matching.
+      # Parent studio (platform/network) assigned manually once; Ignore Auto-Tag
+      # recommended for short label names.
       Studio:
         Name:
           selector: //section[contains(concat(' ', normalize-space(@class), ' '), ' items_comment_sellerBox ')]//h4/a/text()
 
+        URLs:
+          selector: //section[contains(concat(' ', normalize-space(@class), ' '), ' items_comment_sellerBox ')]//h4/a/@href
       Tags:
         Name:
           selector: //a[contains(concat(concat(' ', normalize-space(@class)), ' '), ' tagTag ')]/text()

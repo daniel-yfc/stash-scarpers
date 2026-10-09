@@ -80,6 +80,11 @@ xPathScrapers:
               if (/^https?:/i.test(v)) return v;
               if (v.charAt(0) === "/") return "https://www.ko-tube.com" + v;
               return "https://www.ko-tube.com/" + v
+      # Studio convention: label/brand-level field → Studio (sub-studio model,
+      # StashDB amateur-studios).
+      # Studio URLs mapped from the same anchor as Studio Name for Identify URL-matching.
+      # Parent studio (platform/network) assigned manually once; Ignore Auto-Tag
+      # recommended for short label names.
       Studio:
         Name:
           # Label value sits inside an <a>, not a direct text node —
@@ -89,6 +94,8 @@ xPathScrapers:
           - replace:
             - regex: ^\s+|\s+$
               with: ''
+        URLs:
+          selector: //th[contains(text(), "レーベル")]/following-sibling::td[1]//a[1]/@href
       Tags:
         Name:
           selector: //th[contains(text(), "プレイ")]/following-sibling::td[1]/text()

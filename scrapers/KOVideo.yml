@@ -103,6 +103,11 @@ xPathScrapers:
         postProcess:
           - javascript: "var v = value || \"\";\nif (!v) return \"\";\nvar m = v.match(/(\\d{4})\\D+(\\d{1,2})\\D+(\\d{1,2})/u);\nif (m) {\n  var mm = (\"0\" + m[2]).slice(-2);\n  var dd = (\"0\" + m[3]).slice(-2);\n  return m[1] + \"-\" + mm + \"-\" + dd;\n}\nreturn v.trim();"
           - parseDate: "2006-01-02"
+      # Studio convention: label/brand-level field → Studio (sub-studio model,
+      # StashDB amateur-studios).
+      # Studio URLs mapped from the same anchor as Studio Name for Identify URL-matching.
+      # Parent studio (platform/network) assigned manually once; Ignore Auto-Tag
+      # recommended for short label names.
       Studio:
         Name:
           selector: $meta/dt[normalize-space(.)='メーカー/レーベル']/following-sibling::dd[1]/a[last()]/text()
@@ -110,6 +115,8 @@ xPathScrapers:
             - replace:
                 - regex: ^\s+|\s+$
                   with: ""
+        URLs:
+          selector: $meta/dt[normalize-space(.)='メーカー/レーベル']/following-sibling::dd[1]/a[last()]/@href
       Performers:
         Name:
           selector: $performers
