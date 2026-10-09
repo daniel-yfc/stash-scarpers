@@ -51,10 +51,11 @@ performerByURL:
           with: "gayerdar.com/zh-TW/models/"
     scraper: performerScraper
 
-performerByFragment:
-  action: scrapeXPath
-  queryURL: "{url}"
-  scraper: performerScraper
+# 2026-10-10: removed performerByFragment. Its queryURL "{url}" only expands
+# when the performer fragment already carries a URL; scene-level performers
+# here are name-only, so the fragment is URL-less by construction — the
+# literal "{url}" would fail CDP navigation and risk the same upstream
+# nil-pointer panic as sceneByFragment (Rule 4). Use performerByURL instead.
 
 xPathScrapers:
   sceneScraper:

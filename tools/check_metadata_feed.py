@@ -43,6 +43,16 @@ def definition_errors(data):
         same_search_page = bool(fragment_url) and fragment_url == search_url and "{" not in fragment_url
         if same_mapper or same_search_page:
             errors.append("sceneByFragment: search-page reuse can silently select the first candidate; use manual search/detail")
+    for entry in ("sceneByFragment", "performerByFragment"):
+        node = data.get(entry, {})
+        if not isinstance(node, dict) or node.get("action") not in MAPPED:
+            continue
+        if str(node.get("queryURL", "")).strip() == "{url}":
+            errors.append(
+                f"{entry}: bare queryURL \"{{url}}\" does not expand on URL-less fragments; "
+                "the zero-row result triggers the upstream Stash nil-pointer panic "
+                "(Rule 4). Use {title}/{code}/{filename} with queryURLReplace, or omit."
+            )
     return errors
 
 
