@@ -32,10 +32,10 @@ name: Pubu
 sceneByURL:
   - action: scrapeXPath
     url:
-      - pubu.com.tw/media/
-      - pubu.com.tw/magazine/
-      - pubu.com.tw/ebook/
       - pubu.com.tw/combo/
+      - pubu.com.tw/ebook/
+      - pubu.com.tw/magazine/
+      - pubu.com.tw/media/
     scraper: sceneScraper
 
 sceneByName:
