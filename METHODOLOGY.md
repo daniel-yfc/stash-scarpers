@@ -68,7 +68,9 @@
 
 standalone 不會自動跟著 main 走。同步時機與做法：
 
-- **觸發**：main 上 `skills/stash-scraper-builder/`、`templates/` 有實質變更（不是 repo 治理文件的變更）。
+- **觸發**：以下任一有實質變更時
+  1. `skills/stash-scraper-builder/`、`templates/`（skill 內容本體）；
+  2. **作者知識**：`docs/03_Quality_Gate_Rules.md` 的寫作規則、`tools/` 下可執行的語義檢查（如 `check_metadata_feed.py`、`check_scraper_semantics.py`）若新增了影響 scraper 寫法的規則——例如 2026-10-10 的 Rule 4（禁用 `*ByFragment` 裸 `"{url}"`）——要評估是否同步到 standalone 的 `references/`／`scripts/`（人工判斷，見 §5；standalone 的 `scripts/check-scraper.py` 是這類規則的對應落點）。
 - **做法**：在 `standalone-skill` 分支上重跑 Phase 1–4（`scripts/sync-from-main.sh <new-main-ref>`），再按 §5 檢查清單處理重構差異。不要用 rebase 硬合——重產比解衝突可靠。
 - **版本**：`SKILL.md` 的 `metadata.version` 寫來源日期；本文件 §8 記錄每次同步的來源 commit。
 
@@ -79,7 +81,8 @@ standalone 不會自動跟著 main 走。同步時機與做法：
 
 ## 8. 版本紀錄
 
-| 日期       | 來源 main commit | 說明                                                                                                      |
-| ---------- | ---------------- | --------------------------------------------------------------------------------------------------------- |
-| 2026-10-09 | `ab53a21`        | 初次衍生：重構為 standalone skill（fba6288、8d30c73、4225e59）                                            |
-| 2026-10-10 | —                | 方法論文件化（本文件＋`scripts/sync-from-main.sh`）；尚未同步 main 的後續變更（#58、#59、Rule 4、#60 等） |
+| 日期       | 來源 main commit | 說明                                                                                                                                                                                                                                                                                                                                              |
+| ---------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 2026-10-09 | `ab53a21`        | 初次衍生：重構為 standalone skill（fba6288、8d30c73、4225e59）                                                                                                                                                                                                                                                                                    |
+| 2026-10-10 | —                | 方法論文件化（本文件＋`scripts/sync-from-main.sh`）                                                                                                                                                                                                                                                                                               |
+| 2026-10-10 | `b3fac11`        | 複檢：main 合併 #61（GraphQL 文件）、#62（Studio.URLs）；`skills/`、`templates/` 無變更，無需同步。§6 觸發條件擴大為含作者知識（`docs/03_Quality_Gate_Rules.md`、`tools/` 語義檢查）。待合併分支 `fix/fragment-url-rule` 含 Rule 4（禁用 `*ByFragment` 裸 `"{url}"`），合併後應評估同步到 standalone 的 `references/`／`scripts/check-scraper.py` |
