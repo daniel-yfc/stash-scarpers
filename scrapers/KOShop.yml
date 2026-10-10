@@ -168,22 +168,15 @@ xPathScrapers:
             - replace:
                 - regex: '^\s+|\s+$'
                   with: ""
-      Performers:
-        Name:
-          # Live DOM (2026-10-07): CAST line sits in the Details div as
-          # "CAST : 名1 | 名2 | ... ほか" — extract names, drop ほか.
-          selector: "//div[contains(concat(' ',normalize-space(@class),' '),' under_col ')]/div[contains(concat(' ',normalize-space(@class),' '),' ma_b30 ')][1]//text()[contains(.,'CAST')]"
-          postProcess:
-            - replace:
-                - regex: "[\\s\\S]*?CAST\\s*:\\s*"
-                  with: ""
-                - regex: "\\s*ほか\\s*$"
-                  with: ""
-                - regex: "\\s*\\|\\s*"
-                  with: "|"
-                - regex: "^\\s+|\\s+$"
-                  with: ""
-          split: "|"
+      # Performers: omitted (2026-10-10). KOShop detail pages carry no
+      # structured performer field. The old CAST-line selector
+      # ("CAST : 名1 | 名2 | ... ほか") matched nothing on 6/6 sampled
+      # pages — the CAST line does not exist in current page templates.
+      # JUSTICE performer names may appear in description/title text
+      # (e.g. Act：【NAME】 on justice01, numbered lists on KOShop), but
+      # formats vary by product and parsing them is unreliable.
+      # For performer data, prefer the KOVideo scraper, which has a
+      # dedicated 出演モデル field on all pages.
 
   # Group view of the same product page (2026-10-07):
   # - Code goes to Aliases, not Code
