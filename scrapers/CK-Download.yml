@@ -128,6 +128,25 @@ xPathScrapers:
             - replace:
                 - regex: "^\\s+|\\s+$"
                   with: ""
+      Performers:
+        Name:
+          # Live DOM (2026-10-10, verified on detail/28089 and detail/34458):
+          # performer field lives in div.prod_category > ul > li with
+          # <strong>出演モデル</strong> (NOT in table.prod_data).
+          # Each performer is <a href="/product/search?m[]=<id>">Name</a>.
+          # Page-dependent: absent on pages without named performers
+          # (four walkthrough rounds, 2026-10-10) — legitimately empty.
+          selector: "$cats//li[strong[normalize-space(.)='出演モデル']]//a/text()"
+          postProcess:
+            - replace:
+                - regex: "^\\s+|\\s+$"
+                  with: ""
+        URL:
+          selector: "$cats//li[strong[normalize-space(.)='出演モデル']]//a/@href"
+          postProcess:
+            - replace:
+                - regex: "^/"
+                  with: "https://www.ck-download.com/"
       Details:
         selector: "//div[contains(@class,'intro_text')]//p[string-length(normalize-space(.)) > 10 and not(contains(@style,'color'))]//text()[normalize-space()]"
         concat: "\n\n"
