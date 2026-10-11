@@ -106,12 +106,20 @@ xPathScrapers:
           split: 、
       Performers:
         Name:
-          # Live DOM (2026-10-06): single-product pages use the spec-table
-          # th[モデル] row; package pages list performers in a standalone
-          # 出演モデル block as a[href^='/search/index?ml='] + h6 pairs.
+          # Live DOM (2026-10-06, corrected 2026-10-10): the spec-table
+          # th[モデル] row holds BODY-TYPE tags only (e.g. スリム・細身,
+          # ガチムチ・ラガー体型) — never performer names. A previous
+          # selector revision mistakenly fed those tags into Performers
+          # (four walkthrough rounds, 2026-10-10: 5/5 single pages show
+          # body-type tags in the モデル row).
+          # Named performers appear only in the standalone 出演モデル block
+          # (package pages and some single pages, e.g. EROS / 裸王-RAOH- /
+          # TUBEオリジナル) as a[href^='/search/index?ml='] + h6 pairs.
+          # The field is page-dependent: absent on most single-product pages
+          # (e.g. 西麻布撮影所 / 広輔project) — legitimately empty, not a bug.
           # concat first: Stash's split only processes the FIRST text node
           # and returns early, dropping the rest (2026-10-07).
-          selector: //th[contains(text(), "モデル")]/following-sibling::td[1]/text() | //a[starts-with(@href,'/search/index?ml=')]/following-sibling::h6[1]/text()
+          selector: //a[starts-with(@href,'/search/index?ml=')]/following-sibling::h6[1]/text()
           concat: "、"
           postProcess:
           - replace:

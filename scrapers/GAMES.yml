@@ -32,9 +32,14 @@
 #   Image    a[rel=lightbox] @href (large ./product/l/ cover)
 #   Tags     property table カテゴリー links (labels as shown)
 #   Studio   レーベル text (WILD GAMES, HUNK, …)
-#   Performers: detail pages have no performer list (model.php is nav only)
-#   — omitted intentionally.
+#   Performers: 3/5 sampled detail pages (2026-10-10) carry a structured
+#   ■出演モデル block: h3.g_h3 + ul.product_list > li > table.product_list_b,
+#   names in tr[2] td a (href search.php?c=<id>&model=on). Page-dependent:
+#   legitimately empty when absent (e.g. WIG-387, WIG-386).
 # 2026-10-06: URLs gained og:url fallback (no canonical on detail pages).
+# 2026-10-10: corrected Performers status — 3/5 sampled pages (HNK-188,
+#   WIG-384, URG-072) have structured ■出演モデル; earlier "no performer
+#   list" note was based on WIG-387 only.
 # Last Updated: 2026-10-10
 
 name: Games-Video
@@ -140,6 +145,28 @@ xPathScrapers:
                   with: ""
                 - regex: "^\\s+|\\s+$"
                   with: ""
+
+      Performers:
+        # Verified 2026-10-10 against live DOM (HNK-188): h3.g_h3
+        # ■出演モデル followed by ul.product_list; names in tr[2] td a.
+        # Page-dependent: empty when the block is absent (e.g. WIG-387).
+        Name:
+          selector: "//h3[contains(.,'出演モデル')]/following-sibling::ul[1]//table//tr[2]/td/a/text()"
+          postProcess:
+            - replace:
+                - regex: "^\\s+|\\s+$"
+                  with: ""
+        URL:
+          selector: "//h3[contains(.,'出演モデル')]/following-sibling::ul[1]//table//tr[2]/td/a/@href"
+          postProcess:
+            - javascript: |
+                var v = value || "";
+                if (!v) return "";
+                v = v.replace(/^\/\//, "https://");
+                if (/^https?:/i.test(v)) return v;
+                v = v.replace(/^\.\/+/, "");
+                if (v.charAt(0) === "/") return "https://www.games-video.co.jp" + v;
+                return "https://www.games-video.co.jp/" + v;
 
       Details:
         selector: "//p[preceding-sibling::h3[contains(text(),'作品詳細')]]//text()[normalize-space()]"

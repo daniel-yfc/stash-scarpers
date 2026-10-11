@@ -4,7 +4,7 @@
 
 > **概要（zh-TW）：** 單一站點的事故紀錄，僅供借鏡。標 `Heuristic` 者未經第二站驗證，不得當通則用。
 
-**Last reviewed:** 2026-10-05  
+**Last reviewed:** 2026-10-10  
 **Scope:** Scraper authoring, documentation and evidence controls. An incident review is not a schema pass, site fixture pass, live runtime result, or production approval.
 
 ### Incident 1: Schema drift in guidance
@@ -63,3 +63,22 @@
 - Detail scrapers use `URLs` (plural); search scrapers use `URL` (singular) as the required link field. `Studio`, `Tags`, and `Performers` entries need a `Name:` sub-key.
 
 **Feedback loop:** treat "loads in the Stash runtime" as a distinct evidence layer between schema validation and live extraction; record the loader error (or clean load) for the committed blob. Promote nothing past authored status without it.
+
+### Incident 4: Label match is not semantic match (performer field)
+
+**Date:** 2026-10-10  
+**Provenance:** four-round live-DOM walkthrough of KOTube (35 scenes, 2026-10-10); fix commit `84a1057`.
+
+**What happened:** the KOTube scraper's `Performers.Name` selector included `//th[contains(text(), "モデル")]/following-sibling::td[1]/text()` — a spec-table row whose label contains モデル. Across four verification rounds the row was found to hold body-type tags only (スリム・細身, ガチムチ・ラガー体型, …), never performer names. Named performers appear only in a standalone 出演モデル block (`a[href^='/search/index?ml=']` + `h6` pairs), present on package pages and some single-product templates, absent on most single pages. The selector matched the label but not the semantics: it would feed body-type tags (or whitespace, where tags sit inside child `<a>` elements) into the Performers field, creating bogus performer entities and poisoning AutoTag name matching.
+
+**Why review missed it:** the selector was written against a single page's DOM where the row's position looked right; the label text モデル was treated as proof of performer content without checking what the cell actually contains. Schema validation and XPath cardinality checks both pass on a semantically wrong selector.
+
+**Detection and correction:** repeated live-page verification across page templates showed the row never contains names; an independent XPath re-evaluation confirmed the new selector returns only real names on pages with the 出演モデル block and nothing elsewhere. The label-matching alternative was removed.
+
+**Transferable rules:**
+
+- A label match is not a semantic match: after writing a field selector, assert on the *values* it returns across page templates, not just that it matches nodes. A row labeled モデル/出演者/演员 can hold tags, counts, or links — verify with real cell content.
+- Prefer anchors tied to the entity, not the label: performer-profile links (`/search/index?ml=`, `/model/`, `model=on`) are stronger evidence of performer content than a nearby label string.
+- Page-dependent fields are legitimate: when a field exists only on some templates, an empty result on other templates is correct behavior, not a selector bug — document it as such instead of widening the selector to fill the gap.
+
+**Feedback loop:** for every entity field (Performers, Studio, Tags), record at least one positive and one negative page template with the actual returned values; re-check after any site layout change.

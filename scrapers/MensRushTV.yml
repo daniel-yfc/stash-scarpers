@@ -116,21 +116,14 @@ xPathScrapers:
       URLs:
         fixed: "{inputURL}"
 
-      Date:
-        # Page-dependent (verified 2026-10-06): some detail pages carry no
-        # release-date element at all (e.g. single.php?id=MS-629_DL) — the
-        # field is then legitimately empty, not a selector bug.
-        selector: //div[@class='movie_detail'][1]//p[contains(.,'発売') or contains(.,'配信')]
-        postProcess:
-          - javascript: |
-              var v = value || "";
-              if (!v) return "";
-              var m = v.match(/(\d{4})[年\/\-.](\d{1,2})[月\/\-.]?(\d{1,2})/);
-              if (!m) return "";
-              var mm = ("0" + m[2]).slice(-2);
-              var dd = ("0" + m[3]).slice(-2);
-              return m[1] + "-" + mm + "-" + dd;
-          - parseDate: "2006-01-02"
+      # Date: omitted (2026-10-10). Detail pages carry no release-date field
+      # at all — verified 9/9 direct-label scenes (MS-629/628/627,
+      # GT-2784/2783/2782, MR-KR2408/2407/2406): the info block shows only
+      # price, validity period, duration, size, model, maker, genre.
+      # The old selector //p[contains(.,'発売') or contains(.,'配信')]
+      # risked matching the streaming-validity paragraph and extracting a
+      # wrong date. Wrong dates are worse than empty for Identify matching
+      # (same precedent as the search-result Date removal above).
 
       # Studio convention: label/brand-level field → Studio (sub-studio model,
       # StashDB amateur-studios).
@@ -158,6 +151,14 @@ xPathScrapers:
           # Live DOM (2026-10-06): performer links are a[href^='list.php?mid=']
           # inside div.movie_detail. The old "p contains モデル" selector also
           # matched the description paragraph mentioning the name (false positive).
+          # Label-dependent (2026-10-10): the mid= performer field appears on
+          # directly-operated labels (Men's Street 3/3, メンズラッシュ 3/3,
+          # GET-film 1/3 sampled) and some third-party labels; even direct
+          # labels are not 100% (GET-film GT-2783/GT-2782 lack it).
+          # FansMe items (FANS-* codes, maid=156) never have it — they show
+          # an external fansme.jp 出品者 link instead (individual creator,
+          # e.g. FansMe（YUKI RITO）). Absent field is legitimate,
+          # not a selector bug.
           selector: //div[@class='movie_detail'][1]//a[starts-with(@href,'list.php?mid=')]/text()
           postProcess:
             - replace:
