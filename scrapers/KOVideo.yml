@@ -108,15 +108,24 @@ xPathScrapers:
       # Studio URLs mapped from the same anchor as Studio Name for Identify URL-matching.
       # Parent studio (platform/network) assigned manually once; Ignore Auto-Tag
       # recommended for short label names.
+      # Three mutually exclusive union branches (verified 2026-10-11, 11 live pages):
+      #   A: label link when it is a real label (not the KO EAST catch-all).
+      #   B: series link when the label is the KO EAST catch-all and the series
+      #      is not a compilation/best marker.
+      #   C: KO EAST label when the series is a compilation/best marker or absent.
+      # Compilation denylist (series names never suitable as Studio):
+      #   ベスト / BEST, 枚組, 旧作, 総集編, 再編集.
+      # E.g. KKE0049 (KO EAST) → アブSEX; KKE0305 (旧作2枚組) → KO EAST;
+      # KKE0306 (ベスト作品) → KO EAST; KRA069 (裸王-RAOH-) → 裸王-RAOH-.
       Studio:
         Name:
-          selector: $meta/dt[normalize-space(.)='メーカー/レーベル']/following-sibling::dd[1]/a[last()]/text()
+          selector: $meta/dt[normalize-space(.)='メーカー/レーベル']/following-sibling::dd[1]/a[contains(@href,'?label=')][normalize-space(.)!='KO EAST']/text() | $meta[dt[normalize-space(.)='メーカー/レーベル']/following-sibling::dd[1]/a[contains(@href,'?label=') and normalize-space(.)='KO EAST']][dt[normalize-space(.)='シリーズ/ジャンル']/following-sibling::dd[1]/a[contains(@href,'?series=')][not(contains(.,'ベスト') or contains(.,'枚組') or contains(.,'旧作') or contains(.,'総集編') or contains(.,'再編集') or contains(translate(.,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'best'))]]/dt[normalize-space(.)='シリーズ/ジャンル']/following-sibling::dd[1]/a[contains(@href,'?series=')][not(contains(.,'ベスト') or contains(.,'枚組') or contains(.,'旧作') or contains(.,'総集編') or contains(.,'再編集') or contains(translate(.,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'best'))]/text() | $meta[dt[normalize-space(.)='メーカー/レーベル']/following-sibling::dd[1]/a[contains(@href,'?label=') and normalize-space(.)='KO EAST']][not(dt[normalize-space(.)='シリーズ/ジャンル']/following-sibling::dd[1]/a[contains(@href,'?series=')]) or dt[normalize-space(.)='シリーズ/ジャンル']/following-sibling::dd[1]/a[contains(@href,'?series=')][contains(.,'ベスト') or contains(.,'枚組') or contains(.,'旧作') or contains(.,'総集編') or contains(.,'再編集') or contains(translate(.,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'best')]]/dt[normalize-space(.)='メーカー/レーベル']/following-sibling::dd[1]/a[contains(@href,'?label=') and normalize-space(.)='KO EAST']/text()
           postProcess:
             - replace:
                 - regex: ^\s+|\s+$
                   with: ""
         URLs:
-          selector: $meta/dt[normalize-space(.)='メーカー/レーベル']/following-sibling::dd[1]/a[last()]/@href
+          selector: $meta/dt[normalize-space(.)='メーカー/レーベル']/following-sibling::dd[1]/a[contains(@href,'?label=')][normalize-space(.)!='KO EAST']/@href | $meta[dt[normalize-space(.)='メーカー/レーベル']/following-sibling::dd[1]/a[contains(@href,'?label=') and normalize-space(.)='KO EAST']][dt[normalize-space(.)='シリーズ/ジャンル']/following-sibling::dd[1]/a[contains(@href,'?series=')][not(contains(.,'ベスト') or contains(.,'枚組') or contains(.,'旧作') or contains(.,'総集編') or contains(.,'再編集') or contains(translate(.,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'best'))]]/dt[normalize-space(.)='シリーズ/ジャンル']/following-sibling::dd[1]/a[contains(@href,'?series=')][not(contains(.,'ベスト') or contains(.,'枚組') or contains(.,'旧作') or contains(.,'総集編') or contains(.,'再編集') or contains(translate(.,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'best'))]/@href | $meta[dt[normalize-space(.)='メーカー/レーベル']/following-sibling::dd[1]/a[contains(@href,'?label=') and normalize-space(.)='KO EAST']][not(dt[normalize-space(.)='シリーズ/ジャンル']/following-sibling::dd[1]/a[contains(@href,'?series=')]) or dt[normalize-space(.)='シリーズ/ジャンル']/following-sibling::dd[1]/a[contains(@href,'?series=')][contains(.,'ベスト') or contains(.,'枚組') or contains(.,'旧作') or contains(.,'総集編') or contains(.,'再編集') or contains(translate(.,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'best')]]/dt[normalize-space(.)='メーカー/レーベル']/following-sibling::dd[1]/a[contains(@href,'?label=') and normalize-space(.)='KO EAST']/@href
       Performers:
         Name:
           selector: $performers
