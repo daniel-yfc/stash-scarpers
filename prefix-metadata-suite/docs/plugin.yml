@@ -1,0 +1,64 @@
+# prefix-metadata-suite plugin.yml — Task 5 最終範本
+# 版號：V2.5-task5
+# 日期：2026-10-13
+#
+# 外層 name / exec / 既有 tasks 沿用 Phase 0–4，此處不重定義。
+# Stash 只讀它認識的鍵。task5_source_enrich 由 plugin 自己讀這份檔案。
+# 不得把這個區塊放進 settings。settings 只接受 BOOLEAN、NUMBER、STRING。
+# 不得把政策複製到 tasks.defaultArgs。defaultArgs 的值只能是字串，且會和本區塊形成第二份設定。
+# 第一版沒有設定頁。plugin 不得讀探針 JSON 來改這份檔。
+
+name: Prefix Metadata Suite
+description: Prefix metadata tasks. Task 5 is dry-run only.
+version: 0.5.0
+
+exec:
+  - python
+  - "{pluginDir}/tasks/source_enrich/__init__.py"
+interface: raw
+errLog: error
+
+tasks:
+  # 前四個 task 的 name、description、execArgs 維持既有條目，不在本範本改寫。
+  - name: Source Enrich
+    description: Task 5 dry-run. Reads task5_source_enrich from this file.
+    defaultArgs:
+      task: source_enrich
+
+task5_source_enrich:
+  enabled: false
+  dry_run: true
+  allow_live_apply: false
+  source_order:
+    - prefix_site
+    - group_site
+  enabled_sources:
+    - prefix_site
+    - group_site
+  site_modes: {}
+  # 空名單合法。D4 兩次誘發失敗都回錯誤後，才由人工加入站名。
+  # 註解寫探針檔名，例如 reports/probe-20261014-090000.json
+  trusted_miss_sites: []
+  fields:
+    title: true
+    code: false
+    date: true
+    studio: true
+    performer: true
+    tag: false
+    image: false
+    details: false
+  confidence:
+    official: 0.9
+    group: 0.8
+    database: 0.6
+    third_party: 0.5
+  min_auto_confidence: 0.8
+  gvdb:
+    enabled: false
+    rate_limit_seconds: 2
+  alias_learning: false
+  batch_size: 50
+  timeout_seconds: 30
+  request_interval_seconds: 1
+  scene_selector: missing_fields_with_code
