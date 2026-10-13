@@ -1,0 +1,241 @@
+[
+  {
+    "id": "games:CLC",
+    "source_site": "games-video.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "CLC",
+      "priority": 20
+    },
+    "studio": "GAMES",
+    "sub_studio": null,
+    "label": "GAMES COLLECTION",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [
+      "series"
+    ],
+    "title_hints": [],
+    "_candidates": {
+      "labels": [
+        "GAMES COLLECTION"
+      ],
+      "series": [
+        "Super Model",
+        "○○COLLECTION"
+      ]
+    }
+  },
+  {
+    "id": "games:HNK",
+    "source_site": "games-video.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "HNK",
+      "priority": 20
+    },
+    "studio": "GAMES",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [
+      "label",
+      "series"
+    ],
+    "title_hints": [],
+    "_candidates": {
+      "labels": [
+        "HUNK VIDEO",
+        "裏GAMES"
+      ],
+      "series": [
+        "CRUISING（vol.2–47 舊品）",
+        "ガッチンコ!!"
+      ]
+    }
+  },
+  {
+    "id": "games:MST",
+    "source_site": "games-video.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "MST",
+      "priority": 20
+    },
+    "studio": "GAMES",
+    "sub_studio": null,
+    "label": "MONSTER",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "games:WIG",
+    "source_site": "games-video.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "WIG",
+      "priority": 20
+    },
+    "studio": "GAMES",
+    "sub_studio": null,
+    "label": "WILD GAMES",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [
+      "series"
+    ],
+    "title_hints": [],
+    "_candidates": {
+      "labels": [
+        "WILD GAMES"
+      ],
+      "series": [
+        "ASYURA",
+        "Colors",
+        "FREEZE",
+        "KIP",
+        "ROOM072",
+        "X 淫欲の開眼",
+        "Yeaah!",
+        "○○倶楽部",
+        "ノンケ喰い日記",
+        "リーマン",
+        "凄筋人",
+        "大失禁!!",
+        "宅配ちんこ",
+        "泥酔わいせつ",
+        "男獄",
+        "限界面接",
+        "雄穴中出し"
+      ]
+    }
+  },
+  {
+    "id": "games:VGG",
+    "source_site": "games-video.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "VGG",
+      "priority": 20
+    },
+    "studio": "GAMES",
+    "sub_studio": null,
+    "label": "virtual G",
+    "label_is_publisher": false,
+    "series": "バーチャルデート",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "games:PLD",
+    "source_site": "games-video.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "PLD",
+      "priority": 20
+    },
+    "studio": "GAMES",
+    "sub_studio": null,
+    "label": "価格改訂版",
+    "label_is_publisher": false,
+    "series": "旧 MONSTER／STYLE 再發行",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "games:YOY",
+    "source_site": "games-video.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "YOY",
+      "priority": 20
+    },
+    "studio": "GAMES",
+    "sub_studio": null,
+    "label": "価格改訂版",
+    "label_is_publisher": false,
+    "series": "Yeaah!「Of the year!」合集",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "games:URG",
+    "source_site": "games-video.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "URG",
+      "priority": 20
+    },
+    "studio": "GAMES",
+    "sub_studio": null,
+    "label": "裏GAMES",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [
+      "series"
+    ],
+    "title_hints": [],
+    "_candidates": {
+      "labels": [
+        "裏GAMES"
+      ],
+      "series": [
+        "CRUISING（vol.48 起新品）",
+        "X MODE リバース",
+        "のぞき",
+        "激盗撮"
+      ]
+    }
+  },
+  {
+    "id": "games:GMS",
+    "source_site": "games-video.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "GMS",
+      "priority": 20
+    },
+    "studio": "GAMES",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "games:STG",
+    "source_site": "games-video.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "STG",
+      "priority": 20
+    },
+    "studio": "GAMES",
+    "sub_studio": null,
+    "label": "STYLE",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "games:GAMS",
+    "source_site": "games-video.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "GAMS",
+      "priority": 20
+    },
+    "studio": "GAMES",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  }
+]

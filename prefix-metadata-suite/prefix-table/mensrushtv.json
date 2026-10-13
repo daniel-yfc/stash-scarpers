@@ -1,0 +1,179 @@
+[
+  {
+    "id": "mensrushtv:FANS-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "FANS-",
+      "priority": 20
+    },
+    "studio": null,
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "站內廠商 FansMe (maid=156)；實際應抓外部 fansme.jp 個人創作者"
+  },
+  {
+    "id": "mensrushtv:GT-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "GT-",
+      "priority": 20
+    },
+    "studio": "Men's Rush TV",
+    "sub_studio": "GET-film",
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv:MS-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "MS-",
+      "priority": 20
+    },
+    "studio": "Men's Street",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv:MR-KR",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "MR-KR",
+      "priority": 20
+    },
+    "studio": "Men's Rush",
+    "sub_studio": "メンズラッシュ",
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv:MR-ON",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "MR-ON",
+      "priority": 20
+    },
+    "studio": "Men's Rush",
+    "sub_studio": "メンズラッシュ",
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv:GET",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "GET",
+      "priority": 20
+    },
+    "studio": "Men's Rush TV",
+    "sub_studio": "GET-film",
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv:OAV",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "OAV",
+      "priority": 20
+    },
+    "studio": "Men's Rush TV",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv:GEF",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "GEF",
+      "priority": 20
+    },
+    "studio": "Men's Rush TV",
+    "sub_studio": "GET-film",
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv:MR-MS",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "MR-MS",
+      "priority": 20
+    },
+    "studio": "Men's Rush",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv:MR-NK",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "MR-NK",
+      "priority": 20
+    },
+    "studio": "Men's Rush",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": "ノンケ",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv:MR-TK",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "MR-TK",
+      "priority": 20
+    },
+    "studio": "Men's Rush",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": "手コキ",
+    "ambiguous_fields": [],
+    "title_hints": []
+  }
+]

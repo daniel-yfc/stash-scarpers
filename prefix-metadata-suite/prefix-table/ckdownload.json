@@ -1,0 +1,502 @@
+[
+  {
+    "id": "ckdownload:ANO-",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "ANO-",
+      "priority": 20
+    },
+    "studio": "@nonke.com",
+    "sub_studio": null,
+    "label": "otoko de アラカルト",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "ckdownload:AN-",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "AN-",
+      "priority": 20
+    },
+    "studio": "@nonke.com",
+    "sub_studio": null,
+    "label": "実録性犯",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "ckdownload:AD-",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "AD-",
+      "priority": 20
+    },
+    "studio": "ADONIS LAND",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "ckdownload:BOBK-",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "BOBK-",
+      "priority": 20
+    },
+    "studio": "BOYS.BANK",
+    "sub_studio": null,
+    "label": "オナタリングEX",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "ckdownload:BRAV-",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "BRAV-",
+      "priority": 20
+    },
+    "studio": "BRAVO-JAPAN",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "ckdownload:BD-",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "BD-",
+      "priority": 20
+    },
+    "studio": "Badi",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "ckdownload:EXS24-",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "EXS24-",
+      "priority": 20
+    },
+    "studio": "EXS24",
+    "sub_studio": null,
+    "label": "HoneyGoARound",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "ckdownload:GLRI-",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GLRI-",
+      "priority": 20
+    },
+    "studio": "GLORY/RISE",
+    "sub_studio": null,
+    "label": "GLORY",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "ckdownload:HBM-",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "HBM-",
+      "priority": 20
+    },
+    "studio": "Healing Boy Movie",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "ckdownload:IN-",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "IN-",
+      "priority": 20
+    },
+    "studio": "Inside",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "ckdownload:JPCK-",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "JPCK-",
+      "priority": 20
+    },
+    "studio": "JAPAN PICTURES",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "ckdownload:KO-HU",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KO-HU",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "HUNTER",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "ckdownload:S-MDVE-",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "S-MDVE-",
+      "priority": 20
+    },
+    "studio": "MANNHOUSE",
+    "sub_studio": null,
+    "label": "エロチックスキャン",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "ckdownload:S-MDVH-",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "S-MDVH-",
+      "priority": 20
+    },
+    "studio": "MANNHOUSE",
+    "sub_studio": null,
+    "label": "ヒートアップ",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "ckdownload:MERC-",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "MERC-",
+      "priority": 20
+    },
+    "studio": "Men's LAB",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "ckdownload:MS-",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "MS-",
+      "priority": 20
+    },
+    "studio": "Men's Rush.TV",
+    "sub_studio": null,
+    "label": "Men's Street",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "ckdownload:NPRO-",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "NPRO-",
+      "priority": 20
+    },
+    "studio": "N:PROMOTION",
+    "sub_studio": null,
+    "label": "彼シリーズ",
+    "label_is_publisher": false,
+    "series": "彼シリーズ",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "ckdownload:NPJ-",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "NPJ-",
+      "priority": 20
+    },
+    "studio": "NonkeProject",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "ckdownload:RJ-",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "RJ-",
+      "priority": 20
+    },
+    "studio": "RCHS STUDIO",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "ckdownload:STR8-",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "STR8-",
+      "priority": 20
+    },
+    "studio": "STR8 BOYS",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [
+      "label"
+    ],
+    "title_hints": [],
+    "_candidates": {
+      "labels": [
+        "THE FIRST TAKE",
+        "巨根マニア",
+        "欲情～ノンケの本性～"
+      ],
+      "series": []
+    }
+  },
+  {
+    "id": "ckdownload:EC-",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "EC-",
+      "priority": 20
+    },
+    "studio": "エロコレ",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [
+      "label"
+    ],
+    "title_hints": [],
+    "_candidates": {
+      "labels": [
+        "the♂変態",
+        "街角ナンパ"
+      ],
+      "series": []
+    }
+  },
+  {
+    "id": "ckdownload:CAPY-",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "CAPY-",
+      "priority": 20
+    },
+    "studio": "カピバラワークス",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "ckdownload:JU-",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "JU-",
+      "priority": 20
+    },
+    "studio": "ジャスティス",
+    "sub_studio": null,
+    "label": "JUSTICE",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "ckdownload:MC-",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "MC-",
+      "priority": 20
+    },
+    "studio": "メンズキャンプ",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "Men's Camp"
+  },
+  {
+    "id": "ckdownload:MEBR-",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "MEBR-",
+      "priority": 20
+    },
+    "studio": "メンズブレイカー",
+    "sub_studio": null,
+    "label": "Men's Breaker",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "ckdownload:KP-",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KP-",
+      "priority": 20
+    },
+    "studio": "広輔project",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "ckdownload:WKSN-",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "WKSN-",
+      "priority": 20
+    },
+    "studio": "若専ムービー",
+    "sub_studio": null,
+    "label": "wakasen",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "ckdownload:SKIM-",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "SKIM-",
+      "priority": 20
+    },
+    "studio": "赤面男子",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "ckdownload:BAM",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "BAM",
+      "priority": 20
+    },
+    "studio": "BE A MODEL",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "ckdownload:RCH",
+    "source_site": "ck-download.com",
+    "match": {
+      "kind": "prefix",
+      "value": "RCH",
+      "priority": 20
+    },
+    "studio": "RCHS STUDIO",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  }
+]

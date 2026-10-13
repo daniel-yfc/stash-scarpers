@@ -1,0 +1,711 @@
+[
+  {
+    "id": "koshop:KBEA",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KBEA",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "BEAST",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KBUM",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KBUM",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "BUMP",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KDE",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KDE",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "DEEP",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KERO",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KERO",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "EROS",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KGGP",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KGGP",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "Go guy",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KIND",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KIND",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "INDIES",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KJO",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KJO",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "JOKER",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KJUN",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KJUN",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "JUNO",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KG",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KG",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "KO",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KKUR",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KKUR",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "KURUU",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KLIN",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KLIN",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "LINE",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KMANI",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KMANI",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "Mania Club",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KMD",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KMD",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "Model's",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KNON",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KNON",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "Non Fiction",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KPAN",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KPAN",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "PANDORA",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KSUI",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KSUI",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "SUITS",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KSST",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KSST",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "SUPER STAR",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KSUP",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KSUP",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "SURPRISE!",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KSF",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KSF",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "Secret Film",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KSPO",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KSPO",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "Sportus",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KXB",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KXB",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "X-BODY",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KXXX",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KXXX",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "XXX",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KEA",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KEA",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [
+      "label"
+    ],
+    "title_hints": [],
+    "_candidates": {
+      "labels": [
+        "うまのすけ",
+        "益荒男"
+      ],
+      "series": []
+    }
+  },
+  {
+    "id": "koshop:KDPN",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KDPN",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "どぴゅノンケ",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KGAK",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KGAK",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "ガキエロ",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KGD",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KGD",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "ガチ撮り",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KZER",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KZER",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": "STUDIO ZERO",
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [
+      "label"
+    ],
+    "title_hints": [],
+    "_candidates": {
+      "labels": [
+        "キュンC",
+        "今ヌキ隊"
+      ],
+      "series": []
+    }
+  },
+  {
+    "id": "koshop:KGS",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KGS",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "合法ショタ",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KDG",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KDG",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "男子学園",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KRA",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KRA",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "裸王",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KKE",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KKE",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": "KO East",
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [
+      "label"
+    ],
+    "title_hints": [],
+    "_candidates": {
+      "labels": [
+        "BOYS PROJECT",
+        "CHAOS",
+        "KO-EAST",
+        "MONSTER",
+        "SUNRISE",
+        "TOKYOボーイズ",
+        "V-STYLE",
+        "boys Crash",
+        "ぶっこみ",
+        "アブSEX",
+        "エンドレス",
+        "超エロ男子"
+      ],
+      "series": []
+    }
+  },
+  {
+    "id": "koshop:KKA",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KKA",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": "KO East",
+    "label": "強豪",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KOC",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KOC",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:ERS",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "ERS",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "EROS",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:SEC",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "SEC",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "Secret Film",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:KUR",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KUR",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "KURUU",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:DEP",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "DEP",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "DEEP",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:PAN",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "PAN",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "PANDORA",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:BUM",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "BUM",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "BUMP",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:BST",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "BST",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "BEAST",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:DEP-PD",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "DEP-PD",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "DEEP",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "koshop:ERS-PD",
+    "source_site": "ko-shop.com",
+    "match": {
+      "kind": "prefix",
+      "value": "ERS-PD",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "EROS",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  }
+]

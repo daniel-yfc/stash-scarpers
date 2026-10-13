@@ -1,0 +1,68 @@
+{
+  "table_version": "v20261012-1012",
+  "generated_at": "2026-10-12T02:38:09.594028+00:00",
+  "source_file": "code-prefix-table-5col-2026-10-12.md",
+  "sites": {
+    "games": {
+      "source_site": "games-video.co.jp",
+      "entries": 9,
+      "ambiguous": 4
+    },
+    "koshop": {
+      "source_site": "ko-shop.com",
+      "entries": 32,
+      "ambiguous": 3
+    },
+    "hunkch": {
+      "source_site": "hunk-ch.com",
+      "entries": 42,
+      "ambiguous": 2
+    },
+    "hunkch_3rd": {
+      "source_site": "hunk-ch.com",
+      "entries": 76,
+      "ambiguous": 0
+    },
+    "mensrushtv": {
+      "source_site": "mensrush.tv",
+      "entries": 6,
+      "ambiguous": 0
+    },
+    "mensrushtv_3rd": {
+      "source_site": "mensrush.tv",
+      "entries": 91,
+      "ambiguous": 0
+    },
+    "ckdownload": {
+      "source_site": "ck-download.com",
+      "entries": 28,
+      "ambiguous": 2
+    },
+    "ckdownload_orig": {
+      "source_site": "ck-download.com",
+      "entries": 7,
+      "ambiguous": 0
+    },
+    "coat": {
+      "source_site": "coat.co.jp",
+      "entries": 37,
+      "ambiguous": 7
+    },
+    "acceed": {
+      "source_site": "acceed.jp",
+      "entries": 15,
+      "ambiguous": 1
+    },
+    "justice": {
+      "source_site": "justice01.com",
+      "entries": 2,
+      "ambiguous": 0
+    },
+    "bravo": {
+      "source_site": "tbd",
+      "entries": 1,
+      "ambiguous": 0
+    }
+  },
+  "label_is_publisher_note": "All entries default to false. Manual review required: set true where the Label is the publishing entity (vs a series name)."
+}

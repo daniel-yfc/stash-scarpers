@@ -1,0 +1,34 @@
+[
+  {
+    "id": "justice:JUS",
+    "source_site": "justice01.com",
+    "match": {
+      "kind": "prefix",
+      "value": "JUS",
+      "priority": 20
+    },
+    "studio": "JUSTICE",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "justice:JST",
+    "source_site": "justice01.com",
+    "match": {
+      "kind": "prefix",
+      "value": "JST",
+      "priority": 20
+    },
+    "studio": "JUSTICE",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  }
+]

@@ -1,0 +1,696 @@
+[
+  {
+    "id": "hunkch:GV-THE",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GV-THE",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "300円movie",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:ATC-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "ATC-",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "ADULT CITY",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:FORCE-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "FORCE-",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "Body Focus",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:FORCE3D-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "FORCE3D-",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "Body Focus 3D",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:CR-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "CR-",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "CRUISING",
+    "label_is_publisher": false,
+    "series": "ソクハメ!!",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:GSP",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GSP",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "G-spot",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:GV-DSK",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GV-DSK",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "G＠MES",
+    "label_is_publisher": false,
+    "series": "筋肉雄マラ大失禁!!",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:GV-OND",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GV-OND",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "G＠MES",
+    "label_is_publisher": false,
+    "series": "雄穴中出し",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:GV-THT",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GV-THT",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "G＠MES",
+    "label_is_publisher": false,
+    "series": "宅配ちんこ",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:GV-NGM",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GV-NGM",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "G＠MES",
+    "label_is_publisher": false,
+    "series": "ノンケ限界面接!!",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:GV-COBL",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GV-COBL",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "G＠MES",
+    "label_is_publisher": false,
+    "series": "Colors Black",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:GV-RML",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GV-RML",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "G＠MES",
+    "label_is_publisher": false,
+    "series": "リーマンずラブ",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:GV-DSW",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GV-DSW",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "G＠MES",
+    "label_is_publisher": false,
+    "series": "泥酔わいせつ（站上伏字為 泥○わいせつ）",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:SET-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "SET-",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "G＠MES",
+    "label_is_publisher": false,
+    "series": "套裝版（跨系列）",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:HS-ONA",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "HS-ONA",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "HUNK SPURT",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:HW-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "HW-",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "HUNK WORKER",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:GV-OAV",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GV-OAV",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [
+      "label"
+    ],
+    "title_hints": [],
+    "_candidates": {
+      "labels": [
+        "HUNKオリジナル",
+        "オルガズムモード",
+        "ノンケの乳搾り",
+        "ノンケの性処理",
+        "ハメ★ドル!!",
+        "マラ面接!!"
+      ],
+      "series": []
+    }
+  },
+  {
+    "id": "hunkch:MM-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "MM-",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "MEVIUS MODE",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:RB3D-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "RB3D-",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "REAL BODY 3D",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:GV-OGVR",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GV-OGVR",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "RooM072+アナル専科β",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:STR",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "STR",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "Striker",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:WAM",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "WAM",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "W.A.M.",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:WEV",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "WEV",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "W.A.M. x EVE",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:XM-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "XM-",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "X MODE",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:XR-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "XR-",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "X MODEリバース",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:GV-DT",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GV-DT",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "のんけ診察室",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:TF-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TF-",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "アクメンズ",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:GC-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GC-",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "ガッチンコ!!",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:GANT-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GANT-",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "ガンツ",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:CV-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "CV-",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "コニーキャラバン",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:SET-NCC",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "SET-NCC",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "ノンケ★チャットカメラ",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:GV-OGP",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GV-OGP",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "ノンケ激盗撮",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:GV-OGC",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GV-OGC",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "ノンケ激盗撮",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:GV-OGVY",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GV-OGVY",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "ハイパーYeaah!",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:BKS-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "BKS-",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "バキStriker",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:BKG-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "BKG-",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [
+      "label"
+    ],
+    "title_hints": [],
+    "_candidates": {
+      "labels": [
+        "バキStriker",
+        "バキのガチ撮り!!"
+      ],
+      "series": []
+    }
+  },
+  {
+    "id": "hunkch:SET-BAKI",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "SET-BAKI",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "バキのガチ撮り!!",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:BKY-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "BKY-",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "バキッシュ!!",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:GV-VRN",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GV-VRN",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "バーチャルWEBデート",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:GV-VRS",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GV-VRS",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "バーチャルWEBデート",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:GV-VRD",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GV-VRD",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "バーチャルWEBデート",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch:GV-OGVN",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GV-OGVN",
+      "priority": 20
+    },
+    "studio": "HUNK",
+    "sub_studio": "オリジナル",
+    "label": "超のぞき",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  }
+]

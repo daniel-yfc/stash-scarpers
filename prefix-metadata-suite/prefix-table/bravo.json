@@ -1,0 +1,46 @@
+[
+  {
+    "id": "bravo:BWB",
+    "source_site": "bravo-japan.com",
+    "match": {
+      "kind": "prefix",
+      "value": "BWB",
+      "priority": 20
+    },
+    "studio": "Bravo",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "bravo:BR-",
+    "source_site": "bravo-japan.com",
+    "match": {
+      "kind": "prefix",
+      "value": "BR-",
+      "priority": 20
+    },
+    "studio": "Bravo",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [
+      "label"
+    ],
+    "_candidates": {
+      "labels": [
+        "BRAVO!",
+        "ooooPS!!",
+        "AJITO",
+        "Lucifer",
+        "GAYSIAN"
+      ],
+      "series": []
+    },
+    "title_hints": []
+  }
+]

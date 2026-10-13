@@ -1,0 +1,766 @@
+[
+  {
+    "id": "coat:COCO",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "COCO",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [
+      "label"
+    ],
+    "title_hints": [],
+    "_candidates": {
+      "labels": [
+        "ACTIVE BODY",
+        "ANAL SL●VE",
+        "EMERGENCY!!",
+        "EXTRA LEGEND",
+        "GANG",
+        "Hello!",
+        "KING COCK",
+        "PRISONER",
+        "Precious",
+        "RE:BORN",
+        "ROOKIE",
+        "SPARK",
+        "TWINS",
+        "TWO TOP",
+        "birth",
+        "male body undress.",
+        "べっちょりムレムレ汗だくサウナ痴●",
+        "フェラ三昧",
+        "体育会Jr.",
+        "体育会制覇",
+        "其他COAT",
+        "密室撮人",
+        "巨根男子",
+        "悶活エクスタシーサロン",
+        "解禁Special"
+      ],
+      "series": []
+    }
+  },
+  {
+    "id": "coat:COAV",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "COAV",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": null,
+    "label": "ANOTHER VERSION",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:COBL",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "COBL",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": null,
+    "label": "Babylon",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:CONB",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "CONB",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [
+      "label"
+    ],
+    "title_hints": [],
+    "_candidates": {
+      "labels": [
+        "COLLECTORS EDITION",
+        "Number"
+      ],
+      "series": []
+    }
+  },
+  {
+    "id": "coat:CODT",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "CODT",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": null,
+    "label": "D.M.T.",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:COOS",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "COOS",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": null,
+    "label": "OUT STAFF",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:COPG",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "COPG",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": null,
+    "label": "POWER GRIP",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:CORB",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "CORB",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": null,
+    "label": "ROCK BULL",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:COSC",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "COSC",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [
+      "label"
+    ],
+    "title_hints": [],
+    "_candidates": {
+      "labels": [
+        "SCOUT CARAVAN",
+        "ナンパ専門学群"
+      ],
+      "series": []
+    }
+  },
+  {
+    "id": "coat:COST",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "COST",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": null,
+    "label": "SHOOT",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:COTP",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "COTP",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": null,
+    "label": "TOP 1 CK style",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:COHS",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "COHS",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": null,
+    "label": "変態面接官",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:WEWE",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "WEWE",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": "COAT WEST",
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [
+      "label"
+    ],
+    "title_hints": [],
+    "_candidates": {
+      "labels": [
+        "ACE",
+        "COAT WEST",
+        "CUTTING EDGE",
+        "FIXER",
+        "Funky Innovation",
+        "GRAND SLAM",
+        "I LOVE HOT",
+        "IDOL xx",
+        "JOINT",
+        "Jump!",
+        "KISS",
+        "LUCINA",
+        "LUXE",
+        "NAGI*SHO",
+        "NONKE PLAY ROOM",
+        "Nagi Complete Best",
+        "ONLY SHINING STAR",
+        "R-30",
+        "Romance",
+        "Style One",
+        "THE BUDDY",
+        "TRAP HOLE",
+        "WEST BEST SELECTION",
+        "WEST COLLECTORS EDITION",
+        "maniac",
+        "その他",
+        "ど・ノンケ",
+        "ザ・シリーズ",
+        "バーチャル彼氏",
+        "射精!!トライアスロン",
+        "生堕ち!!"
+      ],
+      "series": []
+    }
+  },
+  {
+    "id": "coat:WEBS",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "WEBS",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": "COAT WEST",
+    "label": "BACK SNIPER",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:WEEL",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "WEEL",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": "COAT WEST",
+    "label": "ELoS",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:WESS",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "WESS",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": "COAT WEST",
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [
+      "label"
+    ],
+    "title_hints": [],
+    "_candidates": {
+      "labels": [
+        "G.G.G. -Triple G-",
+        "Straight Style"
+      ],
+      "series": []
+    }
+  },
+  {
+    "id": "coat:WEMV",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "WEMV",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": "COAT WEST",
+    "label": "MVP",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:WERD",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "WERD",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": "COAT WEST",
+    "label": "Re:D",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:WESW",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "WESW",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": "COAT WEST",
+    "label": "S.W.A.P.",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:WESM",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "WESM",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": "COAT WEST",
+    "label": "Smart",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:WEST",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "WEST",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": "COAT WEST",
+    "label": "Story",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:WEWG",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "WEWG",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": "COAT WEST",
+    "label": "WEST GATE",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:WEBZ",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "WEBZ",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": "COAT WEST",
+    "label": "WILD BIZ",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:WEWN",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "WEWN",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": "COAT WEST",
+    "label": "Winner",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:WEWS",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "WEWS",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": "COAT WEST",
+    "label": "スタ誕",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:KUCT",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "KUCT",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": "KURATATSU",
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [
+      "label"
+    ],
+    "title_hints": [],
+    "_candidates": {
+      "labels": [
+        "CK CYBER RANKING",
+        "CONCEPTION",
+        "DEEP THROAT",
+        "Discovery",
+        "HAREM",
+        "NAKED",
+        "その他",
+        "フェチ",
+        "爆裂天使",
+        "飛沫 SHIBUKI ."
+      ],
+      "series": []
+    }
+  },
+  {
+    "id": "coat:KUES",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "KUES",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": "KURATATSU",
+    "label": "E-STYLE",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:KUFN",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "KUFN",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": "KURATATSU",
+    "label": "Fine",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:KUND",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "KUND",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": "KURATATSU",
+    "label": "NUDE",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:KUDG",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "KUDG",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": "KURATATSU",
+    "label": "danGet",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:KUIM",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "KUIM",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": "KURATATSU",
+    "label": "i-mode学園",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:KUSP",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "KUSP",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": "KURATATSU",
+    "label": "scooop!!!",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:KUGC",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "KUGC",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": "KURATATSU",
+    "label": "ガッちび",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:KUBR",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "KUBR",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": "KURATATSU",
+    "label": "バサラ",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:KUUC",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "KUUC",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": "KURATATSU",
+    "label": "制コレ。",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:KUTK",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "KUTK",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": "KURATATSU",
+    "label": "太極",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:blank-unknown",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": "OTHER",
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [
+      "label"
+    ],
+    "title_hints": [],
+    "_candidates": {
+      "labels": [
+        "@nonke.com",
+        "EXFEED",
+        "エロコレ"
+      ],
+      "series": []
+    }
+  },
+  {
+    "id": "coat:COAT",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "COAT",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:CTO",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "CTO",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "coat:WST",
+    "source_site": "coat.co.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "WST",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": "COAT WEST",
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  }
+]

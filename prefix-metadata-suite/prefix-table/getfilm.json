@@ -1,0 +1,46 @@
+[
+  {
+    "id": "getfilm:TOU",
+    "source_site": "get-film.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "TOU",
+      "priority": 20
+    },
+    "studio": "GET-film",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [
+      "studio"
+    ],
+    "_candidates": {
+      "studios": [
+        "GET-film",
+        "Men's Street"
+      ],
+      "labels": [],
+      "series": []
+    },
+    "title_hints": [],
+    "note": "TOU: GET-film 19 series + Men's Street old releases (pre-2019)"
+  },
+  {
+    "id": "getfilm:MTK",
+    "source_site": "get-film.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "MTK",
+      "priority": 20
+    },
+    "studio": "Men's Street",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "note": "MTK: Men's Street new releases (2019+)"
+  }
+]

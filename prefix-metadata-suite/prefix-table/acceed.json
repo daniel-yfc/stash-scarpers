@@ -1,0 +1,253 @@
+[
+  {
+    "id": "acceed:ACSM",
+    "source_site": "acceed.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "ACSM",
+      "priority": 20
+    },
+    "studio": "ACCEED",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": "DVD 通用前綴（Smash!!、IKUZE、BLACK HOLE 等）",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "acceed:ACST",
+    "source_site": "acceed.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "ACST",
+      "priority": 20
+    },
+    "studio": "ACCEED",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": "串流通用前綴",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "acceed:ACAI",
+    "source_site": "acceed.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "ACAI",
+      "priority": 20
+    },
+    "studio": "ACCEED",
+    "sub_studio": null,
+    "label": "An independence",
+    "label_is_publisher": false,
+    "series": "An independence",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "acceed:ACAS",
+    "source_site": "acceed.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "ACAS",
+      "priority": 20
+    },
+    "studio": "ACCEED",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": "猥褻病棟24時",
+    "ambiguous_fields": [
+      "label"
+    ],
+    "title_hints": [],
+    "_candidates": {
+      "labels": [
+        "アクスタ☆彡",
+        "猥褻病棟24時"
+      ],
+      "series": [
+        "猥褻病棟24時"
+      ]
+    }
+  },
+  {
+    "id": "acceed:ACBC",
+    "source_site": "acceed.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "ACBC",
+      "priority": 20
+    },
+    "studio": "ACCEED",
+    "sub_studio": null,
+    "label": "ぶらりちん道中",
+    "label_is_publisher": false,
+    "series": "ぶらりちん道中",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "acceed:ACBH",
+    "source_site": "acceed.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "ACBH",
+      "priority": 20
+    },
+    "studio": "ACCEED",
+    "sub_studio": null,
+    "label": "BLACK HOLE",
+    "label_is_publisher": false,
+    "series": "BLACK HOLE",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "acceed:ACDE",
+    "source_site": "acceed.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "ACDE",
+      "priority": 20
+    },
+    "studio": "ACCEED",
+    "sub_studio": null,
+    "label": "Dance Dance Erolution",
+    "label_is_publisher": false,
+    "series": "Dance Dance Erolution",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "acceed:ACDJ",
+    "source_site": "acceed.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "ACDJ",
+      "priority": 20
+    },
+    "studio": "ACCEED",
+    "sub_studio": null,
+    "label": "野獣",
+    "label_is_publisher": false,
+    "series": "野獣",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "acceed:ACIK",
+    "source_site": "acceed.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "ACIK",
+      "priority": 20
+    },
+    "studio": "ACCEED",
+    "sub_studio": null,
+    "label": "イクぜ!!",
+    "label_is_publisher": false,
+    "series": "イクぜ!!",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "acceed:ACMM",
+    "source_site": "acceed.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "ACMM",
+      "priority": 20
+    },
+    "studio": "ACCEED",
+    "sub_studio": null,
+    "label": "萌え萌え少年",
+    "label_is_publisher": false,
+    "series": "萌え萌え少年",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "acceed:ACMZ",
+    "source_site": "acceed.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "ACMZ",
+      "priority": 20
+    },
+    "studio": "ACCEED",
+    "sub_studio": null,
+    "label": "悶絶少年",
+    "label_is_publisher": false,
+    "series": "悶絶少年",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "acceed:ACNH",
+    "source_site": "acceed.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "ACNH",
+      "priority": 20
+    },
+    "studio": "ACCEED",
+    "sub_studio": null,
+    "label": "変態面接",
+    "label_is_publisher": false,
+    "series": "面接に来たノンケを変態ホモがケツまで犯す（僅1樣本）",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "acceed:ACOH",
+    "source_site": "acceed.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "ACOH",
+      "priority": 20
+    },
+    "studio": "ACCEED",
+    "sub_studio": null,
+    "label": "980円オナニー",
+    "label_is_publisher": false,
+    "series": "980円オナニー",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "acceed:ACTM",
+    "source_site": "acceed.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "ACTM",
+      "priority": 20
+    },
+    "studio": "ACCEED",
+    "sub_studio": null,
+    "label": "THE MANIA",
+    "label_is_publisher": false,
+    "series": "THE MANIA",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "acceed:OCON",
+    "source_site": "acceed.jp",
+    "match": {
+      "kind": "prefix",
+      "value": "OCON",
+      "priority": 20
+    },
+    "studio": "ACCEED",
+    "sub_studio": null,
+    "label": "ワンコイン動画",
+    "label_is_publisher": false,
+    "series": "ワンコイン動画",
+    "ambiguous_fields": [],
+    "title_hints": []
+  }
+]

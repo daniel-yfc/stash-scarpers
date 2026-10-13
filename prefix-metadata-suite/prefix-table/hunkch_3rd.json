@@ -1,0 +1,2570 @@
+[
+  {
+    "id": "hunkch_3rd:ACD",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "ACD",
+      "priority": 20
+    },
+    "studio": "ACCEED",
+    "sub_studio": null,
+    "label": "IKUZE",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:ADL-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "ADL-",
+      "priority": 20
+    },
+    "studio": "ADONIS LAND",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:BB-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "BB-",
+      "priority": 20
+    },
+    "studio": "B+B",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:BFT",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "BFT",
+      "priority": 20
+    },
+    "studio": "BIG FOOT",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:BYB-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "BYB-",
+      "priority": 20
+    },
+    "studio": "BOYS.BANK",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:BW-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "BW-",
+      "priority": 20
+    },
+    "studio": "Bravo",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:BADI-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "BADI-",
+      "priority": 20
+    },
+    "studio": "Badi",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:BEAT-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "BEAT-",
+      "priority": 20
+    },
+    "studio": "Body Beat",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:BLV",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "BLV",
+      "priority": 20
+    },
+    "studio": "Boys Love Video",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:BKN",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "BKN",
+      "priority": 20
+    },
+    "studio": "Bくん VIDEO",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:CGP-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "CGP-",
+      "priority": 20
+    },
+    "studio": "CYBER GUMPTION",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:CBP-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "CBP-",
+      "priority": 20
+    },
+    "studio": "ChubbyParadise",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:DKF-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "DKF-",
+      "priority": 20
+    },
+    "studio": "DOKKING Film",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:DT-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "DT-",
+      "priority": 20
+    },
+    "studio": "DickTok",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:DR-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "DR-",
+      "priority": 20
+    },
+    "studio": "Dream",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:EMN-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "EMN-",
+      "priority": 20
+    },
+    "studio": "E-MEN+",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:EXT-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "EXT-",
+      "priority": 20
+    },
+    "studio": "EXTRA STUDIO",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:BOT-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "BOT-",
+      "priority": 20
+    },
+    "studio": "G-BOT/BOYSLAB",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:GMEN-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GMEN-",
+      "priority": 20
+    },
+    "studio": "G-men",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:GSPS-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GSPS-",
+      "priority": 20
+    },
+    "studio": "GAY 〇〇 PICTURE",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:GRY-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GRY-",
+      "priority": 20
+    },
+    "studio": "GLORY",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:HBM-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "HBM-",
+      "priority": 20
+    },
+    "studio": "HealingBoyMovie",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:INS-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "INS-",
+      "priority": 20
+    },
+    "studio": "Inside",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:JSO-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "JSO-",
+      "priority": 20
+    },
+    "studio": "J-STUDIO",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:JP-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "JP-",
+      "priority": 20
+    },
+    "studio": "JAPAN PICTURES",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:JTS-JT",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "JTS-JT",
+      "priority": 20
+    },
+    "studio": "JUSTICE",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:KO-BEAST",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KO-BEAST",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "BEAST",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:KO-GOGUY",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KO-GOGUY",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": "go guy plus",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:MEC-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "MEC-",
+      "priority": 20
+    },
+    "studio": "MEC/SYMBOL",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:MTN",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "MTN",
+      "priority": 20
+    },
+    "studio": "MOTONARI",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:NPR-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "NPR-",
+      "priority": 20
+    },
+    "studio": "NonkeProject",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:OS-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "OS-",
+      "priority": 20
+    },
+    "studio": "OSUINRA",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:RBP-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "RBP-",
+      "priority": 20
+    },
+    "studio": "ROYAL BLUE Production",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:SB-O",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "SB-O",
+      "priority": 20
+    },
+    "studio": "STR8 BOYS",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:SB-M",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "SB-M",
+      "priority": 20
+    },
+    "studio": "STR8 BOYS",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:SB-I",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "SB-I",
+      "priority": 20
+    },
+    "studio": "STR8 BOYS",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:STY-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "STY-",
+      "priority": 20
+    },
+    "studio": "STYLE-30",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:SZ-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "SZ-",
+      "priority": 20
+    },
+    "studio": "SUPER ZEX",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-VI",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-VI",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "VIO専門・メンズ脱毛サロン",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-MA",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-MA",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "妄想遊び",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-CS",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-CS",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "超絶失禁",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TM-ZS",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TM-ZS",
+      "priority": 20
+    },
+    "studio": "TRANCE MIX",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": "ノンケのザーメン採集",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TM-SS",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TM-SS",
+      "priority": 20
+    },
+    "studio": "TRANCE MIX",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": "ソソる!ノンケSTORY",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:VF-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "VF-",
+      "priority": 20
+    },
+    "studio": "VFactory",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:VC-MNTU",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "VC-MNTU",
+      "priority": 20
+    },
+    "studio": "VIDEO CITY",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:VC-TWAK",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "VC-TWAK",
+      "priority": 20
+    },
+    "studio": "VIDEO CITY",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": "20発兄貴",
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:NSFN-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "NSFN-",
+      "priority": 20
+    },
+    "studio": "filenumber",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:HAND",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "HAND",
+      "priority": 20
+    },
+    "studio": "hands up",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:GP-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GP-",
+      "priority": 20
+    },
+    "studio": "studio:GUMPTION",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:GJ",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GJ",
+      "priority": 20
+    },
+    "studio": "world.glossmen@japan",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:IDS-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "IDS-",
+      "priority": 20
+    },
+    "studio": "インディーズ",
+    "sub_studio": null,
+    "label": "NextBoy、若専ムービー",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:EV-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "EV-",
+      "priority": 20
+    },
+    "studio": "エジキ",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:KPP-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KPP-",
+      "priority": 20
+    },
+    "studio": "カピバラワークス",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:GM-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "GM-",
+      "priority": 20
+    },
+    "studio": "ゲンマ/ANIKY",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:SV-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "SV-",
+      "priority": 20
+    },
+    "studio": "サムソン",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:SD",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "SD",
+      "priority": 20
+    },
+    "studio": "スタジオ101",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TN-TQ",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TN-TQ",
+      "priority": 20
+    },
+    "studio": "テキーラネオワークス",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:DIG-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "DIG-",
+      "priority": 20
+    },
+    "studio": "ディグオーバー",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TON-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TON-",
+      "priority": 20
+    },
+    "studio": "トントン倉庫",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:NKB-NON",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "NKB-NON",
+      "priority": 20
+    },
+    "studio": "ノンケ部屋",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:HBS-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "HBS-",
+      "priority": 20
+    },
+    "studio": "ハマチ物産",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:NSBU-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "NSBU-",
+      "priority": 20
+    },
+    "studio": "バルキーOSAKA",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:PRV",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "PRV",
+      "priority": 20
+    },
+    "studio": "プリズム",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:BSM-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "BSM-",
+      "priority": 20
+    },
+    "studio": "ボーイズスタームービー",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:MENP-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "MENP-",
+      "priority": 20
+    },
+    "studio": "メンズキャンプ",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:MB-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "MB-",
+      "priority": 20
+    },
+    "studio": "メンズブレイカー",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:LB",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "LB",
+      "priority": 20
+    },
+    "studio": "ライクボーイズ",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:KSP",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "KSP",
+      "priority": 20
+    },
+    "studio": "広輔project",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TKC-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TKC-",
+      "priority": 20
+    },
+    "studio": "東京CoLors",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:CKS-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "CKS-",
+      "priority": 20
+    },
+    "studio": "素人個人投稿",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:MKN-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "MKN-",
+      "priority": 20
+    },
+    "studio": "街角ノンケ",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:NS-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "NS-",
+      "priority": 20
+    },
+    "studio": "西麻布撮影所",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:SMD-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "SMD-",
+      "priority": 20
+    },
+    "studio": "赤面男子",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:SZK",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "SZK",
+      "priority": 20
+    },
+    "studio": "鈴木商店",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:PNS-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "PNS-",
+      "priority": 20
+    },
+    "studio": "陰茎裏筋睾丸太郎",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-MS",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-MS",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "Men's スリムスーツ",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-HO",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-HO",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "働く男達",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-MG",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-MG",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "マッサージ店で隣の客にバレないようにガン掘りしてみた",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-GF",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-GF",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "玄関FUCK",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-AS",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-AS",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "穴処理整体師",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-TK",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-TK",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "盗撮KING",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-HS",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-HS",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "ハイスクール!男組",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-TS",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-TS",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "Top Swimmer",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-RK",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-RK",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "Risky",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-TD",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-TD",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "新・宅配男子",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-STD",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-STD",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "新・宅配男子",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-HK",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-HK",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "変態泌尿器科",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-FK",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-FK",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "覆面犬",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-NK",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-NK",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "熱狂球児",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-SS",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-SS",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "試着室",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-FO",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-FO",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "ノンケの筆おろし！",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-ND",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-ND",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "日本男児",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-GM",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-GM",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "検証!!ゲイマッサージ",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-FT",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-FT",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "fetishism【フェチ】",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-YB",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-YB",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "忍夜",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-BB",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-BB",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "BODY BATTLE",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-ZS",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-ZS",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "ザーメンソムリエ",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-PV",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-PV",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "Private",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-WN",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-WN",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "罠",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-MJ",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-MJ",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "マジっすか！？",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-TC",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-TC",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "逃走中",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-RG",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-RG",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "露出願望",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-DK",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-DK",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "男根乱舞",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-GL",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-GL",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "GLORY HOLE",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-HT",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-HT",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "ハッテン図書館",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-SP",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-SP",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "SNIPER",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-MM",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-MM",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "メガマラ！",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-KC",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-KC",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "実録!!古書店カメラ",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-NA",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-NA",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "ノンケアナル、オナホ化計画",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-ZD",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-ZD",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "顔面ザーメンデコレーション",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-ZT",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-ZT",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "絶頂TAXI",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-RD",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-RD",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "流出!!ノンケのエロ動画",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-FM",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-FM",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "淫猥冬物語",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-BF",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-BF",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "Boyfriend",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-NS",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-NS",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "Naked Summer",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-CC",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-CC",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "Cum Cum",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-DB",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-DB",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "デカマラ部長",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-DS",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-DS",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "男性専用車",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-NC",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-NC",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "激撮!!ネットカフェ24時",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-CX",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-CX",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "CINEMA XXX",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-DRN",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-DRN",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "drone",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-GY",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-GY",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "ゴム破れちゃいました。",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TR-HG",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TR-HG",
+      "priority": 20
+    },
+    "studio": "TRANCE",
+    "sub_studio": null,
+    "label": "変態G面",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:label-TRANCEORIG-知らぬがノンケ。",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "label_name",
+      "value": null,
+      "priority": 0
+    },
+    "studio": "TRANCE ORIGINAL",
+    "sub_studio": null,
+    "label": "知らぬがノンケ。",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "note": "Label name from official site; code prefix TBD"
+  },
+  {
+    "id": "hunkch_3rd:label-TRANCEORIG-ホントにあったノンケの情事",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "label_name",
+      "value": null,
+      "priority": 0
+    },
+    "studio": "TRANCE ORIGINAL",
+    "sub_studio": null,
+    "label": "ホントにあったノンケの情事",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "note": "Label name from official site; code prefix TBD"
+  },
+  {
+    "id": "hunkch_3rd:label-TRANCEORIG-Best Selection",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "label_name",
+      "value": null,
+      "priority": 0
+    },
+    "studio": "TRANCE ORIGINAL",
+    "sub_studio": null,
+    "label": "Best Selection",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "note": "Label name from official site; code prefix TBD"
+  },
+  {
+    "id": "hunkch_3rd:label-TRANCEORIG-オイルマッサージ店にノンケを送り込んでみた",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "label_name",
+      "value": null,
+      "priority": 0
+    },
+    "studio": "TRANCE ORIGINAL",
+    "sub_studio": null,
+    "label": "オイルマッサージ店にノンケを送り込んでみた",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "note": "Label name from official site; code prefix TBD"
+  },
+  {
+    "id": "hunkch_3rd:label-TRANCEORIG-男子学性日誌",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "label_name",
+      "value": null,
+      "priority": 0
+    },
+    "studio": "TRANCE ORIGINAL",
+    "sub_studio": null,
+    "label": "男子学性日誌",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "note": "Label name from official site; code prefix TBD"
+  },
+  {
+    "id": "hunkch_3rd:label-TRANCEORIG-ノンケせんずり部屋",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "label_name",
+      "value": null,
+      "priority": 0
+    },
+    "studio": "TRANCE ORIGINAL",
+    "sub_studio": null,
+    "label": "ノンケせんずり部屋",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "note": "Label name from official site; code prefix TBD"
+  },
+  {
+    "id": "hunkch_3rd:label-TRANCEORIG-男子社員職務猥褻",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "label_name",
+      "value": null,
+      "priority": 0
+    },
+    "studio": "TRANCE ORIGINAL",
+    "sub_studio": null,
+    "label": "男子社員職務猥褻",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "note": "Label name from official site; code prefix TBD"
+  },
+  {
+    "id": "hunkch_3rd:label-TRANCEORIG-ワケアリ",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "label_name",
+      "value": null,
+      "priority": 0
+    },
+    "studio": "TRANCE ORIGINAL",
+    "sub_studio": null,
+    "label": "ワケアリ",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "note": "Label name from official site; code prefix TBD"
+  },
+  {
+    "id": "hunkch_3rd:label-TRANCEORIG-リクエスト",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "label_name",
+      "value": null,
+      "priority": 0
+    },
+    "studio": "TRANCE ORIGINAL",
+    "sub_studio": null,
+    "label": "リクエスト",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "note": "Label name from official site; code prefix TBD"
+  },
+  {
+    "id": "hunkch_3rd:label-TRANCEORIG-オナコレ珍百景",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "label_name",
+      "value": null,
+      "priority": 0
+    },
+    "studio": "TRANCE ORIGINAL",
+    "sub_studio": null,
+    "label": "オナコレ珍百景",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "note": "Label name from official site; code prefix TBD"
+  },
+  {
+    "id": "hunkch_3rd:label-TRANCEORIG-ノンケ宙吊り処刑",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "label_name",
+      "value": null,
+      "priority": 0
+    },
+    "studio": "TRANCE ORIGINAL",
+    "sub_studio": null,
+    "label": "ノンケ宙吊り処刑",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "note": "Label name from official site; code prefix TBD"
+  },
+  {
+    "id": "hunkch_3rd:label-TRANCEORIG-密室ヤリ部屋",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "label_name",
+      "value": null,
+      "priority": 0
+    },
+    "studio": "TRANCE ORIGINAL",
+    "sub_studio": null,
+    "label": "密室ヤリ部屋",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "note": "Label name from official site; code prefix TBD"
+  },
+  {
+    "id": "hunkch_3rd:label-TRANCEORIG-ノンケの喰い方",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "label_name",
+      "value": null,
+      "priority": 0
+    },
+    "studio": "TRANCE ORIGINAL",
+    "sub_studio": null,
+    "label": "ノンケの喰い方",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "note": "Label name from official site; code prefix TBD"
+  },
+  {
+    "id": "hunkch_3rd:label-TRANCEORIG-肉弾戦",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "label_name",
+      "value": null,
+      "priority": 0
+    },
+    "studio": "TRANCE ORIGINAL",
+    "sub_studio": null,
+    "label": "肉弾戦",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "note": "Label name from official site; code prefix TBD"
+  },
+  {
+    "id": "hunkch_3rd:label-TRANCEORIG-電動射精",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "label_name",
+      "value": null,
+      "priority": 0
+    },
+    "studio": "TRANCE ORIGINAL",
+    "sub_studio": null,
+    "label": "電動射精",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "note": "Label name from official site; code prefix TBD"
+  },
+  {
+    "id": "hunkch_3rd:label-TRANCEORIG-飛汁",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "label_name",
+      "value": null,
+      "priority": 0
+    },
+    "studio": "TRANCE ORIGINAL",
+    "sub_studio": null,
+    "label": "飛汁",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "note": "Label name from official site; code prefix TBD"
+  },
+  {
+    "id": "hunkch_3rd:label-TRANCEORIG-ノンフィクション",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "label_name",
+      "value": null,
+      "priority": 0
+    },
+    "studio": "TRANCE ORIGINAL",
+    "sub_studio": null,
+    "label": "ノンフィクション",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "note": "Label name from official site; code prefix TBD"
+  },
+  {
+    "id": "hunkch_3rd:label-TRANCEORIG-スマホ推奨！勃て動画",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "label_name",
+      "value": null,
+      "priority": 0
+    },
+    "studio": "TRANCE ORIGINAL",
+    "sub_studio": null,
+    "label": "スマホ推奨！勃て動画",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "note": "Label name from official site; code prefix TBD"
+  },
+  {
+    "id": "hunkch_3rd:label-TRANCEORIG-緊縛-KINBAKU featuring Rai-",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "label_name",
+      "value": null,
+      "priority": 0
+    },
+    "studio": "TRANCE ORIGINAL",
+    "sub_studio": null,
+    "label": "緊縛-KINBAKU featuring Rai-",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "note": "Label name from official site; code prefix TBD"
+  },
+  {
+    "id": "hunkch_3rd:label-TRANCEORIG-COMBO",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "label_name",
+      "value": null,
+      "priority": 0
+    },
+    "studio": "TRANCE ORIGINAL",
+    "sub_studio": null,
+    "label": "COMBO",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "note": "Label name from official site; code prefix TBD"
+  },
+  {
+    "id": "hunkch_3rd:label-TRANCEORIG-ノンケ崩壊",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "label_name",
+      "value": null,
+      "priority": 0
+    },
+    "studio": "TRANCE ORIGINAL",
+    "sub_studio": null,
+    "label": "ノンケ崩壊",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "note": "Label name from official site; code prefix TBD"
+  },
+  {
+    "id": "hunkch_3rd:label-TRANCEORIG-欲情病棟",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "label_name",
+      "value": null,
+      "priority": 0
+    },
+    "studio": "TRANCE ORIGINAL",
+    "sub_studio": null,
+    "label": "欲情病棟",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "note": "Label name from official site; code prefix TBD"
+  },
+  {
+    "id": "hunkch_3rd:label-TRANCEORIG-TIME LOCKER",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "label_name",
+      "value": null,
+      "priority": 0
+    },
+    "studio": "TRANCE ORIGINAL",
+    "sub_studio": null,
+    "label": "TIME LOCKER",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "note": "Label name from official site; code prefix TBD"
+  },
+  {
+    "id": "hunkch_3rd:label-TRANCEORIG-特典動画",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "label_name",
+      "value": null,
+      "priority": 0
+    },
+    "studio": "TRANCE ORIGINAL",
+    "sub_studio": null,
+    "label": "特典動画",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "note": "Label name from official site; code prefix TBD"
+  },
+  {
+    "id": "hunkch_3rd:TM-SB",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TM-SB",
+      "priority": 20
+    },
+    "studio": "TRANCE MIX",
+    "sub_studio": null,
+    "label": "ノンケ専用　精子バンク",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TM-GN",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TM-GN",
+      "priority": 20
+    },
+    "studio": "TRANCE MIX",
+    "sub_studio": null,
+    "label": "ガチ!! ～ノンケの本能～",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TM-NG",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TM-NG",
+      "priority": 20
+    },
+    "studio": "TRANCE MIX",
+    "sub_studio": null,
+    "label": "ノンケ逆ナンパ!!",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TM-OP",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TM-OP",
+      "priority": 20
+    },
+    "studio": "TRANCE MIX",
+    "sub_studio": null,
+    "label": "俺はペット",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TM-AV",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TM-AV",
+      "priority": 20
+    },
+    "studio": "TRANCE MIX",
+    "sub_studio": null,
+    "label": "激選!!AV男優図録",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TM-NS",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TM-NS",
+      "priority": 20
+    },
+    "studio": "TRANCE MIX",
+    "sub_studio": null,
+    "label": "ノンケ七変化",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TM-PB",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TM-PB",
+      "priority": 20
+    },
+    "studio": "TRANCE MIX",
+    "sub_studio": null,
+    "label": "ペニバンBTM",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TM-MG",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TM-MG",
+      "priority": 20
+    },
+    "studio": "TRANCE MIX",
+    "sub_studio": null,
+    "label": "面接喰い",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TM-PH",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TM-PH",
+      "priority": 20
+    },
+    "studio": "TRANCE MIX",
+    "sub_studio": null,
+    "label": "パワハラ！！～男イジメ～",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TM-IM",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TM-IM",
+      "priority": 20
+    },
+    "studio": "TRANCE MIX",
+    "sub_studio": null,
+    "label": "如何わしい男性セラピストの在籍するマッサージ店",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TM-KC",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TM-KC",
+      "priority": 20
+    },
+    "studio": "TRANCE MIX",
+    "sub_studio": null,
+    "label": "実録!!古書店カメラ ノンケver.",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "hunkch_3rd:TM-SK",
+    "source_site": "hunk-ch.com",
+    "match": {
+      "kind": "prefix",
+      "value": "TM-SK",
+      "priority": 20
+    },
+    "studio": "TRANCE MIX",
+    "sub_studio": null,
+    "label": "ノンケ三連穴",
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  }
+]

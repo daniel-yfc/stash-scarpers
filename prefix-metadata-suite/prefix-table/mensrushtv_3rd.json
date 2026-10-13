@@ -1,0 +1,1502 @@
+[
+  {
+    "id": "mensrushtv_3rd:ACD-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "ACD-",
+      "priority": 20
+    },
+    "studio": "ACCEED",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:AD-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "AD-",
+      "priority": 20
+    },
+    "studio": "ADONIS LAND",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:AMW-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "AMW-",
+      "priority": 20
+    },
+    "studio": "AMW",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:AK-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "AK-",
+      "priority": 20
+    },
+    "studio": "ANIKY",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:AXDV-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "AXDV-",
+      "priority": 20
+    },
+    "studio": "AXIS-PICTURES",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "DVD 合集"
+  },
+  {
+    "id": "mensrushtv_3rd:AX-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "AX-",
+      "priority": 20
+    },
+    "studio": "AXIS-PICTURES",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:ACM-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "ACM-",
+      "priority": 20
+    },
+    "studio": "ACCEED",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:BB-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "BB-",
+      "priority": 20
+    },
+    "studio": "B+B VIDEOS",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "未公開スペシャル等"
+  },
+  {
+    "id": "mensrushtv_3rd:BOB-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "BOB-",
+      "priority": 20
+    },
+    "studio": "BOYS.BANK",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:BVO-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "BVO-",
+      "priority": 20
+    },
+    "studio": "BRAVO-JAPAN",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:BD-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "BD-",
+      "priority": 20
+    },
+    "studio": "Badi",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "ノンケとXXX 等"
+  },
+  {
+    "id": "mensrushtv_3rd:BET-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "BET-",
+      "priority": 20
+    },
+    "studio": "Body Beat",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:BS-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "BS-",
+      "priority": 20
+    },
+    "studio": "Boys Star Movie",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:CO-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "CO-",
+      "priority": 20
+    },
+    "studio": "COAT",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "FIXER・TRAP HOLE 等"
+  },
+  {
+    "id": "mensrushtv_3rd:CL-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "CL-",
+      "priority": 20
+    },
+    "studio": "COLT",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "欧美"
+  },
+  {
+    "id": "mensrushtv_3rd:CPR-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "CPR-",
+      "priority": 20
+    },
+    "studio": "ChubbyParadise",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "重量級ブラザーズ等 5 子標籤"
+  },
+  {
+    "id": "mensrushtv_3rd:DADV-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "DADV-",
+      "priority": 20
+    },
+    "studio": "DANK VIDEO",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "DVD 合集"
+  },
+  {
+    "id": "mensrushtv_3rd:DAN-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "DAN-",
+      "priority": 20
+    },
+    "studio": "DANK VIDEO",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:EMN-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "EMN-",
+      "priority": 20
+    },
+    "studio": "E-MEN+",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "カピバラワークス组"
+  },
+  {
+    "id": "mensrushtv_3rd:ER-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "ER-",
+      "priority": 20
+    },
+    "studio": "ERECT",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:FLD-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "FLD-",
+      "priority": 20
+    },
+    "studio": "FIELD EXPRESS",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "DEBUT、ATHLETE"
+  },
+  {
+    "id": "mensrushtv_3rd:FLDV-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "FLDV-",
+      "priority": 20
+    },
+    "studio": "FIELD EXPRESS",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "DVD 全卷"
+  },
+  {
+    "id": "mensrushtv_3rd:FDM-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "FDM-",
+      "priority": 20
+    },
+    "studio": "FreeDom",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:GBODV-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "GBODV-",
+      "priority": 20
+    },
+    "studio": "G-BOT",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "DVD 合集"
+  },
+  {
+    "id": "mensrushtv_3rd:GBOT-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "GBOT-",
+      "priority": 20
+    },
+    "studio": "G-BOT",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:GONA-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "GONA-",
+      "priority": 20
+    },
+    "studio": "G-ONA",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:ARGA-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "ARGA-",
+      "priority": 20
+    },
+    "studio": "GACHA＠若い子生堀りぶっかけ専",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "ありのまま男子。组"
+  },
+  {
+    "id": "mensrushtv_3rd:GL-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "GL-",
+      "priority": 20
+    },
+    "studio": "GLORY/RISE",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:HG-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "HG-",
+      "priority": 20
+    },
+    "studio": "HOT GEAR",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "外人系列"
+  },
+  {
+    "id": "mensrushtv_3rd:HBM-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "HBM-",
+      "priority": 20
+    },
+    "studio": "Healing Boy Movie",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:INS-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "INS-",
+      "priority": 20
+    },
+    "studio": "Inside",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:JPN-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "JPN-",
+      "priority": 20
+    },
+    "studio": "JAPAN PICTURES",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:RJM-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "RJM-",
+      "priority": 20
+    },
+    "studio": "JOCK GYM",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "Workout"
+  },
+  {
+    "id": "mensrushtv_3rd:RSA-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "RSA-",
+      "priority": 20
+    },
+    "studio": "JOCK VIDEO",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:JSDV-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "JSDV-",
+      "priority": 20
+    },
+    "studio": "JUSTICE",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "DVD 合集"
+  },
+  {
+    "id": "mensrushtv_3rd:JUS-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "JUS-",
+      "priority": 20
+    },
+    "studio": "JUSTICE",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:KODV-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "KODV-",
+      "priority": 20
+    },
+    "studio": "KO COMPANY",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "アブSEX、INDIES、BEAST 等 38 子標籤"
+  },
+  {
+    "id": "mensrushtv_3rd:KSP-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "KSP-",
+      "priority": 20
+    },
+    "studio": "KTスポーツ",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "禁断の男子寮"
+  },
+  {
+    "id": "mensrushtv_3rd:KB-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "KB-",
+      "priority": 20
+    },
+    "studio": "KinKi Boys",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:MEC-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "MEC-",
+      "priority": 20
+    },
+    "studio": "MEC/SYMBOL",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "PYRAMID 等"
+  },
+  {
+    "id": "mensrushtv_3rd:MB-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "MB-",
+      "priority": 20
+    },
+    "studio": "Men's Breaker",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:NAO-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "NAO-",
+      "priority": 20
+    },
+    "studio": "N.A.O",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:REO-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "REO-",
+      "priority": 20
+    },
+    "studio": "N:PROMOTION",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "彼シリーズ"
+  },
+  {
+    "id": "mensrushtv_3rd:NON-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "NON-",
+      "priority": 20
+    },
+    "studio": "NonkeProject.com",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:OL-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "OL-",
+      "priority": 20
+    },
+    "studio": "OUT LAW／BOLT",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:KS-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "KS-",
+      "priority": 20
+    },
+    "studio": "Office kawasaki",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "10COUNT 等"
+  },
+  {
+    "id": "mensrushtv_3rd:RCHS-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "RCHS-",
+      "priority": 20
+    },
+    "studio": "RCHS STUDIO",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:STR-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "STR-",
+      "priority": 20
+    },
+    "studio": "Striker",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "THE FIRST TAKE 等"
+  },
+  {
+    "id": "mensrushtv_3rd:XB-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "XB-",
+      "priority": 20
+    },
+    "studio": "X-BOY",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:YSF-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "YSF-",
+      "priority": 20
+    },
+    "studio": "Y's Film",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "ヤンキーズ等"
+  },
+  {
+    "id": "mensrushtv_3rd:FNB-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "FNB-",
+      "priority": 20
+    },
+    "studio": "filenumber",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "AVレジェンド等"
+  },
+  {
+    "id": "mensrushtv_3rd:HAME-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "HAME-",
+      "priority": 20
+    },
+    "studio": "hame-hame-boyz",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:KD-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "KD-",
+      "priority": 20
+    },
+    "studio": "きゅーしゅー★だんしー",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:ICE-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "ICE-",
+      "priority": 20
+    },
+    "studio": "アイスマン",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "美男子××"
+  },
+  {
+    "id": "mensrushtv_3rd:ARAM-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "ARAM-",
+      "priority": 20
+    },
+    "studio": "アカデミー-Academy-",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "ありのまま男子。组"
+  },
+  {
+    "id": "mensrushtv_3rd:AVT-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "AVT-",
+      "priority": 20
+    },
+    "studio": "アドバンテージ",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "SPORTSMAN LIVE"
+  },
+  {
+    "id": "mensrushtv_3rd:AG-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "AG-",
+      "priority": 20
+    },
+    "studio": "アルゴスタジオ",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "欧美"
+  },
+  {
+    "id": "mensrushtv_3rd:NXT-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "NXT-",
+      "priority": 20
+    },
+    "studio": "インディーズ",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:YUTO-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "YUTO-",
+      "priority": 20
+    },
+    "studio": "インディーズ",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:IT-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "IT-",
+      "priority": 20
+    },
+    "studio": "インディーズ",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:UB-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "UB-",
+      "priority": 20
+    },
+    "studio": "ウルトラボディ",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:CAPY-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "CAPY-",
+      "priority": 20
+    },
+    "studio": "カピバラワークス",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "カピバラワークス组"
+  },
+  {
+    "id": "mensrushtv_3rd:GIN-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "GIN-",
+      "priority": 20
+    },
+    "studio": "ギンギンクルー",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "ビデオマガジンGENKI"
+  },
+  {
+    "id": "mensrushtv_3rd:GB-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "GB-",
+      "priority": 20
+    },
+    "studio": "グリーンベル",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:GM-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "GM-",
+      "priority": 20
+    },
+    "studio": "ゲンマビデオ",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:JR-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "JR-",
+      "priority": 20
+    },
+    "studio": "ジャックリード／CYBER J",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:CJ-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "CJ-",
+      "priority": 20
+    },
+    "studio": "ジャックリード／CYBER J",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "オープンエアー露出"
+  },
+  {
+    "id": "mensrushtv_3rd:STD-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "STD-",
+      "priority": 20
+    },
+    "studio": "スーパースリー",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "SaKaRi 等"
+  },
+  {
+    "id": "mensrushtv_3rd:CHDV-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "CHDV-",
+      "priority": 20
+    },
+    "studio": "チークス",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "DVD 合集"
+  },
+  {
+    "id": "mensrushtv_3rd:CH-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "CH-",
+      "priority": 20
+    },
+    "studio": "チークス",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:TQ-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "TQ-",
+      "priority": 20
+    },
+    "studio": "テキーラネットワーク",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:DIG-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "DIG-",
+      "priority": 20
+    },
+    "studio": "ディグオーバー",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "カピバラワークス组"
+  },
+  {
+    "id": "mensrushtv_3rd:MTK-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "MTK-",
+      "priority": 20
+    },
+    "studio": "ネットカフェの裏事情",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "合集"
+  },
+  {
+    "id": "mensrushtv_3rd:HMC-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "HMC-",
+      "priority": 20
+    },
+    "studio": "ハマチ物産",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:HAR-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "HAR-",
+      "priority": 20
+    },
+    "studio": "ハルコレ by CHAB-G",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:PDA-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "PDA-",
+      "priority": 20
+    },
+    "studio": "パンダ商会",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "THE人間性器等"
+  },
+  {
+    "id": "mensrushtv_3rd:BLP-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "BLP-",
+      "priority": 20
+    },
+    "studio": "ピンクローズ",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "BL 劇"
+  },
+  {
+    "id": "mensrushtv_3rd:PM-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "PM-",
+      "priority": 20
+    },
+    "studio": "プリズムビデオ",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:MH-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "MH-",
+      "priority": 20
+    },
+    "studio": "マンハウス",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "淫行等"
+  },
+  {
+    "id": "mensrushtv_3rd:MNC-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "MNC-",
+      "priority": 20
+    },
+    "studio": "メンズキャンプ",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "カピバラワークス组"
+  },
+  {
+    "id": "mensrushtv_3rd:MLF-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "MLF-",
+      "priority": 20
+    },
+    "studio": "メンズライフ",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:MERC-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "MERC-",
+      "priority": 20
+    },
+    "studio": "メンズラボ",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "女装子系列"
+  },
+  {
+    "id": "mensrushtv_3rd:ARML-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "ARML-",
+      "priority": 20
+    },
+    "studio": "メンログ-Menlog-",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "ありのまま男子。组"
+  },
+  {
+    "id": "mensrushtv_3rd:RO-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "RO-",
+      "priority": 20
+    },
+    "studio": "ローゼンクラップ",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "龍之介"
+  },
+  {
+    "id": "mensrushtv_3rd:KPR-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "KPR-",
+      "priority": 20
+    },
+    "studio": "広輔project",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:KT-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "KT-",
+      "priority": 20
+    },
+    "studio": "慶太シリーズ",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "投稿"
+  },
+  {
+    "id": "mensrushtv_3rd:TKC-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "TKC-",
+      "priority": 20
+    },
+    "studio": "東京CoLors",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:MACHI-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "MACHI-",
+      "priority": 20
+    },
+    "studio": "街角ノンケ",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "ノンケ喰い"
+  },
+  {
+    "id": "mensrushtv_3rd:NIAS-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "NIAS-",
+      "priority": 20
+    },
+    "studio": "西麻布撮影所／バルキーOSAKA",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": [],
+    "remark": "玲央くん等"
+  },
+  {
+    "id": "mensrushtv_3rd:IST-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "IST-",
+      "priority": 20
+    },
+    "studio": "陰茎裏筋睾丸太郎",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  },
+  {
+    "id": "mensrushtv_3rd:TWKS-",
+    "source_site": "mensrush.tv",
+    "match": {
+      "kind": "prefix",
+      "value": "TWKS-",
+      "priority": 20
+    },
+    "studio": "黒潮メディアスタジオ",
+    "sub_studio": null,
+    "label": null,
+    "label_is_publisher": false,
+    "series": null,
+    "ambiguous_fields": [],
+    "title_hints": []
+  }
+]
