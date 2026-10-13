@@ -1,6 +1,9 @@
-# Prefix Metadata Suite（Tasks 1–4）
+# Prefix Metadata Suite 
 
-依據版本化前綴表（`prefix-table/`），從檔名前綴自動填入、驗證、標準化 Stash Scene 的 Studio／Code。現階段為獨立腳本，尚未打包成 Stash plugin（尚無 `plugin.yml`、設定頁）。Task 5（Source Enrich）僅有設計文件，不在本目錄。
+依據版本化前綴表（`prefix-table/`），從檔名前綴自動填入、驗證、標準化 Stash Scene 的 Studio／Code。現階段為獨立腳本，尚未打包成 Stash plugin（尚無 `plugin.yml`、設定頁）。
+
+Task 5（Source Enrich）僅有設計文件經過 Review，尚未實作。
+Plugin 規劃一併放入，尚未確認。
 
 ## Tasks
 
@@ -38,5 +41,7 @@ python3 tasks/enrich.py --live     # 實際寫入（寫入前請先看 dry-run �
 - `alias-table.json`：正規 Studio 名稱 ↔ 別名。
 - `extractor.py`／`resolver.py`：純函式（品番提取、前綴解析），測試見 `tests/test_extractor_resolver.py`。
 - `md_to_json.py`／`sync_md_from_json.py`：五欄 MD 總表 ↔ JSON 的轉換／增量同步（MD 總表本身不在 repo 內）。
-- `docs/`：V1.0 規格書、實作計畫、修正案。
+- `docs/`：V1.0 規格書、實作計畫、修正案。V2.5 規格書與實作計畫（Task5）、Plugin.yml初稿。
 - `reports/`：各 task 執行時產生的 audit journal／CSV，屬於本地執行產出，不進版控。
+
+- ## 
