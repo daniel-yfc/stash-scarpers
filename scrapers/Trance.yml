@@ -15,7 +15,10 @@
 #   - Image: //div[@class="photo_flexslider"]//ul[@class="slides"]/li[@class="flex-active-slide"]/img
 #     (relative path like /picture/parent/TR-16-0028-01-01_1.jpg)
 #   - No canonical, no og:* tags.
-# Search: /product/search?keyword={keyword} (302 redirects to /product/result).
+# Search: /product/search?keyword={} (302 redirects to /product/result).
+#   VERIFIED 2026-10-14 on live search page (keyword=TR-16, 28 items, no pagination):
+#   - Result item: //ul[@class='title_list']/li > a[href='/product/detail/<id>']
+#   - Title: ./h4 inside the same <a> (1:1 Title/URL pairing)
 # 95 prefixes mapped: TR-01..50, TM-01..14, TO-01..23, TC-01..05, TP-01, DF-02/03.
 # Last Updated: 2026-10-13
 
@@ -30,7 +33,7 @@ sceneByURL:
 
 sceneByName:
   action: scrapeXPath
-  queryURL: "https://www.trance-video.com/product/search?keyword={keyword}"
+  queryURL: "https://www.trance-video.com/product/search?keyword={}"
   scraper: searchScraper
 
 sceneByQueryFragment:
@@ -142,8 +145,10 @@ xPathScrapers:
 
   searchScraper:
     scene:
+      Title:
+        selector: "//ul[@class='title_list']/li/a/h4"
       URL:
-        selector: "//a[contains(@href,'/product/detail/')]/@href"
+        selector: "//ul[@class='title_list']/li/a/@href"
         postProcess:
           - javascript: |
 

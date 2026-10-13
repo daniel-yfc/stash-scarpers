@@ -12,7 +12,10 @@
 #   - Date: regex 【(\d{4})年(\d{1,2})月(\d{1,2})日発売 from .main_comment (no separate DOM element)
 #   - No canonical, no og:* tags.
 # Prefixes: TOU (GET-film 19 series + Men's Street pre-2019), MTK (Men's Street 2019+).
-# Search: /products/list.php?mode=search&name={keyword} (name matches title + performer, NOT product code).
+# Search: /products/list.php?mode=search&name={} (name matches title + performer, NOT product code).
+#   VERIFIED 2026-10-14 on live search page (name=sex, 16 items/page):
+#   - Result card: //div[contains(concat(' ', normalize-space(@class), ' '), ' neo_product_area ')]
+#   - Title/URL: .//h3/a (title text inside the same <a>; image link <a class="over"> excluded to keep 1:1 Title/URL pairing)
 # Note: GET-film DVDs discontinued, now released via Men's Rush.TV.
 # Last Updated: 2026-10-13
 
@@ -27,7 +30,7 @@ sceneByURL:
 
 sceneByName:
   action: scrapeXPath
-  queryURL: "https://www.get-film.jp/products/list.php?mode=search&name={keyword}"
+  queryURL: "https://www.get-film.jp/products/list.php?mode=search&name={}"
   scraper: searchScraper
 
 sceneByQueryFragment:
@@ -110,8 +113,10 @@ xPathScrapers:
 
   searchScraper:
     scene:
+      Title:
+        selector: "//div[contains(concat(' ', normalize-space(@class), ' '), ' neo_product_area ')]//h3/a"
       URL:
-        selector: "//a[contains(@href,'/products/detail.php?product_id=')]/@href"
+        selector: "//div[contains(concat(' ', normalize-space(@class), ' '), ' neo_product_area ')]//h3/a/@href"
         postProcess:
           - javascript: |
 
