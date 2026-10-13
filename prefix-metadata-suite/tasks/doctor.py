@@ -16,9 +16,7 @@ Categories:
 """
 import csv
 import json
-import os
 import sys
-import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -26,31 +24,10 @@ sys.path.insert(0, str(Path(__file__).parent))
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from extractor import extract_from_path
-from resolver import PrefixTable
+from resolver import PrefixTable, effective_studio
+from stash_client import graphql
 
-# Stash GraphQL endpoint. Set STASH_URL env var for your instance;
-# default is a local placeholder (no real address in the public repo).
-STASH_URL = os.environ.get("STASH_URL", "http://localhost:9999/graphql")
 BATCH_SIZE = 100
-
-
-def graphql(query: str, variables: dict | None = None) -> dict:
-    import os
-    import subprocess
-    payload = json.dumps({"query": query, "variables": variables or {}})
-    # Use curl via tunnel proxy (urllib proxy handling is unreliable here)
-    proxy = os.environ.get("HTTPS_PROXY", "")
-    if proxy:
-        proxy = proxy.rsplit(":", 1)[0] + ":3130"
-    cmd = [
-        "curl", "-s", "--max-time", "60",
-        "--proxy", proxy,
-        "-H", "Content-Type: application/json",
-        "-d", payload,
-        STASH_URL,
-    ]
-    result = subprocess.run(cmd, capture_output=True, text=True, timeout=70)
-    return json.loads(result.stdout)
 
 
 SCENES_QUERY = """
@@ -116,6 +93,9 @@ def doctor(table: PrefixTable, out_dir: Path, limit: int | None = None):
             path = get_primary_path(scene)
             ext = extract_from_path(path)
             res = table.resolve(ext.prefix)
+            # Effective studio: same Label > Series > Sub-Studio > Studio
+            # rule Enrich writes, so Doctor verdicts agree with Enrich.
+            effective = effective_studio(res)
 
             existing = (scene.get("studio") or {}).get("name")
 
@@ -129,7 +109,9 @@ def doctor(table: PrefixTable, out_dir: Path, limit: int | None = None):
                 # ambiguous + existing studio = potential mismatch, flag for review
             elif not existing:
                 category = "fillable"
-            elif existing == res.studio:
+            elif existing.casefold() == (effective or "").casefold():
+                # Stash studio comparison is case-insensitive: a stored
+                # name differing only by case is a match, not a mismatch.
                 category = "match"
             else:
                 category = "mismatch"
@@ -142,9 +124,10 @@ def doctor(table: PrefixTable, out_dir: Path, limit: int | None = None):
                 "prefix": ext.prefix,
                 "code": ext.code,
                 "code_source": ext.source,
-                "table_version": "v20261012-1012",
+                "table_version": table.version_info,
                 "confidence": res.confidence,
                 "resolved_studio": res.studio,
+                "resolved_effective_studio": effective,
                 "resolved_sub_studio": res.sub_studio,
                 "existing_studio": existing,
                 "category": category,
@@ -156,7 +139,7 @@ def doctor(table: PrefixTable, out_dir: Path, limit: int | None = None):
             if category != "match":
                 csv_writer.writerow([
                     sid, scene.get("title", ""), ext.code or "",
-                    ext.prefix or "", res.studio or "",
+                    ext.prefix or "", effective or "",
                     res.sub_studio or "", existing or "",
                     category, res.confidence,
                 ])

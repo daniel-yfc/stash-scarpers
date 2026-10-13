@@ -5,7 +5,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 from extractor import extract, extract_from_path
-from resolver import PrefixTable
+from resolver import PrefixTable, ResolveResult, effective_studio
 
 TABLE_DIR = Path(__file__).parent.parent / "prefix-table"
 
@@ -85,3 +85,44 @@ class TestResolver:
     def test_case_insensitive(self):
         r = self.table.resolve("kke")
         assert r.confidence == "ambiguous"
+
+
+def _res(studio=None, sub_studio=None, label=None, series=None):
+    return ResolveResult(
+        studio=studio, sub_studio=sub_studio, label=label, series=series,
+        confidence="unique",
+    )
+
+
+class TestEffectiveStudio:
+    def test_label_wins(self):
+        assert effective_studio(_res("S", "SS", "L", "SE")) == "L"
+
+    def test_series_fallback(self):
+        assert effective_studio(_res("S", "SS", None, "SE")) == "SE"
+
+    def test_sub_studio_fallback(self):
+        assert effective_studio(_res("S", "SS", None, None)) == "SS"
+
+    def test_category_sub_studio_skipped(self):
+        # 配信 / 独占 / オリジナル are categories, not studios.
+        for cat in ("配信", "独占", "オリジナル"):
+            assert effective_studio(_res("S", cat, None, None)) == "S"
+
+    def test_studio_fallback(self):
+        assert effective_studio(_res("S", None, None, None)) == "S"
+
+    def test_matches_live_table(self):
+        # KGS resolves to label 合法ショタ: Doctor and Enrich must agree.
+        table = PrefixTable(TABLE_DIR)
+        assert effective_studio(table.resolve("KGS")) == "合法ショタ"
+
+    def test_version_info(self):
+        table = PrefixTable(TABLE_DIR)
+        vi = table.version_info
+        assert set(vi) == {"meta_version", "meta_generated_at",
+                           "fingerprint", "files"}
+        assert len(vi["fingerprint"]) == 12
+        assert vi["files"] > 0
+        # Fingerprint is stable across loads of the same files.
+        assert PrefixTable(TABLE_DIR).version_info == vi

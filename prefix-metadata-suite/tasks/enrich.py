@@ -14,8 +14,6 @@ Skipped:
 """
 import csv
 import json
-import subprocess
-import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -24,23 +22,10 @@ sys.path.insert(0, str(Path(__file__).parent))
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from extractor import extract_from_path
-from resolver import PrefixTable
+from resolver import PrefixTable, effective_studio
+from stash_client import graphql
 
-# Stash GraphQL endpoint. Set STASH_URL env var for your instance;
-# default is a local placeholder (no real address in the public repo).
-STASH_URL = os.environ.get("STASH_URL", "http://localhost:9999/graphql")
 BATCH_SIZE = 50
-
-
-def graphql(query: str, variables: dict | None = None) -> dict:
-    payload = json.dumps({"query": query, "variables": variables or {}})
-    proxy = os.environ.get("HTTPS_PROXY", "")
-    if proxy:
-        proxy = proxy.rsplit(":", 1)[0] + ":3130"
-    cmd = ["curl", "-s", "--max-time", "60", "--proxy", proxy,
-           "-H", "Content-Type: application/json", "-d", payload, STASH_URL]
-    result = subprocess.run(cmd, capture_output=True, text=True, timeout=70)
-    return json.loads(result.stdout)
 
 
 def find_or_create_studio(name: str, dry_run: bool) -> str | None:
@@ -167,22 +152,18 @@ def enrich(table: PrefixTable, out_dir: Path, dry_run: bool = True,
 
             stats["fillable"] += 1
 
+            # Determine code first: the studio-failure skip below reads
+            # code_to_fill, which must be assigned before use.
+            code_to_fill = ext.code if need_code else None
+
             # Determine studio (if needed)
             # Priority: Label > Series > sub_studio > studio
             # (user 2026-10-12: Label/Series 當成 Studio 填入)
+            # Shared effective_studio() with Doctor so verdicts agree.
             studio_id = None
             studio_name = ""
             if need_studio and res.studio:
-                if res.label:
-                    studio_name = res.label
-                elif res.series:
-                    studio_name = res.series
-                else:
-                    _CATEGORY_SUBS = {"オリジナル", "独占", "配信"}
-                    if res.sub_studio and res.sub_studio not in _CATEGORY_SUBS:
-                        studio_name = res.sub_studio
-                    else:
-                        studio_name = res.studio
+                studio_name = effective_studio(res)
                 if studio_name not in studio_cache:
                     studio_cache[studio_name] = find_or_create_studio(studio_name, dry_run)
                 studio_id = studio_cache[studio_name]
@@ -190,9 +171,6 @@ def enrich(table: PrefixTable, out_dir: Path, dry_run: bool = True,
                 if not studio_id and not code_to_fill:
                     stats["errors"] += 1
                     continue
-
-            # Determine code (if needed)
-            code_to_fill = ext.code if need_code else None
 
             # Update scene
             success = update_scene(sid, studio_id, code_to_fill, dry_run)
@@ -219,6 +197,7 @@ def enrich(table: PrefixTable, out_dir: Path, dry_run: bool = True,
                 "action": action,
                 "dry_run": dry_run,
                 "table_id": res.table_id,
+                "table_version": table.version_info,
             }, ensure_ascii=False) + "\n")
 
             if limit and stats["scanned"] >= limit:

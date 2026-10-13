@@ -7,29 +7,15 @@ Reads: alias-table.json (canonical -> [aliases])
 Does: find studios matching aliases, rename to canonical via studioUpdate.
 """
 import json
-import subprocess
-import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 
-# Stash GraphQL endpoint. Set STASH_URL env var for your instance;
-# default is a local placeholder (no real address in the public repo).
-STASH_URL = os.environ.get("STASH_URL", "http://localhost:9999/graphql")
+from stash_client import graphql
+
 ALIAS_TABLE = Path(__file__).parent.parent / "alias-table.json"
-
-
-def graphql(query: str, variables: dict | None = None) -> dict:
-    payload = json.dumps({"query": query, "variables": variables or {}})
-    proxy = os.environ.get("HTTPS_PROXY", "")
-    if proxy:
-        proxy = proxy.rsplit(":", 1)[0] + ":3130"
-    cmd = ["curl", "-s", "--max-time", "60", "--proxy", proxy,
-           "-H", "Content-Type: application/json", "-d", payload, STASH_URL]
-    result = subprocess.run(cmd, capture_output=True, text=True, timeout=70)
-    return json.loads(result.stdout)
 
 
 def find_studio_by_name(name: str) -> dict | None:
