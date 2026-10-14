@@ -5,7 +5,12 @@ states:
   policy:
     status: unverified
   fixture:
-    status: unverified
+    status: verified
+    artifact: tests/fixtures/pubu/pubu-fixtures.yml
+    sha256: dec9dae07523f97571cc5e0415ba11ff7890fdc870421f620c6c377f27759c2f
+    captured_at: '2026-10-14T19:12:24+08:00'
+    source_url: https://www.pubu.com.tw/
+    revision: 992529f7e084e28c4dfb327da68953cf8a9a3be1
   live_search:
     status: unverified
   live_detail:
