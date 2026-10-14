@@ -5,7 +5,12 @@ states:
   policy:
     status: unverified
   fixture:
-    status: unverified
+    status: verified
+    artifact: tests/fixtures/fc2/fc2-fixtures.yml
+    sha256: b0238c165627651f87eb751f6c4ec5e3d18ac4dc259128b082cb2510e4f52f1c
+    captured_at: '2026-10-14T19:14:48+08:00'
+    source_url: https://adult.contents.fc2.com/
+    revision: 8cee96949047cfdc184e81f45cb5ce4f4cdbd446
   live_search:
     status: unverified
   live_detail:

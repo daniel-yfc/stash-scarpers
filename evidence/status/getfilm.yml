@@ -5,7 +5,12 @@ states:
   policy:
     status: unverified
   fixture:
-    status: unverified
+    status: verified
+    artifact: tests/fixtures/getfilm/getfilm-fixtures.yml
+    sha256: cba12b918bd3f5bd608f83384251eba6b8ceff60dbfd78a3a6cbd19c9872ed14
+    captured_at: '2026-10-14T19:14:48+08:00'
+    source_url: https://www.get-film.jp/
+    revision: 8cee96949047cfdc184e81f45cb5ce4f4cdbd446
   live_search:
     status: unverified
   live_detail:
