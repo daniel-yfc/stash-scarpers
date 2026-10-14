@@ -39,3 +39,38 @@ cases:
   - name: "GV-Wiki Cloudflare challenge"
     classification: failure
     html: "failure-cloudflare.html"
+  - name: "GV-Wiki performer search r=m (model-only)"
+    classification: completed
+    html: "search-model-baihu.html"
+    locale:
+      lang: "ja"
+      text: "REACH"
+    expect:
+      - xpath: "(//a[starts-with(@href, '/model/')])//p/text()"
+        min: 2
+        max: 2
+        values: ["REACH", "理一（りいち）"]
+      - xpath: "(//a[starts-with(@href, '/model/')])/@href"
+        min: 2
+        max: 2
+        values: ["/model/OLYOp8G", "/model/WL7gDzL"]
+      - xpath: "(//a[starts-with(@href, '/model/')])//div[@data-bg]/@data-bg"
+        min: 2
+        max: 2
+    optionalField:
+      xpath: "(//a[starts-with(@href, '/model/')])//span[@class='nonexistent-marker-xyz']"
+      expectedCount: 0
+  - name: "GV-Wiki model 7LpXMgL"
+    classification: completed
+    html: "model-7LpXMgL.html"
+    locale:
+      lang: "ja"
+      text: "Daniel"
+    expect:
+      - xpath: "(//table[@class='my-model-table'])//tr[td[1][normalize-space()='Name:']]/td[2]/text()"
+        min: 1
+        max: 1
+        values: [" Daniel/DANIEL ZHANG"]
+      - xpath: "(//main)//img[contains(concat(' ', normalize-space(@class), ' '), ' is-2by3 ')]/@src"
+        min: 1
+        max: 1

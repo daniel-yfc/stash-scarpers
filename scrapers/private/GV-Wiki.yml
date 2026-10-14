@@ -47,6 +47,8 @@ sceneByURL:
 
 sceneByName:
   action: scrapeXPath
+  # r=vm searches video+model without login; r=m is model-only but requires login
+  # (cookie block above must be enabled).
   queryURL: "https://www.gvwiki.com/search?q={}&r=vm"
   scraper: searchScraper
 
@@ -58,6 +60,19 @@ sceneByQueryFragment:
   action: scrapeXPath
   queryURL: "{url}"
   scraper: sceneScraper
+
+performerByURL:
+  - action: scrapeXPath
+    url:
+      - gvwiki.com/model/
+    scraper: performerScraper
+
+performerByName:
+  action: scrapeXPath
+  # r=m is model-only and requires login (cookie block above must be enabled).
+  # Without login use sceneByName (r=vm) and pick a /model/ result instead.
+  queryURL: "https://www.gvwiki.com/search?q={}&r=m"
+  scraper: performerSearchScraper
 
 xPathScrapers:
   searchScraper:
@@ -72,6 +87,53 @@ xPathScrapers:
                 with: ""
       URLs:
         selector: "$results/@href"
+        postProcess:
+          - javascript: |
+              var v = value || "";
+              if (!v) return "";
+              return /^https?:\/\//.test(v) ? v : "https://gvwiki.com" + v;
+
+  performerSearchScraper:
+    common:
+      $results: "//a[starts-with(@href, '/model/')]"
+    performer:
+      Name:
+        selector: "$results//p/text()"
+        postProcess:
+          - replace:
+              - regex: '^\\s+|\\s+$'
+                with: ""
+      URLs:
+        selector: "$results/@href"
+        postProcess:
+          - javascript: |
+              var v = value || "";
+              if (!v) return "";
+              return /^https?:\/\//.test(v) ? v : "https://gvwiki.com" + v;
+      Image:
+        selector: "$results//div[@data-bg]/@data-bg"
+        postProcess:
+          - replace:
+              - regex: '^\\s+|\\s+$'
+                with: ""
+          - javascript: |
+              var v = value || "";
+              if (!v) return "";
+              return /^https?:\/\//.test(v) ? v : "https://gvwiki.com" + v;
+
+  performerScraper:
+    common:
+      $main: "//main"
+      $info: "//table[@class='my-model-table']"
+    performer:
+      Name:
+        selector: "$info//tr[td[1][normalize-space()='Name:']]/td[2]/text()"
+        postProcess:
+          - replace:
+              - regex: '^\\s+|\\s+$'
+                with: ""
+      Image:
+        selector: "$main//img[contains(concat(' ', normalize-space(@class), ' '), ' is-2by3 ')]/@src"
         postProcess:
           - javascript: |
               var v = value || "";
