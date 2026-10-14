@@ -1,0 +1,41 @@
+cases:
+  - name: "GV-Wiki video WwrbNyw"
+    classification: completed
+    html: "video-WwrbNyw.html"
+    locale:
+      lang: "ja"
+      text: "KSF215"
+    expect:
+      - xpath: "(//main)//h1[contains(concat(' ', normalize-space(@class), ' '), ' title ')]/text()"
+        min: 1
+        max: 1
+      - xpath: "(//main//table[contains(concat(' ', normalize-space(@class), ' '), ' is-fullwidth ')])//tr[td[1][normalize-space()='ID']]/td[2]/text()"
+        min: 1
+        max: 1
+        values: ["KSF215"]
+      - xpath: "(//main//table[contains(concat(' ', normalize-space(@class), ' '), ' is-fullwidth ')])//tr[td[1][normalize-space()='Release Date']]/td[2]/text()"
+        min: 1
+        max: 1
+        values: ["2025-01-24"]
+      - xpath: "(//main)//div[contains(concat(' ', normalize-space(@class), ' '), ' swiper-slide ')][1]//img/@src"
+        min: 1
+        max: 1
+    optionalField:
+      xpath: "(//main)//span[@class='nonexistent-marker-xyz']"
+      expectedCount: 0
+  - name: "GV-Wiki video XDOEqzw"
+    classification: completed
+    html: "video-XDOEqzw.html"
+    locale:
+      lang: "ja"
+      text: "AKIRA"
+    expect:
+      - xpath: "(//main)//h1[contains(concat(' ', normalize-space(@class), ' '), ' title ')]/text()"
+        min: 1
+        max: 1
+      - xpath: "(//main//table[contains(concat(' ', normalize-space(@class), ' '), ' is-fullwidth ')])//tr[td[1][normalize-space()='ID']]/td[2]/text()"
+        min: 1
+        max: 1
+  - name: "GV-Wiki Cloudflare challenge"
+    classification: failure
+    html: "failure-cloudflare.html"
