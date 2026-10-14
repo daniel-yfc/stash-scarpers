@@ -5,7 +5,12 @@ states:
   policy:
     status: unverified
   fixture:
-    status: unverified
+    status: verified
+    artifact: tests/fixtures/jgvdata/jgvdata-fixtures.yml
+    sha256: 6cb0cba5a6e2101285036f1f532e0945666f126266965aa54e0a196e91511aa0
+    captured_at: '2026-10-14T19:19:57+08:00'
+    source_url: https://www.jgvdata.com/
+    revision: 4685af1c3bbbcb13632dbe4d4bf81006e51d6e6c
   live_search:
     status: unverified
   live_detail:
