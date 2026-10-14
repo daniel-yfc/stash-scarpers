@@ -1,0 +1,22 @@
+cases:
+  - name: "RGBEE product 39054"
+    classification: completed
+    html: "product-39054.html"
+    locale:
+      lang: "zh-TW"
+      text: "Bluephoto"
+    expect:
+      - xpath: "//section[@id='facts']//dt[normalize-space()='發行']/following-sibling::dd[1]"
+        min: 1
+        max: 1
+        values: ["2026-08-18"]
+      - xpath: "//meta[@property='og:image']/@content"
+        min: 1
+        max: 1
+        values: ["https://staticmedia.rgbee.net/39054/t-37akgft3727.jpg"]
+    optionalField:
+      xpath: "//section[@id='facts']//dt[normalize-space()='影片長度']/following-sibling::dd[1]"
+      expectedCount: 0
+  - name: "RGBEE Cloudflare challenge"
+    classification: failure
+    html: "failure-cloudflare.html"

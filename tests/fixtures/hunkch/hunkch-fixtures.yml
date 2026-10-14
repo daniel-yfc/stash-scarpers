@@ -1,0 +1,21 @@
+cases:
+  - name: "HunkCh movie BKY-010"
+    classification: completed
+    html: "movie-BKY-010.html"
+    locale:
+      lang: "ja"
+      text: "バキッシュ"
+    expect:
+      - xpath: "(//div[contains(concat(' ',normalize-space(@class),' '),' product_detail_centre ')] | //table[@id='product'])//h2[1]"
+        min: 1
+        max: 1
+      - xpath: "//link[@rel='canonical']/@href"
+        min: 1
+        max: 1
+        values: ["https://www.hunk-ch.com/movie_detail.php?code=BKY-010"]
+    optionalField:
+      xpath: "//table[@id='product']//th[contains(.,'nonexistent-marker-xyz')]"
+      expectedCount: 0
+  - name: "HunkCh Cloudflare challenge"
+    classification: failure
+    html: "failure-cloudflare.html"

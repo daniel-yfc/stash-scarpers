@@ -1,0 +1,20 @@
+cases:
+  - name: "ClubCK product 2221"
+    classification: completed
+    html: "product-2221.html"
+    locale:
+      lang: "ja"
+      text: "NUDE BEST D"
+    expect:
+      - xpath: "//h2[contains(@class,'margin-none')][normalize-space()]"
+        min: 1
+        max: 1
+      - xpath: "//span[@id='product_code_default']/text()"
+        min: 1
+        max: 1
+    optionalField:
+      xpath: "//div[@id='jacket']//img[contains(@src,'nonexistent-marker-xyz')]/@src"
+      expectedCount: 0
+  - name: "ClubCK Cloudflare challenge"
+    classification: failure
+    html: "failure-cloudflare.html"

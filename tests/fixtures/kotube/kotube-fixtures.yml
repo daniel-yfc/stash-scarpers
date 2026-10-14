@@ -1,0 +1,37 @@
+cases:
+  - name: "KOTube package 26895"
+    classification: completed
+    html: "package-26895.html"
+    locale:
+      text: "美少年選抜巨根男子校2"
+    expect:
+      - xpath: "//div[@id='Contents']//h3[1]/text()"
+        min: 1
+        max: 1
+      - xpath: "//a[@class='btn_dvd']/@href"
+        min: 1
+        max: 1
+        values: ["http://ko-video.com/products/detail.php?product_code=KSF152_DVD"]
+      - xpath: "//th[contains(text(), \"DVD 発売\") or contains(text(), \"発売\")]/following-sibling::td[1]/text()"
+        min: 1
+        max: 1
+        values: ["2019年05月"]
+    optionalField:
+      xpath: "//th[contains(text(), \"作品番号\")]/following-sibling::td[1]/text()"
+      expectedCount: 0
+  - name: "KOTube product 93903"
+    classification: completed
+    html: "product-93903.html"
+    locale:
+      text: "コスプレパーソナル"
+    expect:
+      - xpath: "//div[@id='Contents']//h3[1]/text()"
+        min: 1
+        max: 1
+      - xpath: "//th[contains(text(), \"作品番号\")]/following-sibling::td[1]/text()"
+        min: 1
+        max: 1
+        values: ["01-01-0542-01"]
+  - name: "KOTube Cloudflare challenge"
+    classification: failure
+    html: "failure-cloudflare.html"

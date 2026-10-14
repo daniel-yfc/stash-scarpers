@@ -1,0 +1,21 @@
+cases:
+  - name: "KOVideo product KG520_DVD"
+    classification: completed
+    html: "product-KG520_DVD.html"
+    locale:
+      lang: "ja"
+      text: "KO-TUBEオリジナル"
+    expect:
+      - xpath: "//div[contains(concat(' ',normalize-space(@class),' '),' title_bar ')][1]/h2[1]/text()"
+        min: 1
+        max: 2
+      - xpath: "//div[contains(@class,'detail_product')][1]//dl[1]/dt[normalize-space(.)='商品発売日']/following-sibling::dd[1]/text()"
+        min: 1
+        max: 1
+        values: ["\u00a0:\u00a02026/09/04"]
+    optionalField:
+      xpath: "//div[contains(@class,'detail_product')][1]//dl[1]/dt[normalize-space(.)='監督']/following-sibling::dd[1]"
+      expectedCount: 0
+  - name: "KOVideo Cloudflare challenge"
+    classification: failure
+    html: "failure-cloudflare.html"
