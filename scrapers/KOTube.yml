@@ -1,7 +1,12 @@
 name: KO-Tube
+# 2026-10-14: added ko-tube.com/extra/package/ (特典パッケージ, bonus packages)
+# to sceneByURL + groupByURL — verified against 5 extra pages
+# (26646, 26422, 26592, 26726, 26887): same DOM as /package/index/
+# (h3 title, th/td spec table, sub_data description, btn_dvd Code fallback).
 sceneByURL:
 - action: scrapeXPath
   url:
+  - ko-tube.com/extra/package/
   - ko-tube.com/package/index/
   - ko-tube.com/product/index/
   - ko-tube.com/product/index2/
@@ -17,12 +22,13 @@ sceneByQueryFragment:
 groupByURL:
 - action: scrapeXPath
   url:
+  - ko-tube.com/extra/package/
   - ko-tube.com/package/index/
   scraper: groupScraper
 xPathScrapers:
   sceneSearch:
     common:
-      $item: //a[contains(@href, "/product/index") or contains(@href, "/package/index/")]
+      $item: //a[contains(@href, "/product/index") or contains(@href, "/package/index/") or contains(@href, "/extra/package/")]
     scene:
       Title: $item
       Image: $item//img/@src
