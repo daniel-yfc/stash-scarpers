@@ -19,6 +19,32 @@ cases:
     optionalField:
       xpath: "//table[contains(@class,'prod_data')][1]//th[normalize-space(.)='監督']/following-sibling::td[1]"
       expectedCount: 0
+  - name: "CK-Download product 16942"
+    classification: completed
+    html: "product-16942.html"
+    locale:
+      text: "ORWE00079"
+    expect:
+      - xpath: "//table[contains(@class,'prod_data')][1]//th[normalize-space(.)='DVDタイトル']/following-sibling::td[1][normalize-space()]"
+        min: 1
+        max: 1
+      - xpath: "//table[contains(@class,'prod_data')][1]//th[normalize-space(.)='プロダクトナンバー']/following-sibling::td[1]"
+        min: 1
+        max: 1
+        values: ["ORWE00079"]
+  - name: "CK-Download product 34479"
+    classification: completed
+    html: "product-34479.html"
+    locale:
+      text: "WKSN-00142"
+    expect:
+      - xpath: "//table[contains(@class,'prod_data')][1]//th[normalize-space(.)='DVDタイトル']/following-sibling::td[1][normalize-space()] | //div[@id='Contents']/h3[normalize-space()]/text() | //title"
+        min: 1
+        max: 3
+      - xpath: "//table[contains(@class,'prod_data')][1]//th[normalize-space(.)='プロダクトナンバー']/following-sibling::td[1]"
+        min: 1
+        max: 1
+        values: ["WKSN-00142"]
   - name: "CK-Download Cloudflare challenge"
     classification: failure
     html: "failure-cloudflare.html"

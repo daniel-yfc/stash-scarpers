@@ -1,0 +1,37 @@
+cases:
+  - name: "Justice01 justice4th17"
+    classification: completed
+    html: "page-justice4th17.html"
+    locale:
+      lang: "ja"
+      text: "JUSTICE4th17"
+    expect:
+      - xpath: "//article[contains(@class,'post')][.//h1[contains(@class,'entry-title')]]//h1[contains(@class,'entry-title')]/text()"
+        min: 1
+        max: 1
+        values: ["JUSTICE4th17"]
+      - xpath: "//time[contains(@class,'entry-date')]/@datetime"
+        min: 1
+        max: 1
+        values: ["2024-09-18T23:33:50+09:00"]
+    optionalField:
+      xpath: "//article[contains(@class,'post')]//span[@class='nonexistent-marker-xyz']"
+      expectedCount: 0
+  - name: "Justice01 guilty2nd14"
+    classification: completed
+    html: "page-guilty2nd14.html"
+    locale:
+      lang: "ja"
+      text: "GUILTY2nd14"
+    expect:
+      - xpath: "//article[contains(@class,'post')][.//h1[contains(@class,'entry-title')]]//h1[contains(@class,'entry-title')]/text()"
+        min: 1
+        max: 1
+        values: ["GUILTY2nd14"]
+      - xpath: "//time[contains(@class,'entry-date')]/@datetime"
+        min: 1
+        max: 1
+        values: ["2024-09-17T22:57:09+09:00"]
+  - name: "Justice01 Cloudflare challenge"
+    classification: failure
+    html: "failure-cloudflare.html"

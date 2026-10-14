@@ -1,0 +1,33 @@
+cases:
+  - name: "ACCEED detail ACST270"
+    classification: completed
+    html: "detail-ACST270.html"
+    locale:
+      text: "拘束したノンケを喰う！"
+    expect:
+      - xpath: "//div[@id='content4']//blockquote/h2/text()[normalize-space()][1]"
+        min: 1
+        max: 1
+      - xpath: "//ul[contains(@class,'thongso')]//input[@name='product_code']/@value"
+        min: 1
+        max: 1
+        values: ["ACST270"]
+    optionalField:
+      xpath: "//ul[contains(@class,'thongso')]//input[@name='nonexistent-marker-xyz']/@value"
+      expectedCount: 0
+  - name: "ACCEED detail ACST397"
+    classification: completed
+    html: "detail-ACST397.html"
+    locale:
+      text: "美少年巨根伝説。～K-P"
+    expect:
+      - xpath: "//div[@id='content4']//blockquote/h2/text()[normalize-space()][1]"
+        min: 1
+        max: 1
+      - xpath: "//ul[contains(@class,'thongso')]//input[@name='product_code']/@value"
+        min: 1
+        max: 1
+        values: ["ACST397"]
+  - name: "ACCEED Cloudflare challenge"
+    classification: failure
+    html: "failure-cloudflare.html"

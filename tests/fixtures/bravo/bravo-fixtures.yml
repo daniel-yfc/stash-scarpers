@@ -1,0 +1,37 @@
+cases:
+  - name: "BRAVO dvd 281"
+    classification: completed
+    html: "dvd-281.html"
+    locale:
+      lang: "ja"
+      text: "281"
+    expect:
+      - xpath: "//div[@id='comp-kbfkf16x']//h1[contains(@class,'font_0')] | //meta[@property='og:title']/@content"
+        min: 1
+        max: 1
+        values: ["281"]
+      - xpath: "//link[@rel='canonical']/@href"
+        min: 1
+        max: 1
+        values: ["https://www.bravo-japan.com/dvds/281"]
+    optionalField:
+      xpath: "//div[@id='comp-kbflq5xd']//img/@src | //div[@id='comp-kbflq5xd']//video/@poster"
+      expectedCount: 0
+  - name: "BRAVO dvd 046"
+    classification: completed
+    html: "dvd-046.html"
+    locale:
+      lang: "ja"
+      text: "046"
+    expect:
+      - xpath: "//div[@id='comp-kbfkf16x']//h1[contains(@class,'font_0')] | //meta[@property='og:title']/@content"
+        min: 1
+        max: 1
+        values: ["046"]
+      - xpath: "//link[@rel='canonical']/@href"
+        min: 1
+        max: 1
+        values: ["https://www.bravo-japan.com/dvds/046"]
+  - name: "BRAVO Cloudflare challenge"
+    classification: failure
+    html: "failure-cloudflare.html"

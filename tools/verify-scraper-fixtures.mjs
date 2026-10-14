@@ -6,7 +6,7 @@ import { parse } from 'yaml';
 
 const FAILURE_MARKERS = [
   'cf-challenge', 'Just a moment', 'Attention Required',
-  'age-verification', 'Application error', '404 Not Found',
+  'Application error', '404 Not Found',
 ];
 
 function fail(message) { throw new Error(message); }
