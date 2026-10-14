@@ -105,9 +105,13 @@ xPathScrapers:
           - javascript: |
               var v = value || "";
               if (!v) return "";
+              v = v.replace(/\?.*$/, "");
               v = v.replace(/^\/\//, "https://");
+              v = v.replace(/^http:\/\//i, "https://");
               if (/^https?:/i.test(v)) return v;
-              return "";
+              v = v.replace(/^\.\/+/, "");
+              if (v.charAt(0) === "/") return "https://www.bravo-japan.com" + v;
+              return "https://www.bravo-japan.com/" + v;
 
 driver:
   useCDP: true

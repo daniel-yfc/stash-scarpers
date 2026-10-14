@@ -63,8 +63,11 @@ xPathScrapers:
           - javascript: |
               var v = value || "";
               if (!v) return "";
+              v = v.replace(/\?.*$/, "");
               v = v.replace(/^\/\//, "https://");
+              v = v.replace(/^http:\/\//i, "https://");
               if (/^https?:/i.test(v)) return v;
+              v = v.replace(/^\.\/+/, "");
               if (v.charAt(0) === "/") return "https://www.ko-shop.com" + v;
               return "https://www.ko-shop.com/" + v;
       Image:
@@ -75,7 +78,9 @@ xPathScrapers:
               if (!v) return "";
               v = v.replace(/\?.*$/, "");
               v = v.replace(/^\/\//, "https://");
+              v = v.replace(/^http:\/\//i, "https://");
               if (/^https?:/i.test(v)) return v;
+              v = v.replace(/^\.\/+/, "");
               if (v.charAt(0) === "/") return "https://www.ko-shop.com" + v;
               return "https://www.ko-shop.com/" + v;
 
@@ -134,7 +139,9 @@ xPathScrapers:
               if (!v) return "";
               v = v.replace(/\?.*$/, "");
               v = v.replace(/^\/\//, "https://");
+              v = v.replace(/^http:\/\//i, "https://");
               if (/^https?:/i.test(v)) return v;
+              v = v.replace(/^\.\/+/, "");
               if (v.charAt(0) === "/") return "https://www.ko-shop.com" + v;
               return "https://www.ko-shop.com/" + v;
       # Studio convention: label/brand-level field → Studio (sub-studio model,
@@ -155,8 +162,11 @@ xPathScrapers:
             - javascript: |
                 var v = value || "";
                 if (!v) return "";
+                v = v.replace(/\?.*$/, "");
                 v = v.replace(/^\/\//, "https://");
+                v = v.replace(/^http:\/\//i, "https://");
                 if (/^https?:/i.test(v)) return v;
+                v = v.replace(/^\.\/+/, "");
                 if (v.charAt(0) === "/") return "https://www.ko-shop.com" + v;
                 return "https://www.ko-shop.com/" + v;
       Tags:
@@ -217,7 +227,9 @@ xPathScrapers:
               if (!v) return "";
               v = v.replace(/\?.*$/, "");
               v = v.replace(/^\/\//, "https://");
+              v = v.replace(/^http:\/\//i, "https://");
               if (/^https?:/i.test(v)) return v;
+              v = v.replace(/^\.\/+/, "");
               if (v.charAt(0) === "/") return "https://www.ko-shop.com" + v;
               return "https://www.ko-shop.com/" + v;
       Date:
@@ -262,8 +274,11 @@ xPathScrapers:
             - javascript: |
                 var v = value || "";
                 if (!v) return "";
+                v = v.replace(/\?.*$/, "");
                 v = v.replace(/^\/\//, "https://");
+                v = v.replace(/^http:\/\//i, "https://");
                 if (/^https?:/i.test(v)) return v;
+                v = v.replace(/^\.\/+/, "");
                 if (v.charAt(0) === "/") return "https://www.ko-shop.com" + v;
                 return "https://www.ko-shop.com/" + v;
       URLs:

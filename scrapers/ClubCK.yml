@@ -98,6 +98,7 @@ xPathScrapers:
                 v = v.replace(/h\.(jpe?g|png|webp)$/i, ".$1");
               }
               if (/^https?:/i.test(v)) return v;
+              v = v.replace(/^\.\/+/, "");
               if (v.charAt(0) === "/") return "https://www.coat.co.jp" + v;
               return "https://www.coat.co.jp/" + v;
 
@@ -204,6 +205,7 @@ xPathScrapers:
                 v = v.replace(/h\.(jpe?g|png|webp)$/i, ".$1");
               }
               if (/^https?:/i.test(v)) return v;
+              v = v.replace(/^\.\/+/, "");
               if (v.charAt(0) === "/") return "https://www.coat.co.jp" + v;
               return "https://www.coat.co.jp/" + v;
 
