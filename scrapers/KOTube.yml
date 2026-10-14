@@ -28,7 +28,7 @@ groupByURL:
 xPathScrapers:
   sceneSearch:
     common:
-      $item: //a[contains(@href, "/product/index") or contains(@href, "/package/index/")]
+      $item: //a[contains(@href, "/product/index") or contains(@href, "/package/index/") or contains(@href, "/extra/package/")]
     scene:
       Title: $item
       Image: $item//img/@src
