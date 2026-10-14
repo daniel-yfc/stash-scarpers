@@ -1,0 +1,21 @@
+scraper: scrapers/BRAVO.yml
+states:
+  schema:
+    status: unverified
+  policy:
+    status: unverified
+  fixture:
+    status: verified
+    artifact: tests/fixtures/bravo/bravo-fixtures.yml
+    sha256: be1885d2097683e8c4ae5f2440120e8bd7945ac16f62c1910ac87e5d009d39b2
+    captured_at: '2026-10-14T19:09:10+08:00'
+    source_url: https://www.bravo-japan.com/
+    revision: 901c2b8b9411f806d746d97ee330e3c6ac56ed92
+  live_search:
+    status: unverified
+  live_detail:
+    status: unverified
+  live_cdp:
+    status: unverified
+  production:
+    status: unverified

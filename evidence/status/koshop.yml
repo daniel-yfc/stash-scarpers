@@ -1,0 +1,21 @@
+scraper: scrapers/KOShop.yml
+states:
+  schema:
+    status: unverified
+  policy:
+    status: unverified
+  fixture:
+    status: verified
+    artifact: tests/fixtures/koshop/koshop-fixtures.yml
+    sha256: 893a82feddae0a5e9d81046d45f16aeffb31aa44f83ab99f9f9d078a6fa2fb76
+    captured_at: '2026-10-14T19:09:10+08:00'
+    source_url: https://www.ko-shop.com/
+    revision: 5459b3b2ac685271a097f0e059d60b44d6fb7f1c
+  live_search:
+    status: unverified
+  live_detail:
+    status: unverified
+  live_cdp:
+    status: unverified
+  production:
+    status: unverified
