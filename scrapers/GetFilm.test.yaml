@@ -1,0 +1,4 @@
+# GetFilm live-test fixtures (browser verified 2026-10-13)
+urls:
+  - https://www.get-film.jp/products/detail.php?product_id=1201
+multi: true

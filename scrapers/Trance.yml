@@ -1,0 +1,172 @@
+# TRANCE MARKET (trance-video.com) — official site for TRANCE / TRANCE MIX /
+# TRANCE ORIGINAL / TRANCE creators / TRANCE PACK / DOKKING Film.
+# Verification status (2026-10-13, anonymous fetch of live pages):
+#   VERIFIED against https://www.trance-video.com/product/detail/40625:
+#   - Title: //div[@id="Contents"]/h3 (page <title>/<h1> are site-wide fixed text)
+#   - Code (作品ID): //table[@class="prod_data"]//tr[th[text()="作品ID"]]/td[1]
+#     e.g. TR-16-0028-01 (format: {brand}-{series:02d}-{ep:04d}-{part:02d})
+#   - Date (掲載日): //table[@class="prod_data"]//tr[th[text()="掲載日"]]/td[1]
+#   - Duration (再生時間): //table[@class="prod_data"]//tr[th[text()="再生時間"]]/td[1]
+#   - Studio (メーカー): //div[@class="prod_category"]//li[strong[text()="メーカー"]]/div[@class="item"]/a
+#   - Label (レーベル): //div[@class="prod_category"]//li[strong[text()="レーベル"]]/div[@class="item"]/a
+#     (site uses レーベル for series concept; no separate シリーズ field)
+#   - Performers (出演モデル): //div[@class="prod_category"]//li[strong[text()="出演モデル"]]/div[@class="item"]/a
+#   - Tags (カテゴリ): //div[@class="prod_category"]//li[strong[text()="カテゴリ"]]/div[@class="item"]/a
+#   - Image: //div[@class="photo_flexslider"]//ul[@class="slides"]/li[@class="flex-active-slide"]/img
+#     (relative path like /picture/parent/TR-16-0028-01-01_1.jpg)
+#   - No canonical, no og:* tags.
+# Search: /product/search?keyword={} (302 redirects to /product/result).
+#   VERIFIED 2026-10-14 on live search page (keyword=TR-16, 28 items, no pagination):
+#   - Result item: //ul[@class='title_list']/li > a[href='/product/detail/<id>']
+#   - Title: ./h4 inside the same <a> (1:1 Title/URL pairing)
+# 95 prefixes mapped: TR-01..50, TM-01..14, TO-01..23, TC-01..05, TP-01, DF-02/03.
+# Last Updated: 2026-10-13
+
+name: Trance
+
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - trance-video.com/product/detail/
+      - www.trance-video.com/product/detail/
+    scraper: sceneScraper
+
+sceneByName:
+  action: scrapeXPath
+  queryURL: "https://www.trance-video.com/product/search?keyword={}"
+  scraper: searchScraper
+
+sceneByQueryFragment:
+  action: scrapeXPath
+  queryURL: "{url}"
+  scraper: sceneScraper
+
+# Performer pages: no individual profile pages; each performer links to their
+# filmography (e.g. /product/search?model[]=210).
+# Verified 2026-10-13 via /product/model:
+#   - List: //div[@class='model_list']//a (h5 = name, img = photo)
+#   - Performer name: //div[@class='model_list']//a//h5
+#   - Performer image: //div[@class='model_list']//a//div[@class='photo'][1]//img/@src
+performerByURL:
+  - action: scrapeXPath
+    url:
+      - trance-video.com/product/search?model[]=
+      - www.trance-video.com/product/search?model[]=
+    scraper: performerScraper
+
+xPathScrapers:
+  sceneScraper:
+    common:
+      $code: "//table[@class='prod_data']//tr[th[normalize-space(text())='作品ID']]/td[1]"
+      $date: "//table[@class='prod_data']//tr[th[normalize-space(text())='掲載日']]/td[1]"
+      $duration: "//table[@class='prod_data']//tr[th[normalize-space(text())='再生時間']]/td[1]"
+
+    scene:
+      Title:
+        selector: "//div[@id='Contents']/h3"
+        postProcess:
+          - replace:
+              - regex: "^\\s+|\\s+$"
+                with: ""
+
+      Code:
+        selector: "$code"
+        postProcess:
+          - replace:
+              - regex: "^\\s+|\\s+$"
+                with: ""
+
+      Date:
+        selector: "$date"
+        postProcess:
+          - replace:
+              - regex: "^\\s+|\\s+$"
+                with: ""
+          - parseDate: "2006.01.02"
+
+      Duration:
+        selector: "$duration"
+        postProcess:
+          - replace:
+              - regex: "[^0-9]"
+                with: ""
+
+      Studio:
+        Name:
+          selector: "//div[@class='prod_category']//li[strong[normalize-space(text())='メーカー']]/div[@class='item']/a"
+        URL:
+          selector: "//div[@class='prod_category']//li[strong[normalize-space(text())='メーカー']]/div[@class='item']/a/@href"
+          postProcess:
+            - javascript: |
+
+                var v = value || "";
+
+                if (!v) return "";
+
+                if (/^https?:/i.test(v)) return v;
+
+                return "https://www.trance-video.com" + v;
+
+      Performers:
+        Name:
+          selector: "//div[@class='prod_category']//li[strong[normalize-space(text())='出演モデル']]/div[@class='item']/a"
+        URL:
+          selector: "//div[@class='prod_category']//li[strong[normalize-space(text())='出演モデル']]/div[@class='item']/a/@href"
+          postProcess:
+            - javascript: |
+
+                var v = value || "";
+
+                if (!v) return "";
+
+                if (/^https?:/i.test(v)) return v;
+
+                return "https://www.trance-video.com" + v;
+
+      Tags:
+        Name:
+          selector: "//div[@class='prod_category']//li[strong[normalize-space(text())='カテゴリ']]/div[@class='item']/a"
+
+      Image:
+        selector: "//div[@class='photo_flexslider']//ul[@class='slides']/li[@class='flex-active-slide']/img/@src"
+        postProcess:
+          - javascript: |
+
+              var v = value || "";
+
+              if (!v) return "";
+
+              if (/^https?:/i.test(v)) return v;
+
+              return "https://www.trance-video.com" + v;
+
+      Details:
+        selector: "//div[@class='intro_text']/p"
+
+  searchScraper:
+    scene:
+      Title:
+        selector: "//ul[@class='title_list']/li/a/h4"
+      URL:
+        selector: "//ul[@class='title_list']/li/a/@href"
+        postProcess:
+          - javascript: |
+
+              var v = value || "";
+
+              if (!v) return "";
+
+              if (/^https?:/i.test(v)) return v;
+
+              return "https://www.trance-video.com" + v;
+
+  performerScraper:
+    performer:
+      Name:
+        selector: "//div[contains(text(),'モデル：')]"
+        postProcess:
+          - replace:
+              - regex: ".*モデル：\\s*"
+                with: ""
+              - regex: "^\\s+|\\s+$"
+                with: ""

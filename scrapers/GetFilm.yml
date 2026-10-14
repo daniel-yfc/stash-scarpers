@@ -1,0 +1,138 @@
+# GET-film (get-film.jp) — official site for GET-film / Men's Street (EC-CUBE 2.x).
+# Verification status (2026-10-13, anonymous fetch of live pages):
+#   VERIFIED against https://www.get-film.jp/products/detail.php?product_id=1201:
+#   - Title: //div[@id='detailrightbloc']/h2
+#   - Code (商品コード): //span[@id='product_code_default'] e.g. TOU-420
+#   - Studio: //div[@id='leftcolumn']//select[@name='maker_id']/option[@selected]
+#     (only 2 makers: GET-film / Men's Street; not shown as text on detail page)
+#   - Series: //div[@class='relative_cat']/p (category path like DVD > GET-film > Premium Channel)
+#   - Performers (モデル): //div[@class='relative_cat']/p[a[1][text()='モデル']]/a[2]
+#   - Image: //div[@id='detailphotobloc']/div[@class='photo']/a/img[@class='picture']/@src
+#   - Details: //div[@class='main_comment']
+#   - Date: regex 【(\d{4})年(\d{1,2})月(\d{1,2})日発売 from .main_comment (no separate DOM element)
+#   - No canonical, no og:* tags.
+# Prefixes: TOU (GET-film 19 series + Men's Street pre-2019), MTK (Men's Street 2019+).
+# Search: /products/list.php?mode=search&name={} (name matches title + performer, NOT product code).
+#   VERIFIED 2026-10-14 on live search page (name=sex, 16 items/page):
+#   - Result card: //div[contains(concat(' ', normalize-space(@class), ' '), ' neo_product_area ')]
+#   - Title/URL: .//h3/a (title text inside the same <a>; image link <a class="over"> excluded to keep 1:1 Title/URL pairing)
+# Note: GET-film DVDs discontinued, now released via Men's Rush.TV.
+# Last Updated: 2026-10-13
+
+name: GetFilm
+
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - get-film.jp/products/detail.php
+      - www.get-film.jp/products/detail.php
+    scraper: sceneScraper
+
+sceneByName:
+  action: scrapeXPath
+  queryURL: "https://www.get-film.jp/products/list.php?mode=search&name={}"
+  scraper: searchScraper
+
+sceneByQueryFragment:
+  action: scrapeXPath
+  queryURL: "{url}"
+  scraper: sceneScraper
+
+# Performer pages: no individual profile pages; each performer links to their
+# filmography (e.g. https://www.get-film.jp/products/list.php?category_id=155).
+# Verified 2026-10-13 via /user_data/model_list.php:
+#   - List: //div[@id="two_maincolumn_right"]/a/img[contains(@src,"image/model/")]
+#   - Performer name: //h2[@class="title"] (no bio, no portrait on performer page)
+performerByURL:
+  - action: scrapeXPath
+    url:
+      - get-film.jp/products/list.php?category_id=
+      - www.get-film.jp/products/list.php?category_id=
+    scraper: performerScraper
+
+xPathScrapers:
+  sceneScraper:
+    scene:
+      Title:
+        selector: "//div[@id='detailrightbloc']/h2"
+        postProcess:
+          - replace:
+              - regex: "^\\s+|\\s+$"
+                with: ""
+
+      Code:
+        selector: "//span[@id='product_code_default']"
+        postProcess:
+          - replace:
+              - regex: "^\\s+|\\s+$"
+                with: ""
+
+      Date:
+        selector: "//div[@class='main_comment']"
+        postProcess:
+          - replace:
+              - regex: "(?s).+【(\\d{4})年(\\d{1,2})月(\\d{1,2})日発売.*"
+                with: "$1-$2-$3"
+          - parseDate: "2006-1-2"
+
+      Studio:
+        Name:
+          selector: "//div[@id='leftcolumn']//select[@name='maker_id']/option[@selected]"
+
+      Performers:
+        Name:
+          selector: "//div[@class='relative_cat']/p[a[1][normalize-space(text())='モデル']]/a[position()>1]"
+        URL:
+          selector: "//div[@class='relative_cat']/p[a[1][normalize-space(text())='モデル']]/a[position()>1]/@href"
+          postProcess:
+            - javascript: |
+
+                var v = value || "";
+
+                if (!v) return "";
+
+                if (/^https?:/i.test(v)) return v;
+
+                return "https://www.get-film.jp" + v;
+
+      Tags:
+        Name:
+          selector: "//div[@class='relative_cat']//a"
+
+      Image:
+        selector: "//div[@id='detailphotobloc']/div[@class='photo']/a/img[@class='picture']/@src"
+        postProcess:
+          - javascript: |
+              var v = value || "";
+              if (!v) return "";
+              if (/^https?:/i.test(v)) return v;
+              return "https://www.get-film.jp" + v;
+
+      Details:
+        selector: "//div[@class='main_comment']"
+
+  searchScraper:
+    scene:
+      Title:
+        selector: "//div[contains(concat(' ', normalize-space(@class), ' '), ' neo_product_area ')]//h3/a"
+      URL:
+        selector: "//div[contains(concat(' ', normalize-space(@class), ' '), ' neo_product_area ')]//h3/a/@href"
+        postProcess:
+          - javascript: |
+
+              var v = value || "";
+
+              if (!v) return "";
+
+              if (/^https?:/i.test(v)) return v;
+
+              return "https://www.get-film.jp" + v;
+
+  performerScraper:
+    performer:
+      Name:
+        selector: "//h2[@class='title']"
+        postProcess:
+          - replace:
+              - regex: "^\\s+|\\s+$"
+                with: ""
