@@ -1,0 +1,33 @@
+cases:
+  - name: "GetFilm product 1201"
+    classification: completed
+    html: "product-1201.html"
+    locale:
+      lang: "ja"
+      text: "MINATO"
+    expect:
+      - xpath: "//div[@id='detailrightbloc']/h2"
+        min: 1
+        max: 1
+      - xpath: "//span[@id='product_code_default']"
+        min: 1
+        max: 1
+    optionalField:
+      xpath: "//div[@id='detailrightbloc']//span[@class='nonexistent-marker-xyz']"
+      expectedCount: 0
+  - name: "GetFilm product 1199"
+    classification: completed
+    html: "product-1199.html"
+    locale:
+      lang: "ja"
+      text: "TOU-419"
+    expect:
+      - xpath: "//div[@id='detailrightbloc']/h2"
+        min: 1
+        max: 1
+      - xpath: "//span[@id='product_code_default']"
+        min: 1
+        max: 1
+  - name: "GetFilm Cloudflare challenge"
+    classification: failure
+    html: "failure-cloudflare.html"

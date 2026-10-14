@@ -1,0 +1,20 @@
+cases:
+  - name: "GAMES dvd WIG-381"
+    classification: completed
+    html: "dvd-WIG-381.html"
+    locale:
+      text: "DVD"
+    expect:
+      - xpath: "//div[contains(@class,'left_etc')]//div[contains(@class,'titlebar')]//h2/text()"
+        min: 1
+        max: 1
+      - xpath: "//div[@id='main_contents']//form//input[@name='code']/@value"
+        min: 1
+        max: 1
+        values: ["WIG-381"]
+    optionalField:
+      xpath: "//div[@id='main_contents']//span[@class='nonexistent-marker-xyz']"
+      expectedCount: 0
+  - name: "GAMES Cloudflare challenge"
+    classification: failure
+    html: "failure-cloudflare.html"

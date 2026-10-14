@@ -1,0 +1,38 @@
+cases:
+  - name: "fc2 article 4817460"
+    classification: completed
+    html: "article-4817460.html"
+    locale:
+      lang: "tw"
+      text: "4817460"
+    expect:
+      - xpath: "//div[contains(concat(' ', normalize-space(@class), ' '), ' items_article_headerInfo ')]/h3/text()"
+        min: 1
+        max: 3
+      - xpath: "/html/head/meta[@property='og:url']/@content"
+        min: 1
+        max: 1
+        values: ["https://adult.contents.fc2.com/article/4817460/"]
+      - xpath: "//section[contains(concat(' ', normalize-space(@class), ' '), ' items_comment_sellerBox ')]//h4/a/text()"
+        min: 1
+        max: 1
+    optionalField:
+      xpath: "//section[contains(concat(' ', normalize-space(@class), ' '), ' items_article_SampleImages ')]//span[@class='nonexistent-marker-xyz']"
+      expectedCount: 0
+  - name: "fc2 article 4810323"
+    classification: completed
+    html: "article-4810323.html"
+    locale:
+      lang: "tw"
+      text: "4810323"
+    expect:
+      - xpath: "//div[contains(concat(' ', normalize-space(@class), ' '), ' items_article_headerInfo ')]/h3/text()"
+        min: 1
+        max: 3
+      - xpath: "/html/head/meta[@property='og:url']/@content"
+        min: 1
+        max: 1
+        values: ["https://adult.contents.fc2.com/article/4810323/"]
+  - name: "fc2 Cloudflare challenge"
+    classification: failure
+    html: "failure-cloudflare.html"
