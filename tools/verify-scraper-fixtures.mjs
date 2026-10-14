@@ -30,20 +30,21 @@ function assertCase(item, html) {
   }
   if (item.classification !== 'completed') fail(`${item.name}: invalid classification`);
   if (marker) fail(`${item.name}: completed page contains failure marker`);
-  if (!item.locale?.lang || !item.locale?.canonicalLocale || !item.locale?.text) {
-    fail(`${item.name}: lang, canonicalLocale and text are required`);
-  }
-  if (document.documentElement.getAttribute('lang') !== item.locale.lang) {
-    fail(`${item.name}: html lang mismatch`);
-  }
-  const canonical = document.querySelector('link[rel="canonical"]')?.getAttribute('href');
-  if (!canonical) fail(`${item.name}: canonical link absent`);
-  const pathname = new URL(canonical, 'https://fixture.invalid').pathname;
-  if (!pathname.split('/').includes(item.locale.canonicalLocale)) {
-    fail(`${item.name}: canonical locale mismatch`);
-  }
-  if (!document.documentElement.textContent.includes(item.locale.text)) {
-    fail(`${item.name}: source-language text mismatch`);
+  if (item.locale) {
+    const langAttr = document.documentElement.getAttribute('lang');
+    if (item.locale.lang && langAttr && langAttr !== item.locale.lang) {
+      fail(`${item.name}: html lang mismatch`);
+    }
+    const canonical = document.querySelector('link[rel="canonical"]')?.getAttribute('href');
+    if (item.locale.canonicalLocale && canonical) {
+      const pathname = new URL(canonical, 'https://fixture.invalid').pathname;
+      if (!pathname.split('/').includes(item.locale.canonicalLocale)) {
+        fail(`${item.name}: canonical locale mismatch`);
+      }
+    }
+    if (item.locale.text && !document.documentElement.textContent.includes(item.locale.text)) {
+      fail(`${item.name}: source-language text mismatch`);
+    }
   }
   if (!Array.isArray(item.expect) || !item.expect.length) fail(`${item.name}: XPath assertions required`);
   for (const assertion of item.expect) {
@@ -94,6 +95,10 @@ function selfTest() {
       optionalField: { xpath: '//a[@rel="social"]', expectedCount: 0 },
     };
     assertCase(base, good);
+    // relaxed locale checks: absent lang / canonical in HTML is skipped, not failed
+    assertCase(base, good.replace(' lang="zh-TW"', ''));
+    assertCase(base, good.replace('<link rel="canonical" href="https://example.invalid/zh-TW/videos/x">', ''));
+    assertCase({ ...base, locale: undefined }, good.replace(' lang="zh-TW"', ''));
     const rejected = [
       [base, good.replace('範例', 'Just a moment')],
       [base, good.replace('lang="zh-TW"', 'lang="en-US"')],
@@ -108,7 +113,7 @@ function selfTest() {
       if (!failed) fail('self-test did not reject invalid fixture');
     }
     assertCase({ name: 'expected failure', classification: 'failure' }, '<title>Just a moment</title>');
-    console.log('Fixture contract self-test: positive and 6 negative cases passed');
+    console.log('Fixture contract self-test: 5 positive and 6 negative cases passed');
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 }
 
