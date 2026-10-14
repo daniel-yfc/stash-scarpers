@@ -149,6 +149,8 @@ xPathScrapers:
                 if (mixed) n = mixed[1].trim();
 
                 return n;'
+        Gender:
+          fixed: MALE
       Tags:
         Name:
           selector: $meta/dt[normalize-space(.)='シリーズ/ジャンル']/following-sibling::dd[1]//a/text()
