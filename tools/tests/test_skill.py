@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-SKILL_DIR = Path("skills/stash-scraper-builder")
+SKILL_DIR = Path(__file__).resolve().parents[2] / "skills/stash-scraper-builder"
 REFS_DIR = SKILL_DIR / "references"
 
 CORE_REFERENCES = [

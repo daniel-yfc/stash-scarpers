@@ -1,4 +1,12 @@
-# GetFilm live-test fixtures (browser verified 2026-10-13)
+# GetFilm live-test fixtures (browser verified 2026-10-14)
+# search: https://www.get-film.jp/products/list.php?mode=search&name={keyword}
+# custom probes (all HIT): performer=SUGURU (3), code=TOU-419 (1), partial title=早熟 (8)
+probes:
+  - SUGURU
+  - TOU-419
+  - 早熟
 urls:
   - https://www.get-film.jp/products/detail.php?product_id=1201
+  - https://www.get-film.jp/products/detail.php?product_id=1199
+  - https://www.get-film.jp/products/detail.php?product_id=1139
 multi: true

@@ -8,8 +8,6 @@ on:
       - "validator/**"
       - "tools/**"
       - "docs/**"
-      - "evidence/**"
-      - "tests/fixtures/**"
       - "logs/**"
       - "skills/**"
       - "templates/README.md"
@@ -29,8 +27,6 @@ on:
       - "validator/**"
       - "tools/**"
       - "docs/**"
-      - "evidence/**"
-      - "tests/fixtures/**"
       - "logs/**"
       - "skills/**"
       - "templates/README.md"
@@ -62,7 +58,7 @@ jobs:
         run: node --version
 
       - name: Install Node dependencies
-        run: npm ci || npm install
+        run: npm ci
 
       - name: Validate scraper schemas
         run: node validator/index.mjs -a --ci

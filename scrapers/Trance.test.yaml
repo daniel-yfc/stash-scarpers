@@ -1,4 +1,12 @@
-# Trance live-test fixtures (browser verified 2026-10-13)
+# Trance live-test fixtures (browser verified 2026-10-14)
+# search: https://www.trance-video.com/product/search?keyword={keyword}
+# custom probes (all HIT): performer=沖修斗 (36), code=TC-05-0013-01 (1), partial title=private sex (17)
+probes:
+  - 沖修斗
+  - TC-05-0013-01
+  - private sex
 urls:
   - https://www.trance-video.com/product/detail/40625
+  - https://www.trance-video.com/product/detail/40641
+  - https://www.trance-video.com/product/detail/40627
 multi: true

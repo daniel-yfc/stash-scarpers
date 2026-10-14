@@ -75,10 +75,11 @@ xPathScrapers:
         selector: //section[@id='facts']//dt[normalize-space()='影片長度']/following-sibling::dd[1]
         postProcess:
           - javascript: |
-              var parts = value.trim().split(':').map(function (part) { return parseInt(part, 10) || 0; });
+              var v = value || "";
+              var parts = v.trim().split(':').map(function (part) { return parseInt(part, 10) || 0; });
               if (parts.length === 3) return String(parts[0] * 3600 + parts[1] * 60 + parts[2]);
               if (parts.length === 2) return String(parts[0] * 60 + parts[1]);
-              return value.replace(/\D/g, '');
+              return v.replace(/\D/g, '');
       Image: &rgbeeImage
         selector: //meta[@property='og:image']/@content | //section[@id='purchase']//div[contains(@class,'pdp-cover')]//img/@src
         postProcess:

@@ -1,0 +1,16 @@
+# Pubu live-test fixtures (browser verified 2026-10-14)
+# search: https://www.pubu.com.tw/search/adult?q={keyword}&AgeRestricted=on&isNewFilter=true
+# custom probes (all HIT): performer=雨宮れいん (720), code=348474 (1), partial title=巨乳天使 (2355)
+# NOTE: adult detail pages redirect anonymous visitors to /auth/login (age gate);
+# existence verified by redirect behavior vs "product removed" page for bogus IDs.
+# Detail-page field extraction needs 18+ member login (not covered here).
+probes:
+  - 雨宮れいん
+  - "348474"
+  - 巨乳天使
+urls:
+  - https://www.pubu.com.tw/ebook/348474
+  - https://www.pubu.com.tw/media/686896
+  - https://www.pubu.com.tw/magazine/4195
+  - https://www.pubu.com.tw/combo/217773
+multi: true
