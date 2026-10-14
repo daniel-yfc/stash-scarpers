@@ -1,0 +1,37 @@
+name: Standalone Auto-fix
+
+# Manual trigger: applies the safe auto-fixes from scripts/fix-standalone.py
+# (currently: delete excluded files) and commits the result.
+# Markers and path references are NOT auto-fixed -- they need semantic
+# reframe per METHODOLOGY.md §5 and are reported for manual handling.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: standalone-skill
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Apply safe auto-fixes
+        run: python scripts/fix-standalone.py --apply
+
+      - name: Verify with Phase 4 checks
+        run: python scripts/check-standalone.py
+
+      - name: Commit fixes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -m "Auto-fix standalone issues (fix-standalone.py)"
+          git push origin HEAD:standalone-skill

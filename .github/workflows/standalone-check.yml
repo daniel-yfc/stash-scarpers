@@ -1,0 +1,25 @@
+name: Standalone Skill Check
+
+# Phase 4 validation (METHODOLOGY.md) on every push/PR to standalone-skill.
+on:
+  push:
+    branches: [standalone-skill]
+  pull_request:
+    branches: [standalone-skill]
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run Phase 4 checks
+        run: python scripts/check-standalone.py
+
+      - name: Prettier check
+        run: npx --yes prettier@3 --check "SKILL.md" "METHODOLOGY.md" "references/**/*.md" "scripts/*.py"

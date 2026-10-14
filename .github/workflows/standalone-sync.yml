@@ -1,0 +1,51 @@
+name: Sync from Main
+
+# Manual trigger: runs scripts/sync-from-main.sh (Phase 1 mechanical
+# extraction) and opens a PR for review. Phase 3 reframe (METHODOLOGY.md §5)
+# is manual -- the PR must be reviewed before merging.
+on:
+  workflow_dispatch:
+    inputs:
+      main_ref:
+        description: "Main ref to sync from (branch, tag, or SHA)"
+        required: true
+        default: "main"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: standalone-skill
+          # Full history so sync-from-main.sh can archive any main ref.
+          fetch-depth: 0
+
+      - name: Fetch main ref
+        run: git fetch origin ${{ inputs.main_ref }}:${{ inputs.main_ref }} || true
+
+      - name: Run Phase 1 sync
+        run: bash scripts/sync-from-main.sh ${{ inputs.main_ref }}
+
+      - name: Phase 4 checks (informational -- reframe may be needed)
+        run: python scripts/check-standalone.py || true
+
+      - name: Open PR for review
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: sync/standalone-${{ github.run_id }}
+          base: standalone-skill
+          title: "Sync from main@${{ inputs.main_ref }}"
+          body: |
+            Mechanical sync (Phase 1) from `${{ inputs.main_ref }}`.
+
+            **Manual reframe required before merge** (METHODOLOGY.md §5):
+            - [ ] Review diff for repo-only links/commands to rewrite
+            - [ ] Bump `metadata.version` in SKILL.md
+            - [ ] `scripts/check-standalone.py` passes
+            - [ ] `prettier --check` clean
