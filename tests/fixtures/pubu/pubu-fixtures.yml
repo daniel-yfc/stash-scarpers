@@ -1,0 +1,38 @@
+cases:
+  - name: "Pubu media 697540"
+    classification: completed
+    html: "media-1.html"
+    locale:
+      lang: "zh-tw"
+      text: "GDSR-003-2"
+    expect:
+      - xpath: "//div[contains(concat(' ', normalize-space(@class), ' '), ' col-4 ')][normalize-space()='ID']/following-sibling::div[contains(concat(' ', normalize-space(@class), ' '), ' col-8 ')][1]"
+        min: 1
+        max: 2
+      - xpath: "//div[@id='info-content']//div[contains(concat(' ', normalize-space(@class), ' '), ' font-base ')]/div/text()"
+        min: 1
+        max: 3
+      - xpath: "//meta[@property='og:image']/@content"
+        min: 1
+        max: 1
+        values: ["https://d8klf4yg300is.cloudfront.net/prod/697540/697540media_cover_image_l.jpg"]
+    optionalField:
+      xpath: "//div[@id='info-content']//span[@class='nonexistent-marker-xyz']"
+      expectedCount: 0
+  - name: "Pubu media 688239"
+    classification: completed
+    html: "media-2.html"
+    locale:
+      lang: "zh-tw"
+      text: "Bluephoto"
+    expect:
+      - xpath: "//div[contains(concat(' ', normalize-space(@class), ' '), ' col-4 ')][normalize-space()='ID']/following-sibling::div[contains(concat(' ', normalize-space(@class), ' '), ' col-8 ')][1]"
+        min: 1
+        max: 2
+      - xpath: "//meta[@property='og:image']/@content"
+        min: 1
+        max: 1
+        values: ["https://d8klf4yg300is.cloudfront.net/prod/688239/688239media_cover_image_l.jpg"]
+  - name: "Pubu Cloudflare challenge"
+    classification: failure
+    html: "failure-cloudflare.html"
