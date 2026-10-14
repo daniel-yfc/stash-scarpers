@@ -1,0 +1,47 @@
+cases:
+  - name: "JGVData post h0230-gol0065"
+    classification: completed
+    html: "post-h0230-gol0065.html"
+    locale:
+      lang: "en-US"
+      text: "gol0065"
+    expect:
+      - xpath: "(//div[contains(concat(' ', normalize-space(@class), ' '), ' mg-blog-post-box ')])[1]//h1[contains(concat(' ', normalize-space(@class), ' '), ' title ')]/text()"
+        min: 1
+        max: 1
+      - xpath: "(//div[contains(concat(' ', normalize-space(@class), ' '), ' mg-blog-post-box ')])[1]//dt[normalize-space()='GV Code']/following-sibling::dd[1]/text()"
+        min: 1
+        max: 1
+        values: ["gol0065"]
+      - xpath: "(//div[contains(concat(' ', normalize-space(@class), ' '), ' mg-blog-post-box ')])[1]//dt[normalize-space()='Release Date']/following-sibling::dd[1]/text()"
+        min: 1
+        max: 1
+        values: ["2013-04-13"]
+      - xpath: "(//div[contains(concat(' ', normalize-space(@class), ' '), ' mg-blog-post-box ')])[1]//img[contains(concat(' ', normalize-space(@class), ' '), ' wp-post-image ')]/@src"
+        min: 1
+        max: 1
+        values: ["https://jgvdata.com/wp-content/uploads/2021/09/h0230_gol0065.jpg"]
+    optionalField:
+      xpath: "(//div[contains(concat(' ', normalize-space(@class), ' '), ' mg-blog-post-box ')])[1]//span[@class='nonexistent-marker-xyz']"
+      expectedCount: 0
+  - name: "JGVData post fc2-4720058"
+    classification: completed
+    html: "post-fc2-4720058.html"
+    locale:
+      lang: "en-US"
+      text: "4720058"
+    expect:
+      - xpath: "(//div[contains(concat(' ', normalize-space(@class), ' '), ' mg-blog-post-box ')])[1]//h1[contains(concat(' ', normalize-space(@class), ' '), ' title ')]/text()"
+        min: 1
+        max: 1
+      - xpath: "(//div[contains(concat(' ', normalize-space(@class), ' '), ' mg-blog-post-box ')])[1]//dt[normalize-space()='GV Code']/following-sibling::dd[1]/text()"
+        min: 1
+        max: 1
+        values: ["4720058"]
+      - xpath: "(//div[contains(concat(' ', normalize-space(@class), ' '), ' mg-blog-post-box ')])[1]//dt[normalize-space()='Release Date']/following-sibling::dd[1]/text()"
+        min: 1
+        max: 1
+        values: ["2025-08-01"]
+  - name: "JGVData Cloudflare challenge"
+    classification: failure
+    html: "failure-cloudflare.html"
