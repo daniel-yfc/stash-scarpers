@@ -26,7 +26,7 @@
 #   bash tools/run-all-checks.sh --step        # 逐步確認模式
 #   bash tools/run-all-checks.sh --list        # 列出所有層級
 #   bash tools/run-all-checks.sh --report [輸出檔]
-#                                             # 全跑 + 依 docs/evaluation-report-template.md
+#                                             # 全跑 + 依 docs/72-evaluation-report-template.md
 #                                             # 自動產生評估報告（預設 docs/reports/evaluation-YYYYMMDD-HHMMSS.md）
 # =============================================================================
 set -u
@@ -259,7 +259,7 @@ print_summary() {
 
 # --- 評估報告產生 ---
 generate_report() {
-  # $1=輸出檔路徑。依 docs/evaluation-report-template.md 填入實測結果。
+  # $1=輸出檔路徑。依 docs/72-evaluation-report-template.md 填入實測結果。
   local out="$1"
   mkdir -p "$(dirname "$out")"
 
@@ -323,7 +323,7 @@ generate_report() {
   R_ISSUE_ROWS="$issue_rows" \
   R_RESULTS="$results_ser" \
   R_PASS_RATE="通過 $pass_n / 12" \
-  python3 - "$REPO_ROOT/docs/evaluation-report-template.md" "$out" <<'PYEOF'
+  python3 - "$REPO_ROOT/docs/72-evaluation-report-template.md" "$out" <<'PYEOF'
 import os, re, sys
 
 tpl_path, out_path = sys.argv[1], sys.argv[2]
@@ -414,7 +414,7 @@ case "${1:-}" in
     echo "  --step      逐步確認模式"
     echo "  --list      列出測試層級"
     echo "  --report [輸出檔]"
-    echo "              執行全部並依 docs/evaluation-report-template.md 自動產生評估報告"
+    echo "              執行全部並依 docs/72-evaluation-report-template.md 自動產生評估報告"
     echo "              未指定輸出檔時寫入 docs/reports/evaluation-YYYYMMDD-HHMMSS.md"
     exit 0
     ;;

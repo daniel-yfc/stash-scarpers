@@ -1,6 +1,24 @@
+---
+doc_id: REF-VERIFY-60
+title: Schema Validation Checklist
+status: active
+layer: skill
+owner: maintainer
+audience:
+  - agent
+  - maintainer
+applies_to:
+  - scrapers
+last_verified: "2026-10-15"
+authority: informational
+routing:
+  intents:
+    - schema
+---
+
 # Schema Validation Checklist
 
-Use this checklist before emitting a scraper YAML file. Run the repository's Node validator against its schema; its expectations derive from upstream CommunityScrapers (see `UPSTREAM_SOURCES.md`). A checklist is not a validator result.
+Use this checklist before emitting a scraper YAML file. Run the repository's Node validator against its schema; its expectations derive from upstream CommunityScrapers (see `upstream-sources.md`). A checklist is not a validator result.
 
 ## Top-Level Entry Points
 
@@ -50,7 +68,7 @@ whose `url` value is contained in the target URL.
 
 ## Authority
 
-- [ ] The repository's `validator/index.mjs` and `validator/scraper.schema.json` encode schema checks derived from upstream CommunityScrapers; check `UPSTREAM_SOURCES.md` for provenance and compare with upstream when compatibility is in question.
+- [ ] The repository's `validator/index.mjs` and `validator/scraper.schema.json` encode schema checks derived from upstream CommunityScrapers; check `upstream-sources.md` for provenance and compare with upstream when compatibility is in question.
 - [ ] `references/scraper.schema.json` is a minimal offline stub, not a full validator or a pass/fail authority.
 
 ## Scraper Definition
@@ -93,7 +111,7 @@ whose `url` value is contained in the target URL.
 
 **Repo-only** (stash-scarpers): the commands below. Standalone, validate with the official CommunityScrapers validator and schema instead.
 
-`validate.yml` runs path-filtered schema, URL sorting, repository policy, Python regression tests, fixture-runner self-test, committed-YAML parsing, session-material scan, and documentation checks. `pr-check.yml` reports changed-scraper policy results. `fixture-manifests.yml`, `evidence-contract.yml`, and `cdp-evidence-gate.yml` have separate evidence scopes. `link-check.yml` is advisory; `scrutiny.yml` is manual raw-response inspection. See [`docs/05_CI_Workflows.md`](../../../docs/05_CI_Workflows.md) for triggers and all eight workflow responsibilities.
+`validate.yml` runs path-filtered schema, URL sorting, repository policy, Python regression tests, fixture-runner self-test, committed-YAML parsing, session-material scan, and documentation checks. `pr-check.yml` reports changed-scraper policy results. `fixture-manifests.yml`, `evidence-contract.yml`, and `cdp-evidence-gate.yml` have separate evidence scopes. `link-check.yml` is advisory; `scrutiny.yml` is manual raw-response inspection. See [`docs/05_CI_Workflows.md`](../../../docs/40-ci-workflows.md) for triggers and all eight workflow responsibilities.
 
 ```bash
 node validator/index.mjs -a --ci
