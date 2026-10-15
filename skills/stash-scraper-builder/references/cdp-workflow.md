@@ -1,3 +1,21 @@
+---
+doc_id: REF-MODE-44
+title: Visible-CDP Workflow
+status: active
+layer: skill
+owner: maintainer
+audience:
+  - agent
+  - maintainer
+applies_to:
+  - scrapers
+last_verified: "2026-10-15"
+authority: informational
+routing:
+  intents:
+    - cdp
+---
+
 # Visible-CDP Workflow
 
 **Load when:** standard HTTP cannot retrieve the page (login, paywall, human check, or JS-only DOM).

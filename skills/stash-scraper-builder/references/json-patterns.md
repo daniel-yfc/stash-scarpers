@@ -1,3 +1,21 @@
+---
+doc_id: REF-MODE-41
+title: JSON Patterns
+status: active
+layer: skill
+owner: maintainer
+audience:
+  - agent
+  - maintainer
+applies_to:
+  - scrapers
+last_verified: "2026-10-15"
+authority: informational
+routing:
+  intents:
+    - json
+---
+
 # JSON Patterns
 
 Patterns and guidance for JSON-based scrapers.

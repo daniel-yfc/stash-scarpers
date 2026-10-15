@@ -1,3 +1,21 @@
+---
+doc_id: REF-MODE-45
+title: Multi-site network scrapers
+status: active
+layer: skill
+owner: maintainer
+audience:
+  - agent
+  - maintainer
+applies_to:
+  - scrapers
+last_verified: "2026-10-15"
+authority: informational
+routing:
+  intents:
+    - multi-site
+---
+
 # Multi-site network scrapers
 
 Canonical reference:

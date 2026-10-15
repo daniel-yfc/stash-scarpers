@@ -1,3 +1,21 @@
+---
+doc_id: REF-FIELD-55
+title: Entity Field Reference
+status: active
+layer: skill
+owner: maintainer
+audience:
+  - agent
+  - maintainer
+applies_to:
+  - scrapers
+last_verified: "2026-10-15"
+authority: informational
+routing:
+  intents:
+    - entity-fields
+---
+
 # Entity Field Reference
 
 Complete field lists for the seven scraped object types, verified against

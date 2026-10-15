@@ -1,3 +1,21 @@
+---
+doc_id: REF-VERIFY-61
+title: Eval Pack — 5 Tasks
+status: active
+layer: skill
+owner: maintainer
+audience:
+  - agent
+  - maintainer
+applies_to:
+  - scrapers
+last_verified: "2026-10-15"
+authority: informational
+routing:
+  intents:
+    - evaluation
+---
+
 # Eval Pack — 5 Tasks
 
 **Load when:** testing the skill end-to-end.
