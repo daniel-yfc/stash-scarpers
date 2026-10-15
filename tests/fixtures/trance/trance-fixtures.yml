@@ -1,0 +1,59 @@
+cases:
+  - name: "Trance detail 40625"
+    classification: completed
+    html: "detail-40625.html"
+    locale:
+      lang: "ja"
+      text: "熱狂球児"
+    expect:
+      - xpath: "//div[@id='Contents']/h3"
+        min: 1
+        max: 1
+        values: ["【先行配信】熱狂球児 part28"]
+      - xpath: "(//table[@class='prod_data']//tr[th[normalize-space(text())='作品ID']]/td[1])"
+        min: 1
+        max: 1
+        values: ["TR-16-0028-01"]
+      - xpath: "(//div[@class='prod_category']//li[strong[normalize-space(text())='メーカー']]/div[@class='item']/a)"
+        min: 1
+        max: 1
+      - xpath: "(//div[@class='prod_category']//li[strong[normalize-space(text())='出演モデル']]/div[@class='item']/a)"
+        min: 2
+        max: 2
+    optionalField:
+      xpath: "//div[@class='nonexistent-marker-xyz']"
+      expectedCount: 0
+  - name: "Trance detail 40641"
+    classification: completed
+    html: "detail-40641.html"
+    locale:
+      lang: "ja"
+      text: "private sex"
+    expect:
+      - xpath: "//div[@id='Contents']/h3"
+        min: 1
+        max: 1
+        values: ["【沖修斗】private sex6"]
+      - xpath: "(//table[@class='prod_data']//tr[th[normalize-space(text())='作品ID']]/td[1])"
+        min: 1
+        max: 1
+        values: ["TC-05-0013-01"]
+      - xpath: "(//div[@class='prod_category']//li[strong[normalize-space(text())='メーカー']]/div[@class='item']/a)"
+        min: 1
+        max: 1
+  - name: "Trance search result"
+    classification: completed
+    html: "search-okishuto.html"
+    locale:
+      lang: "ja"
+      text: "沖修斗"
+    expect:
+      - xpath: "//ul[@class='title_list']/li/a/h4"
+        min: 60
+        max: 60
+      - xpath: "//ul[@class='title_list']/li/a/@href"
+        min: 60
+        max: 60
+  - name: "Trance Cloudflare challenge"
+    classification: failure
+    html: "failure-cloudflare.html"
