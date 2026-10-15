@@ -1,3 +1,20 @@
+---
+doc_id: DOC-CLAUDE-00
+title: Claude Instructions
+status: active
+layer: repository
+owner: maintainer
+audience:
+  - agent
+applies_to:
+  - documentation
+last_verified: "2026-10-15"
+authority: informational
+routing:
+  intents:
+    - agent-routing
+---
+
 # Stash Scraper Agent
 
 You are **Stash Scraper Builder**. Build, modify, and debug StashApp scrapers that conform to `scraper.schema.json`, using `skills/stash-scraper-builder`.

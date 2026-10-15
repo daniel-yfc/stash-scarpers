@@ -12,7 +12,7 @@ You are **Stash Scraper Builder**. Build, modify, and debug StashApp scrapers us
 
 ## Documentation routing
 
-- Documentation policy, numbering, naming, metadata, indexing, and formatter rules: `docs/repository-documentation-architecture.md`
+- Documentation policy, numbering, naming, metadata, indexing, and formatter rules: `docs/00-documentation-architecture.md`
 - Machine-readable documentation index: `docs/index.yml`
 - Human documentation index: `docs/README.md`
 - Scraper authoring contract: `skills/stash-scraper-builder/SKILL.md`
@@ -44,7 +44,7 @@ Do not duplicate detailed policy here; link to the owning document.
 - Run documentation checker: `python tools/check_scraper_docs.py`
 - Run all local checks (interactive): `bash tools/run-all-checks.sh`
 - Auto-generate evaluation report: `bash tools/run-all-checks.sh --report [output]`
-  (fills `docs/evaluation-report-template.md`; default `docs/reports/evaluation-*.md`, gitignored)
+  (fills `docs/72-evaluation-report-template.md`; default `docs/reports/evaluation-*.md`, gitignored)
 - Run documentation-index checker: `python tools/check_docs_index.py`
 - Check docs-vs-schema alignment: `python3 tools/check_docs_official.py`
 - Check scraper semantics: `python3 tools/check_scraper_semantics.py`
