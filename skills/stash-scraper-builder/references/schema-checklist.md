@@ -111,7 +111,7 @@ whose `url` value is contained in the target URL.
 
 **Repo-only** (stash-scarpers): the commands below. Standalone, validate with the official CommunityScrapers validator and schema instead.
 
-`validate.yml` runs path-filtered schema, URL sorting, repository policy, Python regression tests, fixture-runner self-test, committed-YAML parsing, session-material scan, and documentation checks. `pr-check.yml` reports changed-scraper policy results. `fixture-manifests.yml`, `evidence-contract.yml`, and `cdp-evidence-gate.yml` have separate evidence scopes. `link-check.yml` is advisory; `scrutiny.yml` is manual raw-response inspection. See [`docs/05_CI_Workflows.md`](../../../docs/40-ci-workflows.md) for triggers and all eight workflow responsibilities.
+`validate.yml` runs path-filtered schema, URL sorting, repository policy, Python regression tests, fixture-runner self-test, committed-YAML parsing, session-material scan, and documentation checks. `pr-check.yml` reports changed-scraper policy results. `fixture-manifests.yml`, `evidence-contract.yml`, and `cdp-evidence-gate.yml` have separate evidence scopes. `link-check.yml` is advisory; `scrutiny.yml` is manual raw-response inspection. See [`docs/40-ci-workflows.md`](../../../docs/40-ci-workflows.md) for triggers and all eight workflow responsibilities.
 
 ```bash
 node validator/index.mjs -a --ci

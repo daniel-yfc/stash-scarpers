@@ -6,6 +6,7 @@ exclude = [
   '^localhost',
   '^127\.0\.0\.1',
   '^file://',
+  'docs/archive/',
 ]
 
 # Accepted status codes

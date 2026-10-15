@@ -77,7 +77,7 @@ No completed Gayerdar fixture or live Stash/CDP pass is implied by these command
 - `cdp-evidence-gate.yml` rejects unsupported CDP claims; it is not a live CDP test.
 - `scrutiny.yml` is a manual raw-response check; `link-check.yml` is advisory link inspection for Markdown PRs, weekly, and manually.
 
-See [`docs/05_CI_Workflows.md`](../docs/05_CI_Workflows.md) for the eight-workflow inventory and verification boundaries. No workflow currently executes the five-task skill evaluation pack.
+See [`docs/40-ci-workflows.md`](../docs/40-ci-workflows.md) for the eight-workflow inventory and verification boundaries. No workflow currently executes the five-task skill evaluation pack.
 
 ## Local helpers
 

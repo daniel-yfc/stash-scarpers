@@ -60,7 +60,7 @@ routing:
 3. Add deterministic positive, optional/negative and failure-page cases to the fixture contract for the affected _class_ of problem; test card decoys, locale/layout variation or URL near-matches when relevant. For each configured search entity, author a populated result and separate detail case. The runner enforces only its documented assertions, not every authoring expectation; see the rendered-DOM fixture guide (**repo-only**: `docs/51-rendered-dom-fixture-testing.md`).
 4. Run schema, URL sort, policy, tests and documentation checks on the committed revision; record each result separately. No manifests means `UNVERIFIED`, not a fixture pass. Record raw live search and detail separately and require actual Stash/CDP output for a live-CDP claim.
 5. Promote a proposed family pattern to [`best-practices.md`](best-practices.md) or a runtime-specific reference only after an independent site/layout test and a counterexample have been reviewed. Then update [`schema-checklist.md`](schema-checklist.md), relevant executable regression tests, and the owning authoring checklist together. If only one site supports it, keep it in the incident record as a site-specific hypothesis.
-6. Do not mark production ready until the separate A–H production-gate evidence exists (**repo-only**: `docs/04_Production_Gate.md`). An audit recommendation or checklist completion is not verification.
+6. Do not mark production ready until the separate A–H production-gate evidence exists (**repo-only**: `docs/30-production-gate.md`). An audit recommendation or checklist completion is not verification.
 
 ### Incident 3: YAML shape defects surfaced only at runtime load
 
