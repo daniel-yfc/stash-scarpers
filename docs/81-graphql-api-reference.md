@@ -21,7 +21,7 @@ routing:
     - identify
 ---
 
-# Stash GraphQL API 參考
+# Stash GraphQL API Reference
 
 StashApp 的 GraphQL 就是它的主要 API。以下內容已對照官方文件與 repo 的 schema（develop 分支）確認。與 scraper 工作的關聯：scraper 產出的欄位（Studio、URLs、Performer 等）最終經由這些 mutation 寫入，理解 schema 有助於對齊欄位語義與 Identify 行為。
 

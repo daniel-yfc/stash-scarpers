@@ -1,3 +1,23 @@
+---
+doc_id: DOC-QG-21
+title: Quality Gate Rules
+status: active
+layer: repository
+owner: maintainer
+audience:
+  - agent
+  - maintainer
+applies_to:
+  - scrapers
+  - ci
+last_verified: "2026-10-15"
+authority: canonical
+routing:
+  intents:
+    - quality-gate
+    - validation
+---
+
 # Quality Gate Rules
 
 ## Overview
@@ -36,21 +56,22 @@ When `sceneByFragment` uses `scrapeXPath` or `scrapeJson`, it must include the a
 
 Placeholder support matrix (verified 2026-10-15 against upstream schema + official docs):
 
-| placeholder | `sceneByFragment` | `sceneByQueryFragment` | source |
-|---|---|---|---|
-| `{checksum}` | ✅ | ❌ | scene file MD5 |
-| `{oshash}` | ✅ | ❌ | scene file oshash |
-| `{phash}` | ✅ | ❌ | scene file phash |
-| `{filename}` | ✅ | ❌ | scene filename |
-| `{title}` | ✅ | ✅ | fragment title |
-| `{url}` | ✅ | ✅ | fragment URL |
-| `{code}` | ❌ | ✅ | query-fragment code field |
+| placeholder  | `sceneByFragment` | `sceneByQueryFragment` | source                    |
+| ------------ | ----------------- | ---------------------- | ------------------------- |
+| `{checksum}` | ✅                | ❌                     | scene file MD5            |
+| `{oshash}`   | ✅                | ❌                     | scene file oshash         |
+| `{phash}`    | ✅                | ❌                     | scene file phash          |
+| `{filename}` | ✅                | ❌                     | scene filename            |
+| `{title}`    | ✅                | ✅                     | fragment title            |
+| `{url}`      | ✅                | ✅                     | fragment URL              |
+| `{code}`     | ❌                | ✅                     | query-fragment code field |
 
 `sceneByQueryFragment` input is a search-result fragment (no file fingerprints), so `{filename}`/`{checksum}`/`{oshash}`/`{phash}` are unavailable there. In practice all 10 verified upstream instances use `"{url}"`; the sole variant (ManyVids) adds `queryURLReplace` to rewrite the URL to a JSON API endpoint.
 
 Mode → feature mapping: `sceneByFragment` serves Tagger / Identify / the `Scrape…` button (input: the scene's own fragment); `sceneByName` + `sceneByQueryFragment` serve the Scene Edit page query dropdown (input: selected search result). AutoTag uses no scraper. `performerByQueryFragment` does not exist in the schema (`additionalProperties: false`).
 
 Practical notes:
+
 - Search endpoints may need form-specific parameters: KOTube `/search/index` requires `x=0&y=0` (image-button coords) to trigger the 302 redirect to filtered results; without them `kw` is silently ignored (verified 2026-10-15).
 - IP-based blocking happens: FC2 search rejects US datacenter IPs (verified 2026-10-15); scrapers relying on such endpoints should note the limitation.
 
@@ -60,7 +81,7 @@ Practical notes:
 
 ### Rule 6: Live verification
 
-Schema validation does not prove that selectors match current site HTML. Record live verification separately in `docs/LIVE_TEST_STATUS.md`.
+Schema validation does not prove that selectors match current site HTML. Record live verification separately in `docs/60-live-test-status.md`.
 
 ## Commands
 

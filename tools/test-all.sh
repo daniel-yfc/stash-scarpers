@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # test-all.sh - Stash 擷取器整合測試套件 / Integrated Test Suite
 # 位置：專案根目錄（與 validator/、tools/、scrapers/ 同層）
-# 執行：bash test-all.sh
+# 執行：bash tools/test-all.sh
 
 # 設計重點：
 # - 不使用 set -e：單一檢查失敗只計入失敗數，不會中止整體流程
@@ -72,9 +72,9 @@ echo " 各檢查完整輸出：./.log/runs/<時間>/<檢查名>.log"
 echo " 最新執行捷徑：./.log/latest/ -> runs/<時間>/"
 echo ""
 echo "範例："
-echo " bash test-all.sh # 完整執行"
-echo " bash test-all.sh --quick # 快速檢查（不含 npm / 文件 / 網站實測）"
-echo " bash test-all.sh -i -v # 互動 + 詳細"
+echo " bash tools/test-all.sh # 完整執行"
+echo " bash tools/test-all.sh --quick # 快速檢查（不含 npm / 文件 / 網站實測）"
+echo " bash tools/test-all.sh -i -v # 互動 + 詳細"
 echo " cat .log/latest/run.log # 查看最新執行摘要"
 exit 0
 }

@@ -18,11 +18,11 @@ routing:
     - validation
 ---
 
-# Scraper 品質管線總覽
+# Quality Gate Overview
 
 ## 目的
 
-本文件概述儲存庫品質檢查，不代表任何特定 GitHub Actions 執行結果。詳細政策以 [`03_Quality_Gate_Rules.md`](03_Quality_Gate_Rules.md) 為準；實際八個 workflow 的觸發條件與證據邊界見 [`05_CI_Workflows.md`](05_CI_Workflows.md)。`last_verified` 為文件檢視日期，並非 CI 或網站實測日期。
+本文件概述儲存庫品質檢查，不代表任何特定 GitHub Actions 執行結果。詳細政策以 [`21-quality-gate-rules.md`](21-quality-gate-rules.md) 為準；實際八個 workflow 的觸發條件與證據邊界見 [`40-ci-workflows.md`](40-ci-workflows.md)。`last_verified` 為文件檢視日期，並非 CI 或網站實測日期。
 
 ## 技術檢核原則
 
@@ -60,6 +60,6 @@ routing:
 ## 狀態追蹤
 
 - Schema／政策／CI 結果不等於網站 selector 正確；live search 與 live detail 必須分別留存實際證據。
-- JavaScript 網站的已完成渲染 DOM fixture，應依 [`07_Rendered_DOM_Fixture_Testing.md`](07_Rendered_DOM_Fixture_Testing.md) 分類頁面與記錄案例；fixture 通過不等於 live Stash/CDP 驗證。
-- 網站實測狀態見 [`LIVE_TEST_STATUS.md`](LIVE_TEST_STATUS.md)；詳細命令、修訂版、來源與限制使用 [`test-report-template.md`](test-report-template.md) 記錄。沒有執行的層級保持 `UNVERIFIED`。
+- JavaScript 網站的已完成渲染 DOM fixture，應依 [`51-rendered-dom-fixture-testing.md`](51-rendered-dom-fixture-testing.md) 分類頁面與記錄案例；fixture 通過不等於 live Stash/CDP 驗證。
+- 網站實測狀態見 [`60-live-test-status.md`](60-live-test-status.md)；詳細命令、修訂版、來源與限制使用 [`71-test-report-template.md`](71-test-report-template.md) 記錄。沒有執行的層級保持 `UNVERIFIED`。
 - 目前沒有執行五題 skill Eval Pack 的 CI workflow；任何 CI 通過皆不等於 production readiness。

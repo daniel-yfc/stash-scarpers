@@ -21,7 +21,7 @@ metadata:
 
 ## When to use
 
-Use this skill when authoring, modifying, validating, or debugging a Stash scraper. **Repo-only**: for repository setup, CI, contribution, or project-wide documentation, see [`docs/repository-documentation-architecture.md`](../../docs/repository-documentation-architecture.md), the root README, and `docs/` instead.
+Use this skill when authoring, modifying, validating, or debugging a Stash scraper. **Repo-only**: for repository setup, CI, contribution, or project-wide documentation, see [`docs/00-documentation-architecture.md`](../../docs/00-documentation-architecture.md), the root README, and `docs/` instead.
 
 ## Entry contract
 
@@ -94,7 +94,7 @@ Choose the simplest viable implementation path before writing any scraper.
 | Best practices & patterns | `references/best-practices.md`, `references/multi-site-network-scrapers.md`           |
 | Debugging                 | `references/debugging.md`, `references/incident-reviews.md`                           |
 | Examples & validation     | `references/examples.md`, `references/schema-checklist.md`, `references/eval-pack.md` |
-| Upstream sources          | `references/UPSTREAM_SOURCES.md`                                                      |
+| Upstream sources          | `references/upstream-sources.md`                                                      |
 
 ## Output contract
 

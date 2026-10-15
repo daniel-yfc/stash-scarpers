@@ -57,7 +57,7 @@ These templates contain placeholders and may not extract data until implementati
 | Need                                | Read                                                                                                 |
 | ----------------------------------- | ---------------------------------------------------------------------------------------------------- |
 | Repository-wide agent rules         | [`AGENTS.md`](../AGENTS.md)                                                                          |
-| Repository workflow and ownership   | [`docs/repository-documentation-architecture.md`](../docs/repository-documentation-architecture.md)  |
+| Repository workflow and ownership   | [`docs/00-documentation-architecture.md`](../docs/00-documentation-architecture.md)  |
 | Skill contract and workflow         | [`skills/stash-scraper-builder/SKILL.md`](../skills/stash-scraper-builder/SKILL.md)                  |
 | Script YAML and Python I/O contract | [`references/script-actions.md`](../skills/stash-scraper-builder/references/script-actions.md)       |
 | Schema and entry-point checklist    | [`references/schema-checklist.md`](../skills/stash-scraper-builder/references/schema-checklist.md)   |

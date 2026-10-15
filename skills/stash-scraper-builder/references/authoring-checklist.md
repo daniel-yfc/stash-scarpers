@@ -1,3 +1,21 @@
+---
+doc_id: REF-TPL-90
+title: Template Workflow Checklist
+status: active
+layer: skill
+owner: maintainer
+audience:
+  - agent
+  - maintainer
+applies_to:
+  - scrapers
+last_verified: "2026-10-15"
+authority: informational
+routing:
+  intents:
+    - templates
+---
+
 # Template Workflow Checklist
 
 **Repo-only**: use this checklist when starting from a file in the `stash-scarpers` repo's `templates/`. Standalone, start from the upstream [`templates/`](https://github.com/stashapp/CommunityScrapers/tree/master/templates) instead.

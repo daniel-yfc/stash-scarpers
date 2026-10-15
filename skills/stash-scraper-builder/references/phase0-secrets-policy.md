@@ -1,3 +1,21 @@
+---
+doc_id: REF-SEC-30
+title: Minimal Secrets Policy
+status: active
+layer: skill
+owner: maintainer
+audience:
+  - agent
+  - maintainer
+applies_to:
+  - scrapers
+last_verified: "2026-10-15"
+authority: informational
+routing:
+  intents:
+    - authentication
+---
+
 # Minimal Secrets Policy
 
 ## Rules

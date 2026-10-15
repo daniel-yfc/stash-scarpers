@@ -46,7 +46,7 @@ Thanks for contributing to Stash Scraper Builder!
 - `fixture-manifests.yml`, `evidence-contract.yml`, and `cdp-evidence-gate.yml` check distinct evidence contracts on their configured triggers.
 - `link-check.yml` runs on Markdown PRs, weekly, and manually, but broken external links are advisory (`fail: false`).
 - `scrutiny.yml` is a deliberate manual raw-response check, not browser-rendered or live Stash/CDP verification.
-- Read the exact trigger, scope, and proof boundary for all eight current workflows in [`docs/05_CI_Workflows.md`](docs/05_CI_Workflows.md). Only actually executed required checks can pass; an advisory green job is not a guarantee that every link resolved.
+- Read the exact trigger, scope, and proof boundary for all eight current workflows in [`docs/40-ci-workflows.md`](docs/40-ci-workflows.md). Only actually executed required checks can pass; an advisory green job is not a guarantee that every link resolved.
 
 ## Code Style
 
@@ -64,7 +64,7 @@ Use this source hierarchy when authoring or changing scraper guidance:
 4. Project references and examples.
 5. Heuristics, explicitly labeled `Heuristic`.
 
-- Normative schema/runtime rules must include a nearby source citation or point to `skills/stash-scraper-builder/references/UPSTREAM_SOURCES.md`.
+- Normative schema/runtime rules must include a nearby source citation or point to `skills/stash-scraper-builder/references/upstream-sources.md`.
 - Experience-based recommendations must be labeled `Heuristic`; do not present them as schema behavior or runtime causality.
 - Search the full `skills/stash-scraper-builder/` tree for duplicated wording before changing a rule.
 - Keep complete YAML examples copy-paste-valid and include the required root `name:` field.

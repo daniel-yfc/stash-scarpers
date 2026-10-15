@@ -44,7 +44,7 @@ python tools/check_docs_index.py
 npm run format:check
 ```
 
-The repository's Node validator/schema expectations derive from upstream CommunityScrapers; see [`validator/scraper.schema.json`](../validator/scraper.schema.json) and [`UPSTREAM_SOURCES.md`](../skills/stash-scraper-builder/references/UPSTREAM_SOURCES.md). A successful schema check does not establish the quality gate, live page matching, or Stash runtime extraction. The formatter is a separate local check; its result must not be inferred from documentation-index success.
+The repository's Node validator/schema expectations derive from upstream CommunityScrapers; see [`validator/scraper.schema.json`](../validator/scraper.schema.json) and [`upstream-sources.md`](../skills/stash-scraper-builder/references/upstream-sources.md). A successful schema check does not establish the quality gate, live page matching, or Stash runtime extraction. The formatter is a separate local check; its result must not be inferred from documentation-index success.
 
 ## Raw-response scrutiny
 
@@ -62,7 +62,7 @@ node tools/scrutiny.js scrapers/CK-Download.yml --url="<detail-url>"
 
 `tools/scrutiny.js` auto-loads `scrapers/<name>.test.yaml` (same directory as the
 scraper, including `scrapers/private/`) when present. Sidecars keep reusable
-live-test inputs next to the scraper so `test-all.sh` can rerun the suite.
+live-test inputs next to the scraper so `tools/test-all.sh` can rerun the suite.
 Supported keys:
 
 | Key        | Type            | Meaning                                                          |
@@ -92,13 +92,13 @@ python tools/run_fixture_manifests.py
 python tools/run_fixture_manifests.py --expect tests/fixtures/<scraper>-fixtures.yml
 ```
 
-The self-test checks the runner only. Discovery reports `UNVERIFIED` when no manifests are committed; `--expect` fails if the named manifest is absent. A manifest pass proves only its included cases and assertions, not all configured search modes or live runtime behavior. Follow [`07_Rendered_DOM_Fixture_Testing.md`](07_Rendered_DOM_Fixture_Testing.md) for the current executable contract versus broader authoring expectations.
+The self-test checks the runner only. Discovery reports `UNVERIFIED` when no manifests are committed; `--expect` fails if the named manifest is absent. A manifest pass proves only its included cases and assertions, not all configured search modes or live runtime behavior. Follow [`51-rendered-dom-fixture-testing.md`](51-rendered-dom-fixture-testing.md) for the current executable contract versus broader authoring expectations.
 
 For meaningful site coverage, include detail layouts where variation is plausible, a populated search fixture for each configured search entity, an optional/missing-field case, and a separately classified failure page. Assert XPath cardinality and representative values; when localized, assert `<html lang>`, canonical URL locale, and source-language text. Do not promote an authoring expectation to an enforced runner check without a test.
 
 ## CI workflow map
 
-`validate.yml` runs path-filtered schema, URL sort, repository policy, pytest, safeguards, and documentation checks. `pr-check.yml` gives changed-scraper policy feedback. `fixture-manifests.yml`, `evidence-contract.yml`, and `cdp-evidence-gate.yml` have distinct fixture/claim scopes. `scrutiny.yml` is deliberately manual and raw-response only; `link-check.yml` is an advisory Markdown link check on Markdown PRs, weekly, and manually. Read [`05_CI_Workflows.md`](05_CI_Workflows.md) for the exact eight-workflow inventory, triggers, and proof boundaries.
+`validate.yml` runs path-filtered schema, URL sort, repository policy, pytest, safeguards, and documentation checks. `pr-check.yml` gives changed-scraper policy feedback. `fixture-manifests.yml`, `evidence-contract.yml`, and `cdp-evidence-gate.yml` have distinct fixture/claim scopes. `scrutiny.yml` is deliberately manual and raw-response only; `link-check.yml` is an advisory Markdown link check on Markdown PRs, weekly, and manually. Read [`40-ci-workflows.md`](40-ci-workflows.md) for the exact eight-workflow inventory, triggers, and proof boundaries.
 
 The five-task authoring evaluation in [`eval-pack.md`](../skills/stash-scraper-builder/references/eval-pack.md) is not an executable GitHub Actions evaluation. No workflow result should be represented as its 5/5 score. Neither fixture control nor the CDP claim gate launches a live Stash browser session.
 
@@ -120,9 +120,9 @@ The five-task authoring evaluation in [`eval-pack.md`](../skills/stash-scraper-b
 
 ## Related documents
 
-- [`01_System_Architecture.md`](01_System_Architecture.md) — Architecture and verification layers.
-- [`03_Quality_Gate_Rules.md`](03_Quality_Gate_Rules.md) — Repository policy rules.
-- [`04_Production_Gate.md`](04_Production_Gate.md) — A–H production gate.
-- [`05_CI_Workflows.md`](05_CI_Workflows.md) — Current CI roles and triggers.
-- [`07_Rendered_DOM_Fixture_Testing.md`](07_Rendered_DOM_Fixture_Testing.md) — Fixture contract and page classification.
-- [`test-report-template.md`](test-report-template.md) — Durable test report format.
+- [`10-system-architecture.md`](10-system-architecture.md) — Architecture and verification layers.
+- [`21-quality-gate-rules.md`](21-quality-gate-rules.md) — Repository policy rules.
+- [`30-production-gate.md`](30-production-gate.md) — A–H production gate.
+- [`40-ci-workflows.md`](40-ci-workflows.md) — Current CI roles and triggers.
+- [`51-rendered-dom-fixture-testing.md`](51-rendered-dom-fixture-testing.md) — Fixture contract and page classification.
+- [`71-test-report-template.md`](71-test-report-template.md) — Durable test report format.
