@@ -58,7 +58,7 @@ xPathScrapers:
   sceneScraper:
     common:
       $code: "//table[@class='prod_data']//tr[th[normalize-space(text())='作品ID']]/td[1]"
-      $date: "//table[@class='prod_data']//tr[th[normalize-space(text())='掲載日']]/td[1]"
+      $date: "//table[@class='prod_data']//tr/th[normalize-space(text())='掲載日']/following-sibling::td[1]"
       $duration: "//table[@class='prod_data']//tr[th[normalize-space(text())='再生時間']]/td[1]"
 
     scene:
