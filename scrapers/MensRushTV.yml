@@ -165,6 +165,8 @@ xPathScrapers:
                 - regex: '^\s+|\s+$'
                   with: ""
 
+        Gender:
+          fixed: MALE
       Tags:
         Name:
           selector: //div[@class='movie_detail'][1]//p//a[contains(@href,'list.php?geid=')]/text()

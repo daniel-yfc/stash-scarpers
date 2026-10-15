@@ -103,6 +103,8 @@ xPathScrapers:
             - replace:
                 - regex: ^/
                   with: https://www.rgbee.net/
+        Gender:
+          fixed: MALE
       Tags: &rgbeeTags
         Name:
           selector: //section[@id='facts']//nav[@aria-label='標籤']/a

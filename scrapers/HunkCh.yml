@@ -258,6 +258,8 @@ xPathScrapers:
                 # Clear if no match (full title is long)
                 - regex: "^.{3,}$"
                   with: ""
+        Gender:
+          fixed: MALE
 
 driver:
   useCDP: true

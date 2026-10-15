@@ -246,6 +246,8 @@ xPathScrapers:
             - replace:
                 - regex: "^/"
                   with: "https://www.coat.co.jp/"
+        Gender:
+          fixed: MALE
 
 driver:
   useCDP: true
