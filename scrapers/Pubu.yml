@@ -101,6 +101,8 @@ xPathScrapers:
             - replace:
                 - regex: ^/
                   with: https://www.pubu.com.tw/
+        Gender:
+          fixed: MALE
       Tags:
         Name: //nav[contains(concat(' ', normalize-space(@class), ' '), ' class-tag ')]/h3/a
 
