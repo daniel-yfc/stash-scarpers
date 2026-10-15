@@ -1,0 +1,21 @@
+scraper: scrapers/MensRushTV.yml
+states:
+  schema:
+    status: unverified
+  policy:
+    status: unverified
+  fixture:
+    status: verified
+    artifact: tests/fixtures/mensrushtv/mensrushtv-fixtures.yml
+    sha256: 351ea687b00c69837bc702e1e87b69998be247a47c51c8be3426e454f059a5d0
+    captured_at: '2026-10-14T19:09:10+08:00'
+    source_url: https://www.mensrush.tv/
+    revision: 901c2b8b9411f806d746d97ee330e3c6ac56ed92
+  live_search:
+    status: unverified
+  live_detail:
+    status: unverified
+  live_cdp:
+    status: unverified
+  production:
+    status: unverified

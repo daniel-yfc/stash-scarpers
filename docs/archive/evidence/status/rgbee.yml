@@ -1,0 +1,21 @@
+scraper: scrapers/RGBEE.yml
+states:
+  schema:
+    status: unverified
+  policy:
+    status: unverified
+  fixture:
+    status: verified
+    artifact: tests/fixtures/rgbee/rgbee-fixtures.yml
+    sha256: 68d9b7c2390d92fa18b727e4b278dba44e7c6a7783d719613242c8a1ef4ea80d
+    captured_at: '2026-10-14T19:09:10+08:00'
+    source_url: https://www.rgbee.net/
+    revision: 5459b3b2ac685271a097f0e059d60b44d6fb7f1c
+  live_search:
+    status: unverified
+  live_detail:
+    status: unverified
+  live_cdp:
+    status: unverified
+  production:
+    status: unverified

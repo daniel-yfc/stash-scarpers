@@ -1,0 +1,21 @@
+scraper: scrapers/ClubCK.yml
+states:
+  schema:
+    status: unverified
+  policy:
+    status: unverified
+  fixture:
+    status: verified
+    artifact: tests/fixtures/clubck/clubck-fixtures.yml
+    sha256: e7403a7b0aeb9780ac0364286e82466af8c9ad807bc91ee62fa5ef2d1a790763
+    captured_at: '2026-10-14T19:09:10+08:00'
+    source_url: https://www.coat.co.jp/
+    revision: 901c2b8b9411f806d746d97ee330e3c6ac56ed92
+  live_search:
+    status: unverified
+  live_detail:
+    status: unverified
+  live_cdp:
+    status: unverified
+  production:
+    status: unverified
