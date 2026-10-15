@@ -171,6 +171,8 @@ xPathScrapers:
                 v = v.replace(/^\.\/+/, "");
                 if (v.charAt(0) === "/") return "https://www.games-video.co.jp" + v;
                 return "https://www.games-video.co.jp/" + v;
+        Gender:
+          fixed: MALE
 
       Details:
         selector: "//p[preceding-sibling::h3[contains(text(),'作品詳細')]]//text()[normalize-space()]"
