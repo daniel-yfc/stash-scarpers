@@ -57,9 +57,9 @@ performerByURL:
 xPathScrapers:
   sceneScraper:
     common:
-      $code: "//table[@class='prod_data']//tr[th[normalize-space(text())='作品ID']]/td[1]"
-      $date: "//table[@class='prod_data']//tr/th[normalize-space(text())='掲載日']/following-sibling::td[1]"
-      $duration: "//table[@class='prod_data']//tr[th[normalize-space(text())='再生時間']]/td[1]"
+      $code: "//table[@class='prod_data']//th[normalize-space(text())='作品ID']/following-sibling::td[1]"
+      $date: "//table[@class='prod_data']//th[normalize-space(text())='掲載日']/following-sibling::td[1]"
+      $duration: "//table[@class='prod_data']//th[normalize-space(text())='再生時間']/following-sibling::td[1]"
 
     scene:
       Title:
@@ -126,8 +126,6 @@ xPathScrapers:
                 v = v.replace(/^\.\/+/, "");
                 if (v.charAt(0) === "/") return "https://www.trance-video.com" + v;
                 return "https://www.trance-video.com/" + v;
-        Gender:
-          fixed: MALE
 
       Tags:
         Name:
