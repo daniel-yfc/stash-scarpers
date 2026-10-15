@@ -23,7 +23,7 @@ routing:
 
 [English README](README.md) · [文件索引](docs/README.md)
 
-本儲存庫用於製作與驗證 Stash 擷取器 YAML，並非 Stash 主程式或 CommunityScrapers。Schema 與 validator 的上游關係見 [來源紀錄](skills/stash-scraper-builder/references/UPSTREAM_SOURCES.md)。此譯本協助操作；schema、工具與各主題的權威文件仍是判定依據。範本、schema 通過或 CI 綠燈，都不等於網站實測通過。
+本儲存庫用於製作與驗證 Stash 擷取器 YAML，並非 Stash 主程式或 CommunityScrapers。Schema 與 validator 的上游關係見 [來源紀錄](skills/stash-scraper-builder/references/upstream-sources.md)。此譯本協助操作；schema、工具與各主題的權威文件仍是判定依據。範本、schema 通過或 CI 綠燈，都不等於網站實測通過。
 
 ## 建置流程
 
@@ -31,8 +31,8 @@ routing:
 2. 檢查目標網站真正的 URL、回應格式、語系及存取限制，保存來源 URL 與日期。不要虛構搜尋端點、模式或 selector；無法存取時標記 `UNVERIFIED`。
 3. 從 [templates/](templates/README.md) 或已驗證的相近檔案起步。公開 YAML 放在 `scrapers/<CamelCaseName>.yml`，保留根層 `name:`；不得在任何版本、fixture 或報告內重現憑證、cookie、token 或瀏覽器設定檔內容。
 4. 選用已證實足夠的最簡執行方式：XPath → 真正的 JSON 回應 → 必要的 script → 必須渲染或獲准互動時才用 CDP。HTML 中內嵌 JSON 不會自動變成 `scrapeJson` 可讀的 JSON 回應。僅實作網站確實支援的入口，保留來源語言。
-5. 對完整目標頁測試，先排除挑戰頁、登入閘門、HTTP 錯誤與部分渲染。每個已設定的搜尋模式需檢查有結果的搜尋頁、結果 URL 及獨立詳情頁；另測可選欄位缺失、版面變體與適用的語系。參照 [測試指南](docs/06_Testing_Guide.md) 與 [渲染 DOM fixture 指南](docs/07_Rendered_DOM_Fixture_Testing.md)。
-6. 保存證據與未解問題；只有滿足 [A–H 生產閘門](docs/04_Production_Gate.md)的證據，才能主張生產就緒。把事故與實頁失敗回饋到規則、fixture 與測試。
+5. 對完整目標頁測試，先排除挑戰頁、登入閘門、HTTP 錯誤與部分渲染。每個已設定的搜尋模式需檢查有結果的搜尋頁、結果 URL 及獨立詳情頁；另測可選欄位缺失、版面變體與適用的語系。參照 [測試指南](docs/50-testing-guide.md) 與 [渲染 DOM fixture 指南](docs/51-rendered-dom-fixture-testing.md)。
+6. 保存證據與未解問題；只有滿足 [A–H 生產閘門](docs/30-production-gate.md)的證據，才能主張生產就緒。把事故與實頁失敗回饋到規則、fixture 與測試。
 
 ## 本機檢查
 
@@ -72,7 +72,7 @@ node tools/scrutiny.js scrapers/<Scraper>.yml --url="<detail-url>"
 
 逐一記下擷取器路徑、修訂版、日期、來源 URL、回應種類（原始 HTTP、JSON、渲染 DOM、live Stash/CDP）、存取狀態、實際命令與結果、欄位預期值與實得值、尚未驗證的 selector。建議案例包含有版面差異時的兩筆詳情、每種已設定搜尋模式的有結果頁與詳情結果、可選欄位缺失案例，以及適用的語系斷言；挑戰或錯誤頁要獨立分類。XPath fixture 應斷言匹配數量及代表值。這些撰寫期望不全是 runner 強制規則。
 
-務必分開記錄 schema、URL 排序、政策閘門、自動測試、快照／fixture、live-search、live-detail 與生產就緒；未執行或遭封鎖的項目標為 `UNVERIFIED`。使用 [實測狀態](docs/LIVE_TEST_STATUS.md) 與 [報告範本](docs/test-report-template.md)記錄來源和限制。歷史 `evidence/` 不是現行政策，清單或審計建議也不能代替測試。
+務必分開記錄 schema、URL 排序、政策閘門、自動測試、快照／fixture、live-search、live-detail 與生產就緒；未執行或遭封鎖的項目標為 `UNVERIFIED`。使用 [實測狀態](docs/60-live-test-status.md) 與 [報告範本](docs/71-test-report-template.md)記錄來源和限制。歷史 `evidence/` 不是現行政策，清單或審計建議也不能代替測試。
 
 ## 儲存庫地圖
 
@@ -83,4 +83,4 @@ node tools/scrutiny.js scrapers/<Scraper>.yml --url="<detail-url>"
 - `docs/README.md` 與 `docs/index.yml`：人工與機器文件路由。
 - `CONTRIBUTING.md`：貢獻與審查流程。
 
-新增的 Markdown 使用小寫 kebab-case 檔名，已存在的編號 `docs/` 系列除外。依循[文件架構](docs/repository-documentation-architecture.md)處理 metadata、ID、索引與格式。
+新增的 Markdown 檔案使用兩位數字前綴加小寫 kebab-case，與文件 ID 編號對應（例如 `DOC-QG-21` 對應 `21-quality-gate-rules.md`）。依循[文件架構](docs/00-documentation-architecture.md)處理 metadata、ID、索引與格式。

@@ -1,3 +1,21 @@
+---
+doc_id: REF-OPS-73
+title: Incident Reviews
+status: active
+layer: skill
+owner: maintainer
+audience:
+  - agent
+  - maintainer
+applies_to:
+  - scrapers
+last_verified: "2026-10-15"
+authority: informational
+routing:
+  intents:
+    - incidents
+---
+
 # Incident Reviews
 
 **Load when:** a past failure looks similar and you need the transferable lesson, not the failure catalog.
@@ -16,7 +34,7 @@
 
 **Why review missed it:** the local schema stub was treated as a convenient reference instead of an explicitly incomplete compatibility aid; documentation examples were not extracted and validated as test fixtures; heuristics and verified schema rules were not labeled differently; review focused on individual files instead of searching for repeated claims across the reference tree; the evaluation pack checked generated output shapes but did not lint every embedded example.
 
-**Detection and correction:** the Phase 1 audit compared local documentation with upstream schema material. A control test showed that script guidance without `name:` fails with `'name' is a required property`. Extracting corrected examples and validating them against schema rules caught additional `queryURLReplace` and entry-point errors, including omission of a valid `phash` key. The response was to require root `name:` in complete examples, distinguish schema-backed rules from heuristics, validate embedded full-document YAML, and centralize provenance in `UPSTREAM_SOURCES.md`. For any changed rule, search all references and update duplicates together. A rule repeated across files is not independently verified.
+**Detection and correction:** the Phase 1 audit compared local documentation with upstream schema material. A control test showed that script guidance without `name:` fails with `'name' is a required property`. Extracting corrected examples and validating them against schema rules caught additional `queryURLReplace` and entry-point errors, including omission of a valid `phash` key. The response was to require root `name:` in complete examples, distinguish schema-backed rules from heuristics, validate embedded full-document YAML, and centralize provenance in `upstream-sources.md`. For any changed rule, search all references and update duplicates together. A rule repeated across files is not independently verified.
 
 ### Incident 2: Rendered page versus scraper runtime
 
@@ -39,10 +57,10 @@
 
 1. Record the incident's source revision, response type, date, completed/error classification, selector or routing hypothesis, expected/actual values and remaining unknowns. Never store credentials, cookies, tokens or browser-profile contents.
 2. Choose the smallest verified runtime: XPath on public HTML, then real JSON response, then necessary script action, then CDP only when a simpler path demonstrably fails. A completed saved DOM proves selector behavior on that snapshot only.
-3. Add deterministic positive, optional/negative and failure-page cases to the fixture contract for the affected _class_ of problem; test card decoys, locale/layout variation or URL near-matches when relevant. For each configured search entity, author a populated result and separate detail case. The runner enforces only its documented assertions, not every authoring expectation; see the rendered-DOM fixture guide (**repo-only**: `docs/07_Rendered_DOM_Fixture_Testing.md`).
+3. Add deterministic positive, optional/negative and failure-page cases to the fixture contract for the affected _class_ of problem; test card decoys, locale/layout variation or URL near-matches when relevant. For each configured search entity, author a populated result and separate detail case. The runner enforces only its documented assertions, not every authoring expectation; see the rendered-DOM fixture guide (**repo-only**: `docs/51-rendered-dom-fixture-testing.md`).
 4. Run schema, URL sort, policy, tests and documentation checks on the committed revision; record each result separately. No manifests means `UNVERIFIED`, not a fixture pass. Record raw live search and detail separately and require actual Stash/CDP output for a live-CDP claim.
 5. Promote a proposed family pattern to [`best-practices.md`](best-practices.md) or a runtime-specific reference only after an independent site/layout test and a counterexample have been reviewed. Then update [`schema-checklist.md`](schema-checklist.md), relevant executable regression tests, and the owning authoring checklist together. If only one site supports it, keep it in the incident record as a site-specific hypothesis.
-6. Do not mark production ready until the separate A–H production-gate evidence exists (**repo-only**: `docs/04_Production_Gate.md`). An audit recommendation or checklist completion is not verification.
+6. Do not mark production ready until the separate A–H production-gate evidence exists (**repo-only**: `docs/30-production-gate.md`). An audit recommendation or checklist completion is not verification.
 
 ### Incident 3: YAML shape defects surfaced only at runtime load
 
@@ -77,7 +95,7 @@
 
 **Transferable rules:**
 
-- A label match is not a semantic match: after writing a field selector, assert on the *values* it returns across page templates, not just that it matches nodes. A row labeled モデル/出演者/演员 can hold tags, counts, or links — verify with real cell content.
+- A label match is not a semantic match: after writing a field selector, assert on the _values_ it returns across page templates, not just that it matches nodes. A row labeled モデル/出演者/演员 can hold tags, counts, or links — verify with real cell content.
 - Prefer anchors tied to the entity, not the label: performer-profile links (`/search/index?ml=`, `/model/`, `model=on`) are stronger evidence of performer content than a nearby label string.
 - Page-dependent fields are legitimate: when a field exists only on some templates, an empty result on other templates is correct behavior, not a selector bug — document it as such instead of widening the selector to fill the gap.
 

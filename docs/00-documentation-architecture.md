@@ -55,11 +55,11 @@ Every indexed document has a stable `doc_id`. The ID is independent of the filen
 
 Use increments of 10 where practical. Do not renumber documents solely to close gaps. `DOC-TEST-51` is the rendered-DOM fixture document and does not replace `DOC-TEST-50`.
 
-Current repository document IDs are registered in [`index.yml`](index.yml). Existing numbered filenames under `docs/` remain valid for compatibility; new numbered files use a two-digit prefix followed by lowercase kebab-case.
+Current repository document IDs are registered in [`index.yml`](index.yml). Numbered files use a two-digit prefix followed by lowercase kebab-case, matching the document ID number.
 
 ## Naming rules
 
-- New Markdown files use lowercase kebab-case, except fixed entry points such as `README.md` and the existing numbered `docs/` series.
+- New Markdown files use a two-digit prefix followed by lowercase kebab-case, matching the document ID number, except fixed entry points such as `README.md`.
 - Scraper and template YAML files use CamelCase names with `.yml`.
 - Python implementation files use CamelCase names with `.py` and match their paired YAML/dependency name where applicable.
 - Root scraper YAML contains required `name:`; unsupported `documentHeader` and `$vars` are prohibited.
@@ -106,7 +106,7 @@ Legacy documents may be migrated incrementally. When front matter contains `doc_
 - Every repository-level Markdown document under `docs/` and every Markdown reference under `skills/stash-scraper-builder/references/` must be indexed.
 - Root routing documents, `templates/README.md`, and `validator/README.md` must also be indexed.
 - Every indexed path must exist, every `doc_id` must be unique, and routing references must point to registered IDs.
-- Add operational documents to `skills/stash-scraper-builder/references/UPSTREAM_SOURCES.md` when they depend on upstream material.
+- Add operational documents to `skills/stash-scraper-builder/references/upstream-sources.md` when they depend on upstream material.
 - Run `python tools/check_docs_index.py` after changing documentation paths or metadata.
 
 ## Agent routing
@@ -114,7 +114,7 @@ Legacy documents may be migrated incrementally. When front matter contains `doc_
 1. Repository administration, CI, paths, or contribution: `README.md` → `AGENTS.md` → `docs/README.md` → `docs/index.yml` → the owning repository document.
 2. Scraper authoring or debugging: `skills/stash-scraper-builder/SKILL.md` → `references/skill-read-order.md` → the selected specialized reference.
 3. Schema or validation questions: official `validator/index.mjs` and official schema first, then repository policy.
-4. Live verification: `docs/06_Testing_Guide.md` → `docs/07_Rendered_DOM_Fixture_Testing.md` → `docs/LIVE_TEST_STATUS.md`. `tools/scrutiny.js` is raw HTTP plus JSDOM, not rendered-DOM or live Stash/CDP verification.
+4. Live verification: `docs/50-testing-guide.md` → `docs/51-rendered-dom-fixture-testing.md` → `docs/60-live-test-status.md`. `tools/scrutiny.js` is raw HTTP plus JSDOM, not rendered-DOM or live Stash/CDP verification.
 5. Authentication, cookies, or private variants: the skill secrets reference, then `scrapers/private/`.
 
 If documentation conflicts, resolve in this order: official CommunityScrapers schema/validator, executable repository tools, canonical repository docs, skill references, examples.

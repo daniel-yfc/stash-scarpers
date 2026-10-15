@@ -62,7 +62,7 @@ def validate(record: dict, root: Path) -> list[str]:
 
 
 def main() -> int:
-    directory = ROOT / "evidence" / "status"
+    directory = ROOT / "docs" / "archive" / "evidence" / "status"
     files = sorted(directory.glob("*.yml")) if directory.exists() else []
     if not files:
         print("EVIDENCE CONTRACT: UNVERIFIED (no status records)")

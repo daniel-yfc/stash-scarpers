@@ -1,3 +1,22 @@
+---
+doc_id: TPL-WORKFLOW-70
+title: Template Workflow
+status: active
+layer: template
+owner: maintainer
+audience:
+  - agent
+  - maintainer
+applies_to:
+  - documentation
+last_verified: "2026-10-15"
+authority: informational
+routing:
+  intents:
+    - documentation
+    - workflow
+---
+
 # Template Workflow
 
 ## Purpose

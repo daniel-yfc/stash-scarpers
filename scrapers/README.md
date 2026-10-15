@@ -142,8 +142,8 @@ Before deploying any scraper:
 
 ## Related Docs
 
-- **Production readiness checklist**: [`docs/04_Production_Gate.md`](../docs/04_Production_Gate.md) — Full A-H workstream checklist for production deployment
-- **Automation & CI/CD**: [`docs/05_CI_Workflows.md`](../docs/05_CI_Workflows.md) — Validation scripts, workflows, and local testing
+- **Production readiness checklist**: [`docs/30-production-gate.md`](../docs/30-production-gate.md) — Full A-H workstream checklist for production deployment
+- **Automation & CI/CD**: [`docs/40-ci-workflows.md`](../docs/40-ci-workflows.md) — Validation scripts, workflows, and local testing
 - **Skill references**: [`skills/stash-scraper-builder/references/`](../skills/stash-scraper-builder/references/) — CDP workflow, schema checklist, scraping failures
 
 ## References

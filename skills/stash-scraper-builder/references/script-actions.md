@@ -1,3 +1,21 @@
+---
+doc_id: REF-MODE-43
+title: Script Actions
+status: active
+layer: skill
+owner: maintainer
+audience:
+  - agent
+  - maintainer
+applies_to:
+  - scrapers
+last_verified: "2026-10-15"
+authority: informational
+routing:
+  intents:
+    - script-scrapers
+---
+
 # Script Actions
 
 **Load when:** `action: script` (including dependency packages).

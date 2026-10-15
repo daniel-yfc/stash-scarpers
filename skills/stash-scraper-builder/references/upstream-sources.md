@@ -1,3 +1,21 @@
+---
+doc_id: REF-OPS-00
+title: Upstream Sources and Document Inventory
+status: active
+layer: skill
+owner: maintainer
+audience:
+  - agent
+  - maintainer
+applies_to:
+  - scrapers
+last_verified: "2026-10-15"
+authority: informational
+routing:
+  intents:
+    - upstream-sources
+---
+
 # Upstream Sources and Document Inventory
 
 ## Skill entry point
@@ -8,7 +26,7 @@
 
 | Document                         | Role                                                                     | Status                              |
 | -------------------------------- | ------------------------------------------------------------------------ | ----------------------------------- |
-| `UPSTREAM_SOURCES.md`            | Source registry and maintenance notes                                    | Current                             |
+| `upstream-sources.md`            | Source registry and maintenance notes                                    | Current                             |
 | `best-practices.md`              | General authoring guidance (incl. anchors, studio maps, legacy patterns) | Audit with #21                      |
 | `cdp-workflow.md`                | Login and CDP workflows                                                  | Audit with #21/#26                  |
 | `eval-pack.md`                   | Five-task validation and regression pack                                 | Run under #26                       |
@@ -43,7 +61,7 @@
 
 ## Maintenance
 
-The repository's [metadata feed integration guide](../../../docs/metadata-feed-integration.md)
+The repository's [metadata feed integration guide](../../../docs/80-metadata-feed-integration.md)
 derives consumer behavior from the official Stash Identify, Tagger, Auto Tagging
 manuals, GraphQL scraper types and scraper/Identify source linked there. These
 integration checks do not implement a stash-box publisher.

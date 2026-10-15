@@ -1,3 +1,22 @@
+---
+doc_id: TPL-REPORT-71
+title: Full‑Suite Test Report Template (Markdown)
+status: active
+layer: template
+owner: maintainer
+audience:
+  - agent
+  - maintainer
+applies_to:
+  - testing
+last_verified: "2026-10-15"
+authority: informational
+routing:
+  intents:
+    - testing
+    - reporting
+---
+
 # Full‑Suite Test Report Template (Markdown)
 
 ## Purpose

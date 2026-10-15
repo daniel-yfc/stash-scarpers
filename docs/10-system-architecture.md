@@ -20,7 +20,7 @@ routing:
 
 # System Architecture
 
-This repository stores Stash scraper YAML under `scrapers/`, with private variants under `scrapers/private/`. It derives its validator expectations from upstream CommunityScrapers; it is not the upstream Stash application or its scraper corpus. See [`UPSTREAM_SOURCES.md`](../skills/stash-scraper-builder/references/UPSTREAM_SOURCES.md) for provenance.
+This repository stores Stash scraper YAML under `scrapers/`, with private variants under `scrapers/private/`. It derives its validator expectations from upstream CommunityScrapers; it is not the upstream Stash application or its scraper corpus. See [`upstream-sources.md`](../skills/stash-scraper-builder/references/upstream-sources.md) for provenance.
 
 ## Verification layers
 
@@ -35,8 +35,8 @@ This repository stores Stash scraper YAML under `scrapers/`, with private varian
 | Evidence metadata     | `python tools/check_evidence_contract.py`                                  | Record fields and artifact digest, not proof of live execution                                  |
 | Live raw response     | `node tools/scrutiny.js scrapers/<Scraper>.yml --search`                   | Direct HTTP response plus JSDOM; no site JavaScript execution                                   |
 | Live Stash/CDP        | Authorized Stash runtime test with recorded output                         | Separate live-search and live-detail evidence; a CDP artifact-existence gate is not this test   |
-| Production gate       | [`04_Production_Gate.md`](04_Production_Gate.md)                           | Promotion only after all required evidence is reviewed                                          |
+| Production gate       | [`30-production-gate.md`](30-production-gate.md)                           | Promotion only after all required evidence is reviewed                                          |
 
 ## Routing
 
-Start with [`06_Testing_Guide.md`](06_Testing_Guide.md) for commands, [`07_Rendered_DOM_Fixture_Testing.md`](07_Rendered_DOM_Fixture_Testing.md) for fixture policy, and [`LIVE_TEST_STATUS.md`](LIVE_TEST_STATUS.md) for live status. Schema, policy, test, snapshot, live-search, live-detail, CDP, and production states must be recorded separately. A green workflow does not substitute for a missing evidence state.
+Start with [`50-testing-guide.md`](50-testing-guide.md) for commands, [`51-rendered-dom-fixture-testing.md`](51-rendered-dom-fixture-testing.md) for fixture policy, and [`60-live-test-status.md`](60-live-test-status.md) for live status. Schema, policy, test, snapshot, live-search, live-detail, CDP, and production states must be recorded separately. A green workflow does not substitute for a missing evidence state.

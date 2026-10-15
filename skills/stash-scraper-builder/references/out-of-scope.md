@@ -1,3 +1,21 @@
+---
+doc_id: REF-CORE-20
+title: Out of Scope
+status: active
+layer: skill
+owner: maintainer
+audience:
+  - agent
+  - maintainer
+applies_to:
+  - scrapers
+last_verified: "2026-10-15"
+authority: informational
+routing:
+  intents:
+    - scope
+---
+
 # Out of Scope
 
 This skill covers CommunityScrapers-style YAML, JSON, and script scrapers only.

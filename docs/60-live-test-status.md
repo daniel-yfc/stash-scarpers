@@ -1,3 +1,22 @@
+---
+doc_id: STATUS-LIVE-60
+title: Live Test Status
+status: active
+layer: status
+owner: maintainer
+audience:
+  - agent
+  - maintainer
+applies_to:
+  - scrapers
+last_verified: "2026-10-15"
+authority: informational
+routing:
+  intents:
+    - live-verification
+    - testing
+---
+
 # Live Test Status
 
 This table separates schema validation from live-page verification. `Schema` means the official validator accepts the YAML; it does not mean the website selectors are currently working.

@@ -1,3 +1,21 @@
+---
+doc_id: REF-MODE-42
+title: JSON scraper examples
+status: active
+layer: skill
+owner: maintainer
+audience:
+  - agent
+  - maintainer
+applies_to:
+  - scrapers
+last_verified: "2026-10-15"
+authority: informational
+routing:
+  intents:
+    - json
+---
+
 # JSON scraper examples
 
 **Load when:** you need a complete-file `scrapeJson` template.

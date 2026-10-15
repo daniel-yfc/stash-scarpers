@@ -1,3 +1,21 @@
+---
+doc_id: REF-CORE-00
+title: Skill Read Order
+status: active
+layer: skill
+owner: maintainer
+audience:
+  - agent
+  - maintainer
+applies_to:
+  - scrapers
+last_verified: "2026-10-15"
+authority: informational
+routing:
+  intents:
+    - agent-routing
+---
+
 # Skill Read Order
 
 **Repo-only**: when using this skill inside the `stash-scarpers` repo, read repository-level routing before skill-level guidance. Standalone, start at "Skill second".
@@ -7,7 +25,7 @@
 1. `README.md` — project purpose, canonical commands, and directory map
 2. `AGENTS.md` — repository-wide agent and safety rules
 3. `docs/index.yml` — machine-readable document registry
-4. `docs/repository-documentation-architecture.md` — ownership, numbering, naming, metadata, indexing, routing, and formatter policy
+4. `docs/00-documentation-architecture.md` — ownership, numbering, naming, metadata, indexing, routing, and formatter policy
 5. `templates/README.md` — when starting from a template
 6. `CONTRIBUTING.md` — before committing or modifying shared repository files
 
@@ -31,12 +49,12 @@
 | Examples               | `examples.md` → `json-examples.md`                                                     |
 | Best practices         | `best-practices.md` → `multi-site-network-scrapers.md`                                 |
 | Debugging failures     | `debugging.md` → `incident-reviews.md` (past incidents)                                |
-| Regression/evaluation  | `eval-pack.md` → **repo-only**: repository `tools/tests/` and validation commands    |
+| Regression/evaluation  | `eval-pack.md` → **repo-only**: repository `tools/tests/` and validation commands      |
 | Verification metadata  | **Repo-only**: `docs/verification-metadata.md`                                         |
-| Live-site verification | **Repo-only**: `docs/06_Testing_Guide.md` → `docs/LIVE_TEST_STATUS.md`                 |
+| Live-site verification | **Repo-only**: `docs/50-testing-guide.md` → `docs/60-live-test-status.md`                 |
 
 ## Before editing
 
-- Check `UPSTREAM_SOURCES.md` for the owning source.
+- Check `upstream-sources.md` for the owning source.
 - Confirm every referenced path exists.
-- **Repo-only**: use the canonical repository commands from `docs/repository-documentation-architecture.md`; register new or renamed Markdown documents in `docs/index.yml`; keep repository governance in repository-level docs and scraper semantics in skill-level docs.
+- **Repo-only**: use the canonical repository commands from `docs/00-documentation-architecture.md`; register new or renamed Markdown documents in `docs/index.yml`; keep repository governance in repository-level docs and scraper semantics in skill-level docs.

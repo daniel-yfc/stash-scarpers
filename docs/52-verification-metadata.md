@@ -122,11 +122,11 @@ def parse_verification_metadata(yaml_content: str) -> dict:
     return metadata
 ```
 
-## Integration with LIVE_TEST_STATUS.md
+## Integration with 60-live-test-status.md
 
-The `LIVE_TEST_STATUS.md` table should include these columns
+The `60-live-test-status.md` table should include these columns
 (illustrative example — values below are placeholders, not live status;
-see `docs/LIVE_TEST_STATUS.md` for the current table):
+see `docs/60-live-test-status.md` for the current table):
 
 | Scraper     | Schema | Search card | Detail core | validated_on | ttl_days | staleness | coverage | postprocess | stash_int |
 | :---------- | :----: | :---------: | :---------: | :----------: | :------: | :-------: | :------: | :---------: | :-------: |

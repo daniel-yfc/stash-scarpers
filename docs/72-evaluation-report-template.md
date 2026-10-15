@@ -1,3 +1,22 @@
+---
+doc_id: TPL-REPORT-72
+title: 本機評估報告模板
+status: active
+layer: template
+owner: maintainer
+audience:
+  - agent
+  - maintainer
+applies_to:
+  - testing
+last_verified: "2026-10-15"
+authority: informational
+routing:
+  intents:
+    - testing
+    - reporting
+---
+
 # 本機評估報告模板
 
 獨立的本機完整測試評估報告格式。每次執行 `bash tools/run-all-checks.sh`
@@ -8,20 +27,20 @@
 `{{...}}` 為佔位符，由 `--report` 模式填入；手動填寫時直接取代。
 
 > 執行順序與依賴關係見 `tools/run-all-checks.sh` 檔頭註解。
-> 線上 CI 流程見 `docs/05_CI_Workflows.md`。
+> 線上 CI 流程見 `docs/40-ci-workflows.md`。
 
 ---
 
 ## 1. 報告標頭
 
-| 項目        | 內容           |
-| ----------- | -------------- |
-| 報告日期    | {{REPORT_DATE}} |
-| 執行者      | {{EXECUTOR}}   |
+| 項目        | 內容                               |
+| ----------- | ---------------------------------- |
+| 報告日期    | {{REPORT_DATE}}                    |
+| 執行者      | {{EXECUTOR}}                       |
 | Repo commit | `{{COMMIT}}`（分支：`{{BRANCH}}`） |
-| 執行環境    | {{ENV}}        |
-| 執行方式    | {{METHOD}}     |
-| 總 verdict  | {{VERDICT}}    |
+| 執行環境    | {{ENV}}                            |
+| 執行方式    | {{METHOD}}                         |
+| 總 verdict  | {{VERDICT}}                        |
 
 ---
 

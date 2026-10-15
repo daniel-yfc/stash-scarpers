@@ -35,7 +35,7 @@ A completed checklist is not production readiness by itself. Schema validation, 
 
 ### B: Technical Implementation & Code Review
 
-- Implement scraper YAML following the rules in [`03_Quality_Gate_Rules.md`](03_Quality_Gate_Rules.md)
+- Implement scraper YAML following the rules in [`21-quality-gate-rules.md`](21-quality-gate-rules.md)
 - Code review for best practices
 - Verify CDP configuration
 - Public scrapers (`scrapers/*.yml`) contain no `driver.cookies`; session-dependent scrapers belong in `scrapers/private/`
@@ -90,7 +90,7 @@ A completed checklist is not production readiness by itself. Schema validation, 
 
 ### Before Merge
 
-- [ ] Quality-gate rules in [`03_Quality_Gate_Rules.md`](03_Quality_Gate_Rules.md) pass
+- [ ] Quality-gate rules in [`21-quality-gate-rules.md`](21-quality-gate-rules.md) pass
 - [ ] Schema validation passes
 - [ ] A-H workstream completed
 - [ ] Documentation complete
@@ -107,12 +107,12 @@ A completed checklist is not production readiness by itself. Schema validation, 
 
 ## Related Files
 
-- [01_System_Architecture.md](01_System_Architecture.md) - System design
-- [02_Quality_Gate_Overview.md](02_Quality_Gate_Overview.md) - Chinese overview
-- [03_Quality_Gate_Rules.md](03_Quality_Gate_Rules.md) - Quality-gate rules
-- [05_CI_Workflows.md](05_CI_Workflows.md) - CI/CD workflows
-- [06_Testing_Guide.md](06_Testing_Guide.md) - Testing guide
-- [07_Rendered_DOM_Fixture_Testing.md](07_Rendered_DOM_Fixture_Testing.md) - Rendered-DOM fixtures and failure-page classification
+- [10-system-architecture.md](10-system-architecture.md) - System design
+- [20-quality-gate-overview.md](20-quality-gate-overview.md) - Chinese overview
+- [21-quality-gate-rules.md](21-quality-gate-rules.md) - Quality-gate rules
+- [40-ci-workflows.md](40-ci-workflows.md) - CI/CD workflows
+- [50-testing-guide.md](50-testing-guide.md) - Testing guide
+- [51-rendered-dom-fixture-testing.md](51-rendered-dom-fixture-testing.md) - Rendered-DOM fixtures and failure-page classification
 
 ---
 

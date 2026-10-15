@@ -1,3 +1,21 @@
+---
+doc_id: REF-CORE-15
+title: Best practices for maintainable scrapers
+status: active
+layer: skill
+owner: maintainer
+audience:
+  - agent
+  - maintainer
+applies_to:
+  - scrapers
+last_verified: "2026-10-15"
+authority: informational
+routing:
+  intents:
+    - scraper-authoring
+---
+
 # Best practices for maintainable scrapers
 
 Canonical reference:

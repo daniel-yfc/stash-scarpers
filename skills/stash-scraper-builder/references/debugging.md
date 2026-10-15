@@ -1,3 +1,21 @@
+---
+doc_id: REF-OPS-72
+title: Debugging
+status: active
+layer: skill
+owner: maintainer
+audience:
+  - agent
+  - maintainer
+applies_to:
+  - scrapers
+last_verified: "2026-10-15"
+authority: informational
+routing:
+  intents:
+    - debugging
+---
+
 # Debugging
 
 **Load when:** a scraper returns empty/wrong fields, crashes, or hits access walls.
@@ -115,7 +133,7 @@ Past incident write-ups live in [`incident-reviews.md`](incident-reviews.md). Th
 
 ### Prevention checklist
 
-- Compare each normative schema claim to the local validator/schema derived from upstream, and consult `UPSTREAM_SOURCES.md` when provenance matters.
+- Compare each normative schema claim to the local validator/schema derived from upstream, and consult `upstream-sources.md` when provenance matters.
 - Search the full reference tree for a changed rule; update duplicates, examples and ownership routes together.
 - Parse and validate complete YAML examples; check the committed file, not only a local reconstruction.
 - Mark `Source:` facts, `Heuristic:` transfers and evidence status distinctly; require a cross-site counterexample before declaring a generic pattern.

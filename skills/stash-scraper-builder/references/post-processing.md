@@ -1,3 +1,21 @@
+---
+doc_id: REF-FIELD-51
+title: Post-processing pipeline
+status: active
+layer: skill
+owner: maintainer
+audience:
+  - agent
+  - maintainer
+applies_to:
+  - scrapers
+last_verified: "2026-10-15"
+authority: informational
+routing:
+  intents:
+    - post-processing
+---
+
 # Post-processing pipeline
 
 Canonical reference: https://deepwiki.com/stashapp/CommunityScrapers/3.3-post-processing-pipeline
