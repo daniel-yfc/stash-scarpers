@@ -126,6 +126,8 @@ xPathScrapers:
                 v = v.replace(/^\.\/+/, "");
                 if (v.charAt(0) === "/") return "https://www.trance-video.com" + v;
                 return "https://www.trance-video.com/" + v;
+        Gender:
+          fixed: MALE
 
       Tags:
         Name:
