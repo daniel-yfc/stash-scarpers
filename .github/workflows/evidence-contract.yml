@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "evidence/**"
+      - "docs/archive/evidence/**"
       - "tests/fixtures/**"
       - "tools/check_evidence_contract.py"
       - "tools/tests/test_evidence_contract.py"
@@ -12,7 +12,7 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - "evidence/**"
+      - "docs/archive/evidence/**"
       - "tests/fixtures/**"
       - "tools/check_evidence_contract.py"
       - "tools/tests/test_evidence_contract.py"
