@@ -118,7 +118,7 @@ xPathScrapers:
         selector: "//link[@rel='canonical']/@href | //meta[@property='og:url']/@content"
 
       Date:
-        selector: "$prop//td[contains(text(),'発売日')]/text()"
+        selector: "$prop//td[contains(.,'発売')]"
         postProcess:
           - javascript: |
               var v = value || "";
