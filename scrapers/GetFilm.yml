@@ -96,6 +96,8 @@ xPathScrapers:
                 v = v.replace(/^\.\/+/, "");
                 if (v.charAt(0) === "/") return "https://www.get-film.jp" + v;
                 return "https://www.get-film.jp/" + v;
+        Gender:
+          fixed: MALE
 
       Tags:
         Name:
