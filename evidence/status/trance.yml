@@ -7,7 +7,7 @@ states:
   fixture:
     status: verified
     artifact: tests/fixtures/trance/trance-fixtures.yml
-    sha256: e84480bc6599891710c017261a6e82d78e622933d875d2019355ac335d3f2fb0
+    sha256: 7897f8886a7a16e1e7c2b3a2b5e37308bae97bb6fd97ddbbaacbfa61c7cb3b42
     captured_at: '2026-10-15T09:45:00+08:00'
     source_url: https://www.trance-video.com/product/detail/40625
     revision: f3df1de3ed0d7a83894145699b1bcd0d115d43b0
