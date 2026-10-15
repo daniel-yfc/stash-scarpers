@@ -7,7 +7,7 @@ from tools import check_docs_index
 
 def test_documentation_paths_are_portable():
     paths = check_docs_index.expected_markdown_paths()
-    assert "docs/metadata-feed-integration.md" in paths
+    assert "docs/80-metadata-feed-integration.md" in paths
     assert all("\\" not in path for path in paths)
 
 
