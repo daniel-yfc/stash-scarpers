@@ -118,7 +118,7 @@ xPathScrapers:
         selector: "//link[@rel='canonical']/@href | //meta[@property='og:url']/@content"
 
       Date:
-        selector: "$prop//td[contains(text(),'発売日')]/text()"
+        selector: "$prop//td[contains(.,'発売')]"
         postProcess:
           - javascript: |
               var v = value || "";
@@ -171,8 +171,6 @@ xPathScrapers:
                 v = v.replace(/^\.\/+/, "");
                 if (v.charAt(0) === "/") return "https://www.games-video.co.jp" + v;
                 return "https://www.games-video.co.jp/" + v;
-        Gender:
-          fixed: MALE
 
       Details:
         selector: "//p[preceding-sibling::h3[contains(text(),'作品詳細')]]//text()[normalize-space()]"

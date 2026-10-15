@@ -5,8 +5,8 @@
 #   (4988302, 4979753, 4772001 — incl. 18 tags on 4772001).
 #   eKYC wall is INTERMITTENT and rate-triggered (first page loads,
 #   subsequent requests get walled); login does not clear it.
-#   No search endpoint on site — sceneByURL only.
-# Last Updated: 2026-10-06
+#   Search endpoint: /search/?q= (2026-10-15, user-confirmed; US IPs blocked).
+# Last Updated: 2026-10-15
 
 name: fc2
 
@@ -15,6 +15,17 @@ sceneByURL:
     url:
       - https://adult.contents.fc2.com/article/
     scraper: sceneScraper
+
+# 2026-10-15: search verified by user (US IP blocked, cannot verify selectors
+# from here — marked UNVERIFIED, needs check from non-blocked IP).
+sceneByName:
+  action: scrapeXPath
+  queryURL: https://adult.contents.fc2.com/search/?q={}
+  scraper: sceneSearch
+sceneByQueryFragment:
+  action: scrapeXPath
+  queryURL: "{url}"
+  scraper: sceneScraper
 
 sceneByFragment:
   action: scrapeXPath
@@ -32,6 +43,15 @@ groupByURL:
     scraper: movieScraper
 
 xPathScrapers:
+  # Verified 2026-10-15 against user-provided rendered search HTML
+  # (q=test, q=人妻): 35 cards, 10/10 title+URL+image hit.
+  sceneSearch:
+    common:
+      $item: //div[contains(concat(' ', normalize-space(@class), ' '), ' c-cntCard-110-f ')]
+    scene:
+      Title: $item//div[contains(concat(' ', normalize-space(@class), ' '), ' c-cntCard-110-f_indetail ')]//a/text()
+      URLs: $item//div[contains(concat(' ', normalize-space(@class), ' '), ' c-cntCard-110-f_indetail ')]//a/@href
+      Image: $item//div[contains(concat(' ', normalize-space(@class), ' '), ' c-cntCard-110-f_thumb ')]//img/@src
   sceneScraper:
     scene:
       Title:

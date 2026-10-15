@@ -11,10 +11,14 @@ sceneByURL:
   - ko-tube.com/product/index/
   - ko-tube.com/product/index2/
   scraper: sceneScraper
+# 2026-10-15: search requires x=0&y=0 (image-button coords) to trigger the
+# 302 redirect to /search/result/keep:1; without them kw is ignored.
+# Verified 2026-10-15: 27/40 EROS hits with cookies + redirect following.
 sceneByName:
   action: scrapeXPath
-  queryURL: https://www.ko-tube.com/search/index?kw={}&sk=0
+  queryURL: https://www.ko-tube.com/search/index?kw={}&sk=0&x=0&y=0
   scraper: sceneSearch
+# sceneByQueryFragment kept for the query-dropdown flow.
 sceneByQueryFragment:
   action: scrapeXPath
   queryURL: '{url}'
@@ -107,7 +111,7 @@ xPathScrapers:
           selector: //th[contains(text(), "レーベル")]/following-sibling::td[1]//a[1]/@href
       Tags:
         Name:
-          selector: //th[contains(text(), "プレイ")]/following-sibling::td[1]/text()
+          selector: //th[contains(text(), "プレイ") or contains(text(), "モデル")]/following-sibling::td[1]//a/text()
           postProcess:
           - replace:
             - regex: ^\s+|\s+$
@@ -135,8 +139,6 @@ xPathScrapers:
             - regex: ^\s+|\s+$
               with: ''
           split: 、
-        Gender:
-          fixed: MALE
       # Panic guard (2026-10-07): fixed URLs guarantees scrapeScene never
       # returns zero results — Stash nil-panics on empty results
       # (pkg/scraper/mapped.go processSceneRelationships).
@@ -173,7 +175,7 @@ xPathScrapers:
               with: ''
       Tags:
         Name:
-          selector: //th[contains(text(), "プレイ")]/following-sibling::td[1]/text()
+          selector: //th[contains(text(), "プレイ") or contains(text(), "モデル")]/following-sibling::td[1]//a/text()
           postProcess:
           - replace:
             - regex: ^\s+|\s+$
