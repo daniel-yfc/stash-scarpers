@@ -37,11 +37,24 @@ jobs:
           echo "files=${files}" >> "$GITHUB_OUTPUT"
 
       - name: Check repository Markdown links (advisory)
+        id: lychee
         uses: lycheeverse/lychee-action@v2
         with:
           args: "--verbose --no-progress ${{ steps.md-files.outputs.files }} './.github/**/*.md'"
           fail: false
           failIfEmpty: true
+
+      - name: Alert on broken links
+        # lychee runs advisory (fail: false) so flaky external links don't
+        # block PRs -- but surface a visible warning instead of staying silent.
+        if: steps.lychee.outputs.exit_code != 0
+        run: |
+          echo "::warning::Lychee found broken links (exit code ${{ steps.lychee.outputs.exit_code }}). Download the lychee-results artifact for details."
+          {
+            echo "## ⚠️ Broken links found"
+            echo ""
+            echo "Lychee exited with code ${{ steps.lychee.outputs.exit_code }}. See the **lychee-results** artifact for the full report."
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload link report
         uses: actions/upload-artifact@v4
