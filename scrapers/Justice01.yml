@@ -121,14 +121,6 @@ xPathScrapers:
         selector: "//link[@rel='canonical']/@href | //meta[@property='og:url']/@content"
         concat: "\n"
 
-      Date:
-        selector: "//time[contains(@class,'entry-date')]/@datetime"
-        postProcess:
-          - replace:
-              - regex: "^([0-9]{4}-[0-9]{2}-[0-9]{2}).*$"
-                with: "$1"
-          - parseDate: "2006-01-02"
-
       Details:
         selector: "$article//div[contains(@class,'entry-content')]//p//text()[normalize-space()]"
         concat: "\n"
@@ -143,7 +135,7 @@ xPathScrapers:
       Image:
         # Live DOM (2026-10-06): first slider img sometimes lacks data-src;
         # fall back to @src, then eye-catch, then og:image.
-        selector: "$article//div[contains(@class,'sp-slides')]//img[contains(@class,'sp-image')][1]/@data-src | $article//div[contains(@class,'sp-slides')]//img[contains(@class,'sp-image')][1]/@src | //figure[contains(@class,'eye-catch')]//img/@data-src | //meta[@property='og:image']/@content"
+        selector: "$article//div[contains(@class,'sp-slides')]//img[contains(@class,'sp-image')][not(contains(@data-src,'no-image'))][1]/@data-src | $article//div[contains(@class,'sp-slides')]//img[contains(@class,'sp-image')][not(contains(@src,'no-image'))][1]/@src | //figure[contains(@class,'eye-catch')]//img[not(contains(@data-src,'.gif'))]/@data-src | //meta[@property='og:image'][not(contains(@content,'.gif'))]/@content"
         postProcess:
           - javascript: |
               var v = value || "";
@@ -157,13 +149,32 @@ xPathScrapers:
               return "https://www.justice01.com/" + v;
               return v;
 
-      Tags:
+      Performers:
         Name:
-          selector: "//div[contains(@class,'entry-categories')]//a[contains(@class,'cat-link')]/text()"
+          # Performer names in h3.wp-block-heading like 【ホクト】.
+          # Verified 2026-10-17 on guilty2nd20.
+          selector: "$article//h3[contains(@class,'wp-block-heading')][starts-with(normalize-space(.), '【')][not(contains(., 'Bonus Track'))][not(starts-with(normalize-space(.), '【Type'))]/text()"
+          split: "×"
+          postProcess:
+            - replace:
+                - regex: "^【|】$"
+                  with: ""
+            - replace:
+                - regex: "^\\s+|\\s+$"
+                  with: ""
+        Gender:
+          fixed: MALE
+      Groups:
+        Name:
+          # Series group from entry-categories, excluding the generic parent.
+          # Verified 2026-10-17 on guilty2nd20 (GUILTY2nd).
+          selector: "//div[contains(@class,'entry-categories')]//a[contains(@class,'cat-link')][not(normalize-space(.)='ゲイビデオ・DVD')]/text()"
           postProcess:
             - replace:
                 - regex: "^\\s+|\\s+$"
                   with: ""
+        URLs:
+          selector: "//div[contains(@class,'entry-categories')]//a[contains(@class,'cat-link')][not(normalize-space(.)='ゲイビデオ・DVD')]/@href"
 
 driver:
   useCDP: true
