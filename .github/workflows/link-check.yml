@@ -26,10 +26,20 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Collect Markdown files (excluding archive)
+        id: md-files
+        run: |
+          # docs/archive/ holds historical records with URLs that may rot;
+          # skip them so advisory link-check stays noise-free.
+          # (Note: .lychee.toml `exclude` matches URLs, not file paths,
+          # so path exclusion must happen here.)
+          files=$(find . -name '*.md' -not -path './docs/archive/*' -not -path './.git/*' -not -path './node_modules/*' | sort | tr '\n' ' ')
+          echo "files=${files}" >> "$GITHUB_OUTPUT"
+
       - name: Check repository Markdown links (advisory)
         uses: lycheeverse/lychee-action@v2
         with:
-          args: "--verbose --no-progress './**/*.md' './.github/**/*.md'"
+          args: "--verbose --no-progress ${{ steps.md-files.outputs.files }} './.github/**/*.md'"
           fail: false
           failIfEmpty: true
 

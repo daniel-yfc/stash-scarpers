@@ -1,12 +1,11 @@
 # Lychee link checker configuration
 # See: https://github.com/lycheeverse/lychee
 
-# Exclude patterns
+# Exclude patterns (matched against URLs, not file paths)
 exclude = [
   '^localhost',
   '^127\.0\.0\.1',
   '^file://',
-  'docs/archive/',
 ]
 
 # Accepted status codes
