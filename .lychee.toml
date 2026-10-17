@@ -26,3 +26,11 @@ user_agent = "lychee/0.14.2"
 
 # Exclude mailto links
 exclude_mail = true
+
+# Per-host rate limiting
+# Rationale: deepwiki.com returns 429 under lychee's default concurrency;
+# throttle to 1 concurrent request with a 2s interval to stay polite.
+# (429 is already in `accept`, so this is about not hammering, not about pass/fail.)
+[hosts."deepwiki.com"]
+concurrency = 1
+request_interval = 2000
