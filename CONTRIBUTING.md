@@ -29,6 +29,13 @@ Thanks for contributing to Stash Scraper Builder!
 2. Ensure references and runnable examples remain valid.
 3. Update `AGENTS.md` only if repository-wide rules change.
 
+## Git Rules
+
+1. Before any work: `git fetch --all && git merge --ff-only origin/main`. Never assume local is current.
+2. Never push directly to main except minor fixes. Otherwise: branch + PR.
+3. Branch naming: `feat|fix|hotfix|release|chore/<kebab-case-task>`. Lowercase, hyphens, no underscores/spaces. Issue-linked: `<type>/issue-N-description`.
+4. Commit messages: `<type>(scope): <imperative description>`. Body with what/why/rationale except minor changes. Footers: `Refs: #issue`, `Generated-by: <tool>`.
+
 ## Before You Push
 
 - [ ] Run `npm run validate` — no schema errors.
