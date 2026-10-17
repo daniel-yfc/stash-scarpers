@@ -114,16 +114,29 @@ xPathScrapers:
       # recommended for short label names.
       Studio:
         Name:
-          selector: "$data//th[normalize-space(.)='レーベル']/following-sibling::td[1]//a[1] | $data//th[normalize-space(.)='メーカー']/following-sibling::td[1]//a[1]"
+          # Label-first with maker fallback (verified 2026-10-17 on detail/27735):
+          # union returns document order (maker first), so gate the maker branch
+          # on absence of レーベル.
+          selector: "($data//th[normalize-space(.)='レーベル']/following-sibling::td[1]//a[1])[1] | ($data//th[normalize-space(.)='メーカー']/following-sibling::td[1]//a[1])[1][not($data//th[normalize-space(.)='レーベル'])]"
           postProcess:
             - replace:
                 - regex: "^\\s+|\\s+$"
                   with: ""
         URLs:
-          selector: "$data//th[normalize-space(.)='レーベル']/following-sibling::td[1]//a[1]/@href | $data//th[normalize-space(.)='メーカー']/following-sibling::td[1]//a[1]/@href"
+          selector: "($data//th[normalize-space(.)='レーベル']/following-sibling::td[1]//a[1]/@href)[1] | ($data//th[normalize-space(.)='メーカー']/following-sibling::td[1]//a[1]/@href)[1][not($data//th[normalize-space(.)='レーベル'])]"
+      Groups:
+        Name:
+          # Series group from レーベル (same anchor as Studio). Verified 2026-10-17.
+          selector: "($data//th[normalize-space(.)='レーベル']/following-sibling::td[1]//a[1])[1]/text()"
+          postProcess:
+            - replace:
+                - regex: "^\\s+|\\s+$"
+                  with: ""
+        URLs:
+          selector: "($data//th[normalize-space(.)='レーベル']/following-sibling::td[1]//a[1]/@href)[1]"
       Tags:
         Name:
-          selector: "$cats//li[strong[normalize-space(.)='プレイ内容']]//a | $cats//li[strong[normalize-space(.)='モデルタイプ']]//a"
+          selector: "$cats//li[strong[normalize-space(.)='プレイ内容']]//a/text() | $cats//li[strong[normalize-space(.)='モデルタイプ']]//a/text()"
           postProcess:
             - replace:
                 - regex: "^\\s+|\\s+$"
