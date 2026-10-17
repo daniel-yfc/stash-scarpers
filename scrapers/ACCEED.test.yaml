@@ -7,9 +7,15 @@ probes:
   - くうや
   - ACST431
   - アナル突かれ
+# 2026-10-17: added 5 urls (user-provided)
 urls:
   - https://acceed.jp/detail.ACSM344_1.html
   - https://acceed.jp/detail.ACSM051.html
   - https://acceed.jp/detail.ACSM096.html
   - https://acceed.jp/detail.ACSM026.html
+  - https://acceed.jp/detail.ACSM270.html
+  - https://acceed.jp/detail.ACSM245.html
+  - https://acceed.jp/detail.ACSM273.html
+  - https://acceed.jp/detail.ACSM326_1.html
+  - https://acceed.jp/detail.ACSM252.html
 multi: true

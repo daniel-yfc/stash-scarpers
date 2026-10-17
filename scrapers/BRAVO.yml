@@ -58,14 +58,16 @@ xPathScrapers:
 
     scene:
       Title:
-        selector: "$title//h1[contains(@class,'font_0')] | //meta[@property='og:title']/@content"
+        # Wix redesign 2026-10-17: title is h2 before 品番 label. Verified on dvds/376,347,372.
+        selector: "//h2[contains(.,'品番')]/preceding::h2[2]"
         postProcess:
           - replace:
               - regex: "^\\s+|\\s+$"
                 with: ""
 
       Code:
-        selector: "//div[@id='comp-kbfljjti']//h2"
+        # Wix redesign 2026-10-17: code follows 品番 label. Verified on dvds/376,347,372.
+        selector: "//h2[contains(.,'品番')]/following::h2[1]"
         postProcess:
           - replace:
               - regex: "^\\s+|\\s+$"
@@ -99,8 +101,8 @@ xPathScrapers:
               - regex: "^\\s+|\\s+$"
                 with: ""
 
-      Image: # UNVERIFIED — og:image empty; poster rendered by the CDP video player
-        selector: "//div[@id='comp-kbflq5xd']//img/@src | //div[@id='comp-kbflq5xd']//video/@poster"
+      Image: # Wix redesign 2026-10-17: product image has alt=title. Verified on dvds/376,347,372.
+        selector: "//img[@alt!='' and contains(@src,'wixstatic')]/@src"
         postProcess:
           - javascript: |
               var v = value || "";

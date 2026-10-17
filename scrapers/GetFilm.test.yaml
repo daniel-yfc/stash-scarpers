@@ -5,8 +5,16 @@ probes:
   - SUGURU
   - TOU-419
   - 早熟
+# 2026-10-17: added 7 urls (user-provided)
 urls:
   - https://www.get-film.jp/products/detail.php?product_id=1201
   - https://www.get-film.jp/products/detail.php?product_id=1199
   - https://www.get-film.jp/products/detail.php?product_id=1139
+  - https://www.get-film.jp/products/detail.php?product_id=965
+  - https://www.get-film.jp/products/detail.php?product_id=1073
+  - https://www.get-film.jp/products/detail.php?product_id=1135
+  - https://www.get-film.jp/products/detail.php?product_id=1132
+  - https://www.get-film.jp/products/detail.php?product_id=1100
+  - https://www.get-film.jp/products/detail.php?product_id=1127
+  - https://www.get-film.jp/products/detail.php?product_id=1119
 multi: true
