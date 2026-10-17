@@ -1,1 +1,127 @@
-PLACEHOLDER
+# Exfeed (exfeed.jp) — EXFEED メーカー公式直販サイト (maker-direct gay adult DVD/streaming store).
+#
+# Verification status (2026-10-11, anonymous HTTP fetch of live pages — no login,
+# no cookies; the 18+ gate only fronts the homepage, direct /datail and /product
+# URLs return 200 with full HTML):
+#   detail: https://exfeed.jp/datail?pid=<32-hex>  (path misspells "detail" as "datail")
+#     - Title:    h4.detailBox_head_tit
+#     - Date:     div.detailBox_head_date (YYYY-MM-DD)
+#     - Code:     div.detailBox_l_code, "品番:EXSD-240 [ストリーミング/ダウンロードHD] /[DVD]"
+#     - Details:  div.detailBox_l_description (text + <br>)
+#     - Studio:   table row th "シリーズ" -> td a (name + absolute /product?label=N URL).
+#                 EXFEED is the maker itself; シリーズ is the label line, mapped to
+#                 Studio following the repo's ACCEED/GAMES convention.
+#     - Tags:     table row th "カテゴリー" -> td a names (absolute /product?genre=N URLs)
+#     - Duration: table row th "収録分数" -> td, e.g. "120分" (minutes -> seconds)
+#     - Image:    .detail_imageMain img @src (absolute https://exfeed.jp/imgview?i=<64hex>)
+#     - No performers (models are anonymized on the site), no canonical link,
+#       no breadcrumbs, no og:* meta tags on detail pages.
+#   search: GET https://exfeed.jp/product?kwd=<kw>&type=search (the form POSTs to
+#     /product; GET pagination also works: ?go=N&kwd=…&type=search with N = page-1,
+#     page 1 omits go)
+#     - cards: li.movieListBox (title h4.movieListBox_movie_tit,
+#       .movieListBox_thumb a[href*="/datail?pid="], thumb img @src,
+#       date div.movieListBox_movie_date, blurb div.movieListBox_movie_text[1])
+# Search URL: https://exfeed.jp/product?kwd={keyword}&type=search
+# Expected fields: Title, Code, Date, Image, URL, Details, Studio, Tags, Duration
+# Last Updated: 2026-10-11
+
+name: Exfeed
+
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - exfeed.jp/datail
+    scraper: sceneScraper
+
+sceneByName:
+  action: scrapeXPath
+  queryURL: "https://exfeed.jp/product?kwd={}&type=search"
+  scraper: searchScraper
+
+sceneByQueryFragment:
+  action: scrapeXPath
+  queryURL: "{url}"
+  scraper: sceneScraper
+
+# No sceneByFragment: the site exposes no verifiable fragment-search mode, and a
+# bare "{url}" queryURL triggers the upstream nil-pointer panic (Rule 4:
+# docs/03_Quality_Gate_Rules.md). Use sceneByURL, or sceneByName then
+# sceneByQueryFragment on a selected result.
+
+xPathScrapers:
+  searchScraper:
+    common:
+      $cards: "//li[@class='movieListBox'][.//a[contains(@href,'/datail?pid=')]]"
+
+    scene:
+      Title:
+        selector: "$cards//h4[@class='movieListBox_movie_tit']/text()"
+
+      URLs:
+        selector: "$cards//div[@class='movieListBox_thumb']/a/@href"
+
+      Image:
+        selector: "$cards//div[@class='movieListBox_thumb']//img/@src"
+
+      Date:
+        selector: "$cards//div[@class='movieListBox_movie_date']/text()"
+        postProcess:
+          - parseDate: "2006-01-02"
+
+      Details:
+        # First movie_text block is the blurb; the second one holds the price.
+        selector: "$cards//div[@class='movieListBox_movie_text'][1]//text()[normalize-space()]"
+        concat: "\n\n"
+
+  sceneScraper:
+    common:
+      $spec: "//div[@class='detailBox_l_tableBox']//table"
+
+    scene:
+      Title:
+        selector: "//h4[@class='detailBox_head_tit']/text()"
+
+      Code:
+        # "品番:EXSD-240 [ストリーミング/ダウンロードHD] /[DVD]"
+        selector: "//div[@class='detailBox_l_code']/text()"
+        postProcess:
+          - replace:
+              - regex: "品番:(\\S+).*"
+                with: "$1"
+
+      URLs:
+        fixed: "{inputURL}"
+
+      Date:
+        selector: "//div[@class='detailBox_head_date']/text()"
+        postProcess:
+          - parseDate: "2006-01-02"
+
+      Details:
+        selector: "//div[@class='detailBox_l_description']//text()[normalize-space()]"
+        concat: "\n\n"
+
+      Image:
+        selector: "//div[@class='detail_imageMain']//img/@src"
+
+      Duration:
+        # "収録分数" e.g. "120分" -> seconds, same convention as GAMES.yml.
+        selector: "$spec//tr[th[normalize-space()='収録分数']]/td/text()"
+        postProcess:
+          - javascript: |
+              var v = value || "";
+              var m = v.match(/(\d+)\s*分/);
+              if (!m) return "";
+              return String(parseInt(m[1], 10) * 60);
+
+      Studio:
+        # EXFEED is the maker; シリーズ is the label line -> Studio (ACCEED/GAMES convention).
+        Name:
+          selector: "$spec//tr[th[normalize-space()='シリーズ']]/td/a/text()"
+        URLs:
+          selector: "$spec//tr[th[normalize-space()='シリーズ']]/td/a/@href"
+
+      Tags:
+        Name:
+          selector: "$spec//tr[th[normalize-space()='カテゴリー']]/td/a/text()"
