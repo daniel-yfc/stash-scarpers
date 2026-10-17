@@ -1,0 +1,185 @@
+# Gayerdar scraper. Historical zh-TW rendered-DOM inspection (2026-09-28,
+# record not committed to this repo). Reproducible fixture
+# verification and live Stash/CDP verification are not established.
+# No cookies, credentials, tokens, or browser profile data.
+#
+# Fragility notes:
+# - performerScraper Height/Weight anchor on Tailwind utility class text-D1D0CF.
+# - sceneSearchScraper per-field card selectors work positionally; not live-verified.
+# - Title selectors split on fullwidth ｜, which depends on zh-TW page chrome.
+# 2026-10-06: Tags gained plain-text li fallback (some pages render tags
+# without links) against live DOM.
+# Last Updated: 2026-10-06
+name: Gayerdar
+
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - "gayerdar.com/zh-TW/videos/"
+    queryURL: "{url}"
+    queryURLReplace:
+      url:
+        - regex: "(?i)gayerdar\\.com/(?:en-us|zh-tw)?/?videos/"
+          with: "gayerdar.com/zh-TW/videos/"
+    scraper: sceneScraper
+
+sceneByName:
+  action: scrapeXPath
+  queryURL: "https://gayerdar.com/zh-TW/search?query={}"
+  scraper: sceneSearchScraper
+
+sceneByQueryFragment:
+  action: scrapeXPath
+  queryURL: "{url}"
+  queryURLReplace:
+    url:
+      - regex: "(?i)gayerdar\\.com/(?:en-us|zh-tw)?/?videos/"
+        with: "gayerdar.com/zh-TW/videos/"
+  scraper: sceneScraper
+
+performerByURL:
+  - action: scrapeXPath
+    url:
+      - "gayerdar.com/zh-TW/models/"
+    queryURL: "{url}"
+    queryURLReplace:
+      url:
+        - regex: "(?i)gayerdar\\.com/(?:en-us|zh-tw)?/?models/"
+          with: "gayerdar.com/zh-TW/models/"
+    scraper: performerScraper
+
+performerByName:
+  action: scrapeXPath
+  queryURL: "https://gayerdar.com/zh-TW/search?query={}"
+  scraper: performerSearchScraper
+
+xPathScrapers:
+  sceneScraper:
+    scene:
+      Title:
+        selector: //title/text()
+        postProcess:
+          - replace:
+              - regex: "｜.*$"
+                with: ""
+              - regex: "\\|.*$"
+                with: ""
+      Code:
+        selector: //link[@rel="canonical"]/@href
+        postProcess:
+          - replace:
+              - regex: ".*/videos/([^/]+).*"
+                with: "$1"
+              - regex: ".*/clips/([^/]+).*"
+                with: "$1"
+      Date:
+        # 發佈日期: 2025/07/18 in span.genres-info. Verified 2026-10-17.
+        selector: //span[contains(text(),"發佈日期")]/text()
+        postProcess:
+          - replace:
+              - regex: '^.*?(\d{4})/(\d{2})/(\d{2}).*$'
+                with: "$1-$2-$3"
+          - parseDate: "2006-01-02"
+      Image:
+        # og:image is favicon; use video cover. Verified 2026-10-17.
+        selector: (//img[contains(@src,"video_covers")])[1]/@src
+      Studio:
+        Name:
+          fixed: "Gayerdar"
+      Tags:
+        # Live DOM (2026-10-06): linked variant is ul.iq-blogtag li a.title
+        # (the <a> has no href); some pages render plain-text li nodes
+        # instead — union both, strip separators.
+        Name:
+          selector: //ul[contains(@class,"iq-blogtag")]/li/a[contains(@class,"title")]/text() | //ul[contains(@class,"iq-blogtag")]/li/text()[normalize-space()]
+          postProcess:
+            - replace:
+                - regex: '^[，、,]\s*|\s*[，、,]$'
+                  with: ""
+                - regex: '^\s+|\s+$'
+                  with: ""
+      Performers:
+        Name:
+          selector: //a[contains(@href,"/models/")]//text()[normalize-space()]
+      URLs:
+        selector: //link[@rel="canonical"]/@href
+        postProcess:
+          - replace:
+              - regex: "^/"
+                with: "https://gayerdar.com/"
+              - regex: "(?i)gayerdar\\.com/(?:en-us|zh-tw)?/?videos/"
+                with: "gayerdar.com/zh-TW/videos/"
+
+  performerScraper:
+    performer:
+      Name:
+        selector: //title/text()
+        postProcess:
+          - replace:
+              - regex: "｜.*$"
+                with: ""
+              - regex: "\\|.*$"
+                with: ""
+      Gender:
+        fixed: "male"
+      Country:
+        selector: //p[contains(@class,"text-D1D0CF")][contains(text(),"From")]/text()
+        postProcess:
+          - replace:
+              - regex: ".*From\\s+"
+                with: ""
+      Height:
+        selector: //p[contains(@class,"text-D1D0CF")][contains(text(),"cm")]/text()
+        postProcess:
+          - replace:
+              - regex: ".*?(\\d+)\\s*cm.*"
+                with: "$1"
+      Weight:
+        selector: //p[contains(@class,"text-D1D0CF")][contains(text(),"kg")]/text()
+        postProcess:
+          - replace:
+              - regex: ".*?(\\d+)\\s*kg.*"
+                with: "$1"
+      Image:
+        selector: //meta[@property="og:image"]/@href
+      URLs:
+        selector: //link[@rel="canonical"]/@href
+        postProcess:
+          - replace:
+              - regex: "^/"
+                with: "https://gayerdar.com/"
+              - regex: "(?i)gayerdar\\.com/(?:en-us|zh-tw)?/?models/"
+                with: "gayerdar.com/zh-TW/models/"
+
+  sceneSearchScraper:
+    # 2026-10-17: verified against live search DOM (browser + rendered HTML).
+    scene:
+      Title:
+        selector: .//div[@id and @description][.//a[contains(@href,"/videos/")]]//p[1]/text()
+      Image:
+        selector: .//div[@id and @description][.//a[contains(@href,"/videos/")]]//img[1]/@src
+      URL:
+        selector: .//div[@id and @description][.//a[contains(@href,"/videos/")]]//a[contains(@href,"/videos/")][1]/@href
+        postProcess:
+          - replace:
+              - regex: "^/"
+                with: "https://gayerdar.com/"
+
+  performerSearchScraper:
+    # 2026-10-17: verified against live search DOM (browser).
+    # Performer card is <a href="/zh-TW/models/{id}"> containing <img> and name text.
+    performer:
+      Name:
+        selector: .//a[contains(@href,"/models/")]/text()[normalize-space()]
+      Image:
+        selector: .//a[contains(@href,"/models/")]//img[1]/@src
+      URL:
+        selector: .//a[contains(@href,"/models/")][1]/@href
+        postProcess:
+          - replace:
+              - regex: "^/"
+                with: "https://gayerdar.com/"
+
+driver:
+  useCDP: true
+# Last Updated: 2026-10-06

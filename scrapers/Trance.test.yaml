@@ -5,8 +5,16 @@ probes:
   - 沖修斗
   - TC-05-0013-01
   - private sex
+# 2026-10-17: added 7 urls (user-provided)
 urls:
   - https://www.trance-video.com/product/detail/40625
   - https://www.trance-video.com/product/detail/40641
   - https://www.trance-video.com/product/detail/40627
+  - https://www.trance-video.com/product/detail/40266
+  - https://www.trance-video.com/product/detail/39020
+  - https://www.trance-video.com/product/detail/40516
+  - https://www.trance-video.com/product/detail/39442
+  - https://www.trance-video.com/product/detail/37933
+  - https://www.trance-video.com/product/detail/40632
+  - https://www.trance-video.com/product/detail/37302
 multi: true

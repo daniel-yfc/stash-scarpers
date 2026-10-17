@@ -1,0 +1,27 @@
+# GVWiki live-test fixtures (verified 2026-10-17 via curl, age-gate cookie only)
+# search: https://www.gvwiki.com/search?q={keyword}&r=vm
+# custom probes (all HIT): performer=YUKITO, code=JST56X, partial title=Which Hole
+probes:
+  - YUKITO
+  - JST56X
+  - Which Hole
+urls:
+  - https://gvwiki.com/video/kDmKxgw
+  - https://gvwiki.com/video/GRn8G3V
+  - https://gvwiki.com/video/5D76bNV
+  - https://gvwiki.com/video/4DEoyyw
+  - https://gvwiki.com/video/4wg49dV
+  - https://gvwiki.com/video/7Rk3mkR
+  - https://gvwiki.com/video/8Dpke5V
+  - https://gvwiki.com/video/gD0r5dw
+  - https://gvwiki.com/video/5RllN8R
+  - https://gvwiki.com/video/Wwzn6nw
+  - https://gvwiki.com/video/ODoQjWw
+  - https://gvwiki.com/video/4wgOYBw
+  - https://gvwiki.com/video/XDXOpmV
+  - https://gvwiki.com/video/QD84KpD
+  - https://gvwiki.com/video/gDbelZV
+  - https://gvwiki.com/video/oDAyr5D
+  - https://gvwiki.com/video/9Rxx5KR
+  - https://gvwiki.com/video/1VN4NKR
+multi: true

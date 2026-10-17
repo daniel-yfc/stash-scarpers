@@ -116,11 +116,11 @@ xPathScrapers:
               return String(parseInt(m[1], 10) * 60);
 
       Studio:
-        # EXFEED is the maker; シリーズ is the label line -> Studio (ACCEED/GAMES convention).
+        # 2026-10-17: fixed to EXFEED per user (was series label line).
         Name:
-          selector: "$spec//tr[th[normalize-space()='シリーズ']]/td/a/text()"
+          fixed: "EXFEED"
         URLs:
-          selector: "$spec//tr[th[normalize-space()='シリーズ']]/td/a/@href"
+          fixed: "https://exfeed.jp/"
 
       Tags:
         Name:

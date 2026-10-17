@@ -1,0 +1,165 @@
+# GVWiki
+# Cookies are placeholders (see ACCEED.yml pattern); fill in actual values locally.
+# Verification: live-DOM verified 2026-10-06 (Title/Image/Details fixed).
+# 2026-10-06: Details fixed — #plot-box holds text nodes + <br>, no <p>.
+# (Title/Image already used the robust class-token pattern.)
+# Last Updated: 2026-10-06
+# Validator fixes:
+#   - removed CookieURL (not allowed when useCDP is true)
+#   - sceneByURL regex -> simple prefix (url items are plain strings)
+#   - {query} -> {} (Stash sceneByName only substitutes the {} placeholder)
+#   - replaced invalid `trim` postProcess with replace-regex trim
+#   - inlined $main into $info (recursive common fragments are not supported)
+
+name: GVWiki
+
+driver:
+  useCDP: true
+  headers:
+    - Key: User-Agent
+      Value: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36
+# Private scraper cookies: fill in actual values locally, do NOT commit real values.
+# cookies:
+#     - Cookies:
+#         - Name: "gcaycnniik"
+#           Value: "請填入實際值"
+#           Domain: ".www.gvwiki.com"
+#           Path: "/"
+#         - Name: "gdaydid"
+#           Value: "請填入實際值"
+#           Domain: ".www.gvwiki.com"
+#           Path: "/"
+#         - Name: "csrftoken"
+#           Value: "請填入實際值"
+#           Domain: ".www.gvwiki.com"
+#           Path: "/"
+#         - Name: "gnn_sbbcda"
+#           Value: "請填入實際值"
+#           Domain: ".www.gvwiki.com"
+#           Path: "/"
+
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - gvwiki.com/video/
+    scraper: sceneScraper
+
+sceneByName:
+  action: scrapeXPath
+  queryURL: "https://www.gvwiki.com/search?q={}&r=vm"
+  scraper: searchScraper
+
+sceneByQueryFragment:
+  action: scrapeXPath
+  queryURL: "{url}"
+  scraper: sceneScraper
+
+xPathScrapers:
+  searchScraper:
+    common:
+      $results: "//a[contains(@href, '/video/')][not(contains(@href, '/video/search'))]"
+    scene:
+      Title:
+        selector: "$results/text()"
+        postProcess:
+          - replace:
+              - regex: '^\s+|\s+$'
+                with: ""
+          - replace:
+              - regex: "レビュー$"
+                with: ""
+      URLs:
+        selector: "$results/@href"
+        postProcess:
+          - javascript: |
+              var v = value || "";
+              if (!v) return "";
+              return /^https?:\/\//.test(v) ? v : "https://gvwiki.com" + v;
+
+  sceneScraper:
+    common:
+      $main: "//main"
+      $info: "//main//table[contains(concat(' ', normalize-space(@class), ' '), ' is-fullwidth ')]"
+    scene:
+      Title:
+        selector: "$main//h1[contains(concat(' ', normalize-space(@class), ' '), ' title ')]/text()"
+        postProcess:
+          - replace:
+              - regex: '^\s+|\s+$'
+                with: ""
+      Code:
+        selector: "$info//tr[td[1][normalize-space()='ID']]/td[2]/text()"
+        postProcess:
+          - replace:
+              - regex: '^\s+|\s+$'
+                with: ""
+              - regex: "^-$"
+                with: ""
+      Date:
+        selector: "$info//tr[td[1][normalize-space()='Release Date']]/td[2]/text()"
+        postProcess:
+          - replace:
+              - regex: '^\s+|\s+$'
+                with: ""
+          - replace:
+              - regex: "^-$"
+                with: ""
+          - parseDate: "2006-01-02"
+      Details:
+        # Live DOM (2026-10-06): #plot-box holds text nodes + <br>, no <p>
+        # elements — the old //p selector never matched. Grab text nodes.
+        selector: "$main//*[@id='plot-box']//text()[normalize-space()]"
+        concat: "\n"
+        postProcess:
+          - replace:
+              - regex: '^\s+|\s+$'
+                with: ""
+      Image:
+        selector: "$main//div[contains(concat(' ', normalize-space(@class), ' '), ' swiper-slide ')][1]//img/@src"
+        postProcess:
+          - javascript: |
+              var v = value || "";
+              if (!v) return "";
+              if (v.indexOf("no-image") >= 0) return "";
+              return /^https?:\/\//.test(v) ? v : "https://gvwiki.com" + v;
+      Studio:
+        Name:
+          selector: "$info//tr[td[1][normalize-space()='Company']]/td[2]/text()"
+          postProcess:
+            - replace:
+                - regex: "\\s*\\(.*$"
+                  with: ""
+            - replace:
+                - regex: '^\s+|\s+$'
+                  with: ""
+      Tags:
+        Name:
+          selector: "$info//tr[td[1][normalize-space()='Tag']]/td[2]//a/text()"
+          postProcess:
+            - replace:
+                - regex: '^\s+|\s+$'
+                  with: ""
+      Performers:
+        Name:
+          selector: "$main//a[starts-with(@href, '/model/')]//p[contains(@class,'model-name')]/text()"
+          postProcess:
+            - replace:
+                - regex: '^\s+|\s+$'
+                  with: ""
+            - javascript: |
+                var v = value || "";
+                // strip paren suffix: "YUKITO (xxx" -> "YUKITO"
+                v = v.replace(/\s*\(.*$/, "");
+                v = v.trim();
+                if (!v) return "";
+                // filter descriptive pseudo-names (site lists descriptions as models)
+                if (/\d+歳/.test(v)) return "";
+                if (/少年|大学生|童貞|美少年|巨根|ノンケ|イケメン|色白/.test(v)) return "";
+                return v;
+      URLs:
+        selector: "$info//tr[td[1][normalize-space()='Buy']]/td[2]//a/@href | //link[@rel='canonical']/@href"
+        postProcess:
+          - javascript: |
+              var v = value || "";
+              if (!v) return "";
+              return /^https?:\/\//.test(v) ? v : "https://gvwiki.com" + v;

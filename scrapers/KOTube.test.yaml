@@ -1,5 +1,6 @@
 # KOTube live-test fixtures (browser verified 2026-10-06, logged in)
 # custom probes (all HIT): performer=斎藤士熊, code=29-01-0209-01, partial title=裏野ゲイ君
+# 2026-10-17: added 12 urls (user-provided)
 probes:
   - 斎藤士熊
   - 29-01-0209-01
@@ -8,4 +9,16 @@ urls:
   - https://www.ko-tube.com/package/index/28444
   - https://www.ko-tube.com/package/index/28391
   - https://www.ko-tube.com/product/index/95976
+  - https://www.ko-tube.com/extra/package/24797
+  - https://www.ko-tube.com/product/index/82534
+  - https://www.ko-tube.com/package/index/26976
+  - https://www.ko-tube.com/product/index/80003
+  - https://www.ko-tube.com/extra/package/26366
+  - https://www.ko-tube.com/extra/package/26586
+  - https://www.ko-tube.com/extra/package/26269
+  - https://www.ko-tube.com/extra/package/19543
+  - https://www.ko-tube.com/package/index/26573
+  - https://www.ko-tube.com/product/index/81067
+  - https://www.ko-tube.com/product/index/81218
+  - https://www.ko-tube.com/product/index/81713
 multi: true

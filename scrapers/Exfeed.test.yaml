@@ -1,0 +1,9 @@
+# Exfeed live-test fixtures (user-provided 2026-10-17)
+# verified against rendered HTML: Title/Code/Date/Studio/Tags/Duration/Image all OK
+urls:
+  - https://exfeed.jp/datail?pid=54b7b646012336feb5785aba9e1ea583
+  - https://exfeed.jp/datail?pid=ca1a7c5f74b6c110020d4b1d55cbfac6
+  - https://exfeed.jp/datail?pid=767f2a7e5b816b2867a2e588546e4242
+  - https://exfeed.jp/datail?pid=7277a998aff8b3f6ad432c40236c79be
+  - https://exfeed.jp/datail?pid=08103a52e64442f946342025e4bfeb9c
+multi: true

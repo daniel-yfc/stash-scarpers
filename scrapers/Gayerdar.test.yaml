@@ -1,0 +1,14 @@
+# Gayerdar live-test fixtures (user-provided 2026-10-17)
+# NOTE: site was Cloudflare-blocked 2026-10-10; verify accessibility before live test.
+probes:
+  - GDSR-003
+  - GD-025
+urls:
+  - https://gayerdar.com/zh-TW/videos/GDSR-003-1
+  - https://gayerdar.com/zh-TW/videos/GDSR-004-2
+  - https://gayerdar.com/zh-TW/videos/GD-025
+  - https://gayerdar.com/zh-TW/videos/GD-036
+  - https://gayerdar.com/zh-TW/videos/GD-038
+  - https://gayerdar.com/zh-TW/videos/GD-034
+  - https://gayerdar.com/zh-TW/videos/GDSR-005-2
+multi: true

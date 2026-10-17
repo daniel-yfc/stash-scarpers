@@ -1,7 +1,15 @@
 # BRAVO live-test fixtures (browser verified 2026-10-06)
 # NOTE: site has no search box; custom keyword probes N/A.
+# 2026-10-17: added 7 dvds/ URLs (user-provided)
 urls:
   - https://www.bravo-japan.com/clips/284
   - https://www.bravo-japan.com/clips/282
   - https://www.bravo-japan.com/clips/283
+  - https://www.bravo-japan.com/dvds/234
+  - https://www.bravo-japan.com/dvds/084
+  - https://www.bravo-japan.com/dvds/186
+  - https://www.bravo-japan.com/dvds/281
+  - https://www.bravo-japan.com/dvds/231
+  - https://www.bravo-japan.com/dvds/372
+  - https://www.bravo-japan.com/dvds/276
 multi: true
