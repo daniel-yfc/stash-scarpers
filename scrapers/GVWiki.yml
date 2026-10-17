@@ -49,11 +49,6 @@ sceneByName:
   queryURL: "https://www.gvwiki.com/search?q={}&r=vm"
   scraper: searchScraper
 
-sceneByFragment:
-  action: scrapeXPath
-  queryURL: "https://www.gvwiki.com/search?q={title}&r=vm"
-  scraper: searchScraper
-
 sceneByQueryFragment:
   action: scrapeXPath
   queryURL: "{url}"

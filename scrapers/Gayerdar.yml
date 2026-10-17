@@ -23,14 +23,9 @@ sceneByURL:
           with: "gayerdar.com/zh-TW/videos/"
     scraper: sceneScraper
 
-sceneByFragment:
-  action: scrapeXPath
-  queryURL: "{url}"
-  scraper: sceneScraper
-
 sceneByName:
   action: scrapeXPath
-  queryURL: "{url}"
+  queryURL: "https://gayerdar.com/zh-TW/search?query={}"
   scraper: sceneSearchScraper
 
 sceneByQueryFragment:
@@ -53,14 +48,9 @@ performerByURL:
           with: "gayerdar.com/zh-TW/models/"
     scraper: performerScraper
 
-performerByFragment:
-  action: scrapeXPath
-  queryURL: "{url}"
-  scraper: performerScraper
-
 performerByName:
   action: scrapeXPath
-  queryURL: "{url}"
+  queryURL: "https://gayerdar.com/zh-TW/search?query={}"
   scraper: performerSearchScraper
 
 xPathScrapers:
@@ -162,26 +152,29 @@ xPathScrapers:
                 with: "gayerdar.com/zh-TW/models/"
 
   sceneSearchScraper:
+    # 2026-10-17: verified against live search DOM (browser + rendered HTML).
     scene:
       Title:
-        selector: .//div[contains(@class,"vitem")][contains(@class,"video-item")][.//a[contains(@href,"/videos/")]]//h6[contains(@class,"title")]/text()
+        selector: .//div[@id and @description][.//a[contains(@href,"/videos/")]]//p[1]/text()
       Image:
-        selector: .//div[contains(@class,"vitem")][contains(@class,"video-item")][.//a[contains(@href,"/videos/")]]//img[contains(@class,"video-img")][1]/@src
+        selector: .//div[@id and @description][.//a[contains(@href,"/videos/")]]//img[1]/@src
       URL:
-        selector: .//div[contains(@class,"vitem")][contains(@class,"video-item")][.//a[contains(@href,"/videos/")]]//a[contains(@href,"/videos/")][1]/@href
+        selector: .//div[@id and @description][.//a[contains(@href,"/videos/")]]//a[contains(@href,"/videos/")][1]/@href
         postProcess:
           - replace:
               - regex: "^/"
                 with: "https://gayerdar.com/"
 
   performerSearchScraper:
+    # 2026-10-17: verified against live search DOM (browser).
+    # Performer card is <a href="/zh-TW/models/{id}"> containing <img> and name text.
     performer:
       Name:
-        selector: .//div[contains(@class,"vitem")][contains(@class,"model-item")][.//a[contains(@href,"/models/")]]//h6[contains(@class,"title")]/text()
+        selector: .//a[contains(@href,"/models/")]/text()[normalize-space()]
       Image:
-        selector: .//div[contains(@class,"vitem")][contains(@class,"model-item")][.//a[contains(@href,"/models/")]]//img[contains(@class,"model-img")][1]/@src
+        selector: .//a[contains(@href,"/models/")]//img[1]/@src
       URL:
-        selector: .//div[contains(@class,"vitem")][contains(@class,"model-item")][.//a[contains(@href,"/models/")]]//a[contains(@href,"/models/")][1]/@href
+        selector: .//a[contains(@href,"/models/")][1]/@href
         postProcess:
           - replace:
               - regex: "^/"
