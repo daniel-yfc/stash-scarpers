@@ -45,9 +45,9 @@ routing:
 
 ### ACCEED（登入後驗證）
 
-- https://acceed.jp/detail.ACST425.html（串流，IKUZE）
-- https://acceed.jp/detail.ACSM357.html（DVD，IKUZE21）
-- https://acceed.jp/detail.ACST391.html（串流，BLACK HOLE）
+- <https://acceed.jp/detail.ACST425.html>（串流，IKUZE）
+- <https://acceed.jp/detail.ACSM357.html>（DVD，IKUZE21）
+- <https://acceed.jp/detail.ACST391.html>（串流，BLACK HOLE）
 
 ### KO Video
 
