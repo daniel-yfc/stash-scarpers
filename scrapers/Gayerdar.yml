@@ -101,6 +101,12 @@ xPathScrapers:
       Performers:
         Name:
           selector: //a[contains(@href,"/models/")]//text()[normalize-space()]
+        Gender:
+          fixed: MALE
+        Country:
+          fixed: TW
+        Ethnicity:
+          fixed: Asian
       URLs:
         selector: //link[@rel="canonical"]/@href
         postProcess:

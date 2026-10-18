@@ -98,6 +98,10 @@ xPathScrapers:
                 return "https://www.get-film.jp/" + v;
         Gender:
           fixed: MALE
+        Country:
+          fixed: JP
+        Ethnicity:
+          fixed: Asian
 
       Tags:
         Name:

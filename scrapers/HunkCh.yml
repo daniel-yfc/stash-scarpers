@@ -260,6 +260,10 @@ xPathScrapers:
                   with: ""
         Gender:
           fixed: MALE
+        Country:
+          fixed: JP
+        Ethnicity:
+          fixed: Asian
 
 driver:
   useCDP: true
