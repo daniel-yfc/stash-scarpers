@@ -127,6 +127,12 @@ xPathScrapers:
                 if (v.charAt(0) === "/") return "https://www.trance-video.com" + v;
                 return "https://www.trance-video.com/" + v;
 
+        Gender:
+          fixed: MALE
+        Country:
+          fixed: JP
+        Ethnicity:
+          fixed: Asian
       Tags:
         Name:
           selector: "//div[@class='prod_category']//li[strong[normalize-space(text())='カテゴリ']]/div[@class='item']/a"

@@ -105,6 +105,10 @@ xPathScrapers:
                   with: https://www.rgbee.net/
         Gender:
           fixed: MALE
+        Country:
+          fixed: TW
+        Ethnicity:
+          fixed: Asian
       Tags: &rgbeeTags
         Name:
           selector: //section[@id='facts']//nav[@aria-label='標籤']/a

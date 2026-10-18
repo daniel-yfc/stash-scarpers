@@ -151,6 +151,10 @@ xPathScrapers:
                 return n;'
         Gender:
           fixed: MALE
+        Country:
+          fixed: JP
+        Ethnicity:
+          fixed: Asian
       Tags:
         Name:
           selector: $meta/dt[normalize-space(.)='シリーズ/ジャンル']/following-sibling::dd[1]//a/text()
