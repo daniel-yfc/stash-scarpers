@@ -248,6 +248,10 @@ xPathScrapers:
                   with: "https://www.coat.co.jp/"
         Gender:
           fixed: MALE
+        Country:
+          fixed: JP
+        Ethnicity:
+          fixed: Asian
 
 driver:
   useCDP: true

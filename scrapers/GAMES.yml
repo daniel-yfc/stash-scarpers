@@ -172,6 +172,12 @@ xPathScrapers:
                 if (v.charAt(0) === "/") return "https://www.games-video.co.jp" + v;
                 return "https://www.games-video.co.jp/" + v;
 
+        Gender:
+          fixed: MALE
+        Country:
+          fixed: JP
+        Ethnicity:
+          fixed: Asian
       Details:
         selector: "//p[preceding-sibling::h3[contains(text(),'作品詳細')]]//text()[normalize-space()]"
         concat: "\n"

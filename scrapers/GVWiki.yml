@@ -156,6 +156,12 @@ xPathScrapers:
                 if (/\d+歳/.test(v)) return "";
                 if (/少年|大学生|童貞|美少年|巨根|ノンケ|イケメン|色白/.test(v)) return "";
                 return v;
+        Gender:
+          fixed: MALE
+        Country:
+          fixed: JP
+        Ethnicity:
+          fixed: Asian
       URLs:
         selector: "$info//tr[td[1][normalize-space()='Buy']]/td[2]//a/@href | //link[@rel='canonical']/@href"
         postProcess:

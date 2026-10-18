@@ -162,6 +162,10 @@ xPathScrapers:
                   with: "https://www.ck-download.com/"
         Gender:
           fixed: MALE
+        Country:
+          fixed: JP
+        Ethnicity:
+          fixed: Asian
       Details:
         selector: "//div[contains(@class,'intro_text')]//p[string-length(normalize-space(.)) > 10 and not(contains(@style,'color'))]//text()[normalize-space()]"
         concat: "\n\n"

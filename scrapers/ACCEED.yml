@@ -102,6 +102,10 @@ xPathScrapers:
                   with: ""
         Gender:
           fixed: MALE
+        Country:
+          fixed: JP
+        Ethnicity:
+          fixed: Asian
 
   sceneScraper:
     # Live DOM verified 2026-10-06 (logged in) against
