@@ -1,0 +1,19 @@
+# BoyStudio live-test fixtures (rendered HTML verified 2026-10-18)
+# 5187: 若専ムービー, 10 tags, no performer
+# 4972: 若専ムービー, 8 tags, performer ひろき
+# 3762: 若専ムービー, 7 tags, performer ひろき
+# 4955: 若専ムービー, 12 tags, performer とも君
+# 4438: カピバラワークス, 7 tags, no performer
+# 4343: カピバラワークス, 5 tags, performer ゆーた
+# custom probes (verified 2026-10-18): performer=ひろき (7 results), keyword=若専
+probes:
+  - ひろき
+  - 若専ムービー
+urls:
+  - https://boy-studio.com/videos/5187/
+  - https://boy-studio.com/videos/4972/
+  - https://boy-studio.com/videos/3762/
+  - https://boy-studio.com/videos/4955/
+  - https://boy-studio.com/videos/4438/
+  - https://boy-studio.com/videos/4343/
+multi: true

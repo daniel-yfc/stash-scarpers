@@ -1,0 +1,142 @@
+# BoyStudio (boy-studio.com) — 動画配信サイト.
+# Verification status (2026-10-18, rendered HTML of live pages):
+#   VERIFIED against https://boy-studio.com/videos/5187/ and /videos/4972/:
+#   - Title: h2.item__title > span
+#   - Details: div.item__content > details > div (商品説明)
+#   - Code: numeric video ID from og:url (e.g. 5187)
+#   - Studio: table th=レーベル > td > a (e.g. 若専ムービー, /videos/label/32/)
+#   - Tags: table th=ジャンル > td > a (e.g. ガッチリ・マッスル, /videos/category/4/)
+#   - Performers: table th=出演モデル > td > a (e.g. ひろき, /videos/?q=...)
+#   - Date: table th=配信開始日 > td (e.g. 2026年10月17日 -> 2026-10-17)
+#   - Duration: table th=収録時間 > td (e.g. 96分 -> 5760 seconds)
+#   - Image: .swiper-slide img @src (cdn.boy-studio.tokyo)
+#   - URLs: canonical link
+# Selector risk: site redesign breaks table th labels; re-verify against
+# a fresh page before trusting.
+# Last Updated: 2026-10-18
+
+name: BoyStudio
+
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - "boy-studio.com/videos/"
+      - "www.boy-studio.com/videos/"
+    scraper: sceneScraper
+
+sceneByName:
+  action: scrapeXPath
+  queryURL: "https://boy-studio.com/videos/?q={}"
+  scraper: sceneSearchScraper
+
+sceneByQueryFragment:
+  action: scrapeXPath
+  queryURL: "{url}"
+  scraper: sceneScraper
+
+xPathScrapers:
+  sceneSearchScraper:
+    scene:
+      Title:
+        selector: "//main//a[starts-with(@href,'/videos/')]/img/@alt"
+      URL:
+        selector: "//main//a[starts-with(@href,'/videos/')]/@href"
+        postProcess:
+          - replace:
+              - regex: "^/"
+                with: "https://boy-studio.com/"
+      Image:
+        selector: "//main//a[starts-with(@href,'/videos/')]/img/@src"
+
+
+
+  sceneScraper:
+    scene:
+      Title:
+        selector: "//h2[@class='item__title']/span"
+        postProcess:
+          - replace:
+              - regex: "^\\s+|\\s+$"
+                with: ""
+
+      Code:
+        selector: "//meta[@property='og:url']/@content"
+        postProcess:
+          - replace:
+              - regex: "^.*/videos/(\\d+)/?.*$"
+                with: "$1"
+
+      Details:
+        selector: "//div[@class='item__content']/details/div"
+        postProcess:
+          - replace:
+              - regex: "^\\s+|\\s+$"
+                with: ""
+
+      Date:
+        selector: "//th[normalize-space(text())='配信開始日']/../td"
+        postProcess:
+          - replace:
+              - regex: "(\\d{4})年(\\d{1,2})月(\\d{1,2})日"
+                with: "$1-$2-$3"
+          - replace:
+              - regex: "^(\\d{4})-(\\d)-(\\d{2})$"
+                with: "$1-0$2-$3"
+          - replace:
+              - regex: "^(\\d{4})-(\\d{2})-(\\d)$"
+                with: "$1-$2-0$3"
+          - replace:
+              - regex: "^\\s+|\\s+$"
+                with: ""
+
+      Duration:
+        selector: "//th[normalize-space(text())='収録時間']/../td"
+        postProcess:
+          - javascript: |
+              var v = value || "";
+              var m = v.match(/(\d+)/);
+              if (!m) return "";
+              return String(parseInt(m[1], 10) * 60);
+
+      Studio:
+        Name:
+          selector: "//th[normalize-space(text())='レーベル']/../td/a"
+        URLs:
+          selector: "//th[normalize-space(text())='レーベル']/../td/a/@href"
+          postProcess:
+            - replace:
+                - regex: "^/"
+                  with: "https://boy-studio.com/"
+
+      Performers:
+        Name:
+          selector: "//th[normalize-space(text())='出演モデル']/../td/a/text()"
+        URLs:
+          selector: "//th[normalize-space(text())='出演モデル']/../td/a/@href"
+          postProcess:
+            - replace:
+                - regex: "^/"
+                  with: "https://boy-studio.com/"
+        Gender:
+          fixed: MALE
+        Country:
+          fixed: JP
+        Ethnicity:
+          fixed: Asian
+
+      Tags:
+        Name:
+          selector: "//th[normalize-space(text())='ジャンル']/../td/a/text()"
+
+      Image:
+        selector: "(//div[contains(@class,'swiper-slide')]//img[@src])[1]/@src"
+        postProcess:
+          - replace:
+              - regex: "^//"
+                with: "https://"
+
+      URLs:
+        selector: "//link[@rel='canonical']/@href"
+
+driver:
+  useCDP: true
