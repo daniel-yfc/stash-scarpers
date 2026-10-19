@@ -211,7 +211,7 @@ xPathScrapers:
 
       Performers:
         Name:
-          selector: "$cats//a[contains(@href,'search.php?model=on')]"
+          selector: "$cats//a[contains(@href,'search.php?model=on')]/@title"
           postProcess:
             - replace:
                 - regex: "^\\s+|\\s+$"
