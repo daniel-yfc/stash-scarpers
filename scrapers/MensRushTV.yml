@@ -159,7 +159,10 @@ xPathScrapers:
           # an external fansme.jp 出品者 link instead (individual creator,
           # e.g. FansMe（YUKI RITO）). Absent field is legitimate,
           # not a selector bug.
-          selector: //div[@class='movie_detail'][1]//a[starts-with(@href,'list.php?mid=')]/text()
+          # NOTE (2026-10-19): no /text() suffix -- take the anchor's full
+          # string value so nested markup doesn't yield empty names
+          # (same pitfall fixed in ACCEED).
+          selector: //div[@class='movie_detail'][1]//a[starts-with(@href,'list.php?mid=')]
           postProcess:
             - replace:
                 - regex: '^\s+|\s+$'
