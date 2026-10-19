@@ -213,6 +213,16 @@ xPathScrapers:
         Name:
           selector: "$cats//a[contains(@href,'search.php?model=on')]/@title"
           postProcess:
+            # title is "stagename (realname)" -- keep the realname inside
+            # either half- or full-width parentheses.
+            - replace:
+                - regex: "^[^（(]*[（(]([^）)]+)[）)].*$"
+                  with: "$1"
+            # Drop space between CJK chars (響木 一馬 -> 響木一馬),
+            # but keep it after romaji (Williams 龍).
+            - replace:
+                - regex: "([\\u4e00-\\u9fff\\u3040-\\u309f\\u30a0-\\u30ff])\\s+([\\u4e00-\\u9fff\\u3040-\\u309f\\u30a0-\\u30ff])"
+                  with: "$1$2"
             - replace:
                 - regex: "^\\s+|\\s+$"
                   with: ""
