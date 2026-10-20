@@ -148,10 +148,14 @@ xPathScrapers:
 
                 if (mixed) n = mixed[1].trim();
 
+                if (!n) { var fb = v.replace(/\s+/g, " ").trim().match(/[A-Za-z][A-Za-z ]*/); return fb ? fb[0].trim() : ""; }
+
                 return n;'
         Aliases:
           # Same source as Name; keep only the trailing romaji as alias
-          # (阿部純也 Junya -> alias Junya). Empty for other performers.
+          # (阿部純也 Junya -> alias Junya). Empty for other performers,
+          # and empty when the name is romaji-only (the romaji is the
+          # Name itself then, not an alias).
           selector: $performers
           postProcess:
             - javascript: 'var v = value || "";
@@ -161,6 +165,9 @@ xPathScrapers:
 
 
                 var n = v.replace(/\s+/g, " ").trim();
+
+
+                if (!/[^\x00-\x7F]/.test(n)) return "";
 
 
                 var m = n.match(/\s([A-Za-z][A-Za-z ]*)$/);
