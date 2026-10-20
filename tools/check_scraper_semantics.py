@@ -7,12 +7,17 @@
 2. movieByURL: deprecated; warn if present (use groupByURL).
 3. parseDate: format string should contain `2006` (Go reference year).
    Catches yyyy-MM-dd / %Y-%m-%d style mistakes the blacklist may miss.
+4. postProcess regex: must not contain JS-style `\\uXXXX` escapes.
+   Stash applies postProcess with Go regexp (RE2), which rejects `\\u`
+   escapes -- the step fails to compile and is silently skipped at
+   runtime (Incident 5). Use \\p{...} classes or literal characters.
 
 Exit 0 if clean, 1 with details otherwise.
 Usage: python3 tools/check_scraper_semantics.py [file ...]
        (no args = all scrapers/*.yml)
 """
 
+import re
 import sys
 from pathlib import Path
 
@@ -84,6 +89,41 @@ def check_parse_date(data, path):
     walk(data)
 
 
+JS_STYLE_U_ESCAPE = re.compile(r"\\u[0-9a-fA-F]{4}")
+
+
+def check_postprocess_regex(data, path):
+    """Flag JS-style \\uXXXX escapes in postProcess regexes (Go RE2 rejects them)."""
+    def walk(node, trail=""):
+        if isinstance(node, dict):
+            pp = node.get("postProcess")
+            if isinstance(pp, list):
+                for i, op in enumerate(pp):
+                    if not isinstance(op, dict):
+                        continue
+                    replaces = op.get("replace")
+                    if not isinstance(replaces, list):
+                        continue
+                    for j, item in enumerate(replaces):
+                        if not isinstance(item, dict):
+                            continue
+                        pattern = item.get("regex")
+                        if isinstance(pattern, str) and JS_STYLE_U_ESCAPE.search(pattern):
+                            errors.append(
+                                f"{path}:{trail}/postProcess[{i}]/replace[{j}]: "
+                                f"regex {pattern!r} uses JS-style \\uXXXX escapes; "
+                                "Go RE2 (Stash) rejects them -- use \\p{...} classes "
+                                "or literal characters (Incident 5)"
+                            )
+            for k, v in node.items():
+                walk(v, f"{trail}/{k}")
+        elif isinstance(node, list):
+            for i, item in enumerate(node):
+                walk(item, f"{trail}[{i}]")
+
+    walk(data)
+
+
 def check_file(path):
     try:
         with open(path) as f:
@@ -96,6 +136,7 @@ def check_file(path):
     check_gender(data, path)
     check_movie_by_url(data, path)
     check_parse_date(data, path)
+    check_postprocess_regex(data, path)
 
 
 def main():

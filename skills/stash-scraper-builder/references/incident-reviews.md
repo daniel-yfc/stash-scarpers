@@ -100,3 +100,22 @@ routing:
 - Page-dependent fields are legitimate: when a field exists only on some templates, an empty result on other templates is correct behavior, not a selector bug — document it as such instead of widening the selector to fill the gap.
 
 **Feedback loop:** for every entity field (Performers, Studio, Tags), record at least one positive and one negative page template with the actual returned values; re-check after any site layout change.
+
+### Incident 5: postProcess regex verified on the wrong engine (Go RE2 vs JS RegExp)
+
+**Date:** 2026-10-20  
+**Provenance:** ACCEED performer-name post-processing; broken commit `75df013`, fix commit `489008f`.
+
+**What happened:** the ACCEED scene scraper's `Performers.Name` postProcess gained a step that strips the space between CJK characters, written with JS-style unicode escapes: `([\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff])\s+([\u4e00-\u9fff...])`. The author verified the pattern in Node.js (9/9 cases passed) and the schema validator passed — but in Stash the step silently did nothing. Stash applies `postProcess` with Go's `regexp` package (RE2), which rejects `\uXXXX` escapes outright (`\u` is not a valid RE2 escape; Go uses `\x{XXXX}` or `\p{...}` classes). The pattern failed to compile and the replace step was skipped, while the neighbouring step (bracket extraction, written with literal full-width characters) worked — which made the failure look like a data problem instead of a dialect problem.
+
+**Why review missed it:** the verification engine was chosen for convenience (Node was at hand), not for fidelity: a JavaScript RegExp pass proves nothing about Go RE2 behaviour. Schema validation checks YAML shape only; it never compiles the regexes. Neither layer executes the pattern with the runtime's dialect.
+
+**Detection and correction:** the user observed in live Stash that bracket extraction worked but space stripping did not. The dialect mismatch was identified from that asymmetry — the working step used literal characters, the failing step used `\u` escapes. Fix: rewrite with RE2-supported unicode classes, `([\p{Han}\p{Hiragana}\p{Katakana}])\s+([\p{Han}\p{Hiragana}\p{Katakana}])`.
+
+**Transferable rules:**
+
+- `postProcess` regexes are Go RE2, not JavaScript: no `\uXXXX` escapes (use `\p{Han}`/`\p{Hiragana}`/`\p{Katakana}` or `\x{...}`), no lookahead/lookbehind, no pattern backreferences. Prefer literal characters or `\p{...}` classes for non-ASCII work.
+- Verify a regex with the runtime's dialect (Go RE2) or in Stash itself. A pass in Node/Python/`re` is a different engine's opinion and is not evidence for Stash behaviour — the same class of gap as "validator pass is not runtime pass" (Incident 3).
+- When one postProcess step works and the next silently does nothing in live Stash, suspect a pattern-compile failure (dialect) before suspecting the data or the selector.
+
+**Feedback loop:** `tools/check_scraper_semantics.py` rule 4 rejects JS-style `\uXXXX` escapes in committed `postProcess` regexes, so the dialect error is caught offline; the incident stays as the record of why the rule exists.
