@@ -220,8 +220,10 @@ xPathScrapers:
                   with: "$1"
             # Drop space between CJK chars (響木 一馬 -> 響木一馬),
             # but keep it after romaji (Williams 龍).
+            # NOTE: Stash postProcess uses Go regexp (RE2), which does NOT
+            # support JS-style \uXXXX escapes -- use \p{...} classes.
             - replace:
-                - regex: "([\\u4e00-\\u9fff\\u3040-\\u309f\\u30a0-\\u30ff])\\s+([\\u4e00-\\u9fff\\u3040-\\u309f\\u30a0-\\u30ff])"
+                - regex: "([\\p{Han}\\p{Hiragana}\\p{Katakana}])\\s+([\\p{Han}\\p{Hiragana}\\p{Katakana}])"
                   with: "$1$2"
             - replace:
                 - regex: "^\\s+|\\s+$"
