@@ -149,6 +149,65 @@ xPathScrapers:
                 if (mixed) n = mixed[1].trim();
 
                 return n;'
+        Aliases:
+          # Same source as Name; keep only the trailing romaji as alias
+          # (阿部純也 Junya -> alias Junya). Empty for other performers.
+          selector: $performers
+          postProcess:
+            - javascript: 'var v = value || "";
+
+
+                if (!v) return "";
+
+
+                var n = v.replace(/\s+/g, " ").trim();
+
+
+                var m = n.match(/\s([A-Za-z][A-Za-z ]*)$/);
+
+
+                return m ? m[1].trim() : "";'
+        URL:
+          # Same anchors as Name (name/url/img live in one <a> per performer):
+          # carousel items, model.php links, model_detail.php fallback.
+          # The h3 external-link layout has no profile page -- no URL there.
+          selector: //div[contains(@class,'model_performance')][1]//div[contains(@class,'owl-carousel')]//div[@class='item']//a/@href | //a[contains(@href,'model.php?model_id=')]/@href | //a[contains(@href,'model_detail.php')]/@href
+          postProcess:
+            - javascript: 'var v = value || "";
+
+
+                if (!v) return "";
+
+
+                v = v.replace(/^\/\//, "https://");
+
+
+                if (v.indexOf("http") === 0) return v;
+
+
+                if (v.indexOf("/") === 0) return "https://ko-video.com" + v;
+
+
+                return "https://ko-video.com/" + v;'
+        Image:
+          selector: //div[contains(@class,'model_performance')][1]//div[contains(@class,'owl-carousel')]//div[@class='item']//a//img/@src | //a[contains(@href,'model.php?model_id=')]//img/@src
+          postProcess:
+            - javascript: 'var v = value || "";
+
+
+                if (!v) return "";
+
+
+                v = v.replace(/^\/\//, "https://");
+
+
+                if (v.indexOf("http") === 0) return v;
+
+
+                if (v.indexOf("/") === 0) return "https://ko-video.com" + v;
+
+
+                return "https://ko-video.com/" + v;'
         Gender:
           fixed: MALE
         Country:
