@@ -142,7 +142,7 @@ xPathScrapers:
 
                 var kanaLead = n.match(/^[぀ - ゟ゠ - ハー]+\s+(.+)$/u);
 
-                if (kanaLead) n = kanaLead[1].trim();
+                if (kanaLead && /[^\x00-\x7F]/.test(kanaLead[1])) n = kanaLead[1].trim();
 
                 var mixed = n.match(/^([^\x00-\x7F]+)\s+[A-Za-z\s]+$/u);
 
