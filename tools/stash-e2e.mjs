@@ -48,6 +48,19 @@ export function parseArguments(argv) {
   return options;
 }
 
+function isPrivateHttpHost(hostname) {
+  const host = hostname.replace(/^\[|\]$/g, "").toLowerCase();
+  if (["localhost", "127.0.0.1", "::1"].includes(host)) return true;
+  if (host.endsWith(".ts.net") || host.endsWith(".tailscale") || host.endsWith(".internal")) return true;
+  const parts = host.split(".");
+  if (parts.length !== 4 || parts.some((p) => !/^\d{1,3}$/.test(p) || Number(p) > 255)) return false;
+  const [a, b] = parts.map(Number);
+  return a === 10 || a === 127 ||
+    (a === 172 && b >= 16 && b <= 31) ||
+    (a === 192 && b === 168) ||
+    (a === 100 && b >= 64 && b <= 127);
+}
+
 export function validateConfiguration(config) {
   if (!["test", "production"].includes(config.env)) {
     throw new E2EError("Explicit --env=test|production is required");
@@ -72,9 +85,10 @@ export function validateConfiguration(config) {
     if (url.pathname !== "/" && url.pathname !== "/graphql") {
       throw new Error("path is not GraphQL");
     }
-    if (url.protocol === "http:" && !config.allowPrivateHTTP) {
+    if (url.protocol === "http:") {
+      if (!isPrivateHttpHost(url.hostname)) throw new Error("public HTTP forbidden");
       const h = url.hostname.replace(/^\[|\]$/g, "");
-      if (!["localhost", "127.0.0.1", "::1"].includes(h)) {
+      if (!["localhost", "127.0.0.1", "::1"].includes(h) && !config.allowPrivateHTTP) {
         throw new Error("private HTTP requires explicit permission");
       }
     }
@@ -197,7 +211,7 @@ export async function execute(config, { fetchImpl = fetch, cases = null } = {}) 
     }
     record("E2E-LOADER", "PASS", null, { loaded_count: inventory.listScrapers.length });
   } catch (error) {
-    record("E2E-LOADER", error.status || "FAIL", error.message instanceof String ? error.message : String(error.message).slice(0, 100));
+    record("E2E-LOADER", error.status || "FAIL", error instanceof E2EError ? error.message : "UNEXPECTED_INVENTORY_ERROR");
     return finish(report);
   }
   if (safe.mode === "inventory") return finish(report);
@@ -238,7 +252,7 @@ export async function execute(config, { fetchImpl = fetch, cases = null } = {}) 
         checks: verified.checks, actual_sha256: verified.actual_sha256,
       });
     } catch (error) {
-      record(testcase.id, error.status || "FAIL", error.message instanceof String ? error.message : String(error.message).slice(0, 100));
+      record(testcase.id, error.status || "FAIL", error instanceof E2EError ? error.message : "UNEXPECTED_SCRAPE_ERROR");
     }
   }
   if (safe.caseId && !report.results.some((r) => r.id === safe.caseId)) {
