@@ -101,6 +101,9 @@ def test_new_committed_version_changes_only_affected_package(source_repo, tmp_pa
     ("sceneByURL: []\n", "missing root name"),
     ("name: Unsafe\ndriver:\n  cookies:\n    - Key: Cookie\n      Value: secret\n", "driver.cookies"),
     ("name: Unsafe\napi_key: real-secret\n", "secret-looking key"),
+    ("name: Unsafe\ndriver:\n  headers:\n    - Key: Cookie\n      Value: session-value\n", "credential-bearing driver.header"),
+    ("name: Unsafe\ndriver:\n  headers:\n    - Key: Authorization\n      Value: Bearer-example\n", "credential-bearing driver.header"),
+    ("name: Unsafe\ndriver:\n  headers:\n    - Key: X-Auth-Token\n      Value: session-value\n", "credential-bearing driver.header"),
     ("name: Unsafe\nsceneByName:\n  action: script\n  script: [python, scraper.py]\n", "script action"),
     ("# requires: absent-package\nname: Unsafe\n", "unpublished package"),
 ])
