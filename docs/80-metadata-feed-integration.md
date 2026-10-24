@@ -63,12 +63,14 @@ Private Gayerdar's scene and performer name entries used `{url}`. Stash's name
 scraper substitutes only `{}`, so these entries and their unused search mappings
 were removed. Restore name search only with a verified real keyword endpoint.
 
-Remaining fragment declarations are **not certified for unattended Identify**:
-ACCEED and private/Gayerdar depend on an existing scene URL; BRAVO derives a clip
-path from title text; FC2 extracts digits from a filename. The latter two can
-confuse unrelated numbers with a site identifier. Keep them out of bulk Identify
-until positive, ambiguous, unrelated-number, missing-input and zero-result cases
-have passed in the installed Stash version. Prefer explicit product URLs meanwhile.
+Remaining top-level `sceneByFragment` declarations are limited to **BRAVO** and
+**fc2**; other scrapers such as ACCEED and private/Gayerdar do not declare an
+executable fragment entry point in the current YAML. BRAVO derives a clip path
+from title text, while fc2 extracts digits from a filename; either may confuse
+unrelated numbers with a site identifier. These fragment sources are **not
+certified for unattended Identify** until positive, ambiguous, unrelated-number,
+missing-input and zero-result cases pass in the installed Stash version.
+Prefer explicit product URLs meanwhile.
 
 ## Executable checks
 
