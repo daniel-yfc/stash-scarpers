@@ -5,6 +5,9 @@ on:
     branches: [main]
     paths:
       - "tests/fixtures/**"
+      - "scrapers/**/*.yml"
+      - "scrapers/**/*.test.yaml"
+      - "tools/verify-scraper-mappings.mjs"
       - "tools/run_fixture_manifests.py"
       - "tools/verify-scraper-fixtures.mjs"
       - "tools/tests/test_fixture_manifest_discovery.py"
@@ -13,6 +16,9 @@ on:
     branches: [main]
     paths:
       - "tests/fixtures/**"
+      - "scrapers/**/*.yml"
+      - "scrapers/**/*.test.yaml"
+      - "tools/verify-scraper-mappings.mjs"
       - "tools/run_fixture_manifests.py"
       - "tools/verify-scraper-fixtures.mjs"
       - "tools/tests/test_fixture_manifest_discovery.py"
