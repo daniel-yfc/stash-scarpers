@@ -70,6 +70,7 @@ test("configuration fails closed without target, live consent, or production app
   assert.throws(() => validateConfiguration({ ...BASE, baseURL: "http://100.100.100.100:9999" }), /STASH_BASE_URL/);
   assert.equal(validateConfiguration({ ...BASE, baseURL: "http://100.100.100.100:9999", allowPrivateHTTP: true }).endpoint,
     "http://100.100.100.100:9999/graphql");
+  assert.throws(() => validateConfiguration({ ...BASE, baseURL: "http://public.example.test", allowPrivateHTTP: true }), /STASH_BASE_URL/);
   assert.equal(validateConfiguration({ ...BASE, mode: "inventory", live: false }).mode, "inventory");
 });
 
