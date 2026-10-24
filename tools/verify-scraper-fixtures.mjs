@@ -140,7 +140,7 @@ function selfTest() {
     } catch { mutationFailed = true; }
     if (!mutationFailed) fail('mutation self-test: bad production XPath was not rejected');
     assertCase({ name: 'expected failure', classification: 'failure' }, '<title>Just a moment</title>');
-    console.log('Fixture contract self-test: legacy, mapped-field, and mutated-YAML cases passed');
+    console.log('Fixture contract self-test: 5 positive and 6 negative cases passed; production YAML field and mutation checks passed');
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 }
 
