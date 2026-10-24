@@ -8,6 +8,15 @@ cases:
         values: ["【先行配信】熱狂球児 part28"]
       - field: Code
         values: ["TR-16-0028-01"]
+      - field: Date
+        values: ["2026-06-25"]
+      - field: Duration
+        values: ["1545"]
+      - field: Performers.URL
+        routeThrough: performerByURL
+        values:
+          - "https://www.trance-video.com/product/search?model%5B%5D=210"
+          - "https://www.trance-video.com/product/search?model%5B%5D=212"
     locale:
       lang: "ja"
       text: "熱狂球児"
@@ -41,6 +50,10 @@ cases:
         values: ["【沖修斗】private sex6"]
       - field: Code
         values: ["TC-05-0013-01"]
+      - field: Date
+        values: ["2026-10-08"]
+      - field: Duration
+        values: ["1167"]
     locale:
       lang: "ja"
       text: "private sex"
