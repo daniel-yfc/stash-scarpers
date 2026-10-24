@@ -100,6 +100,9 @@ test("Trance golden assertions validate seconds and distinct performer IDs", () 
 test("mock Stash inventory and two URL scrapes complete, with only sanitized digests", async () => {
   const report = await execute(BASE, { fetchImpl: mocked({ [sourceA]: sceneA, [sourceB]: sceneB }) });
   assert.equal(report.status, "PASS");
+  assert.equal(report.production_ready, false);
+  assert.equal(report.persistence, "UNVERIFIED");
+  assert.equal(report.proof_scope, "LOADER_AND_EXTRACTION");
   assert.equal(report.results.length, 3);
   assert.equal(report.results[1].status, "PASS");
   assert.equal(report.results[2].status, "PASS");
