@@ -50,7 +50,7 @@ routing:
 | Best practices         | `best-practices.md` → `multi-site-network-scrapers.md`                                 |
 | Debugging failures     | `debugging.md` → `incident-reviews.md` (past incidents)                                |
 | Regression/evaluation  | `eval-pack.md` → **repo-only**: repository `tools/tests/` and validation commands      |
-| Verification metadata  | **Repo-only**: `docs/verification-metadata.md`                                         |
+| Verification metadata  | **Repo-only**: `docs/52-verification-metadata.md`                                         |
 | Live-site verification | **Repo-only**: `docs/50-testing-guide.md` → `docs/60-live-test-status.md`                 |
 
 ## Before editing
