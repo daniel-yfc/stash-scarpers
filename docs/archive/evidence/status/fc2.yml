@@ -7,10 +7,10 @@ states:
   fixture:
     status: verified
     artifact: tests/fixtures/fc2/fc2-fixtures.yml
-    sha256: b0238c165627651f87eb751f6c4ec5e3d18ac4dc259128b082cb2510e4f52f1c
-    captured_at: '2026-10-14T19:14:48+08:00'
+    sha256: 66f6923a69ea9cefabcdf6828035ac8f8a02ec20ae6b4b1f773aa3e155be0539
+    captured_at: '2026-10-24T10:40:48+00:00'
     source_url: https://adult.contents.fc2.com/
-    revision: 8cee96949047cfdc184e81f45cb5ce4f4cdbd446
+    revision: 1254d24a0341c9acc2c1046b13b6e23eaa9f8406
   live_search:
     status: unverified
   live_detail:
