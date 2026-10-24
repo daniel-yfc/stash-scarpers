@@ -18,7 +18,8 @@ function getField(scraper, assertion) {
   if (!definition) fail("Missing xPathScraper " + chosen.scraper);
   const fieldPath = assertion.field?.split(".");
   if (!fieldPath?.length) fail("A mapped field path is required");
-  let field = definition.scene;
+  const domain = entrypoint.startsWith("performer") ? "performer" : "scene";
+  let field = definition[domain];
   for (const component of fieldPath) {
     field = field?.[component];
   }
@@ -53,6 +54,17 @@ function postProcessValue(value, steps) {
       // This is a regression aid, not a substitute for an actual Stash runtime.
       const code = "(function () {\n" + step.javascript + "\n})()";
       output = new vm.Script(code).runInNewContext({ value: output }, { timeout: 250 });
+    } else if (step.parseDate !== undefined) {
+      // Deliberately narrow: only explicitly verified YYYY.MM.DD is supported
+      // by this offline test helper; other Stash date layouts must fail closed.
+      if (step.parseDate !== "2006.01.02") fail("Unsupported parseDate layout: " + step.parseDate);
+      const match = /^(\\d{4})\\.(\\d{2})\\.(\\d{2})$/.exec(String(output).trim());
+      if (!match) fail("Date does not match YYYY.MM.DD: " + output);
+      const [year, month, day] = match.slice(1).map(Number);
+      const date = new Date(Date.UTC(year, month - 1, day));
+      if (date.getUTCFullYear() !== year || date.getUTCMonth() !== month - 1
+          || date.getUTCDate() !== day) fail("Invalid calendar date: " + output);
+      output = match.slice(1).join("-");
     } else {
       fail("Unsupported postProcess operation: " + Object.keys(step).join(","));
     }
@@ -93,6 +105,27 @@ export function assertMappedCase(item, document, scraper) {
     }
     const { field, common } = getField(scraper, assertion);
     const actual = extractValues(document, field, common);
+    if (assertion.routeThrough !== undefined) {
+      const routes = scraper[assertion.routeThrough];
+      if (!Array.isArray(routes) || !routes.length) {
+        fail(item.name + ": expected an array of " + assertion.routeThrough + " routes");
+      }
+      const patterns = routes.flatMap((route) => Array.isArray(route.url) ? route.url : [route.url])
+        .filter((pattern) => typeof pattern === "string" && pattern.length);
+      for (const actualURL of actual) {
+        let candidate;
+        try {
+          const url = new URL(actualURL);
+          if (!["http:", "https:"].includes(url.protocol)) throw new Error("non-http URL");
+          candidate = url.host + url.pathname + url.search;
+        } catch {
+          fail(item.name + ": invalid routed URL for " + assertion.field);
+        }
+        if (!patterns.some((p) => candidate.startsWith(p.replace(/^https?:\\/\\//, "")))) {
+          fail(item.name + ": " + assertion.field + " does not match " + assertion.routeThrough);
+        }
+      }
+    }
     if (JSON.stringify(actual) !== JSON.stringify(assertion.values)) {
       fail(
         item.name + ": production YAML field " + assertion.field +
