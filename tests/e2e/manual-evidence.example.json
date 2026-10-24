@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "executed_at": "2026-10-24T12:00:00Z",
+  "executor": "HUMAN_UI",
+  "environment": "test",
+  "mode": "manual",
+  "scraper_commit": "0000000000000000000000000000000000000000",
+  "stash_version": "v0.31.1",
+  "proof_scope": "HUMAN_VERIFIED",
+  "persistence": "UNVERIFIED",
+  "production_ready": false,
+  "results": [
+    {
+      "id": "E2E-TRANCE-40625",
+      "status": "UNVERIFIED",
+      "checks": {
+        "loader": "UNVERIFIED",
+        "extraction": "UNVERIFIED",
+        "postprocess": "UNVERIFIED",
+        "source_truth": "UNVERIFIED",
+        "identity": "UNVERIFIED",
+        "persistence": "NOT_APPLICABLE"
+      }
+    },
+    {
+      "id": "E2E-TRANCE-40641",
+      "status": "UNVERIFIED",
+      "checks": {
+        "loader": "UNVERIFIED",
+        "extraction": "UNVERIFIED",
+        "postprocess": "UNVERIFIED",
+        "source_truth": "UNVERIFIED",
+        "identity": "NOT_APPLICABLE",
+        "persistence": "NOT_APPLICABLE"
+      }
+    }
+  ],
+  "status": "UNVERIFIED"
+}
