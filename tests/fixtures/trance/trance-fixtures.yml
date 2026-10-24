@@ -1,7 +1,13 @@
+scraper: scrapers/Trance.yml
 cases:
   - name: "Trance detail 40625"
     classification: completed
     html: "detail-40625.html"
+    mappedExpect:
+      - field: Title
+        values: ["【先行配信】熱狂球児 part28"]
+      - field: Code
+        values: ["TR-16-0028-01"]
     locale:
       lang: "ja"
       text: "熱狂球児"
@@ -30,6 +36,11 @@ cases:
   - name: "Trance detail 40641"
     classification: completed
     html: "detail-40641.html"
+    mappedExpect:
+      - field: Title
+        values: ["【沖修斗】private sex6"]
+      - field: Code
+        values: ["TC-05-0013-01"]
     locale:
       lang: "ja"
       text: "private sex"
