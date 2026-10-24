@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import fs from "node:fs";
 import { validateReport, evaluatePilot, parseOptions } from "../check_stash_e2e_evidence.mjs";
 
 const COMMIT = "0123456789abcdef0123456789abcdef01234567";
@@ -143,4 +144,26 @@ test("only explicit report paths and an optional pilot gate flag are supported",
   });
   assert.throws(() => parseOptions(["--api-key=secret"]), /unsupported/);
   assert.throws(() => parseOptions([]), /report/);
+});
+
+test("committed manual template is valid but never an E2E PASS", () => {
+  const template = JSON.parse(fs.readFileSync("tests/e2e/manual-evidence.example.json", "utf8"));
+  assert.equal(validateReport(template).status, "UNVERIFIED");
+  assert.equal(evaluatePilot([template]).ready, false);
+});
+
+test("Trance 40625 identity must be verified, not marked not-applicable", () => {
+  const a = manual();
+  a.results[0].checks.identity = "NOT_APPLICABLE";
+  assert.equal(validateReport(a).status, "PASS");
+  assert.ok(evaluatePilot([a]).reasons.includes("E2E-TRANCE-40625_NOT_VERIFIED"));
+});
+
+test("a failing report cannot be masked by another passing report", () => {
+  const a = agent();
+  a.results[1].status = "FAIL";
+  a.results[1].reason = "GOLDEN_VALUE_MISMATCH";
+  a.results[1].checks[0].pass = false;
+  a.status = "FAIL";
+  assert.ok(evaluatePilot([a, manual()]).reasons.includes("INCOMPLETE_OR_FAILED_REPORT"));
 });
