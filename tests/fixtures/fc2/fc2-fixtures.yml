@@ -1,7 +1,11 @@
+scraper: scrapers/fc2.yml
 cases:
   - name: "fc2 article 4817460"
     classification: completed
     html: "article-4817460.html"
+    mappedExpect:
+      - field: URLs
+        values: ["https://adult.contents.fc2.com/article/4817460/"]
     locale:
       lang: "tw"
       text: "4817460"
@@ -22,6 +26,9 @@ cases:
   - name: "fc2 article 4810323"
     classification: completed
     html: "article-4810323.html"
+    mappedExpect:
+      - field: URLs
+        values: ["https://adult.contents.fc2.com/article/4810323/"]
     locale:
       lang: "tw"
       text: "4810323"
