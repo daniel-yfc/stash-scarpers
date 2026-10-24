@@ -49,7 +49,7 @@ test("Trance performer URLs retain different model identifiers from the actual f
   assert.ok(urls.some((url) => url.includes("model%5B%5D=210")));
   assert.ok(urls.some((url) => url.includes("model%5B%5D=212")));
   for (const url of urls) {
-    const target = url.replace(/^https?:\\/\\//, "");
+    const target = new URL(url).host + new URL(url).pathname + new URL(url).search;
     assert.ok(scraper.performerByURL[0].url.some((pattern) => target.includes(pattern)), `performerByURL must route ${url}`);
   }
 });
