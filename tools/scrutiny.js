@@ -18,6 +18,7 @@ import fs from "node:fs";
 import path from "node:path";
 import yaml from "yaml";
 import { JSDOM, VirtualConsole } from "jsdom";
+import { extractSceneURLs, classifyScrapedFields } from "./scrutiny-analysis.mjs";
 
 const quietConsole = new VirtualConsole();
 quietConsole.on("jsdomError", () => {});
@@ -46,7 +47,7 @@ Options:
   --multi               Test multiple candidate scene URLs
   --search              Also evaluate searchScraper (default: always on)
   --url=<url>           Evaluate sceneScraper directly
-  --cookie=<str>        Provide cookie header string
+  --cookie=<str>        Legacy CLI option (prefer SCRUTINY_COOKIE to avoid shell history)
   --help                Show this help
 
 Test Settings File:
@@ -57,7 +58,7 @@ Test Settings File:
   Simplified format:
     - url: string | array (auto-enables multi if array)
     - probe: string | array (auto-enables multi if array)
-    - cookie: string (auto-detects Netscape or header format)
+    - cookie: NOT SUPPORTED (use SCRUTINY_COOKIE environment variable)
     - multi: boolean (default: auto)
     - search: boolean (default: true, always test search unless false)
 
@@ -75,7 +76,7 @@ function parseArgs(argv) {
     multiUrl: false,
     searchReport: false,
     url: null,
-    cookie: null,
+    cookie: process.env.SCRUTINY_COOKIE || null,
   };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
@@ -237,12 +238,9 @@ function mergeOptions(cliOpts, scraperFile) {
     merged.probe = [merged.probe];
   }
 
-  // Cookie: parse and merge
+  // Never read session credentials from a committed *.test.yaml sidecar.
   if (sidecar.cookie) {
-    const parsedCookie = parseCookieInput(sidecar.cookie);
-    if (parsedCookie) {
-      merged.cookie = parsedCookie;
-    }
+    console.warn("[WARN] Ignoring sidecar cookie: supply SCRUTINY_COOKIE in the environment instead.");
   }
 
   // Auto-detect multi mode
@@ -341,84 +339,6 @@ function defaultProbes(scraperDoc) {
   if (/justice/i.test(queryURL)) probes.unshift("JUSTICE");
   if (/hunks/i.test(queryURL)) probes.unshift("HUNKS");
   return probes;
-}
-
-function extractSceneURLs(searchHTML, scraperDoc, baseURL, probe, page) {
-  const dom = new JSDOM(searchHTML, { virtualConsole: quietConsole });
-  const xdoc = dom.window.document;
-  const searchScraper = (scraperDoc.xPathScrapers || {})[
-    (scraperDoc.sceneByName || scraperDoc.sceneByFragment || {}).scraper
-  ];
-  if (!searchScraper) return [];
-
-  const urlsSel = searchScraper.scene && searchScraper.scene.URLs;
-  if (!urlsSel) return [];
-
-  let candidates = [];
-  try {
-    let sel = typeof urlsSel === "string" ? urlsSel : urlsSel.selector;
-    if (!sel) return [];
-    const common = searchScraper.common || {};
-    for (const [k, v] of Object.entries(common)) {
-      const key = k.startsWith("$") ? k : "$" + k;
-      sel = sel.replaceAll(key, v);
-    }
-    const snap = xdoc.evaluate(sel, xdoc, null, XP_ALL, null);
-    for (let i = 0; i < snap.snapshotLength; i++) {
-      const node = snap.snapshotItem(i);
-      let href = node.nodeValue || node.textContent || "";
-      if (!href) continue;
-      if (typeof urlsSel === "object" && urlsSel.postProcess) {
-        for (const pp of urlsSel.postProcess) {
-          if (pp.replace) {
-            for (const r of pp.replace) {
-              href = href.replace(new RegExp(r.regex), r.with);
-            }
-          }
-        }
-      }
-      try {
-        const full = new URL(href, baseURL).toString();
-        candidates.push(full);
-      } catch {
-        // ignore invalid URL
-      }
-    }
-  } catch {
-    // evaluate failed
-  }
-
-  if (candidates.length === 0) {
-    const patterns = (scraperDoc.sceneByURL || []).map((s) => s.url);
-    const snap = xdoc.evaluate("//a[@href]/@href", xdoc, null, XP_ALL, null);
-    for (let i = 0; i < snap.snapshotLength; i++) {
-      const href = snap.snapshotItem(i).nodeValue;
-      if (!href) continue;
-      try {
-        const full = new URL(href, baseURL).toString();
-        for (const pat of patterns) {
-          const patNorm = pat.replace(/^https?:\/\//, "").replace(/^www\./, "");
-          const hostAndPath = full.replace(/^https?:\/\//, "").replace(/^www\./, "");
-          if (hostAndPath.startsWith(patNorm.split("?")[0]) || hostAndPath.includes(patNorm)) {
-            candidates.push(full);
-            break;
-          }
-        }
-      } catch {
-        // ignore invalid URL
-      }
-    }
-  }
-
-  const deduped = [];
-  const seen = new Set();
-  for (const c of candidates) {
-    if (!seen.has(c)) {
-      seen.add(c);
-      deduped.push({ url: c, probe, page });
-    }
-  }
-  return deduped;
 }
 
 async function findSceneURLs(scraperDoc, opts) {
@@ -527,6 +447,7 @@ function tryFieldWithDoc(val, ctx) {
     if (val.fixed !== undefined) out.fixed = val.fixed;
     if (val.postProcess) out.postProcess = val.postProcess;
     if (val.Name) out.Name = tryFieldWithDoc(val.Name, ctx);
+    if (val.URL) out.URL = tryFieldWithDoc(val.URL, ctx);
     return out;
   }
   return null;
@@ -536,6 +457,7 @@ function collectSelectors(val, acc = []) {
   if (!val) return acc;
   if (val.selector) acc.push(val.selector);
   if (val.Name) collectSelectors(val.Name, acc);
+  if (val.URL) collectSelectors(val.URL, acc);
   return acc;
 }
 
@@ -639,7 +561,8 @@ async function testScraper(file, opts) {
       }
     }
     urlEntry.fields = result;
-    urlEntry.status = "OK";
+    urlEntry.analysis = classifyScrapedFields(result);
+    urlEntry.status = urlEntry.analysis.status;
     perUrl.push(urlEntry);
     await new Promise((r) => setTimeout(r, 300));
   }
@@ -676,11 +599,13 @@ async function testScraper(file, opts) {
   }
 
   entry.urls = perUrl;
-  entry.status = perUrl.some((u) => u.status === "OK") ? "OK" : perUrl[0].status;
-  const firstOk = perUrl.find((u) => u.status === "OK");
-  if (firstOk) {
-    entry.sceneURL = firstOk.url;
-    entry.fields = firstOk.fields;
+  const firstMatch = perUrl.find((u) => u.status === "SELECTOR_MATCHED");
+  const best = firstMatch || perUrl.find((u) => u.fields);
+  entry.status = firstMatch ? "SELECTOR_MATCHED" : (best?.status || perUrl[0]?.status || "UNVERIFIED");
+  if (best) {
+    entry.sceneURL = best.url;
+    entry.fields = best.fields;
+    entry.analysis = best.analysis;
   }
   return entry;
 }
@@ -706,7 +631,7 @@ function printEntry(e) {
   if (e.searchError) console.log(`  search-error: ${e.searchError}`);
   if (e.urls && e.urls.length > 1) {
     for (const u of e.urls) {
-      if (u.status !== "OK") continue;
+      if (u.status !== "SELECTOR_MATCHED") continue;
       const pop = countPopulated(u.fields);
       const tot = countTotal(u.fields);
       console.log(
@@ -759,7 +684,7 @@ async function main() {
     const extra =
       e.urls && e.urls.length > 1
         ? ` [multi: ${e.urls
-            .filter((u) => u.status === "OK")
+            .filter((u) => u.status === "SELECTOR_MATCHED")
             .map((u) => countPopulated(u.fields) + "/" + countTotal(u.fields))
             .join(", ")}]`
         : "";
