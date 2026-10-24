@@ -19,6 +19,8 @@ After **GitHub Pages is enabled** for this repository (Settings → Pages → Bu
 https://daniel-yfc.github.io/stash-scarpers/main/index.yml
 ```
 
+While reviewing the PR, download the `stash-scraper-source-preview` artifact from the **Publish Stash Scraper Source** GitHub Actions run to inspect the actual generated `index.yml` and ZIP packages. An Actions artifact is a preview, **not** a permanent Stash Source URL.
+
 Choose a local install path such as `daniel-scrapers`, then select the scrapers you want to install. If the URL currently returns 404, the Pages source is **not yet published**; do not assume the index is live until the deployment completes. This is a separate source, not a replacement for Community (stable).
 
 The source is built from the **top-level `scrapers/*.yml` files only**. Files under `scrapers/private/`, test sidecars, templates and fixtures are intentionally excluded. Packages use the committed scraper's Git revision, UTC commit date and a SHA-256 checksum verified against each ZIP.
