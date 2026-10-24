@@ -50,7 +50,9 @@ sceneByQueryFragment:
 performerByURL:
   - action: scrapeXPath
     url:
+      - trance-video.com/product/search?model%5B%5D=
       - trance-video.com/product/search?model[]=
+      - www.trance-video.com/product/search?model%5B%5D=
       - www.trance-video.com/product/search?model[]=
     scraper: performerScraper
 
@@ -87,9 +89,17 @@ xPathScrapers:
       Duration:
         selector: "$duration"
         postProcess:
-          - replace:
-              - regex: "[^0-9]"
-                with: ""
+          - javascript: |
+              // Site supplies HH:MM:SS (or MM:SS); Stash requires seconds.
+              // Reject unexpected formats rather than silently corrupting data.
+              var parts = String(value || "").trim().split(":");
+              if (parts.length !== 2 && parts.length !== 3) return "";
+              if (!parts.every(function (part) { return /^\d+$/.test(part); })) return "";
+              var seconds = Number(parts[parts.length - 1]);
+              var minutes = Number(parts[parts.length - 2]);
+              var hours = parts.length === 3 ? Number(parts[0]) : 0;
+              if (seconds >= 60 || minutes >= 60) return "";
+              return String(hours * 3600 + minutes * 60 + seconds);
 
       Studio:
         Name:
@@ -119,7 +129,7 @@ xPathScrapers:
 
                 var v = value || "";
                 if (!v) return "";
-                v = v.replace(/\?.*$/, "");
+                // Keep model[] query parameters: they identify the performer.
                 v = v.replace(/^\/\//, "https://");
                 v = v.replace(/^http:\/\//i, "https://");
                 if (/^https?:/i.test(v)) return v;
