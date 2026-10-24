@@ -3,6 +3,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { JSDOM } from 'jsdom';
 import { parse } from 'yaml';
+import { assertMappedCase } from './verify-scraper-mappings.mjs';
 
 const FAILURE_MARKERS = [
   'cf-challenge', 'Just a moment', 'Attention Required',
@@ -20,7 +21,7 @@ function matches(document, xpath) {
 
 function value(node) { return node.nodeValue ?? node.textContent ?? ''; }
 
-function assertCase(item, html) {
+function assertCase(item, html, scraper = null) {
   const dom = new JSDOM(html);
   const document = dom.window.document;
   const marker = FAILURE_MARKERS.find((text) => html.includes(text));
@@ -66,6 +67,8 @@ function assertCase(item, html) {
       fail(`${item.name}: optional field unexpectedly present`);
     }
   }
+  if (item.mappedExpect && !scraper) fail(`${item.name}: mappedExpect requires manifest.scraper`);
+  if (scraper) assertMappedCase(item, document, scraper);
 }
 
 function checkManifest(file) {
@@ -75,11 +78,21 @@ function checkManifest(file) {
       || !cases.some((c) => c.classification === 'failure')
       || !cases.some((c) => c.optionalField)) fail(`${file}: completed, failure and optional cases required`);
   const root = path.dirname(path.resolve(file));
+  let scraper = null;
+  if (manifest.scraper !== undefined) {
+    const repoRoot = path.resolve('.');
+    const scraperRoot = path.join(repoRoot, 'scrapers');
+    const scraperPath = path.resolve(repoRoot, manifest.scraper);
+    if (!scraperPath.startsWith(scraperRoot + path.sep) || !scraperPath.endsWith('.yml')) {
+      fail(`${file}: scraper path must point to a production YAML in scrapers/`);
+    }
+    scraper = parse(fs.readFileSync(scraperPath, 'utf8'));
+  }
   for (const item of cases) {
     if (!item.name || typeof item.html !== 'string') fail(`${file}: case name and html required`);
     const fixture = path.resolve(root, item.html);
     if (!fixture.startsWith(root + path.sep)) fail(`${item.name}: fixture path leaves manifest directory`);
-    assertCase(item, fs.readFileSync(fixture, 'utf8'));
+    assertCase(item, fs.readFileSync(fixture, 'utf8'), scraper);
   }
   return cases.length;
 }
@@ -112,8 +125,22 @@ function selfTest() {
       try { assertCase(testCase, html); } catch { failed = true; }
       if (!failed) fail('self-test did not reject invalid fixture');
     }
+    const syntheticScraper = {
+      sceneByURL: [{ action: 'scrapeXPath', scraper: 'detail' }],
+      xPathScrapers: { detail: { scene: { Title: { selector: '//h1/text()' } } } },
+    };
+    assertCase({ ...base, mappedExpect: [{ field: 'Title', values: ['範例'] }] }, good, syntheticScraper);
+    let mutationFailed = false;
+    try {
+      assertCase(
+        { ...base, mappedExpect: [{ field: 'Title', values: ['範例'] }] },
+        good,
+        { ...syntheticScraper, xPathScrapers: { detail: { scene: { Title: { selector: '//p/text()' } } } } },
+      );
+    } catch { mutationFailed = true; }
+    if (!mutationFailed) fail('mutation self-test: bad production XPath was not rejected');
     assertCase({ name: 'expected failure', classification: 'failure' }, '<title>Just a moment</title>');
-    console.log('Fixture contract self-test: 5 positive and 6 negative cases passed');
+    console.log('Fixture contract self-test: legacy, mapped-field, and mutated-YAML cases passed');
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 }
 
