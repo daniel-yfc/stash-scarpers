@@ -1,6 +1,6 @@
 # Scraper Versions
 
-> **快速總覽（zh-TW）：** 本目錄區分公開版（`scrapers/*.yml`）與私有版（`scrapers/private/*.yml`）刮削器。公開版不含登入憑證，可安全分享；私有版可能使用 CDP 會話或 cookie，僅限私人 repo 使用。永遠不要把 session token 寫入公開 repo。
+> **快速總覽（zh-TW）：** 本公開 Repository 包含 `scrapers/*.yml` 與已追蹤的 `scrapers/private/*.yml` 變體。`private/` 只是目錄名稱，不具存取控制；**兩處都禁止提交真實 Cookie、Token 或登入憑證**。需要個人 Session 的部署副本必須放在獨立的私人環境。
 
 This directory contains Stash scraper YAML files organized by deployment type.
 
@@ -10,7 +10,7 @@ This directory contains Stash scraper YAML files organized by deployment type.
 scrapers/
 ├── *.yml              # Public versions (safe to share, no credentials)
 └── private/
-    └── *.yml          # Private versions (may use CDP sessions, personal use)
+    └── *.yml          # Publicly tracked variants; NOT a secret storage area
 ```
 
 ## Public vs Private Scrapers
@@ -38,14 +38,14 @@ driver:
   # NO cookies section
 ```
 
-### Private Version (`scrapers/private/*.yml`)
+### Private deployment (separate from publicly tracked variants)
 
-**Use when:** Personal deployment where you control the repository access.
+**Use when:** Deploying a personal configuration in a genuinely private repository or local secrets-controlled environment. **The `scrapers/private/` folder in this repository is public**, and its contents must remain free of session material.
 
 **Characteristics:**
 
-- May include `driver.cookies` with session tokens for sites without CDP
-- Requires private repository to prevent credential exposure
+- Publicly tracked variants must not include active session tokens or credentials
+- Personal copies may use `driver.cookies` only outside this public Git repository, with strict access control
 - Higher maintenance burden (sessions expire, need rotation)
 - **Not safe for public sharing**
 
@@ -60,7 +60,7 @@ driver:
    ```
 
    - Login via visible Chrome browser
-   - Stash CDP path: `ws://localhost:9222`
+   - In Stash v0.31.1: Settings → Metadata Providers → Scraping → Chrome CDP Path: `http://localhost:9222/json/version`
    - Sessions persist in browser, not in YAML
 
 2. **HTTP Cookie Mode (Legacy):**
@@ -71,7 +71,7 @@ driver:
        - CookieURL: "https://example.com"
          Cookies:
            - Name: SESSIONID
-             Value: "abc123..."
+             Value: "<private-session-value-never-commit>"
    ```
    - Session tokens embedded in YAML
    - Must rotate when sessions expire
@@ -87,33 +87,29 @@ Session cookies (like `PHPSESSID`, `ECSESSID`, `LOGIN_KEEP_INFO2`) are equivalen
 2. Rotate all affected credentials
 3. Scrub git history or make repo private
 
-### ⚠️ Private scrapers require private repositories
+### ⚠️ `private/` does not make files private
 
-The `scrapers/private/` directory must only exist in private repositories. If your repo becomes public:
-
-- All session tokens are exposed
-- Attackers can impersonate your accounts
-- Target websites may ban compromised accounts
+The `scrapers/private/` directory is tracked by this **public** repository. Only credentials-bearing deployment copies belong in genuinely private repositories or secret-controlled local environments. If active tokens were ever committed publicly, revoke them and review repository history immediately.
 
 ## Migration Guide
 
 ### Public → Private (CDP)
 
-1. Copy `scrapers/Example.yml` to `scrapers/private/Example.yml`
+1. Copy `scrapers/Example.yml` into an **external, private** deployment directory (not this repository's tracked `scrapers/private/`)
 2. Ensure `driver.useCDP: true` is set
 3. Remove any `driver.cookies` blocks
 4. Setup CDP in Stash:
    - Launch Chrome with `--remote-debugging-port=9222`
-   - Stash Settings → System → Application Paths → Chrome CDP path = `ws://localhost:9222`
+   - Stash v0.31.1: Settings → Metadata Providers → Scraping → Chrome CDP Path = `http://localhost:9222/json/version` (verify other versions)
    - Login to target site in that Chrome window
 
 ### Public → Private (HTTP Cookies)
 
-1. Copy `scrapers/Example.yml` to `scrapers/private/Example.yml`
+1. Copy `scrapers/Example.yml` into an **external, private** deployment directory (not this repository's tracked `scrapers/private/`)
 2. Add `driver.cookies` with valid session tokens
 3. Ensure `useCDP: false` or omit the field
 4. Add `CookieURL` for each cookie entry
-5. **Keep repo private**
+5. **Keep deployment files and active session material out of this public repo**
 
 ### Private → Public
 
