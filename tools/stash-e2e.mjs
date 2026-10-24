@@ -43,7 +43,7 @@ export function parseArguments(argv) {
     if (match) { options[match[1]] = match[2]; continue; }
     if (arg === "--live") { options.live = true; continue; }
     if (arg === "--allow-production-read") { options.productionRead = true; continue; }
-    throw new E2EError("Unknown CLI option; see docs/81-stash-e2e-runbook.md");
+    throw new E2EError("Unknown CLI option; see docs/82-stash-e2e-runbook.md");
   }
   return options;
 }
@@ -249,9 +249,11 @@ export async function execute(config, { fetchImpl = fetch, cases = null } = {}) 
 
 function finish(report) {
   const checks = report.results.map((r) => r.status);
-  report.status = checks.every((s) => s === "PASS") ? "PASS"
-    : checks.includes("FAIL") ? "FAIL"
-    : checks.includes("BLOCKED") ? "BLOCKED" : "UNVERIFIED";
+  const applicable = checks.filter((s) => s !== "NOT_APPLICABLE");
+  report.status = !applicable.length ? "UNVERIFIED"
+    : applicable.includes("FAIL") ? "FAIL"
+    : applicable.includes("BLOCKED") ? "BLOCKED"
+    : applicable.every((s) => s === "PASS") ? "PASS" : "UNVERIFIED";
   return report;
 }
 
