@@ -5,6 +5,11 @@ on:
     branches: [main]
     paths:
       - "scrapers/**/*.yml"
+      - "scrapers/**/*.test.yaml"
+      - "tests/fixtures/**"
+      - "templates/*.yml"
+      - "package-lock.json"
+      - "requirements.txt"
       - "validator/**"
       - "tools/**"
       - "docs/**"
@@ -24,6 +29,11 @@ on:
     branches: [main]
     paths:
       - "scrapers/**/*.yml"
+      - "scrapers/**/*.test.yaml"
+      - "tests/fixtures/**"
+      - "templates/*.yml"
+      - "package-lock.json"
+      - "requirements.txt"
       - "validator/**"
       - "tools/**"
       - "docs/**"
@@ -93,6 +103,9 @@ jobs:
 
       - name: Run fixture-control self-test
         run: node tools/verify-scraper-fixtures.mjs --self-test
+
+      - name: Verify committed site fixture manifests against production YAML
+        run: python tools/run_fixture_manifests.py
 
       - name: Scan session material
         run: python tools/scan_session_material.py
