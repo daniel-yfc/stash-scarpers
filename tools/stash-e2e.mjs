@@ -193,6 +193,9 @@ export async function execute(config, { fetchImpl = fetch, cases = null } = {}) 
     schema_version: 1, executed_at: new Date().toISOString(),
     executor: "AGENT_API", environment: safe.env, mode: safe.mode,
     scraper_commit: safe.commit, stash_version: null,
+    proof_scope: safe.mode === "inventory" ? "LOADER_ONLY" : "LOADER_AND_EXTRACTION",
+    persistence: "UNVERIFIED",
+    production_ready: false,
     results: [],
   };
   function record(id, status, reason, extras = {}) {
