@@ -65,8 +65,19 @@ def check_scraper(source: str, path: Path) -> tuple[str, list[str]]:
     if not isinstance(config, dict) or not isinstance(config.get("name"), str) or not config["name"].strip():
         raise SourceError(f"{path.name}: missing root name")
     # Do not publish active credentials, even if a repository-wide scanner misses one.
-    if config.get("driver", {}).get("cookies"):
+    driver = config.get("driver") or {}
+    if not isinstance(driver, dict):
+        raise SourceError(f"{path.name}: driver must be a mapping")
+    if driver.get("cookies"):
         raise SourceError(f"{path.name}: driver.cookies cannot be published")
+    for item in driver.get("headers") or []:
+        if not isinstance(item, dict):
+            raise SourceError(f"{path.name}: invalid driver.headers entry")
+        header_name = str(item.get("Key") or "").strip().lower()
+        if header_name in {"cookie", "authorization", "proxy-authorization", "x-api-key", "x-auth-token"} or (
+            any(word in header_name for word in ("token", "secret", "apikey", "api-key", "session", "csrf"))
+        ):
+            raise SourceError(f"{path.name}: credential-bearing driver.header cannot be published")
     def walk(node):
         if isinstance(node, dict):
             for key, value in node.items():
