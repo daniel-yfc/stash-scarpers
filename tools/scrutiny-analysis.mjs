@@ -80,7 +80,10 @@ export function classifyScrapedFields(fields) {
   const selectors = [];
   function visit(node) {
     if (!node || typeof node !== "object") return;
-    if (node.selector && typeof node.selector === "object" &&
+    if (Number.isInteger(node.count) && Array.isArray(node.samples)) {
+      // Direct string XPath definitions return a bare runXPath() observation.
+      selectors.push(node);
+    } else if (node.selector && typeof node.selector === "object" &&
         Number.isInteger(node.selector.count)) {
       selectors.push(node.selector);
     }
