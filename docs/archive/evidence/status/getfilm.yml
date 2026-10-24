@@ -7,10 +7,10 @@ states:
   fixture:
     status: verified
     artifact: tests/fixtures/getfilm/getfilm-fixtures.yml
-    sha256: cba12b918bd3f5bd608f83384251eba6b8ceff60dbfd78a3a6cbd19c9872ed14
-    captured_at: '2026-10-14T19:14:48+08:00'
+    sha256: 5d1667b4f40568e026101ab6409cec6b709bb428768d8a557b0d9a6cbcec640b
+    captured_at: '2026-10-24T10:40:48+00:00'
     source_url: https://www.get-film.jp/
-    revision: 8cee96949047cfdc184e81f45cb5ce4f4cdbd446
+    revision: 1254d24a0341c9acc2c1046b13b6e23eaa9f8406
   live_search:
     status: unverified
   live_detail:
