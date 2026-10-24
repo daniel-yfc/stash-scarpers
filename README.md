@@ -9,6 +9,32 @@ For Identify, Scene Tagger, Auto Tagging and GraphQL integration, see the
 not automatically publish to stash-box. Generate the declared support inventory
 with `python tools/check_metadata_feed.py --inventory`.
 
+## Install these scrapers as a Stash source
+
+Stash supports custom **installable Scraper Sources** under **Settings → Metadata Providers → Available Scrapers → Add Source**. The source URL is a published `index.yml` that references downloadable ZIP packages; it is **not** an individual scraper YAML file.
+
+After **GitHub Pages is enabled** for this repository (Settings → Pages → Build and deployment → **GitHub Actions**) and the `Publish Stash Scraper Source` workflow has deployed successfully from `main`, use:
+
+```text
+https://daniel-yfc.github.io/stash-scarpers/main/index.yml
+```
+
+Choose a local install path such as `daniel-scrapers`, then select the scrapers you want to install. If the URL currently returns 404, the Pages source is **not yet published**; do not assume the index is live until the deployment completes. This is a separate source, not a replacement for Community (stable).
+
+The source is built from the **top-level `scrapers/*.yml` files only**. Files under `scrapers/private/`, test sidecars, templates and fixtures are intentionally excluded. Packages use the committed scraper's Git revision, UTC commit date and a SHA-256 checksum verified against each ZIP.
+
+If you prefer manual installation, place the individual `scrapers/*.yml` files in Stash's configured scraper directory and **Reload Scrapers**. Login/CDP-dependent sites still require separately authorized Stash-side setup; an installable package does not establish live runtime functionality.
+
+Publication commands (from a full Git clone with dependencies installed):
+
+```bash
+python -m pytest tools/tests/test_scraper_source.py -v
+python tools/build_scraper_source.py --output _site/main
+python tools/build_scraper_source.py --output _site/main --verify-only
+```
+
+See the [official Stash Source URL documentation](https://docs.stashapp.cc/in-app-manual/scraping/#source-urls) and [Stash Scraper Sources guide](https://docs.stashapp.cc/metadata-sources/scrapers/).
+
 ## Build a scraper
 
 1. Read [repository boundaries](AGENTS.md), the [scraper skill](skills/stash-scraper-builder/SKILL.md), and its [read order](skills/stash-scraper-builder/references/skill-read-order.md). Select the relevant references; use [runtime selection](skills/stash-scraper-builder/SKILL.md#runtime-selection) and [security policy](skills/stash-scraper-builder/references/phase0-secrets-policy.md).
