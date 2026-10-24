@@ -1,7 +1,13 @@
+scraper: scrapers/GetFilm.yml
 cases:
   - name: "GetFilm product 1201"
     classification: completed
     html: "product-1201.html"
+    mappedExpect:
+      - field: Title
+        values: ["Men's Rush.TV Premium channel vol.41 MINATO"]
+      - field: Code
+        values: ["TOU-420"]
     locale:
       lang: "ja"
       text: "MINATO"
@@ -18,6 +24,11 @@ cases:
   - name: "GetFilm product 1199"
     classification: completed
     html: "product-1199.html"
+    mappedExpect:
+      - field: Title
+        values: ["18才解禁☆早熟Cherry Boys♂10"]
+      - field: Code
+        values: ["TOU-419"]
     locale:
       lang: "ja"
       text: "TOU-419"
