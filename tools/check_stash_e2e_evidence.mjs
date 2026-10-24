@@ -53,7 +53,8 @@ function validateAgentResult(row) {
       if (!SAFE_FIELD.test(check.field) || typeof check.pass !== "boolean" || names.has(check.field)) error("invalid field assertion");
       names.add(check.field);
     }
-    if (!HEX64.test(row.actual_sha256 || "")) error("extraction requires sanitized digest");
+    if (row.status === "PASS" && !HEX64.test(row.actual_sha256 || "")) error("PASS requires sanitized digest");
+    if (row.actual_sha256 !== undefined && !HEX64.test(row.actual_sha256)) error("invalid digest");
     if (row.status === "PASS" && !row.checks.every((check) => check.pass)) error("PASS with failing assertions");
     if (row.reason === "GOLDEN_VALUE_MISMATCH" && !row.checks.some((check) => !check.pass)) {
       error("mismatch requires failed assertion");
@@ -144,12 +145,16 @@ export function evaluatePilot(reports) {
   const reasons = [];
   if (commits.size !== 1 || versions.size !== 1) reasons.push("REVISION_OR_VERSION_MISMATCH");
   if (reports.some((r) => r.environment !== "test")) reasons.push("TEST_INSTANCE_REQUIRED");
+  if (reports.some((r) => ["FAIL", "BLOCKED", "UNVERIFIED"].includes(r.status))) {
+    reasons.push("INCOMPLETE_OR_FAILED_REPORT");
+  }
   const manual = reports.filter((r) => ["HUMAN_UI", "AGENT_UI"].includes(r.executor));
   if (!manual.length) reasons.push("MANUAL_OR_UI_CONFIRMATION_REQUIRED");
   for (const id of ["E2E-TRANCE-40625", "E2E-TRANCE-40641"]) {
     if (!manual.some((r) => r.results.some((c) =>
       c.id === id && c.status === "PASS" && c.checks.extraction === "PASS"
-      && c.checks.source_truth === "PASS" && c.checks.postprocess === "PASS"))) {
+      && c.checks.source_truth === "PASS" && c.checks.postprocess === "PASS"
+      && (id !== "E2E-TRANCE-40625" || c.checks.identity === "PASS")))) {
       reasons.push(id + "_NOT_VERIFIED");
     }
   }
