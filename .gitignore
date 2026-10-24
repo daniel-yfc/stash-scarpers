@@ -14,3 +14,6 @@ coverage/
 dist/
 build/
 docs/reports/
+# Private Stash runtime reports / credentials
+e2e-results*.json
+stash-e2e-results*.json
