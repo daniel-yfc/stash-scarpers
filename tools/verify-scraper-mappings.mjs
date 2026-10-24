@@ -58,7 +58,7 @@ function postProcessValue(value, steps) {
       // Deliberately narrow: only explicitly verified YYYY.MM.DD is supported
       // by this offline test helper; other Stash date layouts must fail closed.
       if (step.parseDate !== "2006.01.02") fail("Unsupported parseDate layout: " + step.parseDate);
-      const match = /^(\\d{4})\\.(\\d{2})\\.(\\d{2})$/.exec(String(output).trim());
+      const match = /^(\d{4})\.(\d{2})\.(\d{2})$/.exec(String(output).trim());
       if (!match) fail("Date does not match YYYY.MM.DD: " + output);
       const [year, month, day] = match.slice(1).map(Number);
       const date = new Date(Date.UTC(year, month - 1, day));
@@ -121,7 +121,7 @@ export function assertMappedCase(item, document, scraper) {
         } catch {
           fail(item.name + ": invalid routed URL for " + assertion.field);
         }
-        if (!patterns.some((p) => candidate.startsWith(p.replace(/^https?:\\/\\//, "")))) {
+        if (!patterns.some((p) => candidate.startsWith(p.replace(/^https?:\/\//, "")))) {
           fail(item.name + ": " + assertion.field + " does not match " + assertion.routeThrough);
         }
       }
