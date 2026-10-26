@@ -2,7 +2,7 @@
 
 [繁體中文指南](readme-zh-tw.md) · [Documentation index](docs/README.md)
 
-This repository builds and verifies Stash scraper YAML. It is not the upstream Stash application or CommunityScrapers. Its validator and schema expectations derive from CommunityScrapers; see [upstream provenance](skills/stash-scraper-builder/references/upstream-sources.md) and the local [validator schema](validator/scraper.schema.json). A template, schema pass, or green CI run does not prove a scraper works on a live site.
+This repository builds and verifies Stash scraper YAML. It is not the upstream Stash application or CommunityScrapers. Its validator and schema expectations derive from CommunityScrapers; see [upstream provenance](docs/43-upstream-sources.md) and the local [validator schema](validator/scraper.schema.json). A template, schema pass, or green CI run does not prove a scraper works on a live site.
 
 For Identify, Scene Tagger, Auto Tagging and GraphQL integration, see the
 [metadata feed contract](docs/80-metadata-feed-integration.md). Website scrapers do
