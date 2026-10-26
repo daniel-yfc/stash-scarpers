@@ -236,14 +236,16 @@ documents:
   intents:
   - scraper-authoring
   - skill-contract
+  - scraper-review
+  - validation
 - doc_id: REF-CORE-00
-  title: Skill Read Order
-  path: skills/stash-scraper-builder/references/skill-read-order.md
+  title: Superseded Skill Read Order
+  path: docs/archive/skill-read-order-2026-10-27.md
   layer: skill
-  status: active
+  status: archived
   intents:
-  - agent-routing
-  - read-order
+  - archive
+  - historical-routing
 - doc_id: REF-CORE-15
   title: Best practices for maintainable scrapers
   path: skills/stash-scraper-builder/references/best-practices.md
