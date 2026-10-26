@@ -55,6 +55,12 @@ jobs:
       - name: Install Node dependencies
         run: npm ci
 
+      - name: Validate fixed case corpus and expectations
+        run: python tools/evals/validate_cases.py --json
+
+      - name: Exercise negative gates and offline trace checker
+        run: python -m pytest tools/tests/test_skill_eval.py -v
+
       - name: Run full scraper and repo policy regressions
         run: |
           node validator/index.mjs -a --ci
@@ -62,12 +68,6 @@ jobs:
           bash tools/validate-all.sh
           python -m pytest tools/tests/ -v
           python tools/check_scraper_docs.py
-
-      - name: Validate fixed case corpus and expectations
-        run: python tools/evals/validate_cases.py --json
-
-      - name: Exercise negative gates and offline trace checker
-        run: python -m pytest tools/tests/test_skill_eval.py -v
 
       - name: Smoke-test offline host scorer without inventing results
         shell: bash
