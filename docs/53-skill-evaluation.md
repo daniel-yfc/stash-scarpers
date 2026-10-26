@@ -31,7 +31,7 @@ This is a **maintainer testing procedure**, not a runtime Skill instruction. The
 | `workflow-stop-cases.json` | 10 | No-write, P0–P6 stop rules and forbidden evidence promotion |
 | `functional-cases.json` | 5 | Legacy XPath, JSON, script, date-fix and gated/CDP authoring tasks |
 
-The historical five-task notes are at [`legacy-functional-eval.md`](../tests/skill-evals/legacy-functional-eval.md). They are **case requirements**, not a 5/5 pass. Every case has a stable ID, expected intent, and, where needed, stop phase and required evidence axis. The manifest requires **three independent attempts per pinned host/model combination**. Do not edit expected outcomes after seeing results; revise the corpus separately, retaining prior version provenance.
+The five deterministic synthetic inputs/expected field mappings are under `tests/skill-evals/scenarios/`; they constrain offline expected-value comparison but **do not replace actual site, loader or CDP evidence**. The historical five-task notes are at [`legacy-functional-eval.md`](../tests/skill-evals/legacy-functional-eval.md). They are **case requirements**, not a 5/5 pass. Every case has a stable ID, expected intent, and, where needed, stop phase and required evidence axis. The manifest requires **three independent attempts per pinned host/model combination**. Do not edit expected outcomes after seeing results; revise the corpus separately, retaining prior version provenance.
 
 ## Deterministic automated gates
 
@@ -55,7 +55,7 @@ For every host being claimed:
 3. Run every case **three times** in isolated fresh contexts. Capture *actual* Skill-load events, selected intent, P0–P6 exits, tool actions (including whether any write was attempted), verification steps, and negative/near-miss behavior. Do not record only the final answer.
 4. Repeat appropriate controls with the Skill **unavailable**, record token/time cost, and compare the observed change in outcomes. Keep control and with-Skill results distinct.
 5. Export sanitized host event traces to an untracked restricted `logs/skill-evals/traces/` directory. Name each file `<CASE_ID>--<host>--<repeat>.json` (for example `STOP-02--codex--1.json`). Never commit traces or any authentication/session data.
-6. Use the offline scorer and review the **original, authenticated host evidence** independently. A JSON file labeled `host_export` is not cryptographic authentication or an attestation.
+6. Use the offline scorer and review the **original, authenticated host evidence** independently. A JSON file labeled `host_export` is not cryptographic authentication or an attestation. Only a separately controlled reviewer may sign a review manifest after inspecting the actual Host capture, workspace before/after snapshots, and all referenced artifact bytes.
 
 Example **synthetic format only** (not host evidence):
 
@@ -82,13 +82,27 @@ Example **synthetic format only** (not host evidence):
 }
 ```
 
-Required event kinds are `skill_load`, `intent`, `phase_exit`, `tool_action` (classified READ/WRITE/DESTRUCTIVE), and `verification`. Any claimed verification PASS must include a nonempty artifact reference and its 64-character SHA-256. The offline scorer rejects self-declared top-level verdicts, revision/Skill mismatches, unsupported evidence, missing tool-capture assertions, unsafe session material, prohibited writes and downstream phase promotions. **A fully self-authored synthetic event list can satisfy structural conditions, but it never proves a host ran it.**
+Required event kinds are `skill_load`, `intent`, `phase_exit`, `tool_action` (classified READ/WRITE/DESTRUCTIVE), and `verification`. Any claimed verification PASS must include a nonempty artifact reference and its 64-character SHA-256. The offline scorer rejects self-declared top-level verdicts, revision/Skill mismatches, unsupported evidence, missing tool-capture assertions, unsafe session material, prohibited writes and invalid downstream phase promotions. It permits P6 bounded diagnostic delivery following P0–P5 FAIL/BLOCKED, but rejects skipping P6 or promoting a dependent working phase. **A fully self-authored synthetic event list can satisfy structural conditions, but it never proves a host ran it.**
 
 ```sh
 python tools/evals/evaluate_traces.py --host codex --repo-sha "$(git rev-parse HEAD)" --trace-dir logs/skill-evals/traces --output logs/skill-evals/codex-offline-report.json
 ```
 
-The report status is always `OFFLINE_TRACE_ASSESSMENT_ONLY`; `source_trust` is `SYNTHETIC_FIXTURE`, `HOST_EXPORT_UNATTESTED`, or `MISSING`. Running with `--require-complete` deliberately exits 2 until independent Host provenance authentication is provided outside this scorer. **This is a fail-closed boundary, not missing automation disguised as a pass.**
+The report status remains `OFFLINE_TRACE_ASSESSMENT_ONLY`. Individual run status distinguishes `PASS` (reviewer-attested), `FAIL`, `NOT_RUN`, `UNATTESTED`, and `SYNTHETIC_ONLY`; only a correctly signed, independently inspected `host_export` can qualify as formal `PASS`. Synthetic traces can test the scorer but can never become Host PASS.
+
+## Independent review and formal gate
+
+An independent reviewer, **not the evaluated agent**, creates a restricted JSON manifest under `logs/skill-evals/` with `version: 1` and a `reviews` array. Each review must carry the exact case ID, host, repetition, repository SHA, Skill SHA-256, trace SHA-256, reviewer identifier, and explicit booleans `host_origin_verified`, `tool_capture_verified`, `workspace_verified`, `artifacts_verified`. The signature field is lowercase HMAC-SHA256 over sorted compact JSON containing the canonical fields in `tools/evals/review_attestation.py` (`FIELDS`), with a 32-byte-or-longer reviewer key supplied **outside Git and unavailable to the evaluated agent**. Do not print the key, include it in argv, or attach raw credentials to the review.
+
+All claimed verification PASS artifacts must exist under the restricted `logs/skill-evals/artifacts/` directory and their SHA-256 must match the actual bytes, not just a plausible-looking digest. Read-only cases require a recorded workspace fingerprint before/after plus independent review of the actual filesystem/tool actions; equality in an untrusted JSON field alone is not proof of no write. E2E VALUE_MATCH data must be machine-compared against the pinned `tests/skill-evals/scenarios/E2E-0X.json` expectations. The synthetic source data and model test prompts are not live Stash/CDP evidence.
+
+Use an independently provisioned `WSF_REVIEW_KEY` environment value (never commit it) and run:
+
+```sh
+python tools/evals/evaluate_traces.py --host codex --repo-sha "$(git rev-parse HEAD)" --trace-dir logs/skill-evals/traces --attestations logs/skill-evals/reviews.json --require-complete
+```
+
+Formal gate exit codes: `0` = all independently attested case repetitions meet F1/F2/F3/F4 acceptance thresholds; `1` = verified failures or a missed threshold; `2` = incomplete/unsigned/synthetic/unavailable Host evidence. Without the reviewer key and actual authenticated Host runs, `--require-complete` intentionally exits `2`. Synthetic unit tests exercise the `0` success-path logic without pretending to be real Host execution.
 
 ## Acceptance thresholds (never silently relaxed)
 
