@@ -145,3 +145,7 @@ postProcess:
 ## Unmatched regex
 
 If none of the patterns match, return the original string. Do not force a rewrite.
+
+## Semantic field verification
+
+A selector that matches nodes is not necessarily mapping the correct entity. For `Performers`, `Studio` and `Tags`, inspect **actual extracted values** against the source's meaning on at least one populated and one missing-field page where possible. A label such as `モデル` may describe body type or tags rather than the performer; verify performer-profile links or equivalent evidence. An absent performer block on some page templates is a valid empty value, not permission to substitute unrelated metadata. Treat site-specific selectors as heuristics until independently tested on relevant layouts.
