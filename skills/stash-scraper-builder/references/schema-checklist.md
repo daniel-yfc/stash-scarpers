@@ -18,7 +18,7 @@ routing:
 
 # Schema Validation Checklist
 
-Use this checklist before emitting a scraper YAML file. Run the repository's Node validator against its schema; its expectations derive from upstream CommunityScrapers (see `upstream-sources.md`). A checklist is not a validator result.
+Use this checklist before emitting a scraper YAML file. Run the repository's Node validator against its schema; its expectations derive from upstream CommunityScrapers (see `schema-provenance.md`). A checklist is not a validator result.
 
 ## Top-Level Entry Points
 
@@ -68,7 +68,7 @@ whose `url` value is contained in the target URL.
 
 ## Authority
 
-- [ ] The repository's `validator/index.mjs` and `validator/scraper.schema.json` encode schema checks derived from upstream CommunityScrapers; check `upstream-sources.md` for provenance and compare with upstream when compatibility is in question.
+- [ ] The repository's `validator/index.mjs` and `validator/scraper.schema.json` encode schema checks derived from upstream CommunityScrapers; check `schema-provenance.md` for provenance and compare with upstream when compatibility is in question.
 - [ ] `references/scraper.schema.json` is a minimal offline stub, not a full validator or a pass/fail authority.
 
 ## Scraper Definition
@@ -96,7 +96,7 @@ whose `url` value is contained in the target URL.
 ## Driver and Session Safety
 
 - [ ] `driver.useCDP`, if used, is inside the top-level `driver` block only.
-- [ ] Public scrapers (`scrapers/*.yml`) do not contain `driver.cookies`; session-dependent files are restricted to `scrapers/private/` under the local policy.
+- [ ] Every Git-tracked scraper, including `scrapers/private/`, omits active `driver.cookies` (including empty blocks). Only fully commented placeholder-only placement examples may be committed; local deployment copies stay outside the working tree.
 - [ ] No credentials, session cookies, clearance tokens, CSRF values, browser-profile data, or analytics identifiers are committed or reconstructed in YAML, fixtures, evidence, logs, or documentation.
 
 ## Output and Evidence
@@ -126,4 +126,4 @@ python tools/check_scraper_docs.py
 python tools/check_docs_index.py
 ```
 
-A passing check covers only its executed scope. No current workflow runs the five-task skill evaluation pack, a Stash runtime load, or a live Stash/CDP scrape.
+A passing check covers only its executed scope. No current repository validation workflow executes the five-task functional Skill evaluation corpus, a Stash runtime load, or a live Stash/CDP scrape.
