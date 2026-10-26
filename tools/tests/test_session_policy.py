@@ -73,3 +73,36 @@ def test_scrutiny_help_preserves_environment_option():
     process = subprocess.run(["node", "tools/scrutiny.js", "--help"], cwd=ROOT, capture_output=True, text=True)
     assert process.returncode == 0
     assert "SCRUTINY_COOKIE" in process.stdout
+
+@pytest.mark.parametrize("extension,kind", [
+    (".md", "Authorization"),
+    (".js", "Cookie"),
+    (".html", "Set-Cookie"),
+    ("", "api_key"),
+    (".txt", "PHPSESSID"),
+])
+def test_session_material_in_any_tracked_text_type_is_detected(tmp_path, extension, kind):
+    # Synthesize non-replayable values at runtime; the repository stores
+    # neither real credentials nor a contiguous credential-shaped fixture.
+    target = tmp_path / ("sample" + extension)
+    payload = kind + ": " + ("X" * 24)
+    target.write_text(payload, encoding="utf-8")
+    assert "REPLAYABLE_AUTH_ASSIGNMENT" in scan_text(target, tmp_path)
+
+
+def test_even_commented_markdown_auth_line_rejected(tmp_path):
+    target = tmp_path / "readme.md"
+    target.write_text("# " + "Authorization: Bearer " + ("Z" * 24), encoding="utf-8")
+    assert "REPLAYABLE_AUTH_ASSIGNMENT" in scan_text(target, tmp_path)
+
+
+def test_synthetic_json_cookie_assignment_rejected(tmp_path):
+    target = tmp_path / "sample.json"
+    target.write_text('{"' + "Cookie" + '": "' + "sessionid=" + "V" * 24 + '"}', encoding="utf-8")
+    assert "REPLAYABLE_AUTH_ASSIGNMENT" in scan_text(target, tmp_path)
+
+
+def test_safe_placeholder_in_markdown_allowed(tmp_path):
+    target = tmp_path / "safe.md"
+    target.write_text("Authorization: <LOCAL_ONLY_VALUE>", encoding="utf-8")
+    assert scan_text(target, tmp_path) == set()
