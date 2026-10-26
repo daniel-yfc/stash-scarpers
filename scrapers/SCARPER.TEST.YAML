@@ -40,7 +40,7 @@ probe: "DVD"
 # B) Netscape Cookie File 格式（多行，自動辨識）
 
 # 範例 A：簡單 Cookie header
-# cookie: "PHPSESSID=abc123; logged_in=1; user_id=12345"
+# Cookie placement (comment only): PHPSESSID=<LOCAL_ONLY_VALUE>; never commit a live session value
 
 # 範例 B：Netscape Cookie File 格式（使用 YAML | 語法保留換行）
 # 可直接從瀏覽器擴充功能（如 EditThisCookie）匯出後貼上
