@@ -39,9 +39,8 @@ def main():
 
     for path in sorted(DOC_ROOT.rglob("*.md")):
         text = path.read_text(encoding="utf-8")
-        # debugging.md / incident-reviews.md record the stale claim as a
-        # corrected incident ("incorrect causal claim"), not as guidance.
-        if path.name not in ("debugging.md", "incident-reviews.md"):
+        # The debugging guide documents corrections as diagnosis, not active stale guidance.
+        if path.name != "debugging.md":
             if "No root `name" in text or "禁止 root `name" in text:
                 failures.append(f"{path}: documentation still forbids root name")
             if "sceneByFragment` prevents" in text:
