@@ -103,10 +103,10 @@ Legacy documents may be migrated incrementally. When front matter contains `doc_
 
 - `docs/README.md` is the human-readable index.
 - `docs/index.yml` is the machine-readable agent and CI registry.
-- Every repository-level Markdown document under `docs/` and every Markdown reference under `skills/stash-scraper-builder/references/` must be indexed.
+- Every top-level Markdown document under `docs/`, every Markdown reference under `skills/stash-scraper-builder/references/`, and every `tests/skill-evals/*.md` maintainer evaluation document must be indexed.
 - Root routing documents, `templates/README.md`, and `validator/README.md` must also be indexed.
 - Every indexed path must exist, every `doc_id` must be unique, and routing references must point to registered IDs.
-- Add operational documents to `skills/stash-scraper-builder/references/upstream-sources.md` when they depend on upstream material.
+- Add maintainer upstream-source inventories to `docs/43-upstream-sources.md` (formerly `references/upstream-sources.md`); the portable runtime provenance reference is `references/schema-provenance.md`.
 - Run `python tools/check_docs_index.py` after changing documentation paths or metadata.
 
 ## Agent routing
