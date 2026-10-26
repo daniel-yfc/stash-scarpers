@@ -52,6 +52,19 @@ jobs:
       - name: Exercise negative gates and offline trace checker
         run: python -m pytest tools/tests/test_skill_eval.py -v
 
+      - name: Smoke-test offline host scorer without inventing results
+        shell: bash
+        run: |
+          python tools/evals/evaluate_traces.py --host codex --repo-sha "$(git rev-parse HEAD)" --trace-dir logs/skill-evals/traces
+          set +e
+          python tools/evals/evaluate_traces.py --host codex --repo-sha "$(git rev-parse HEAD)" --trace-dir logs/skill-evals/traces --require-complete
+          status=$?
+          set -e
+          if [ "$status" -ne 2 ]; then
+            echo "Fail-closed host-evidence gate did not return 2"
+            exit 1
+          fi
+
       - name: Verify resource placement and documentation index
         run: |
           python tools/check_resource_placement.py
