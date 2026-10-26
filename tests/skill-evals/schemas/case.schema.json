@@ -98,6 +98,10 @@
     "source_path": {
       "type": "string",
       "const": "tests/skill-evals/legacy-functional-eval.md"
+    },
+    "scenario_ref": {
+      "type": "string",
+      "pattern": "^tests/skill-evals/scenarios/E2E-[0-9]{2}\\.json$"
     }
   },
   "allOf": [
@@ -146,7 +150,8 @@
           "intent",
           "legacy_task_number",
           "required_evidence",
-          "source_path"
+          "source_path",
+          "scenario_ref"
         ],
         "properties": {
           "should_load": {
