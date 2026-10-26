@@ -17,7 +17,8 @@
         "SCHEMA",
         "VALUE_MATCH",
         "LOADER"
-      ]
+      ],
+      "scenario_ref": "tests/skill-evals/scenarios/E2E-01.json"
     },
     {
       "id": "E2E-02",
@@ -31,7 +32,8 @@
         "SCHEMA",
         "VALUE_MATCH",
         "LOADER"
-      ]
+      ],
+      "scenario_ref": "tests/skill-evals/scenarios/E2E-02.json"
     },
     {
       "id": "E2E-03",
@@ -45,7 +47,8 @@
         "SCHEMA",
         "SCRIPT_IO",
         "LOADER"
-      ]
+      ],
+      "scenario_ref": "tests/skill-evals/scenarios/E2E-03.json"
     },
     {
       "id": "E2E-04",
@@ -59,7 +62,8 @@
         "SCHEMA",
         "VALUE_MATCH",
         "LOADER"
-      ]
+      ],
+      "scenario_ref": "tests/skill-evals/scenarios/E2E-04.json"
     },
     {
       "id": "E2E-05",
@@ -74,7 +78,8 @@
         "LOADER",
         "CDP",
         "VALUE_MATCH"
-      ]
+      ],
+      "scenario_ref": "tests/skill-evals/scenarios/E2E-05.json"
     }
   ]
 }
