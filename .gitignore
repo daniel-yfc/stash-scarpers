@@ -17,3 +17,6 @@ docs/reports/
 
 # Generated Stash scraper source index and ZIP packages
 _site/
+
+# WS-F host traces, per-run scoring and potentially sensitive evaluation artifacts
+logs/skill-evals/
