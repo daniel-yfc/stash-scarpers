@@ -110,6 +110,9 @@ jobs:
       - name: Scan session material
         run: python tools/scan_session_material.py
 
+      - name: Run session policy negative tests
+        run: python -m pytest tools/tests/test_session_policy.py -v
+
       - name: Check evidence labels
         run: python tools/check_evidence_labels.py
 
