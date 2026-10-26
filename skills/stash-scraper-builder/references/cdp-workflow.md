@@ -60,14 +60,14 @@ other key on the group item). `CookieURL` lives on the group item, not on
 the cookie:
 
 ```yaml
-driver:
-  cookies:
-    - CookieURL: https://example.com/ # required when useCDP is false/omitted; must share the cookie domain
-      Cookies:
-        - Name: session_id
-          Value: abc123
-          Domain: example.com
-          Path: /
+# driver:
+#   cookies:
+#     - CookieURL: https://example.com/ # required when useCDP is false/omitted; must share the cookie domain
+#       Cookies:
+#         - Name: session_id
+#           Value: "<LOCAL_ONLY_VALUE>"
+#           Domain: example.com
+#           Path: /
 ```
 
 With CDP (`useCDP: true`) the group has no `CookieURL` — the attached
@@ -79,7 +79,7 @@ driver:
   cookies:
     - Cookies:
         - Name: session_id
-          Value: abc123
+          Value: "<LOCAL_ONLY_VALUE>"
           Domain: example.com
           Path: /
 ```
