@@ -44,7 +44,7 @@ python tools/check_docs_index.py
 npm run format:check
 ```
 
-The repository's Node validator/schema expectations derive from upstream CommunityScrapers; see [`validator/scraper.schema.json`](../validator/scraper.schema.json) and [`upstream-sources.md`](../skills/stash-scraper-builder/references/upstream-sources.md). A successful schema check does not establish the quality gate, live page matching, or Stash runtime extraction. The formatter is a separate local check; its result must not be inferred from documentation-index success.
+The repository's Node validator/schema expectations derive from upstream CommunityScrapers; see [`validator/scraper.schema.json`](../validator/scraper.schema.json) and [`upstream-sources.md`](43-upstream-sources.md). A successful schema check does not establish the quality gate, live page matching, or Stash runtime extraction. The formatter is a separate local check; its result must not be inferred from documentation-index success.
 
 ## Raw-response scrutiny
 
@@ -100,7 +100,7 @@ For meaningful site coverage, include detail layouts where variation is plausibl
 
 `validate.yml` runs path-filtered schema, URL sort, repository policy, pytest, safeguards, and documentation checks. `pr-check.yml` gives changed-scraper policy feedback. `fixture-manifests.yml`, `evidence-contract.yml`, and `cdp-evidence-gate.yml` have distinct fixture/claim scopes. `scrutiny.yml` is deliberately manual and raw-response only; `link-check.yml` is an advisory Markdown link check on Markdown PRs, weekly, and manually. Read [`40-ci-workflows.md`](40-ci-workflows.md) for the exact eight-workflow inventory, triggers, and proof boundaries.
 
-The five-task authoring evaluation in [`eval-pack.md`](../skills/stash-scraper-builder/references/eval-pack.md) is not an executable GitHub Actions evaluation. No workflow result should be represented as its 5/5 score. Neither fixture control nor the CDP claim gate launches a live Stash browser session.
+The five-task authoring evaluation in [`legacy-functional-eval.md`](../tests/skill-evals/legacy-functional-eval.md) is not an executable GitHub Actions evaluation. No workflow result should be represented as its 5/5 score. Neither fixture control nor the CDP claim gate launches a live Stash browser session.
 
 ## Submission checklist
 
