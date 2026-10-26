@@ -51,7 +51,7 @@ routing:
 - Skill contract: `skills/stash-scraper-builder/SKILL.md`
 - Script operations: `references/script-actions.md`
 - Schema checks: `references/schema-checklist.md`
-- Regression tests: `references/eval-pack.md`
+- Maintainer functional-evaluation cases (not a runtime Skill reference): `tests/skill-evals/legacy-functional-eval.md` (repo-only)
 - Repository workflow (**repo-only**): `docs/template-workflow.md`
 
 Templates are scaffolds, not verified scrapers. The official CommunityScrapers schema and validator override local examples and offline stubs.
