@@ -12,7 +12,7 @@ CORE_REFERENCES = [
     "schema-checklist.md",
     "scraper.schema.json",
     "script-actions.md",
-    "eval-pack.md",
+    "schema-provenance.md",
 ]
 
 
