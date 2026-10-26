@@ -31,10 +31,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - name: Checkout exact evaluation revision
+      - name: Checkout exact PR head (not an implicit test merge)
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
+
+      - name: Record evaluated head and tree
+        run: |
+          git rev-parse HEAD
+          git rev-parse HEAD^{tree}
 
       - name: Setup Python
         uses: actions/setup-python@v5
