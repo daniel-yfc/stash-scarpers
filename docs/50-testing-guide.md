@@ -76,7 +76,7 @@ Supported keys:
 | `paginate` | boolean         | Walk search result pages                                         |
 
 Rules: never store credentials, cookies, or session material in a sidecar —
-use a logged-in browser session or `--cookie` at runtime. Prefer at least three
+use a logged-in isolated local browser session, or pass a locally authorized `SCRUTINY_COOKIE` process environment value to Scrutiny. The `--cookie` CLI option is forbidden; do not place credentials in argv, committed sidecars or logs. Prefer at least three
 detail URLs and one probe each of performer name, code, and partial title per
 site where the site supports search.
 
@@ -113,7 +113,7 @@ The five-task authoring evaluation in [`legacy-functional-eval.md`](../tests/ski
 ## Troubleshooting
 
 - Missing root `name:`: ensure it is nonempty at column zero; a filename alone does not satisfy the schema.
-- Public `driver.cookies`: remove session material; private scraper policy is separate from upstream schema support.
+- Active `driver.cookies` in any Git-tracked scraper (including `scrapers/private/`): remove the block; use commented placeholders and keep private deployment copies outside Git. This repository policy is separate from upstream schema support.
 - Invalid `parseDate`: use a Go layout such as `2006-01-02`, not `YYYY` or `%Y` tokens.
 - Missing Python dependencies: install `requirements.txt`. For script syntax, use `bash -n tools/<script>.sh` or invoke scripts with `bash`.
 - Raw response differs from rendered DOM: save and classify both sanitized responses before revising selectors; do not turn snapshot evidence into a live-CDP claim.
