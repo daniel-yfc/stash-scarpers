@@ -9,7 +9,7 @@
 //      node tools/scrutiny.js --paginate scraper.yml
 //      node tools/scrutiny.js --search scraper.yml
 //      node tools/scrutiny.js --url=<url> scraper.yml
-//      node tools/scrutiny.js --cookie=<str> scraper.yml
+//      SCRUTINY_COOKIE=<local-only-value> node tools/scrutiny.js scraper.yml
 //      node tools/scrutiny.js --help
 //
 // Network: yes, hits the live upstream sites. Be polite.
@@ -47,7 +47,7 @@ Options:
   --multi               Test multiple candidate scene URLs
   --search              Also evaluate searchScraper (default: always on)
   --url=<url>           Evaluate sceneScraper directly
-  --cookie=<str>        Legacy CLI option (prefer SCRUTINY_COOKIE to avoid shell history)
+  --cookie=<str>        REJECTED: use local SCRUTINY_COOKIE environment variable
   --help                Show this help
 
 Test Settings File:
@@ -108,9 +108,9 @@ function parseArgs(argv) {
       opts.url = a.slice(6);
       continue;
     }
-    if (a.startsWith("--cookie=")) {
-      opts.cookie = a.slice(9);
-      continue;
+    if (a === "--cookie" || a.startsWith("--cookie=")) {
+      console.error("CLI_COOKIE_FORBIDDEN: use a local SCRUTINY_COOKIE environment variable, not argv");
+      process.exit(2);
     }
     if (a.startsWith("-")) continue;
     opts.files.push(a);
