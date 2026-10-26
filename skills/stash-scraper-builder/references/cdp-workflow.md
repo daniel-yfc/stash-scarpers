@@ -70,18 +70,18 @@ the cookie:
 #           Path: /
 ```
 
-With CDP (`useCDP: true`) the group has no `CookieURL` — the attached
-browser session already carries the cookies:
+For a separately controlled local deployment only, CDP cookie groups omit `CookieURL`.
+Prefer browser sessions and never activate a cookie group in this Git repository:
 
 ```yaml
-driver:
-  useCDP: true
-  cookies:
-    - Cookies:
-        - Name: session_id
-          Value: "<LOCAL_ONLY_VALUE>"
-          Domain: example.com
-          Path: /
+# driver:
+#   useCDP: true
+#   cookies:
+#     - Cookies:
+#         - Name: session_id
+#           Value: "<LOCAL_ONLY_VALUE>"
+#           Domain: example.com
+#           Path: /
 ```
 
 Use `ValueRandom: <positive integer>` instead of `Value` to have Stash
