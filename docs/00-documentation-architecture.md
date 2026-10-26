@@ -112,10 +112,10 @@ Legacy documents may be migrated incrementally. When front matter contains `doc_
 ## Agent routing
 
 1. Repository administration, CI, paths, or contribution: `README.md` → `AGENTS.md` → `docs/README.md` → `docs/index.yml` → the owning repository document.
-2. Scraper authoring or debugging: `skills/stash-scraper-builder/SKILL.md` → `references/skill-read-order.md` → the selected specialized reference.
+2. Scraper creating, revising, validating, debugging, or review-only requests: `skills/stash-scraper-builder/SKILL.md` is the single runtime workflow entry; only the skill's current phase may select a specialized reference.
 3. Schema or validation questions: official `validator/index.mjs` and official schema first, then repository policy.
 4. Live verification: `docs/50-testing-guide.md` → `docs/51-rendered-dom-fixture-testing.md` → `docs/60-live-test-status.md`. `tools/scrutiny.js` is raw HTTP plus JSDOM, not rendered-DOM or live Stash/CDP verification.
-5. Authentication, cookies, or private variants: the skill secrets reference, then `scrapers/private/`.
+5. Authentication and cookie questions: follow the secrets reference chosen by the skill; `scrapers/private/` is tracked, publicly visible, and never an authorization boundary.
 
 If documentation conflicts, resolve in this order: official CommunityScrapers schema/validator, executable repository tools, canonical repository docs, skill references, examples.
 
