@@ -72,3 +72,11 @@ def test_index_and_security(contract):
     assert "scrapers/private/" in body
     assert "active cookies" in body
     assert "outside this Git working tree" in body
+
+def test_schema_validation_provenance_is_unambiguous(contract):
+    _, body = contract
+    assert "SCHEMA_REPO_PASS" in body
+    assert "SCHEMA_UPSTREAM_PASS" in body
+    assert "pinned upstream" in body
+    assert "repo-derived" in body
+    assert "official upstream pass" in body
