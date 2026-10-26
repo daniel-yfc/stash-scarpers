@@ -20,7 +20,7 @@ routing:
 
 # System Architecture
 
-This repository stores Stash scraper YAML under `scrapers/`, with private variants under `scrapers/private/`. It derives its validator expectations from upstream CommunityScrapers; it is not the upstream Stash application or its scraper corpus. See [`upstream-sources.md`](../skills/stash-scraper-builder/references/upstream-sources.md) for provenance.
+This repository stores Stash scraper YAML under `scrapers/`, with private variants under `scrapers/private/`. It derives its validator expectations from upstream CommunityScrapers; it is not the upstream Stash application or its scraper corpus. See [`upstream-sources.md`](43-upstream-sources.md) for provenance.
 
 ## Verification layers
 
