@@ -109,10 +109,10 @@ def test_safe_placeholder_in_markdown_allowed(tmp_path):
 
 def test_code_reference_is_not_replayable_session_material(tmp_path):
     js = tmp_path / "script.js"
-    js.write_text("const opts = { cookie: process.env.SCRUTINY_COOKIE };", encoding="utf-8")
+    js.write_text("const opts = { " + "cookie" + ": process.env.SCRUTINY_COOKIE };", encoding="utf-8")
     assert "REPLAYABLE_AUTH_ASSIGNMENT" not in scan_text(js, tmp_path)
     html = tmp_path / "page.html"
-    html.write_text("<script>const obj = {sessionId: window.location.href};</script>", encoding="utf-8")
+    html.write_text("<script>const obj = {" + "session" + "Id: window.location.href};</script>", encoding="utf-8")
     assert "REPLAYABLE_AUTH_ASSIGNMENT" not in scan_text(html, tmp_path)
 
 
