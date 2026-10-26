@@ -46,7 +46,7 @@ jobs:
           cache: npm
 
       - name: Install Node dependencies
-        run: npm ci || npm install
+        run: npm ci
 
       - name: Check documentation examples and contradictions
         run: python tools/check_scraper_docs.py
