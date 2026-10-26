@@ -148,6 +148,17 @@ documents:
   read_after:
   - DOC-TEST-50
   - DOC-TEST-51
+- doc_id: DOC-TEST-53
+  title: Skill Evaluation Contract and Host Evidence
+  path: docs/53-skill-evaluation.md
+  layer: repository
+  status: active
+  intents:
+  - skill-evaluation
+  - workflow-exit
+  - trigger-tests
+  read_after:
+  - DOC-TEST-50
 - doc_id: STATUS-LIVE-60
   title: Live Test Status
   path: docs/60-live-test-status.md
