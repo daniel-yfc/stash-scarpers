@@ -122,3 +122,7 @@ Date:
         with: ""
     - parseDate: "January 2, 2006"
 ```
+
+## Go RE2 compatibility
+
+Stash applies `postProcess` regex operations using Go's RE2 syntax, **not JavaScript RegExp or Python re**. JS-style `\\uXXXX` escapes, lookarounds and pattern backreferences are not valid substitutes for runtime checks. Use supported Unicode classes such as `\\p{Han}`, `\\p{Hiragana}`, `\\p{Katakana}` or Go-compatible escapes; round-trip the exact YAML and test in the same engine or real Stash. A Node-only regex pass does **not** verify a Stash postProcess result. This rule derives from the archived October 2026 regex-dialect incident; archived cases remain historical evidence only.
