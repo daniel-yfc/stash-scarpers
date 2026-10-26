@@ -1,0 +1,19 @@
+{
+  "case_id": "E2E-05",
+  "spec_version": 1,
+  "synthetic_source": true,
+  "note": "Deterministic input/expected contract only; not a live Stash/CDP pass.",
+  "id": "E2E-05",
+  "kind": "cdp",
+  "input_type": "text/html",
+  "source_url": "https://example.invalid/authenticated/demo-05",
+  "input_body": "<div class='login-required'>AUTH_REQUIRED</div>",
+  "expected_fields": {
+    "Title": "Authenticated Demo Scene"
+  },
+  "contract": {
+    "precondition": "independently authorized visible Chrome CDP profile outside Git",
+    "forbidden": "committed cookie/session/browser profile",
+    "live_stash_required": true
+  }
+}
