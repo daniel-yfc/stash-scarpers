@@ -20,7 +20,7 @@ routing:
 
 **Load when:** a scraper returns empty/wrong fields, crashes, or hits access walls.
 
-> **概要（zh-TW）：** 先查常見故障表（空值、日期 nil、403、nil pointer），再讀事件回顧裡的可遷移教訓。修復前先分類失敗頁面；證據分層記錄（raw / rendered / live runtime）。
+> **概要（zh-TW）：** 先查常見故障表（空值、日期 nil、403、nil pointer），依技術條件採用已驗證的防錯規則。修復前先分類失敗頁面；證據分層記錄（raw / rendered / live runtime）。
 
 ## Common failure catalog
 
@@ -44,7 +44,7 @@ you need to see what Stash actually received.
 
 1. `$x()` your selectors in browser console to verify they match
 2. Check for age-gate or interstitial pages
-3. Verify `useCDP` and cookie configuration
+3. Verify `useCDP` and the locally authenticated session; never commit cookies or browser profiles
 4. Check HTTP status codes (403 → User-Agent / headers issue)
 
 ### Only Date is nil
@@ -109,7 +109,7 @@ you need to see what Stash actually received.
 **Debug steps:**
 
 1. Add custom User-Agent via `driver.headers`
-2. Configure cookies if site requires login
+2. For login-required pages, use an isolated, authenticated local CDP browser profile; never commit session material or enable cookies in tracked scraper YAML
 3. Use CDP for JavaScript-rendered content
 4. Add `sleep` between requests (min 1 second)
 
@@ -127,13 +127,17 @@ you need to see what Stash actually received.
 
 For XPath/JSON fragment actions, include the required `queryURL` for the entry point and target site. Script actions follow their script contract. Do not add fragment entry points merely to address a runtime panic.
 
-## Incident reviews
+## Transferable failure controls
 
-Past incident write-ups live in [`incident-reviews.md`](incident-reviews.md). They are single-site records: label transfers `Heuristic` until independently tested on a second layout or site.
+- **Source classification:** Separate completed target pages from challenge, login, age-gate, 404 and partially rendered application responses. Empty selectors on failure pages are not evidence of selector drift.
+- **Raw versus rendered:** Capture sanitized raw response and completed rendered DOM separately when needed; neither alone demonstrates live Stash/CDP extraction. Test both populated and missing-field cases, near-match URLs, localized paths and decoy elements.
+- **Runtime load:** A parsed/schema-valid YAML can still fail Go unmarshalling. Confirm the exact committed file loads into the Stash version before claiming loader success. Do not place field maps under `common:` or `queryURLReplace` beneath a ByName entry.
+- **Regex dialect:** PostProcess regex is executed by Go's RE2, not Node/Python regular expressions. Check it with the target engine; see `post-processing.md`.
+- **Historical provenance:** `docs/archive/incident-reviews-2026-10.md` stores case-specific history, not a runtime instruction, schema authority, or current site verification.
 
-### Prevention checklist
+## Prevention checklist
 
-- Compare each normative schema claim to the local validator/schema derived from upstream, and consult `upstream-sources.md` when provenance matters.
+- Compare each normative schema claim to the local validator/schema derived from upstream, and consult `schema-provenance.md` when provenance matters.
 - Search the full reference tree for a changed rule; update duplicates, examples and ownership routes together.
 - Parse and validate complete YAML examples; check the committed file, not only a local reconstruction.
 - Mark `Source:` facts, `Heuristic:` transfers and evidence status distinctly; require a cross-site counterexample before declaring a generic pattern.
