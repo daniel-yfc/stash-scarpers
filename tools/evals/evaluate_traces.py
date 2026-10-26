@@ -30,7 +30,7 @@ NO_WRITE_INTENTS = {"REVIEW_ONLY", "VALIDATE_ONLY", "DEBUG"}
 STATUSES = ("PASS", "FAIL", "NOT_RUN", "UNATTESTED", "SYNTHETIC_ONLY")
 
 
-def evaluate_events(case: dict, trace: dict) -> list[str]:
+def evaluate_events(case: dict, trace: dict, evidence_root: Path | None = None, root: Path = ROOT) -> list[str]:
     """Validate objective behavior, phase ordering, and read-only invariants."""
     events = trace["events"]
     problems: list[str] = []
@@ -104,6 +104,25 @@ def evaluate_events(case: dict, trace: dict) -> list[str]:
         for axis in case["required_evidence"]:
             if axis not in verified:
                 problems.append(f"required evidence missing: {axis}")
+        # The expected values are sourced from the version-pinned case fixture,
+        # never from the host's self-reported 'expected' fields.
+        if "VALUE_MATCH" in case["required_evidence"] and "VALUE_MATCH" in verified:
+            matched = [
+                e for e in events if e.get("type") == "verification"
+                and e.get("axis") == "VALUE_MATCH" and e.get("status") == "PASS"
+            ]
+            if len(matched) != 1 or evidence_root is None:
+                problems.append("missing one inspectable VALUE_MATCH artifact")
+            else:
+                try:
+                    scenario_path = root / case["scenario_ref"]
+                    expected = json.loads(scenario_path.read_text(encoding="utf-8"))["expected_fields"]
+                    artifact_path = evidence_root / matched[0]["artifact_ref"]
+                    actual = json.loads(artifact_path.read_text(encoding="utf-8"))["actual_fields"]
+                    if actual != expected:
+                        problems.append("VALUE_MATCH artifact disagrees with pinned expected fields")
+                except (OSError, ValueError, KeyError, TypeError):
+                    problems.append("VALUE_MATCH artifact unreadable or malformed")
     return sorted(set(problems))
 
 
@@ -141,7 +160,7 @@ def score_cases(
                     "SYNTHETIC_FIXTURE" if record["capture_kind"] == "synthetic_fixture"
                     else "HOST_EXPORT_UNATTESTED"
                 )
-                problems = evaluate_events(case, record)
+                problems = evaluate_events(case, record, evidence_root=trace_dir.parent, root=root)
                 if problems:
                     item["status"] = "FAIL"
                     item["checks"] = problems
