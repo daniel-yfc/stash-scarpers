@@ -51,6 +51,15 @@ jobs:
       - name: Check documentation examples and contradictions
         run: python tools/check_scraper_docs.py
 
+      - name: Check documentation index
+        run: python tools/check_docs_index.py
+
+      - name: Check WS-D resource placement and migrated links
+        run: python tools/check_resource_placement.py
+
+      - name: Run WS-D and WS-C contract tests
+        run: python -m pytest tools/tests/test_resource_placement.py tools/tests/test_skill.py tools/tests/test_skill_contract.py -v
+
       - name: Scan Git-tracked session material
         run: python tools/scan_session_material.py
 
