@@ -71,9 +71,9 @@ if grep -qE '^sceneByQueryFragment:' "${SCRAPER_FILE}"; then
   fi
 fi
 
-# 公開擷取器（scrapers/*.yml）不得包含 cookies；私有擷取器（scrapers/private/）除外
-if [[ "${SCRAPER_FILE}" =~ ^scrapers/[^/]+\.yml$ ]] && grep -qE '^[[:space:]]*cookies:' "${SCRAPER_FILE}"; then
-  fail "Public scraper files must not contain 'cookies:'; move to scrapers/private/ | 公開擷取器不得包含 'cookies:'；請移至 scrapers/private/"
+# All tracked scrapers (including private/) must omit active cookie blocks.
+if grep -qE '^[[:space:]]*cookies:[[:space:]]*' "${SCRAPER_FILE}"; then
+  fail "Active cookies are not permitted in tracked scrapers"
 fi
 
 # parseDate 必須使用 Go 參考時間格式（2006-01-02），拒絕 YYYY/YY/DD 或 %Y/%m/%d 等非 Go 格式
