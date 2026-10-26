@@ -24,6 +24,7 @@ This directory contains repository-level workflow, architecture, testing, and ma
 - Repository workflow and project operations: root README, this directory, and `CONTRIBUTING.md`.
 - Agent boundaries: `AGENTS.md` and `CLAUDE.md`; scraper authoring: `skills/stash-scraper-builder/SKILL.md` and selected references.
 - Schema and runtime behavior: executable validator/schema and verified runtime evidence, not an audit recommendation.
+- Skill test corpus, host-trace provenance and offline scoring: [`53-skill-evaluation.md`](53-skill-evaluation.md) (never a runtime Skill route).
 - Maintainer source registry: [`43-upstream-sources.md`](43-upstream-sources.md); Skill functional-evaluation corpus: [`../tests/skill-evals/legacy-functional-eval.md`](../tests/skill-evals/legacy-functional-eval.md).
 
 ## Guides
