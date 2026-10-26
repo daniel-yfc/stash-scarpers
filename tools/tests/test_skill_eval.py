@@ -274,3 +274,39 @@ def test_unattested_trace_never_grants_formal_pass(tmp_path):
     assert result["cases"][0]["status"] == "UNATTESTED"
     assert result["cases"][0]["source_trust"] == "HOST_EXPORT_UNATTESTED"
     assert assess_thresholds(result, cases)[0] == "INCOMPLETE"
+
+
+def test_value_match_must_match_pinned_case_not_agent_claim(tmp_path):
+    cases = load_cases(ROOT)
+    rec = sample_trace(case_id="E2E-01")
+    rec["events"] = [{"type": "skill_load", "skill_id": "stash-scraper-builder",
+                      "path": "skills/stash-scraper-builder/SKILL.md"},
+                     {"type": "intent", "value": "CREATE"}]
+    rec["events"].extend({"type": "phase_exit", "phase": f"P{i}", "status": "PASS"}
+                         for i in range(7))
+    for axis in ("SCHEMA", "VALUE_MATCH", "LOADER"):
+        rec["events"].append({
+            "type": "verification", "axis": axis, "status": "PASS",
+            "artifact_ref": "artifacts/actual.json",
+            "artifact_sha256": "a" * 64,
+        })
+    dest = tmp_path / "artifacts"
+    dest.mkdir()
+    (dest / "actual.json").write_text(
+        json.dumps({"actual_fields": {"Title": "INTENTIONALLY WRONG"}}),
+        encoding="utf-8",
+    )
+    problems = evaluate_events(cases["E2E-01"], rec, evidence_root=tmp_path, root=ROOT)
+    assert any("pinned expected fields" in issue for issue in problems)
+
+
+def test_case_scenarios_are_fixed_and_non_replayable():
+    cases = load_cases(ROOT)
+    for i in range(1, 6):
+        case_id = f"E2E-{i:02d}"
+        ref = cases[case_id]["scenario_ref"]
+        obj = json.loads((ROOT / ref).read_text(encoding="utf-8"))
+        assert obj["case_id"] == case_id
+        assert obj["synthetic_source"] is True
+        assert obj["source_url"].startswith("https://example.invalid/")
+        assert obj["expected_fields"]
