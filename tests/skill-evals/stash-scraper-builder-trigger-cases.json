@@ -1,0 +1,119 @@
+{
+  "suite": "stash-scraper-builder",
+  "skill_id": "stash-scraper-builder",
+  "expected_skill_path": "skills/stash-scraper-builder/SKILL.md",
+  "note": "Seed cases only. Host-level runs are required before marking invocation verified.",
+  "repeat_per_host": 3,
+  "cases": [
+    {
+      "id": "POS-01",
+      "prompt": "Create an XPath Stash scraper for verified scene pages.",
+      "should_load": true,
+      "intent": "CREATE"
+    },
+    {
+      "id": "POS-02",
+      "prompt": "Build a scrapeJson scraper for an actual documented JSON endpoint.",
+      "should_load": true,
+      "intent": "CREATE"
+    },
+    {
+      "id": "POS-03",
+      "prompt": "Write a script-mode CommunityScrapers YAML using the existing Python script.",
+      "should_load": true,
+      "intent": "CREATE"
+    },
+    {
+      "id": "POS-04",
+      "prompt": "Fix an incorrect Go date layout in my Stash YAML.",
+      "should_load": true,
+      "intent": "REVISE"
+    },
+    {
+      "id": "POS-05",
+      "prompt": "Revise Image XPath without inventing the search endpoint.",
+      "should_load": true,
+      "intent": "REVISE"
+    },
+    {
+      "id": "POS-06",
+      "prompt": "Review this Stash sceneByURL YAML only; do not edit files.",
+      "should_load": true,
+      "intent": "REVIEW_ONLY"
+    },
+    {
+      "id": "POS-07",
+      "prompt": "Validate Stash scraper YAML schema; report errors without edits.",
+      "should_load": true,
+      "intent": "VALIDATE_ONLY"
+    },
+    {
+      "id": "POS-08",
+      "prompt": "Diagnose a Stash fragment scraper nil pointer; no implementation.",
+      "should_load": true,
+      "intent": "DEBUG"
+    },
+    {
+      "id": "POS-09",
+      "prompt": "Check why the Stash performer field is blank.",
+      "should_load": true,
+      "intent": "DEBUG"
+    },
+    {
+      "id": "POS-10",
+      "prompt": "Review CDP login and scraper driver settings; read-only audit.",
+      "should_load": true,
+      "intent": "REVIEW_ONLY"
+    },
+    {
+      "id": "NEG-01",
+      "prompt": "Write a generic Node.js web crawler.",
+      "should_load": false
+    },
+    {
+      "id": "NEG-02",
+      "prompt": "Reformat my Kubernetes YAML.",
+      "should_load": false
+    },
+    {
+      "id": "NEG-03",
+      "prompt": "Configure Stash-box synchronization.",
+      "should_load": false
+    },
+    {
+      "id": "NEG-04",
+      "prompt": "Implement an action: stash remote server scraper.",
+      "should_load": false
+    },
+    {
+      "id": "NEG-05",
+      "prompt": "Submit my patch as a CommunityScrapers upstream pull request.",
+      "should_load": false
+    },
+    {
+      "id": "NEG-06",
+      "prompt": "Change the GitHub Actions workflow and update branch protection.",
+      "should_load": false
+    },
+    {
+      "id": "NEG-07",
+      "prompt": "Review the stash-scraper-builder SKILL.md trigger wording.",
+      "should_load": false
+    },
+    {
+      "id": "NEG-08",
+      "prompt": "Package this Agent Skill as a zip.",
+      "should_load": false
+    },
+    {
+      "id": "NEG-09",
+      "prompt": "Create a dashboard for GitHub issues.",
+      "should_load": false
+    },
+    {
+      "id": "NEG-10",
+      "prompt": "Explain a general JSON Schema unrelated to Stash scraper YAML.",
+      "should_load": false
+    }
+  ]
+}
