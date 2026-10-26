@@ -12,6 +12,7 @@ from pathlib import Path
 import re
 
 MAX_TRACE_BYTES = 1024 * 1024
+MAX_ARTIFACT_BYTES = 2 * 1024 * 1024
 HEX40 = re.compile(r"^[0-9a-f]{40}$")
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
 SESSION_KEY = re.compile(r"(?i)\"(?:cookie|set-cookie|authorization|access_token|api_key|password|session_token)\"\s*:")
@@ -25,9 +26,14 @@ class TraceError(ValueError):
     pass
 
 
-def load_trace(path: Path, repo_sha: str, skill_sha: str, case_id: str, host: str, repeat: int) -> tuple[dict, str]:
+def load_trace(
+    path: Path, repo_sha: str, skill_sha: str, case_id: str, host: str,
+    repeat: int, evidence_root: Path | None = None,
+) -> tuple[dict, str]:
     if path.is_symlink() or not path.is_file():
         raise TraceError("trace file missing or a symlink")
+    if path.stat().st_size > MAX_TRACE_BYTES:
+        raise TraceError("oversized trace")
     data = path.read_bytes()
     if not data or len(data) > MAX_TRACE_BYTES:
         raise TraceError("empty or oversized trace")
@@ -80,4 +86,31 @@ def load_trace(path: Path, repo_sha: str, skill_sha: str, case_id: str, host: st
                 or not HEX64.fullmatch(str(e.get("artifact_sha256", "")))
             ):
                 raise TraceError("verification PASS lacks an evidence reference and digest")
+    workspace = obj.get("workspace")
+    if workspace is not None:
+        if (not isinstance(workspace, dict)
+                or workspace.get("method") != "tracked-and-untracked-worktree-sha256-v1"
+                or not HEX64.fullmatch(str(workspace.get("before_sha256", "")))
+                or not HEX64.fullmatch(str(workspace.get("after_sha256", "")))):
+            raise TraceError("invalid workspace fingerprint contract")
+
+    # Every verification PASS must bind to actual bytes held in the
+    # restricted, ignored local artifact directory. An arbitrary string with
+    # a plausible digest is insufficient evidence.
+    root = (evidence_root if evidence_root is not None else path.parent.parent).resolve()
+    permitted = (root / "artifacts").resolve()
+    for e in events:
+        if e.get("type") != "verification" or e.get("status") != "PASS":
+            continue
+        relative = Path(e["artifact_ref"])
+        artifact = (root / relative).resolve()
+        if (relative.is_absolute() or ".." in relative.parts
+                or not artifact.is_relative_to(permitted)
+                or (root / relative).is_symlink() or not artifact.is_file()):
+            raise TraceError("verification artifact outside restricted evidence directory")
+        if artifact.stat().st_size > MAX_ARTIFACT_BYTES:
+            raise TraceError("oversized verification artifact")
+        actual = hashlib.sha256(artifact.read_bytes()).hexdigest()
+        if actual != e["artifact_sha256"]:
+            raise TraceError("verification artifact digest mismatch")
     return obj, hashlib.sha256(data).hexdigest()
