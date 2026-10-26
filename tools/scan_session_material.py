@@ -92,8 +92,16 @@ def scan_text(path: Path, root: Path) -> set[str]:
     for line in text.splitlines():
         for pattern in (HEADER_PATTERN, ASSIGNMENT):
             match = pattern.search(line)
-            if match and not is_placeholder(match.group(1)):
-                errors.add("REPLAYABLE_AUTH_ASSIGNMENT")
+            if match:
+                candidate = match.group(1)
+                # This is a variable reference, not the value of the secret.
+                # Match the entire expression, never use substring allowlists.
+                runtime_ref = re.fullmatch(
+                    r"(?:process\.env|import\.meta\.env|os\.environ)\.[A-Za-z_][A-Za-z0-9_]*",
+                    candidate,
+                )
+                if not is_placeholder(candidate) and not runtime_ref:
+                    errors.add("REPLAYABLE_AUTH_ASSIGNMENT")
     return errors
 
 
