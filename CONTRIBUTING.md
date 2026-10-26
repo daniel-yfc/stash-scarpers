@@ -71,7 +71,7 @@ Use this source hierarchy when authoring or changing scraper guidance:
 4. Project references and examples.
 5. Heuristics, explicitly labeled `Heuristic`.
 
-- Normative schema/runtime rules must include a nearby source citation or point to `skills/stash-scraper-builder/references/upstream-sources.md`.
+- Normative schema/runtime rules must include a nearby source citation or point to `docs/43-upstream-sources.md`.
 - Experience-based recommendations must be labeled `Heuristic`; do not present them as schema behavior or runtime causality.
 - Search the full `skills/stash-scraper-builder/` tree for duplicated wording before changing a rule.
 - Keep complete YAML examples copy-paste-valid and include the required root `name:` field.
