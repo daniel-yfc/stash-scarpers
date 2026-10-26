@@ -67,11 +67,12 @@ driver:
    ```yaml
    driver:
      useCDP: false
-     cookies:
-       - CookieURL: "https://example.com"
-         Cookies:
-           - Name: SESSIONID
-             Value: "<private-session-value-never-commit>"
+   # Comment-only template for separately controlled local deployment.
+   #   cookies:
+   #     - CookieURL: "https://example.com"
+   #       Cookies:
+   #         - Name: SESSIONID
+   #           Value: "<LOCAL_ONLY_VALUE>"
    ```
    - Session tokens embedded in YAML
    - Must rotate when sessions expire
