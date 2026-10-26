@@ -19,8 +19,8 @@ PLACEHOLDERS = ("<LOCAL_ONLY_VALUE>", "<COOKIE_NAME>", "<TOKEN_PLACEHOLDER>", "<
 SENSITIVE_KEY = re.compile(r"^(?:cookie|authorization|proxy-authorization|x-api-key|x-auth-token|access_token|api_key|apikey|api-key|password|session_token|csrf_token|cf_clearance)$", re.I)
 COMMENT_VALUE = re.compile(r"^\s*#\s*(?:-\s*)?Value:\s*(.+?)\s*$", re.I)
 ACTIVE_COOKIE = re.compile(r"^\s*(?:cookies|CookieURL):\s*(?:#.*)?$", re.M)
-HEADER_PATTERN = re.compile(r"""(?i)(?:^|[\\s'"])(?:cookie|set-cookie|authorization|proxy-authorization|x-api-key|x-auth-token)(?:['"])?\\s*[:=]\\s*['"]?(?:Bearer\\s+)?([A-Za-z0-9_+./=%;~\\-]{12,})""")
-ASSIGNMENT = re.compile(r"""(?i)\\b(?:session[_-]?token|sessionid|phpsessid|cf_clearance|csrf[_-]?token|api[_-]?key|access[_-]?token|auth[_-]?token)\\s*['"]?\\s*[:=]\\s*['"]?([A-Za-z0-9_+./=~\\-]{16,})""")
+HEADER_PATTERN = re.compile(r"""(?i)(?:^|[\s'"])(?:cookie|set-cookie|authorization|proxy-authorization|x-api-key|x-auth-token)(?:['"])?\s*[:=]\s*['"]?(?:Bearer\s+)?([A-Za-z0-9_+./=%;~\-]{12,})""")
+ASSIGNMENT = re.compile(r"""(?i)\b(?:session[_-]?token|sessionid|phpsessid|cf_clearance|csrf[_-]?token|api[_-]?key|access[_-]?token|auth[_-]?token)\s*['"]?\s*[:=]\s*['"]?([A-Za-z0-9_+./=~\-]{16,})""")
 
 
 def tracked_paths(root: Path) -> list[Path]:
