@@ -14,7 +14,7 @@ metadata:
 # Skill: stash-scraper-builder
 
 **Version:** 2026-10-27
-**Authority:** Official CommunityScrapers schema/validator for schema checks; Stash runtime evidence for loader and live behavior.
+**Authority:** The pinned upstream CommunityScrapers validator/schema is normative. The checked-in repository validator is a derived validation implementation and must be named separately. Only Stash runtime evidence establishes loader/live behavior.
 **Portability:** Use this `SKILL.md` as the single workflow entry in a repository or standalone. Repository commands and governance apply only in `stash-scarpers`; otherwise use the official upstream validator if available. Do not require repository documents for standalone use.
 
 ## Trigger, intent, and authorization (P0)
@@ -41,7 +41,7 @@ Run P0 through P6 in order. Each exit is a check, not an aspiration. On `FAIL` o
 | **P1 SOURCE_CLASSIFIED** | Inspect supplied YAML and/or real site URL, response type, access state, language, and known entry points. | Record what was actually observed and the evidence source; separate completed content from login/age/challenge/error pages. | Do not invent URLs, data, page content or successful access. Block any claim requiring unavailable evidence. |
 | **P2 MODE_SELECTED** | For CREATE/REVISE choose the least complex supported XPath, JSON, script, or CDP mode; for review, examine existing modes. | Mode and entry points have real site/API or existing-code support, or are explicitly `UNVERIFIED`; read only the corresponding reference. | If an essential endpoint/mode is unsupported, stop dependent authoring; do not synthesize search APIs. `N/A` if no mode selection is requested. |
 | **P3 ARTIFACT_READY** | CREATE/REVISE produce one complete YAML (root `name:`) with only supported mappings; REVIEW_ONLY/VALIDATE_ONLY/DEBUG produce findings instead. | Full YAML or clear findings, with assumptions and untested selectors marked; no unauthorized writes. | Structural or scope failure blocks claiming an authored artifact. |
-| **P4 SCHEMA_VALIDATED** | For an available YAML candidate run parse, official schema validator and applicable repository safety/quality checks; keep outputs distinct. | Record actual commands, version/ref, `PASS`/`FAIL`/`NOT_RUN` and errors. Only an official validator pass qualifies as `SCHEMA_VALIDATED`. | Failure blocks validation promotion. Missing validator is `NOT_RUN`; local stub is never authoritative. |
+| **P4 SCHEMA_CHECKED** | For an available YAML candidate run parse, the repo validator and, when required/available, a pinned upstream CommunityScrapers validator; run repository policy checks separately. | Record command, schema implementation, exact upstream/ref or repo commit, and `PASS`/`FAIL`/`NOT_RUN`. Report `SCHEMA_REPO_PASS` only for the checked-in validator and `SCHEMA_UPSTREAM_PASS` only for the verified upstream one. | Never call a repo-only check an `official upstream pass`; failure blocks validation promotion. Missing validator is `NOT_RUN`; bundled stub is never authoritative. |
 | **P5 RUNTIME_EVIDENCE** | Independently check available fixtures, Stash loader, live search, live detail and CDP; label source/date/runtime. | Each axis independently `PASS`, `FAIL`, `NOT_RUN` or `N/A` with evidence. | Never infer Stash loader/live success from schema, a fixture-runner self-test, Scrutiny/JSDOM, or a green CI run. No production-ready claim without required runtime evidence. |
 | **P6 DELIVERY_COMPLETE** | Return output for the classified intent, phase outcomes, unmet checks, next steps, and conditional prerequisites. | The user can distinguish authored, validated, loaded and live-verified claims; no secret or unwarranted certainty. | Report `BLOCKED` or `NOT_RUN` instead of asserting unsupported success. |
 
@@ -84,7 +84,7 @@ Evaluation prompts, historical incident reviews, document registries and authori
 - Put field mappings under `scene:`, `performer:`, `group:` or `gallery:`; `common:` stores only named string fragments. Keep scraped values in the source language.
 - Reject credential-bearing output. No tracked scraper (including `scrapers/private/`) may include active cookies, authentication headers, session values, or browser profile data. Only fully commented placement examples with explicit placeholders are permitted. Personal deployment files and profiles must remain outside this Git working tree. Read the security reference when authentication is involved.
 - Preserve `# UNVERIFIED` markers on untested selectors, and do not treat a template, test fixture, schema stub or old incident as present-day site verification.
-- The official CommunityScrapers schema/validator is authoritative for its checks. It does not prove a Stash runtime load or metadata correctness.
+- The upstream CommunityScrapers schema/validator is normative; record `SCHEMA_VALIDATED` with its precise provenance (repo-derived versus pinned upstream), not a generic unqualified `PASS`. Neither proves Stash runtime load or metadata correctness.
 
 ## Output contract (P6)
 
