@@ -106,3 +106,23 @@ def test_safe_placeholder_in_markdown_allowed(tmp_path):
     target = tmp_path / "safe.md"
     target.write_text("Authorization: <LOCAL_ONLY_VALUE>", encoding="utf-8")
     assert scan_text(target, tmp_path) == set()
+
+def test_code_reference_is_not_replayable_session_material(tmp_path):
+    js = tmp_path / "script.js"
+    js.write_text("const opts = { cookie: process.env.SCRUTINY_COOKIE };", encoding="utf-8")
+    assert "REPLAYABLE_AUTH_ASSIGNMENT" not in scan_text(js, tmp_path)
+    html = tmp_path / "page.html"
+    html.write_text("<script>const obj = {sessionId: window.location.href};</script>", encoding="utf-8")
+    assert "REPLAYABLE_AUTH_ASSIGNMENT" not in scan_text(html, tmp_path)
+
+
+def test_quoted_session_id_is_still_rejected(tmp_path):
+    html = tmp_path / "page.html"
+    html.write_text('{"' + "sessionId" + '": "' + "x" * 36 + '"}', encoding="utf-8")
+    assert "REPLAYABLE_AUTH_ASSIGNMENT" in scan_text(html, tmp_path)
+
+
+def test_rendered_dom_snapshots_have_no_active_auth_material():
+    for name in ("dvd-046.html", "dvd-173.html", "dvd-215.html", "dvd-281.html"):
+        path = ROOT / "tests" / "fixtures" / "bravo" / name
+        assert "REPLAYABLE_AUTH_ASSIGNMENT" not in scan_text(path, ROOT), name
