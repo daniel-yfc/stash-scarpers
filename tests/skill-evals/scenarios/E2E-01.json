@@ -1,0 +1,19 @@
+{
+  "case_id": "E2E-01",
+  "spec_version": 1,
+  "synthetic_source": true,
+  "note": "Deterministic input/expected contract only; not a live Stash/CDP pass.",
+  "id": "E2E-01",
+  "kind": "xpath",
+  "input_type": "text/html",
+  "source_url": "https://example.invalid/scenes/demo-01",
+  "input_body": "<html><h1 class='title'>Demo Scene</h1><time>2024-01-15</time><div class='studio'>Demo Studio</div><a class='performer'>Aoi</a></html>",
+  "expected_fields": {
+    "Title": "Demo Scene",
+    "Date": "2024-01-15",
+    "Studio": "Demo Studio",
+    "Performers": [
+      "Aoi"
+    ]
+  }
+}
