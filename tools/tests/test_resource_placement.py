@@ -65,3 +65,21 @@ def test_markdown_archive_is_not_a_runtime_route(tmp_path):
     active.parent.mkdir(parents=True, exist_ok=True)
     active.write_text("# current\n", encoding="utf-8")
     assert inspect(r, paths=(MOVED[1],)) == []
+
+def test_git_tracked_docs_beyond_original_whitelist_are_inspected(tmp_path):
+    import subprocess
+    from tools.check_resource_placement import tracked_markdown_paths
+    root = fixture_root(tmp_path)
+    doc = root / "extras" / "new-maintainer-doc.md"
+    doc.parent.mkdir(parents=True)
+    doc.write_text("[stale](../skills/stash-scraper-builder/references/eval-pack.md)\n", encoding="utf-8")
+    subprocess.run(["git", "init", "-q", str(root)], check=True)
+    subprocess.run(["git", "-C", str(root), "add", "-A"], check=True)
+    assert "extras/new-maintainer-doc.md" in tracked_markdown_paths(root)
+    errors = inspect(root)
+    assert any("extras/new-maintainer-doc.md" in error for error in errors)
+
+
+def test_full_inventory_fails_closed_without_git(tmp_path):
+    root = fixture_root(tmp_path)
+    assert "TRACKED_MARKDOWN_INVENTORY_FAILED" in inspect(root)
