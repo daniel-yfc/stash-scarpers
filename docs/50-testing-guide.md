@@ -100,7 +100,7 @@ For meaningful site coverage, include detail layouts where variation is plausibl
 
 `validate.yml` runs path-filtered schema, URL sort, repository policy, pytest, safeguards, and documentation checks. `pr-check.yml` gives changed-scraper policy feedback. `fixture-manifests.yml`, `evidence-contract.yml`, and `cdp-evidence-gate.yml` have distinct fixture/claim scopes. `scrutiny.yml` is deliberately manual and raw-response only; `link-check.yml` is an advisory Markdown link check on Markdown PRs, weekly, and manually. Read [`40-ci-workflows.md`](40-ci-workflows.md) for the exact eight-workflow inventory, triggers, and proof boundaries.
 
-The five-task authoring evaluation in [`legacy-functional-eval.md`](../tests/skill-evals/legacy-functional-eval.md) is not an executable GitHub Actions evaluation. No workflow result should be represented as its 5/5 score. Neither fixture control nor the CDP claim gate launches a live Stash browser session.
+The five-task authoring evaluation in [`legacy-functional-eval.md`](../tests/skill-evals/legacy-functional-eval.md) is not an executable GitHub Actions evaluation. The new `skill-eval-contract.yml` validates the case corpus and offline negative tests only; it must not be represented as an actual Host Skill execution or 5/5 functional score. See [`53-skill-evaluation.md`](53-skill-evaluation.md). Neither fixture control nor the CDP claim gate launches a live Stash browser session.
 
 ## Submission checklist
 
