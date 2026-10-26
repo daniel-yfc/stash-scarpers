@@ -80,7 +80,7 @@ driver:
 #  cookies:                       # uncomment and fill your own values;
 #    - Cookies:                   # never commit real values to a public repo
 #        - Name: "LOGIN_KEEP_INFO"
-#          Value: "請填入實際值"
+#          Value: "<LOCAL_ONLY_VALUE>"
 #          Domain: ".acceed.jp"
 #          Path: "/"
 ```
