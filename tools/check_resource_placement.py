@@ -36,8 +36,27 @@ OLD_LINK = re.compile(r"(?:skills/stash-scraper-builder/)?references/(?:"
 FORBIDDEN_RUNTIME_PATHS = tuple(SKILL + "references/" + x for x in FORMER)
 
 
-def inspect(root: Path, paths: tuple[str, ...] = ENTRY_DOCS) -> list[str]:
+def tracked_markdown_paths(root: Path) -> tuple[str, ...]:
+    """Inspect Git's actual tracked Markdown set, not a maintained path whitelist."""
+    proc = subprocess.run(
+        ["git", "-C", str(root), "ls-files", "-z", "--", "*.md"],
+        capture_output=True, check=False,
+    )
+    if proc.returncode:
+        raise RuntimeError("tracked Markdown inventory is unavailable")
+    return tuple(sorted(p.decode("utf-8", errors="surrogateescape")
+                        for p in proc.stdout.split(b"\x00") if p))
+
+
+def inspect(root: Path, paths: tuple[str, ...] | None = None) -> list[str]:
     errors: list[str] = []
+    if paths is None:
+        try:
+            paths = tracked_markdown_paths(root)
+        except RuntimeError:
+            return ["TRACKED_MARKDOWN_INVENTORY_FAILED"]
+        if not paths:
+            return ["TRACKED_MARKDOWN_INVENTORY_EMPTY"]
     for moved in MOVED:
         if not (root / moved).is_file():
             errors.append(f"MISSING_MOVED_RESOURCE: {moved}")
@@ -54,6 +73,11 @@ def inspect(root: Path, paths: tuple[str, ...] = ENTRY_DOCS) -> list[str]:
             # Exclude historical *name* mentions, but never a stale live reference.
             # The code pattern is anchored to 'references/' for this reason.
             errors.append(f"STALE_RUNTIME_REFERENCE: {rel}")
+        # Archived material is historical and cannot be a runtime route.
+        # Keep legacy external references as history, but validate active
+        # Markdown links across the full tracked inventory.
+        if rel.startswith("docs/archive/"):
+            continue
         for raw in LINK.findall(content):
             href = raw.split("#", 1)[0].strip()
             if not href or "://" in href or href.startswith(("mailto:", "data:", "/", "#")):
