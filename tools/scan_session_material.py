@@ -19,8 +19,8 @@ PLACEHOLDERS = ("<LOCAL_ONLY_VALUE>", "<COOKIE_NAME>", "<TOKEN_PLACEHOLDER>", "<
 SENSITIVE_KEY = re.compile(r"^(?:cookie|authorization|proxy-authorization|x-api-key|x-auth-token|access_token|api_key|apikey|api-key|password|session_token|csrf_token|cf_clearance)$", re.I)
 COMMENT_VALUE = re.compile(r"^\s*#\s*(?:-\s*)?Value:\s*(.+?)\s*$", re.I)
 ACTIVE_COOKIE = re.compile(r"^\s*(?:cookies|CookieURL):\s*(?:#.*)?$", re.M)
-HEADER_PATTERN = re.compile(r"(?i)(?:^|[\\s'\"])(?:set-cookie|authorization|proxy-authorization|x-api-key|x-auth-token)\s*[:=]\s*(?:Bearer\s+)?([A-Za-z0-9_+./=-]{12,})")
-ASSIGNMENT = re.compile(r"(?i)\b(?:session[_-]?token|cf_clearance|csrf[_-]?token|api[_-]?key|access[_-]?token)\s*[:=]\s*['\"]?([A-Za-z0-9_+./=-]{16,})")
+HEADER_PATTERN = re.compile(r"""(?i)(?:^|[\s'"])(?:cookie|set-cookie|authorization|proxy-authorization|x-api-key|x-auth-token)(?:['"])?\s*[:=]\s*['"]?(?:Bearer\s+)?([A-Za-z0-9_+./=%;~\-]{12,})""")
+ASSIGNMENT = re.compile(r"""(?i)\b(?:session[_-]?token|sessionid|phpsessid|cf_clearance|csrf[_-]?token|api[_-]?key|access[_-]?token|auth[_-]?token)\s*['"]?\s*[:=]\s*['"]?([A-Za-z0-9_+./=~\-]{16,})""")
 
 
 def tracked_paths(root: Path) -> list[Path]:
@@ -85,15 +85,30 @@ def scan_text(path: Path, root: Path) -> set[str]:
             m = COMMENT_VALUE.match(line)
             if m and not is_placeholder(m.group(1)):
                 errors.add("NON_PLACEHOLDER_COOKIE_TEMPLATE")
-    # Only high-confidence inline assignments across arbitrary tracked text.
-    if path.suffix.lower() in (".yml", ".yaml", ".json", ".txt", ".env"):
-        for line in text.splitlines():
-            stripped = line.lstrip()
-            if stripped.startswith("#") and not (rel.startswith("scrapers/") and path.suffix == ".yml"):
-                continue
-            for pattern in (HEADER_PATTERN, ASSIGNMENT):
-                match = pattern.search(line)
-                if match and not is_placeholder(match.group(1)):
+    # Scan every decodable Git-tracked text file, irrespective of extension.
+    # A .md/.js/.html file is not a credential-safe exception. Commented
+    # session values are secrets too; placeholders remain explicitly allowed.
+    # Never emit matched contents, even on failure.
+    for line in text.splitlines():
+        for pattern in (HEADER_PATTERN, ASSIGNMENT):
+            match = pattern.search(line)
+            if match:
+                candidate = match.group(1)
+                # This is a variable reference, not the value of the secret.
+                # Match the entire expression, never use substring allowlists.
+                runtime_ref = re.fullmatch(
+                    r"(?:process\.env|import\.meta\.env|os\.environ)\.[A-Za-z_][A-Za-z0-9_]*",
+                    candidate,
+                )
+                js_reference = (
+                    path.suffix.lower() in (".js", ".html")
+                    and re.fullmatch(
+                        r"[A-Za-z_$][A-Za-z0-9_$]*(?:\.[A-Za-z_$][A-Za-z0-9_$]*)+",
+                        candidate,
+                    )
+                    and re.search(r"(?i)\bsessionId\s*:\s*$", line[:match.start(1)])
+                )
+                if not is_placeholder(candidate) and not runtime_ref and not js_reference:
                     errors.add("REPLAYABLE_AUTH_ASSIGNMENT")
     return errors
 
