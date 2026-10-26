@@ -100,7 +100,15 @@ def scan_text(path: Path, root: Path) -> set[str]:
                     r"(?:process\.env|import\.meta\.env|os\.environ)\.[A-Za-z_][A-Za-z0-9_]*",
                     candidate,
                 )
-                if not is_placeholder(candidate) and not runtime_ref:
+                js_reference = (
+                    path.suffix.lower() in (".js", ".html")
+                    and re.fullmatch(
+                        r"[A-Za-z_$][A-Za-z0-9_$]*(?:\.[A-Za-z_$][A-Za-z0-9_$]*)+",
+                        candidate,
+                    )
+                    and re.search(r"(?i)\bsessionId\s*:\s*$", line[:match.start(1)])
+                )
+                if not is_placeholder(candidate) and not runtime_ref and not js_reference:
                     errors.add("REPLAYABLE_AUTH_ASSIGNMENT")
     return errors
 
