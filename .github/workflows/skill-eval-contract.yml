@@ -29,7 +29,7 @@ jobs:
   corpus-and-contract:
     name: Corpus, Trace Scorer Unit Tests and Documentation
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - name: Checkout exact evaluation revision
         uses: actions/checkout@v4
@@ -45,6 +45,23 @@ jobs:
 
       - name: Install Python dependencies
         run: python -m pip install -r requirements.txt
+
+      - name: Setup Node for stacked-PR regression
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Run full scraper and repo policy regressions
+        run: |
+          node validator/index.mjs -a --ci
+          node validator/index.mjs -a -s --ci
+          bash tools/validate-all.sh
+          python -m pytest tools/tests/ -v
+          python tools/check_scraper_docs.py
 
       - name: Validate fixed case corpus and expectations
         run: python tools/evals/validate_cases.py --json
