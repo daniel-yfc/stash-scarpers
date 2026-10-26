@@ -59,8 +59,29 @@ def load_cases(root: Path = ROOT) -> dict[str, dict]:
                 raise CorpusError(f"wrong case kind: {name}")
             if filename in ("stash-scraper-builder-trigger-cases.json", "near-miss-cases.json") and record["kind"] != "trigger":
                 raise CorpusError(f"wrong trigger case kind: {name}")
-            if record["kind"] == "functional" and not (root / record["source_path"]).is_file():
-                raise CorpusError(f"missing legacy functional task source: {name}")
+            if record["kind"] == "functional":
+                if not (root / record["source_path"]).is_file():
+                    raise CorpusError(f"missing legacy functional task source: {name}")
+                scenario_ref = record["scenario_ref"]
+                if scenario_ref != f"tests/skill-evals/scenarios/{name}.json":
+                    raise CorpusError(f"unapproved scenario path: {name}")
+                scenario_path = root / scenario_ref
+                if scenario_path.is_symlink() or not scenario_path.is_file():
+                    raise CorpusError(f"functional scenario missing or linked: {name}")
+                try:
+                    scenario = json.loads(scenario_path.read_text(encoding="utf-8"))
+                except (OSError, ValueError) as exc:
+                    raise CorpusError(f"unreadable scenario: {name}") from exc
+                if (not isinstance(scenario, dict)
+                        or scenario.get("case_id") != name
+                        or scenario.get("spec_version") != 1
+                        or scenario.get("synthetic_source") is not True
+                        or not isinstance(scenario.get("expected_fields"), dict)
+                        or not scenario["expected_fields"]
+                        or not isinstance(scenario.get("input_body"), str)
+                        or not scenario["input_body"].strip()
+                        or not str(scenario.get("source_url", "")).startswith("https://example.invalid/")):
+                    raise CorpusError(f"invalid/potentially live scenario: {name}")
             cases[name] = record
     baseline = [r for r in cases.values() if r["id"].startswith(("POS-", "NEG-"))]
     if sum(bool(r["should_load"]) for r in baseline) != 10:
