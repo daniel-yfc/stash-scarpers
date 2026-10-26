@@ -20,7 +20,7 @@ routing:
 
 ## Skill entry point
 
-- `SKILL.md` — primary instructions and output contract.
+- `SKILL.md` — the single runtime workflow entry, phase exit checks and intent-specific outputs. Historical read order: `docs/archive/skill-read-order-2026-10-27.md` (not a runtime route).
 
 ## Reference documents
 
@@ -44,7 +44,6 @@ routing:
 | `schema-checklist.md`            | Root keys and schema checklist                                           | Audit with #21/#22/#24              |
 | `scraper.schema.json`            | Local schema reference                                                   | Compare with upstream under #21/#26 |
 | `script-actions.md`              | Script action patterns and I/O                                           | Audit with #21/#22                  |
-| `skill-read-order.md`            | Recommended reading sequence                                             | Phase 0 complete                    |
 | `xpath-patterns.md`              | XPath scraper patterns                                                   | Audit with #21/#26                  |
 
 ## External source registry
