@@ -128,6 +128,9 @@ jobs:
       - name: Check documentation index
         run: python tools/check_docs_index.py
 
+      - name: Check WS-D resource placement and migrated links
+        run: python tools/check_resource_placement.py
+
       - name: Check docs-vs-schema alignment
         run: python3 tools/check_docs_official.py
 
