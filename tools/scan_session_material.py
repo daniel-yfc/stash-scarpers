@@ -118,11 +118,11 @@ def scan_text(path: Path, root: Path) -> set[str]:
                     path.suffix.lower() in (".js", ".mjs", ".html")
                     and pattern is ASSIGNMENT
                     and re.match(
-                        r"(?i)^(?:sessionId|access_token|auth_token)\\s*['\"]?\\s*[:=]",
+                        r"(?i)^(?:sessionId|access_token|auth_token)\s*['\"]?\s*[:=]",
                         match.group(0).lstrip(),
                     )
                     and re.fullmatch(
-                        r"[A-Za-z_$][A-Za-z0-9_$]*(?:\\.[A-Za-z_$][A-Za-z0-9_$]*)+",
+                        r"[A-Za-z_$][A-Za-z0-9_$]*(?:\.[A-Za-z_$][A-Za-z0-9_$]*)+",
                         candidate,
                     )
                     and line[match.start(1) - 1] not in ("'", '"')
@@ -134,7 +134,7 @@ def scan_text(path: Path, root: Path) -> set[str]:
                     and pattern is HEADER_PATTERN
                     and candidate == "cookie_file"
                     and re.search(
-                        r"(?i)\bcookie\\s*:\\s*[\"']?$",
+                        r"(?i)\bcookie\s*:\s*[\"']?$",
                         line[:match.start(1)],
                     )
                 )
