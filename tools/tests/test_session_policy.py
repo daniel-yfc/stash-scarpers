@@ -126,3 +126,84 @@ def test_rendered_dom_snapshots_have_no_active_auth_material():
     for name in ("dvd-046.html", "dvd-173.html", "dvd-215.html", "dvd-281.html"):
         path = ROOT / "tests" / "fixtures" / "bravo" / name
         assert "REPLAYABLE_AUTH_ASSIGNMENT" not in scan_text(path, ROOT), name
+
+
+# Independent QA-02/03/04 regressions. The following strings are all synthetic,
+# built only inside tmp_path to avoid committing replayable-looking fixtures.
+@pytest.mark.parametrize("extension", [".yml", ".yaml", ".YAML", ".Yml"])
+@pytest.mark.parametrize("block", [
+    "driver:\n  cookies: []\n",
+    "driver:\n  cookies:\n    - CookieURL: example.invalid\n",
+    "driver:\n  nested:\n    cookies: {}\n",
+    "driver:\n  nested:\n    - CookieURL: example.invalid\n",
+])
+def test_every_scraper_yaml_extension_rejects_active_cookie_mapping(tmp_path, extension, block):
+    root = tmp_path / "scrapers" / "private"
+    root.mkdir(parents=True)
+    path = root / ("Probe" + extension)
+    path.write_text("name: Probe\n" + block, encoding="utf-8")
+    findings = scan_text(path, tmp_path)
+    assert "ACTIVE_COOKIE_FIELD" in findings or "ACTIVE_DRIVER_COOKIES" in findings
+
+
+@pytest.mark.parametrize("extension", [".yaml", ".YAML", ".Yml", ".yml"])
+def test_cookie_comment_value_requires_exact_placeholder_for_yaml_extensions(tmp_path, extension):
+    root = tmp_path / "scrapers"
+    root.mkdir()
+    path = root / ("Probe" + extension)
+    path.write_text(
+        "name: Probe\n# cookies:\n# - Name: Test\n#   Value: " +
+        '"synthetic_' + "X" * 24 + '"\n',
+        encoding="utf-8",
+    )
+    assert "NON_PLACEHOLDER_COOKIE_TEMPLATE" in scan_text(path, tmp_path)
+    path.write_text('name: Probe\n# Value: "<LOCAL_ONLY_VALUE>"\n', encoding="utf-8")
+    assert scan_text(path, tmp_path) == set()
+
+
+@pytest.mark.parametrize("extension", [".md", ".js", ".yml", ".html", ".unknown"])
+def test_nul_payload_cannot_smuggle_credentials(tmp_path, extension):
+    p = tmp_path / ("probe" + extension)
+    p.write_bytes(b"\x00" + b"Cookie" + b": " + b"X" * 25)
+    assert "BINARY_CONTENT_NOT_INSPECTED" in scan_text(p, tmp_path)
+
+
+@pytest.mark.parametrize("extension", [".md", ".js", ".yml", ".py", ".sh"])
+@pytest.mark.parametrize("encoding", ["utf-16-le", "utf-16-be", "utf-16", "latin-1"])
+def test_non_utf8_text_never_silently_passes(tmp_path, extension, encoding):
+    p = tmp_path / ("probe" + extension)
+    p.write_bytes(("Authorization" + ": Basic " + "X" * 24 + "é").encode(encoding))
+    assert scan_text(p, tmp_path) & {
+        "BINARY_CONTENT_NOT_INSPECTED", "TEXT_DECODE_FAILED",
+        "REPLAYABLE_AUTH_ASSIGNMENT",
+    }
+
+
+@pytest.mark.parametrize("scheme", ["Basic", "Token", "Digest", "Bearer"])
+def test_non_bearer_header_schemes_detected(tmp_path, scheme):
+    p = tmp_path / "probe.txt"
+    p.write_text("Authorization" + ": " + scheme + " " + "X" * 25, encoding="utf-8")
+    assert "REPLAYABLE_AUTH_ASSIGNMENT" in scan_text(p, tmp_path)
+
+
+@pytest.mark.parametrize("key", ["password", "passwd", "authorization", "Cookie"])
+def test_generic_text_auth_field_detected(tmp_path, key):
+    p = tmp_path / "probe.txt"
+    p.write_text(key + ": " + "X" * 25, encoding="utf-8")
+    assert "REPLAYABLE_AUTH_ASSIGNMENT" in scan_text(p, tmp_path)
+
+
+def test_multiple_auth_assignments_on_one_line_cannot_hide_second(tmp_path):
+    p = tmp_path / "probe.js"
+    p.write_text(
+        "cookie" + ": process.env.SCRUTINY_COOKIE; " +
+        "Authorization" + ": Token " + "X" * 25, encoding="utf-8",
+    )
+    assert "REPLAYABLE_AUTH_ASSIGNMENT" in scan_text(p, tmp_path)
+
+
+def test_oversized_tracked_text_is_not_silently_skipped(tmp_path, monkeypatch):
+    from scan_session_material import MAX_FILE_BYTES
+    p = tmp_path / "probe.dat"
+    p.write_bytes(b"X" * (MAX_FILE_BYTES + 1))
+    assert "FILE_TOO_LARGE_NOT_INSPECTED" in scan_text(p, tmp_path)
