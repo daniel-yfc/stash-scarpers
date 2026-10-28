@@ -207,3 +207,31 @@ def test_oversized_tracked_text_is_not_silently_skipped(tmp_path, monkeypatch):
     p = tmp_path / "probe.dat"
     p.write_bytes(b"X" * (MAX_FILE_BYTES + 1))
     assert "FILE_TOO_LARGE_NOT_INSPECTED" in scan_text(p, tmp_path)
+
+
+def test_scraper_set_cookie_header_rejected():
+    source = (
+        "name: Probe\n"
+        "driver:\n"
+        "  headers:\n"
+        "    - Key: Set-" + "Cookie\n"
+        "      Value: " + "synthetic" + "_only\n"
+    )
+    assert "AUTH_HEADER" in scan_scraper_yaml(source)
+
+
+def test_password_with_special_punctuation_not_missed(tmp_path):
+    path = tmp_path / "test.txt"
+    # Compose the probe rather than storing a password-shaped literal.
+    path.write_text("pass" + "word: " + "Ab7" + "!@#$" + "gH19K9", encoding="utf-8")
+    assert "REPLAYABLE_AUTH_ASSIGNMENT" in scan_text(path, tmp_path)
+
+
+def test_cyclic_yaml_alias_does_not_bypass_cookie_check():
+    source = (
+        "name: Probe\n"
+        "data: &ref\n"
+        "  cookies: []\n"
+        "  self: *ref\n"
+    )
+    assert "ACTIVE_COOKIE_FIELD" in scan_scraper_yaml(source)
