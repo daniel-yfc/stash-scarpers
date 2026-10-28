@@ -16,13 +16,13 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 PLACEHOLDERS = ("<LOCAL_ONLY_VALUE>", "<COOKIE_NAME>", "<TOKEN_PLACEHOLDER>", "<REDACTED>")
-SENSITIVE_KEY = re.compile(r"^(?:cookie|authorization|proxy-authorization|x-api-key|x-auth-token|access_token|api_key|apikey|api-key|password|passwd|session_token|csrf_token|cf_clearance)$", re.I)
+SENSITIVE_KEY = re.compile(r"^(?:cookie|authorization|proxy-authorization|x-api-key|x-auth-token|access_token|api_key|apikey|api-key|password|passwd|set-cookie|x-session-token|session_token|csrf_token|cf_clearance)$", re.I)
 COOKIE_FIELD = re.compile(r"^(?:cookies?|cookieurl|cookie_url)$", re.I)
 SCRAPER_EXTENSIONS = frozenset((".yml", ".yaml"))
 MAX_FILE_BYTES = 16 * 1024 * 1024
 COMMENT_VALUE = re.compile(r"^\s*#\s*(?:-\s*)?Value:\s*(.+?)\s*$", re.I)
 HEADER_PATTERN = re.compile(r"""(?i)(?:^|[\s'"])(?:cookie|set-cookie|authorization|proxy-authorization|x-api-key|x-auth-token)(?:['"])?\s*[:=]\s*['"]?(?:(?:Bearer|Basic|Token|Digest|ApiKey)\s+)?([A-Za-z0-9_+./=%;~\-]{8,})""")
-ASSIGNMENT = re.compile(r"""(?i)\b(?:session[_-]?token|sessionid|phpsessid|cf_clearance|csrf[_-]?token|api[_-]?key|access[_-]?token|auth[_-]?token|password|passwd)\s*['"]?\s*[:=]\s*['"]?([A-Za-z0-9_+./=~\-]{8,})""")
+ASSIGNMENT = re.compile(r"""(?i)\b(?:session[_-]?token|sessionid|phpsessid|cf_clearance|csrf[_-]?token|api[_-]?key|access[_-]?token|auth[_-]?token|password|passwd)\s*['"]?\s*[:=]\s*['"]?([A-Za-z0-9_+./=~!@#$%^&*?:\-]{8,})""")
 
 
 def tracked_paths(root: Path) -> list[Path]:
@@ -53,7 +53,12 @@ def scan_scraper_yaml(text: str) -> set[str]:
         for entry in driver.get("headers", []) or []:
             if isinstance(entry, dict) and SENSITIVE_KEY.fullmatch(str(entry.get("Key", ""))):
                 errors.add("AUTH_HEADER")
+    visited: set[int] = set()
     def walk(value):
+        if isinstance(value, (dict, list)):
+            if id(value) in visited:
+                return
+            visited.add(id(value))
         if isinstance(value, dict):
             for k, v in value.items():
                 key = str(k)
