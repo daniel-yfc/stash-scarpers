@@ -22,19 +22,19 @@ driver:
 # cookies:
 #     - Cookies:
 #         - Name: "gcaycnniik"
-#           Value: "請填入實際值"
+#           Value: "<LOCAL_ONLY_VALUE>"
 #           Domain: ".www.gvwiki.com"
 #           Path: "/"
 #         - Name: "gdaydid"
-#           Value: "請填入實際值"
+#           Value: "<LOCAL_ONLY_VALUE>"
 #           Domain: ".www.gvwiki.com"
 #           Path: "/"
 #         - Name: "csrftoken"
-#           Value: "請填入實際值"
+#           Value: "<LOCAL_ONLY_VALUE>"
 #           Domain: ".www.gvwiki.com"
 #           Path: "/"
 #         - Name: "gnn_sbbcda"
-#           Value: "請填入實際值"
+#           Value: "<LOCAL_ONLY_VALUE>"
 #           Domain: ".www.gvwiki.com"
 #           Path: "/"
 
