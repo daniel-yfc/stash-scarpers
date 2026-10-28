@@ -7,6 +7,7 @@ This is a targeted policy check, not a substitute for a full secret-scanning ser
 from __future__ import annotations
 
 import argparse
+import json
 from pathlib import Path
 import re
 import subprocess
@@ -21,8 +22,15 @@ COOKIE_FIELD = re.compile(r"^(?:cookies?|cookieurl|cookie_url)$", re.I)
 SCRAPER_EXTENSIONS = frozenset((".yml", ".yaml"))
 MAX_FILE_BYTES = 16 * 1024 * 1024
 COMMENT_VALUE = re.compile(r"^\s*#\s*(?:-\s*)?Value:\s*(.+?)\s*$", re.I)
-HEADER_PATTERN = re.compile(r"""(?i)(?:^|[\s'"])(?:cookie|set-cookie|authorization|proxy-authorization|x-api-key|x-auth-token)(?:['"])?\s*[:=]\s*['"]?(?:(?:Bearer|Basic|Token|Digest|ApiKey)\s+)?([A-Za-z0-9_+./=%;~\-]{8,})""")
+HEADER_PATTERN = re.compile(r"""(?i)(?:^|[\s'"])(?:cookie|set-cookie|authorization|proxy-authorization|x-api-key|x-auth-token)(?:['"])?\s*[:=]\s*['"]?(?:(?:Bearer|Basic|Token|Digest|ApiKey)\s+)?([A-Za-z0-9_+./=%;~!\-]{8,})""")
 ASSIGNMENT = re.compile(r"""(?i)\b(?:session[_-]?token|sessionid|phpsessid|cf_clearance|csrf[_-]?token|api[_-]?key|access[_-]?token|auth[_-]?token|password|passwd)\s*['"]?\s*[:=]\s*['"]?([A-Za-z0-9_+./=~!@#$%^&*?:\-]{8,})""")
+# QA-17 F02: an explicit Cookie/Set-Cookie header line is structural evidence
+# on its own; a short token threshold must not be the only line of defence.
+COOKIE_HEADER_LINE = re.compile(r"""(?i)^\s*(?:[-#]\s*)?['"]?(cookie|set-cookie)['"]?\s*[:=]\s*(.+?)\s*$""")
+COOKIE_ATTRIBUTE_NAMES = frozenset(("path", "expires", "max-age", "domain", "samesite", "secure", "httponly", "priority", "partitioned"))
+RUNTIME_REF = re.compile(r"(?:process\.env|import\.meta\.env|os\.environ)\.[A-Za-z_][A-Za-z0-9_]*")
+NETSCAPE_DOMAIN = re.compile(r"^\.?[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)+$")
+UNICODE_ESCAPE = re.compile(r"\\u([0-9a-fA-F]{4})")
 
 
 def tracked_paths(root: Path) -> list[Path]:
@@ -38,6 +46,131 @@ def is_placeholder(value: str) -> bool:
     return value in PLACEHOLDERS
 
 
+def is_netscape_cookie_record(line: str) -> bool:
+    """QA-17 F01: structurally valid Netscape cookie-file record.
+
+    Requires the full 7-field tab-separated shape (domain, include-subdomains
+    flag, path, secure flag, numeric expiry, name, value) so ordinary TSV
+    data is not misclassified. ``#HttpOnly_`` prefixes and CRLF endings are
+    part of the format; other ``#`` lines are comments, not records.
+    """
+    work = line.strip()
+    if not work:
+        return False
+    if work[:10].lower() == "#httponly_":
+        work = work[10:]
+    elif work.startswith("#"):
+        return False
+    fields = [field.strip() for field in work.split("\t")]
+    if len(fields) != 7:
+        return False
+    domain, include_sub, path, secure, expiry, name, value = fields
+    if not NETSCAPE_DOMAIN.match(domain):
+        return False
+    if include_sub.upper() not in ("TRUE", "FALSE"):
+        return False
+    if secure.upper() not in ("TRUE", "FALSE"):
+        return False
+    if not path.startswith("/"):
+        return False
+    if not expiry.isdigit():
+        return False
+    if not name or any(ch.isspace() or ch in "=;" for ch in name):
+        return False
+    if not value or is_placeholder(value):
+        return False
+    return True
+
+
+def cookie_header_is_replayable(line: str) -> bool:
+    """QA-17 F02: structural check for explicit Cookie/Set-Cookie lines.
+
+    A concrete ``name=value`` pair on an explicitly named cookie header is
+    replayable material even when punctuation splits the value into short
+    segments. Placeholders and runtime environment references stay allowed.
+    For Set-Cookie only the first segment is the cookie pair; the rest are
+    attributes (Path, Expires, ...), which are not credentials.
+    """
+    m = COOKIE_HEADER_LINE.match(line)
+    if not m:
+        return False
+    segments = m.group(2).split(";")
+    if m.group(1).lower() == "set-cookie":
+        segments = segments[:1]
+    for segment in segments:
+        # A bare punctuation-joined token (``aaa!bbb!ccc``) is one value
+        # split into short segments; judge the token as a whole. Only a
+        # whitespace-free segment can be a bare value — multi-word prose
+        # after a header-shaped label is documentation, not a cookie value.
+        token = segment.strip().strip("'\"").rstrip(",")
+        if (token and not any(ch.isspace() for ch in token)
+                and len(token) >= 8 and any(ch.isalnum() for ch in token)
+                and "=" not in token
+                and token != "cookie_file"
+                and not is_placeholder(token)
+                and not any(ph in token for ph in PLACEHOLDERS)
+                and not RUNTIME_REF.search(token)):
+            return True
+    for segment in segments:
+        segment = segment.strip()
+        if "=" not in segment:
+            continue
+        name, _, value = segment.partition("=")
+        if name.strip().lower() in COOKIE_ATTRIBUTE_NAMES:
+            continue
+        value = value.strip().strip("'\"").strip()
+        if not value or is_placeholder(value):
+            continue
+        if RUNTIME_REF.fullmatch(value):
+            continue
+        if len(value) >= 4:
+            return True
+    return False
+
+
+def scan_json_structure(text: str) -> set[str]:
+    """QA-17 F03: scan parsed JSON keys (the parser resolves \\uXXXX escapes).
+
+    A parse failure returns no structural findings here; the caller still
+    runs the raw-text and unicode-normalised pattern scans, so malformed
+    JSON is never reported clean on the basis of this check alone.
+    """
+    try:
+        doc = json.loads(text)
+    except ValueError:
+        return set()
+    errors: set[str] = set()
+    visited: set[int] = set()
+
+    def walk(value):
+        if isinstance(value, (dict, list)):
+            if id(value) in visited:
+                return
+            visited.add(id(value))
+        if isinstance(value, dict):
+            for k, v in value.items():
+                key = str(k)
+                if key.lower() in ("properties", "definitions", "$defs") and isinstance(v, dict):
+                    # JSON Schema: names under ``properties``/``definitions``
+                    # are schema definition names, not credential fields.
+                    # Still scan the subschemas themselves for material in
+                    # values.
+                    for subschema in v.values():
+                        walk(subschema)
+                    continue
+                if COOKIE_FIELD.fullmatch(key):
+                    errors.add("ACTIVE_COOKIE_FIELD")
+                elif SENSITIVE_KEY.fullmatch(key) and v not in (None, "", [], {}):
+                    errors.add("CREDENTIAL_FIELD")
+                walk(v)
+        elif isinstance(value, list):
+            for child in value:
+                walk(child)
+
+    walk(doc)
+    return errors
+
+
 def scan_scraper_yaml(text: str) -> set[str]:
     errors: set[str] = set()
     try:
@@ -51,8 +184,14 @@ def scan_scraper_yaml(text: str) -> set[str]:
         if "cookies" in driver:
             errors.add("ACTIVE_DRIVER_COOKIES")
         for entry in driver.get("headers", []) or []:
-            if isinstance(entry, dict) and SENSITIVE_KEY.fullmatch(str(entry.get("Key", ""))):
-                errors.add("AUTH_HEADER")
+            if not isinstance(entry, dict):
+                continue
+            # QA-17 F04: the header-name field itself is case-insensitive
+            # (key/Key/KEY are the same driver mapping field).
+            for field_name, field_value in entry.items():
+                if (str(field_name).lower() == "key"
+                        and SENSITIVE_KEY.fullmatch(str(field_value))):
+                    errors.add("AUTH_HEADER")
     visited: set[int] = set()
     def walk(value):
         if isinstance(value, (dict, list)):
@@ -106,6 +245,26 @@ def scan_text(path: Path, root: Path) -> set[str]:
     # session values are secrets too; placeholders remain explicitly allowed.
     # Never emit matched contents, even on failure.
     for line in text.splitlines():
+        if is_netscape_cookie_record(line):
+            errors.add("NETSCAPE_COOKIE_RECORD")
+        if cookie_header_is_replayable(line):
+            errors.add("REPLAYABLE_AUTH_ASSIGNMENT")
+    errors |= _pattern_scan(text.splitlines(), path, rel)
+    if path.suffix.lower() == ".json":
+        # QA-17 F03: parsed keys are already unicode-unescaped by json.loads;
+        # a normalised copy additionally lets the raw patterns see escaped
+        # keys in values and in malformed JSON that the parser rejected.
+        errors |= scan_json_structure(text)
+        normalised = UNICODE_ESCAPE.sub(
+            lambda m: chr(int(m.group(1), 16)), text)
+        if normalised != text:
+            errors |= _pattern_scan(normalised.splitlines(), path, rel)
+    return errors
+
+
+def _pattern_scan(lines: list[str], path: Path, rel: str) -> set[str]:
+    errors: set[str] = set()
+    for line in lines:
         for pattern in (HEADER_PATTERN, ASSIGNMENT):
             for match in pattern.finditer(line):
                 candidate = match.group(1)
@@ -143,7 +302,13 @@ def scan_text(path: Path, root: Path) -> set[str]:
                         line[:match.start(1)],
                     )
                 )
+                # A capture that stops exactly at a placeholder marker
+                # (``name=<LOCAL_ONLY_VALUE>``) captured only the field
+                # name; the value itself is the allowed placeholder.
+                placeholder_value = any(
+                    line[match.end(1):].startswith(ph) for ph in PLACEHOLDERS)
                 if (not is_placeholder(candidate)
+                        and not placeholder_value
                         and not runtime_ref
                         and not member_expression
                         and not safe_enum_label):
