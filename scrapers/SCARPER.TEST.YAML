@@ -43,12 +43,10 @@ probe: "DVD"
 # Cookie placement (comment only): PHPSESSID=<LOCAL_ONLY_VALUE>; never commit a live session value
 
 # 範例 B：Netscape Cookie File 格式（使用 YAML | 語法保留換行）
-# 可直接從瀏覽器擴充功能（如 EditThisCookie）匯出後貼上
-cookie: |
-  .example.com	FALSE	/	FALSE	1791848313	Apache	82.26.195.47.1791243442193899
-  .example.com	FALSE	/	FALSE	0	ECSESSID	k1g337fa951qg814nq9flt0817
-  .example.com	FALSE	/	FALSE	1791867034	checklist	4009%2F4067%2F6648%2F5252%2F4202%2F4230%2F4259%2F
-  .example.com	FALSE	/	FALSE	1822798253	login_email	user%40example.org
+# 絕不可將瀏覽器匯出的 Cookie 或 Session 實值貼入此 Git 追蹤檔案
+# Cookie 值僅在 Git 工作樹以外的受控部署環境使用，這裡只保留位置示例：
+# cookie: |
+#   .example.invalid  FALSE  /  FALSE  0  SESSIONID  <LOCAL_ONLY_VALUE>
 
 # ============================================================
 # 4. 進階選項（選填，通常不需要）
