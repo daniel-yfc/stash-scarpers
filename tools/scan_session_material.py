@@ -16,11 +16,13 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 PLACEHOLDERS = ("<LOCAL_ONLY_VALUE>", "<COOKIE_NAME>", "<TOKEN_PLACEHOLDER>", "<REDACTED>")
-SENSITIVE_KEY = re.compile(r"^(?:cookie|authorization|proxy-authorization|x-api-key|x-auth-token|access_token|api_key|apikey|api-key|password|session_token|csrf_token|cf_clearance)$", re.I)
+SENSITIVE_KEY = re.compile(r"^(?:cookie|authorization|proxy-authorization|x-api-key|x-auth-token|access_token|api_key|apikey|api-key|password|passwd|session_token|csrf_token|cf_clearance)$", re.I)
+COOKIE_FIELD = re.compile(r"^(?:cookies?|cookieurl|cookie_url)$", re.I)
+SCRAPER_EXTENSIONS = frozenset((".yml", ".yaml"))
+MAX_FILE_BYTES = 16 * 1024 * 1024
 COMMENT_VALUE = re.compile(r"^\s*#\s*(?:-\s*)?Value:\s*(.+?)\s*$", re.I)
-ACTIVE_COOKIE = re.compile(r"^\s*(?:cookies|CookieURL):\s*(?:#.*)?$", re.M)
-HEADER_PATTERN = re.compile(r"""(?i)(?:^|[\s'"])(?:cookie|set-cookie|authorization|proxy-authorization|x-api-key|x-auth-token)(?:['"])?\s*[:=]\s*['"]?(?:Bearer\s+)?([A-Za-z0-9_+./=%;~\-]{12,})""")
-ASSIGNMENT = re.compile(r"""(?i)\b(?:session[_-]?token|sessionid|phpsessid|cf_clearance|csrf[_-]?token|api[_-]?key|access[_-]?token|auth[_-]?token)\s*['"]?\s*[:=]\s*['"]?([A-Za-z0-9_+./=~\-]{16,})""")
+HEADER_PATTERN = re.compile(r"""(?i)(?:^|[\s'"])(?:cookie|set-cookie|authorization|proxy-authorization|x-api-key|x-auth-token)(?:['"])?\s*[:=]\s*['"]?(?:(?:Bearer|Basic|Token|Digest|ApiKey)\s+)?([A-Za-z0-9_+./=%;~\-]{8,})""")
+ASSIGNMENT = re.compile(r"""(?i)\b(?:session[_-]?token|sessionid|phpsessid|cf_clearance|csrf[_-]?token|api[_-]?key|access[_-]?token|auth[_-]?token|password|passwd)\s*['"]?\s*[:=]\s*['"]?([A-Za-z0-9_+./=~\-]{8,})""")
 
 
 def tracked_paths(root: Path) -> list[Path]:
@@ -54,7 +56,12 @@ def scan_scraper_yaml(text: str) -> set[str]:
     def walk(value):
         if isinstance(value, dict):
             for k, v in value.items():
-                if SENSITIVE_KEY.fullmatch(str(k)) and v not in (None, "", [], {}):
+                key = str(k)
+                # The presence of any active cookie/URL mapping is disallowed,
+                # even when empty. This also covers nested cookie groups.
+                if COOKIE_FIELD.fullmatch(key):
+                    errors.add("ACTIVE_COOKIE_FIELD")
+                elif SENSITIVE_KEY.fullmatch(key) and v not in (None, "", [], {}):
                     errors.add("CREDENTIAL_FIELD")
                 walk(v)
         elif isinstance(value, list):
@@ -71,15 +78,19 @@ def scan_text(path: Path, root: Path) -> set[str]:
         data = path.read_bytes()
     except OSError:
         return {"FILE_UNREADABLE"}
+    # This repository currently tracks source/text files only. Unknown binary
+    # assets must be explicitly reviewed; never let NUL hide an auth string.
+    if len(data) > MAX_FILE_BYTES:
+        return {"FILE_TOO_LARGE_NOT_INSPECTED"}
     if b"\x00" in data:
-        return set()
+        return {"BINARY_CONTENT_NOT_INSPECTED"}
     try:
         text = data.decode("utf-8")
     except UnicodeDecodeError:
-        return {"TEXT_DECODE_FAILED"} if path.suffix.lower() in (".yml", ".yaml", ".json", ".md", ".txt") else set()
+        return {"TEXT_DECODE_FAILED"}
     rel = path.relative_to(root).as_posix()
     errors: set[str] = set()
-    if rel.startswith("scrapers/") and path.suffix.lower() == ".yml":
+    if rel.startswith("scrapers/") and path.suffix.lower() in SCRAPER_EXTENSIONS:
         errors |= scan_scraper_yaml(text)
         for line in text.splitlines():
             m = COMMENT_VALUE.match(line)
@@ -91,8 +102,7 @@ def scan_text(path: Path, root: Path) -> set[str]:
     # Never emit matched contents, even on failure.
     for line in text.splitlines():
         for pattern in (HEADER_PATTERN, ASSIGNMENT):
-            match = pattern.search(line)
-            if match:
+            for match in pattern.finditer(line):
                 candidate = match.group(1)
                 # This is a variable reference, not the value of the secret.
                 # Match the entire expression, never use substring allowlists.
