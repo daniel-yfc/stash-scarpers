@@ -7,7 +7,14 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools"))
-from scan_session_material import scan_scraper_yaml, scan_text, tracked_paths
+from scan_session_material import (
+    cookie_header_is_replayable,
+    is_netscape_cookie_record,
+    scan_json_structure,
+    scan_scraper_yaml,
+    scan_text,
+    tracked_paths,
+)
 
 
 @pytest.mark.parametrize("source,rule", [
@@ -235,3 +242,233 @@ def test_cyclic_yaml_alias_does_not_bypass_cookie_check():
         "  self: *ref\n"
     )
     assert "ACTIVE_COOKIE_FIELD" in scan_scraper_yaml(source)
+
+
+# --- QA-17 remediation (IMPL-WS-A-QA17-20261029-01) -------------------------
+# All values below are synthetic and assembled at runtime so this tracked
+# test file never itself contains replayable-shaped material.
+
+SYNTH_VALUE = "SYNTH" + "ETIC" + "_VALUE_" + "0123456789"
+
+
+def _netscape_record(domain=".example.com", sub="TRUE", path="/", secure="FALSE",
+                      expiry="1893456000", name="sessionid", value=SYNTH_VALUE,
+                      prefix=""):
+    return prefix + "\t".join([domain, sub, path, secure, expiry, name, value])
+
+
+def _run_production_scanner(tmp_path, files):
+    """Production-boundary harness: tracked fixture in a real tmp Git repo,
+    scanned by the real scanner CLI. Returns the CompletedProcess."""
+    root = tmp_path / "repo"
+    root.mkdir()
+    for rel, content in files.items():
+        target = root / rel
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(content.encode("utf-8"))
+    subprocess.run(["git", "init", "-q"], cwd=root, check=True)
+    subprocess.run(["git", "add", "."], cwd=root, check=True)
+    return subprocess.run(
+        [sys.executable, str(ROOT / "tools" / "scan_session_material.py"),
+         "--root", str(root)],
+        capture_output=True, text=True,
+    )
+
+
+# F01 — raw Netscape cookie-file records
+@pytest.mark.parametrize("record", [
+    _netscape_record(),
+    _netscape_record(prefix="#HttpOnly_"),
+    _netscape_record(prefix="#httponly_"),
+    _netscape_record(sub="true", secure="False"),
+    _netscape_record(expiry="0"),
+    _netscape_record(domain="sub.example.co.jp", name="ECSESSID"),
+    "  " + _netscape_record() + "  ",
+])
+def test_netscape_record_unit_positive(record):
+    assert is_netscape_cookie_record(record)
+
+
+@pytest.mark.parametrize("line", [
+    "",
+    "# Netscape HTTP Cookie File",
+    "# " + _netscape_record(),                      # commented-out record
+    "\t".join(["name", "count", "city", "score", "note", "grade", "comment"]),
+    "\t".join(["example.com", "12", "/", "9", "123", "name", "value"]),
+    "\t".join([".example.com", "TRUE", "/", "FALSE", "1893456000", "sid"]),  # 6 fields
+    _netscape_record(expiry="not-a-number"),
+    _netscape_record(path="relative"),
+    _netscape_record(value=""),
+    _netscape_record(value="<LOCAL_ONLY_VALUE>"),
+    _netscape_record().replace("\t", " "),           # space-separated is not Netscape
+])
+def test_netscape_record_unit_benign(line):
+    assert not is_netscape_cookie_record(line)
+
+
+def test_netscape_record_crlf_and_any_filename(tmp_path):
+    target = tmp_path / "export-data.txt"
+    target.write_bytes((_netscape_record() + "\r\n").encode("utf-8"))
+    assert "NETSCAPE_COOKIE_RECORD" in scan_text(target, tmp_path)
+
+
+def test_netscape_cli_tracked_file_rejected_without_value_echo(tmp_path):
+    process = _run_production_scanner(tmp_path, {"cookies.txt": _netscape_record() + "\n"})
+    assert process.returncode == 1
+    assert "NETSCAPE_COOKIE_RECORD: cookies.txt" in process.stdout
+    assert SYNTH_VALUE not in process.stdout + process.stderr
+
+
+def test_netscape_cli_arbitrary_filename_not_a_whitelist(tmp_path):
+    process = _run_production_scanner(
+        tmp_path, {"notes/readme.md": "intro\n" + _netscape_record() + "\n"})
+    assert process.returncode == 1
+    assert "NETSCAPE_COOKIE_RECORD" in process.stdout
+    assert SYNTH_VALUE not in process.stdout + process.stderr
+
+
+def test_netscape_cli_benign_tsv_and_comments_pass(tmp_path):
+    content = (
+        "# Netscape HTTP Cookie File\n"
+        "# " + _netscape_record() + "\n"
+        + "\t".join(["name", "count", "city", "score", "note", "grade", "comment"]) + "\n"
+        + _netscape_record(value="<LOCAL_ONLY_VALUE>") + "\n"
+    )
+    process = _run_production_scanner(tmp_path, {"data.tsv": content})
+    assert process.returncode == 0, process.stdout
+
+
+# F02 — punctuated Cookie / Set-Cookie header values
+@pytest.mark.parametrize("line", [
+    "Cook" + "ie: " + "!".join(["aaa", "bbb", "ccc", "ddd", "eee"]),
+    "Cook" + "ie: " + "@".join(["aaa", "bbb", "ccc", "ddd"]),
+    "Set-Cook" + "ie: sess=" + "!".join(["aa", "bb", "cc", "dd"]) + "; Path=/",
+    "Cook" + "ie: a=aa!bb; b=cc!dd",
+    "Cook" + "ie: " + "tok" + "%".join(["111", "222", "333", "444"]),
+])
+def test_punctuated_cookie_header_unit_positive(line):
+    assert cookie_header_is_replayable(line)
+
+
+@pytest.mark.parametrize("line", [
+    "Cook" + "ie: <LOCAL_ONLY_VALUE>",
+    "Cook" + "ie: session=<LOCAL_ONLY_VALUE>",
+    "Cook" + "ie: process.env.SCRUTINY_COOKIE",
+    "Set-Cook" + "ie: session=<LOCAL_ONLY_VALUE>; Expires=Wed, 21 Oct 2099 07:28:00 GMT; Path=/",
+    "- cook" + "ie: NOT SUPPORTED (use SCRUTINY_COOKIE environment variable)",
+    "Cook" + "ie: a=b",
+])
+def test_punctuated_cookie_header_unit_benign(line):
+    assert not cookie_header_is_replayable(line)
+
+
+def test_punctuated_cookie_header_scan_text(tmp_path):
+    target = tmp_path / "note.txt"
+    target.write_text("Cook" + "ie: " + "!".join(["aaa", "bbb", "ccc", "ddd"]) + "\n", encoding="utf-8")
+    assert "REPLAYABLE_AUTH_ASSIGNMENT" in scan_text(target, tmp_path)
+
+
+def test_punctuated_cookie_cli_rejected_without_value_echo(tmp_path):
+    secret = "!".join(["zz9", "yy8", "xx7", "ww6", "vv5"])
+    process = _run_production_scanner(tmp_path, {"note.txt": "Cook" + "ie: " + secret + "\n"})
+    assert process.returncode == 1
+    assert "REPLAYABLE_AUTH_ASSIGNMENT: note.txt" in process.stdout
+    assert secret not in process.stdout + process.stderr
+
+
+def test_cookie_placeholder_pair_cli_passes(tmp_path):
+    process = _run_production_scanner(
+        tmp_path, {"note.txt": "Cook" + "ie: session=<LOCAL_ONLY_VALUE>\n"})
+    assert process.returncode == 0, process.stdout
+
+
+# F03 — JSON unicode-escaped credential keys
+ESC = chr(92) + "u"  # backslash-u, assembled so this file holds no escaped key
+
+
+@pytest.mark.parametrize("source,rule", [
+    ('{"Cook' + ESC + '0069e": "abc!def!ghi"}', "ACTIVE_COOKIE_FIELD"),
+    ('{"pass' + ESC + '0077ord": "abc!def!ghi"}', "CREDENTIAL_FIELD"),
+    ('{"outer": [{"Cook' + ESC + '0069e": "x"}]}', "ACTIVE_COOKIE_FIELD"),
+    ('{"CoOk' + ESC + '0069E": "abc!def!ghi"}', "ACTIVE_COOKIE_FIELD"),
+    ('{"api' + ESC + '005fkey": "abc!def!ghi"}', "CREDENTIAL_FIELD"),
+])
+def test_json_escaped_key_unit_positive(source, rule):
+    assert rule in scan_json_structure(source)
+
+
+@pytest.mark.parametrize("source", [
+    '{"name": "example", "theme": "dark"}',
+    '{"$schema": "https://json-schema.org/draft/2020-12/schema",'
+    ' "definitions": {"cookie": {"type": "object"}},'
+    ' "properties": {"password": {"type": "string"}, "cookies": {"type": "array"}}}',
+    '{"password_hint": "shown on screen"}',
+    'not json at all',
+])
+def test_json_structure_unit_benign(source):
+    assert scan_json_structure(source) == set()
+
+
+def test_json_escaped_key_cli_rejected_without_value_echo(tmp_path):
+    payload = '{"Cook' + ESC + '0069e": "' + "abc!def!ghi!jkl" + '"}'
+    process = _run_production_scanner(tmp_path, {"data.json": payload})
+    assert process.returncode == 1
+    assert "data.json" in process.stdout
+    assert "abc!def!ghi!jkl" not in process.stdout + process.stderr
+
+
+def test_json_malformed_with_escaped_key_still_rejected_cli(tmp_path):
+    # Trailing comma: json.loads fails, the normalised pattern scan must
+    # still see the escaped key — a parse failure is never a clean result.
+    payload = '{"pass' + ESC + '0077ord": "' + "abc!def!ghi!jkl" + '",}'
+    process = _run_production_scanner(tmp_path, {"data.json": payload})
+    assert process.returncode == 1
+    assert "abc!def!ghi!jkl" not in process.stdout + process.stderr
+
+
+def test_json_benign_cli_passes(tmp_path):
+    process = _run_production_scanner(
+        tmp_path, {"data.json": '{"name": "example", "theme": "dark"}'})
+    assert process.returncode == 0, process.stdout
+
+
+# F04 — driver header key case variants
+@pytest.mark.parametrize("field", ["key", "Key", "KEY", "kEy"])
+def test_driver_header_key_case_variants(field):
+    source = (
+        "name: Probe\ndriver:\n  headers:\n    - " + field + ": Authorization\n"
+        "      value: synthetic_only\n"
+    )
+    assert "AUTH_HEADER" in scan_scraper_yaml(source)
+
+
+def test_driver_header_lowercase_key_cli_rejected_without_echo(tmp_path):
+    source = (
+        "name: Probe\ndriver:\n  headers:\n    - key: Cook" + "ie\n"
+        "      value: " + SYNTH_VALUE + "\n"
+    )
+    process = _run_production_scanner(tmp_path, {"scrapers/Probe.yml": source})
+    assert process.returncode == 1
+    assert "AUTH_HEADER: scrapers/Probe.yml" in process.stdout
+    assert SYNTH_VALUE not in process.stdout + process.stderr
+
+
+@pytest.mark.parametrize("source", [
+    "name: Probe\nitems:\n  - key: Authorization\n    value: dark\n",   # not driver.headers
+    "name: Probe\ndriver:\n  headers:\n    - key: X-Custom-Header\n      value: dark\n",
+    "name: Probe\ndriver:\n  headers:\n    - Key: Content-Type\n      Value: text/html\n",
+])
+def test_driver_header_key_benign_controls(source):
+    assert "AUTH_HEADER" not in scan_scraper_yaml(source)
+
+
+# QA-02/03 preservation spot checks alongside the QA-17 changes
+def test_qa02_yaml_extension_and_qa03_nul_still_fail_closed(tmp_path):
+    root = tmp_path / "scrapers"
+    root.mkdir()
+    path = root / "Probe.YAML"
+    path.write_text("name: Probe\ndriver:\n  cookies: []\n", encoding="utf-8")
+    assert "ACTIVE_DRIVER_COOKIES" in scan_text(path, tmp_path)
+    binary = tmp_path / "probe.md"
+    binary.write_bytes(b"\x00" + b"Cook" + b"ie: " + b"X" * 25)
+    assert "BINARY_CONTENT_NOT_INSPECTED" in scan_text(binary, tmp_path)
