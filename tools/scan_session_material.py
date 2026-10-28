@@ -110,15 +110,38 @@ def scan_text(path: Path, root: Path) -> set[str]:
                     r"(?:process\.env|import\.meta\.env|os\.environ)\.[A-Za-z_][A-Za-z0-9_]*",
                     candidate,
                 )
-                js_reference = (
-                    path.suffix.lower() in (".js", ".html")
+                # Unquoted JavaScript member expressions are references, not
+                # replayable credentials. Restrict this exception to assignments
+                # (not HTTP headers), only the field names actually used by the
+                # browser adapters, and never quoted literal strings.
+                member_expression = (
+                    path.suffix.lower() in (".js", ".mjs", ".html")
+                    and pattern is ASSIGNMENT
+                    and re.match(
+                        r"(?i)^(?:sessionId|access_token|auth_token)\\s*['\"]?\\s*[:=]",
+                        match.group(0).lstrip(),
+                    )
                     and re.fullmatch(
-                        r"[A-Za-z_$][A-Za-z0-9_$]*(?:\.[A-Za-z_$][A-Za-z0-9_$]*)+",
+                        r"[A-Za-z_$][A-Za-z0-9_$]*(?:\\.[A-Za-z_$][A-Za-z0-9_$]*)+",
                         candidate,
                     )
-                    and re.search(r"(?i)\bsessionId\s*:\s*$", line[:match.start(1)])
+                    and line[match.start(1) - 1] not in ("'", '"')
                 )
-                if not is_placeholder(candidate) and not runtime_ref and not js_reference:
+                # A known Request Builder enum label names a cookie FILE
+                # input type, not a Cookie header or its contents.
+                safe_enum_label = (
+                    rel == "tools/SPB-2.0.html"
+                    and pattern is HEADER_PATTERN
+                    and candidate == "cookie_file"
+                    and re.search(
+                        r"(?i)\bcookie\\s*:\\s*[\"']?$",
+                        line[:match.start(1)],
+                    )
+                )
+                if (not is_placeholder(candidate)
+                        and not runtime_ref
+                        and not member_expression
+                        and not safe_enum_label):
                     errors.add("REPLAYABLE_AUTH_ASSIGNMENT")
     return errors
 
