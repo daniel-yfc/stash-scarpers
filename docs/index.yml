@@ -30,6 +30,15 @@ documents:
   - stash-e2e
   - runtime-verification
   - graphql
+- doc_id: DOC-E2E-83
+  title: Stash E2E Evidence Validation and Pilot Gate
+  path: docs/83-stash-e2e-evidence.md
+  layer: repository
+  status: active
+  intents:
+  - stash-e2e
+  - evidence-validation
+  - release-readiness
 - doc_id: DOC-ROOT-00
   title: Project README
   path: README.md

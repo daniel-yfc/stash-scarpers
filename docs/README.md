@@ -28,6 +28,7 @@ This directory contains repository-level workflow, architecture, testing, and ma
 ## Guides
 
 - [Authorized Stash E2E Runbook](82-stash-e2e-runbook.md): Cloud Codex / Tailscale access, GraphQL extraction, human verification and evidence boundaries.
+- [E2E evidence verification](83-stash-e2e-evidence.md): audited Agent/Human reports and supervised Trance pilot gate.
 - [Metadata feed integration](80-metadata-feed-integration.md): consumer boundaries,
   matching corrections, executable data-quality checks and runtime verification.
 
