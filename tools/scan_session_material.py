@@ -171,6 +171,53 @@ def scan_json_structure(text: str) -> set[str]:
     return errors
 
 
+JSON_PAIR = re.compile(r'"((?:\\.|[^"\\])*)"\s*:\s*("(?:\\.|[^"\\])*"??|[^\s,}\]"\{\[]+)')
+
+
+def _decode_json_string(raw: str) -> str | None:
+    try:
+        decoded = json.loads(f'"{raw}"')
+    except ValueError:
+        return None
+    return decoded if isinstance(decoded, str) else None
+
+
+def scan_json_lexical_fallback(text: str) -> set[str]:
+    """QA-18: lexical key/value scan for JSON that ``json.loads`` rejects.
+
+    A parse failure must not fail open: when the document cannot be parsed
+    (trailing comma, comments, truncation), the structural walk sees nothing
+    and the text patterns only catch values of 8+ characters, so a sensitive
+    field with a short value slipped through. Extract quoted ``key: value``
+    pairs lexically, decode each key literal on its own (which resolves
+    \\uXXXX escapes), and apply the same field policy as the parsed walk.
+    Only used when the whole-document parse failed; well-formed JSON keeps
+    the exact parsed semantics (including schema-name exclusions). The
+    lexical value token covers scalar values (string/number/boolean/null);
+    a sensitive key whose value is itself an object or array does not pair
+    lexically, so scanning continues into its contents instead.
+    """
+    errors: set[str] = set()
+    for match in JSON_PAIR.finditer(text):
+        key = _decode_json_string(match.group(1))
+        if key is None:
+            continue
+        raw_value = match.group(2)
+        if raw_value.startswith('"'):
+            inner = raw_value[1:-1] if raw_value.endswith('"') and len(raw_value) > 1 else raw_value[1:]
+            value = _decode_json_string(inner)
+            if value is None:
+                value = inner
+        else:
+            value = raw_value
+        if COOKIE_FIELD.fullmatch(key):
+            errors.add("ACTIVE_COOKIE_FIELD")
+        elif SENSITIVE_KEY.fullmatch(key):
+            if value not in ("", "null") and not is_placeholder(value):
+                errors.add("CREDENTIAL_FIELD")
+    return errors
+
+
 def scan_scraper_yaml(text: str) -> set[str]:
     errors: set[str] = set()
     try:
@@ -254,7 +301,14 @@ def scan_text(path: Path, root: Path) -> set[str]:
         # QA-17 F03: parsed keys are already unicode-unescaped by json.loads;
         # a normalised copy additionally lets the raw patterns see escaped
         # keys in values and in malformed JSON that the parser rejected.
-        errors |= scan_json_structure(text)
+        # QA-18: a parse failure must not fail open for short values, so
+        # unparseable JSON additionally gets the lexical pair fallback.
+        try:
+            json.loads(text)
+        except ValueError:
+            errors |= scan_json_lexical_fallback(text)
+        else:
+            errors |= scan_json_structure(text)
         normalised = UNICODE_ESCAPE.sub(
             lambda m: chr(int(m.group(1), 16)), text)
         if normalised != text:
