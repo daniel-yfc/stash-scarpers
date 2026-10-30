@@ -157,31 +157,25 @@ a reviewed evidence record with `executor: HUMAN_UI`:
 7. Produce a sanitized record; a checked box or screenshot alone is not
    enough for a `PASS` claim.
 
-Manual report skeleton (keep local/private until reviewed):
+Manual evidence must follow the validator contract in PR #85. Copy the
+versioned, intentionally **UNVERIFIED** template rather than hand-writing an
+incomplete JSON structure:
 
-```json
-{
-  "schema_version": 1,
-  "executor": "HUMAN_UI",
-  "environment": "test",
-  "scraper_commit": "<40-char Git SHA>",
-  "stash_version": "v0.31.1",
-  "executed_at": "<ISO timestamp>",
-  "results": [
-    {
-      "id": "E2E-TRANCE-40625",
-      "status": "UNVERIFIED",
-      "checks": {
-        "loader": "UNVERIFIED",
-        "extraction": "UNVERIFIED",
-        "identity": "UNVERIFIED",
-        "persistence": "UNVERIFIED"
-      },
-      "evidence": "<sanitized private artifact reference>"
-    }
-  ]
-}
+```bash
+cp tests/e2e/manual-evidence.example.json /private/reports/manual-e2e.json
+node tools/check_stash_e2e_evidence.mjs \
+  --report=/private/reports/manual-e2e.json
 ```
+
+The template requires `schema_version`, `executed_at`, `executor`,
+`environment`, `mode`, `scraper_commit`, `stash_version`, `proof_scope`,
+`persistence`, `production_ready`, `results` and aggregate `status`.
+Each manual case requires six checks: `loader`, `extraction`,
+`postprocess`, `source_truth`, `identity` and `persistence`.
+A manual PASS also requires a verified `evidence_sha256`; a human-readable
+evidence path is **not** a valid report field. Keep private artifact
+locations and credentials out of committed reports. Before #85 merges,
+treat this cross-PR schema checker as unavailable on `main`.
 
 For Production-only read access, mark persistence `NOT_APPLICABLE`; for
 unreachable sources `BLOCKED`; never convert either to `PASS`.
