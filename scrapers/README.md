@@ -67,11 +67,12 @@ driver:
    ```yaml
    driver:
      useCDP: false
-     cookies:
-       - CookieURL: "https://example.com"
-         Cookies:
-           - Name: SESSIONID
-             Value: "<private-session-value-never-commit>"
+   # Comment-only template for separately controlled local deployment.
+   #   cookies:
+   #     - CookieURL: "https://example.com"
+   #       Cookies:
+   #         - Name: SESSIONID
+   #           Value: "<LOCAL_ONLY_VALUE>"
    ```
    - Session tokens embedded in YAML
    - Must rotate when sessions expire
@@ -81,7 +82,7 @@ driver:
 
 ### ⚠️ Never commit session tokens to public repos
 
-Session cookies (like `PHPSESSID`, `ECSESSID`, `LOGIN_KEEP_INFO2`) are equivalent to passwords. If committed:
+Session cookies (like `PHPSESSID`, `ECSESSID`, `LOGIN_KEEP_INFO2`) are equivalent to passwords. Only fully commented placement templates with explicit `<LOCAL_ONLY_VALUE>` values may be committed. If committed:
 
 1. Immediately invalidate the session on the target website
 2. Rotate all affected credentials
@@ -153,5 +154,5 @@ Before deploying any scraper:
 ## Questions?
 
 - **Which version should I use?** Start with public. Only use private if the site requires login and CDP is not an option.
-- **Can I mix versions?** Yes, but keep private scrapers in `scrapers/private/` and ensure your repo access is restricted.
+- **Can I mix versions?** Not within this public repository: `scrapers/private/` is tracked and public. Store any credentials-bearing deployment copy outside the Git working tree.
 - **My scraper stopped working:** Check if sessions expired (private HTTP mode) or if the site changed its DOM structure.
