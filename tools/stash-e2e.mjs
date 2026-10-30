@@ -74,6 +74,9 @@ export function validateConfiguration(config) {
   if (config.mode !== "inventory" && !config.live) {
     throw new E2EError("Live external scraping requires --live");
   }
+  if (config.caseId && !/^E2E-[A-Z0-9-]{2,72}$/.test(config.caseId)) {
+    throw new E2EError("Invalid --case format; use a committed E2E case ID");
+  }
   if (!config.baseURL) throw new E2EError("STASH_BASE_URL is required");
   let endpoint;
   try {
@@ -205,7 +208,7 @@ export async function execute(config, { fetchImpl = fetch, cases = null } = {}) 
   try {
     inventory = await graphql(INVENTORY_QUERY, {}, safe, fetchImpl);
     report.stash_version = inventory.version?.version || null;
-    if (!report.stash_version || !Array.isArray(inventory.listScrapers)) {
+    if (!report.stash_version || !Array.isArray(inventory.listScrapers) || inventory.listScrapers.length === 0) {
       throw new E2EError("INVALID_INVENTORY_RESPONSE");
     }
     if (safe.expectedVersion &&
@@ -259,7 +262,7 @@ export async function execute(config, { fetchImpl = fetch, cases = null } = {}) 
     }
   }
   if (safe.caseId && !report.results.some((r) => r.id === safe.caseId)) {
-    record(safe.caseId, "FAIL", "UNKNOWN_CASE_ID");
+    record("E2E-UNKNOWN-CASE", "FAIL", "UNKNOWN_CASE_ID");
   }
   return finish(report);
 }

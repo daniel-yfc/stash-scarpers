@@ -66,6 +66,7 @@ test("configuration fails closed without target, live consent, or production app
   assert.throws(() => validateConfiguration({ ...BASE, env: "production", productionRead: false }), /production-read/);
   assert.throws(() => validateConfiguration({ ...BASE, commit: "HEAD" }), /full Git commit/);
   assert.throws(() => validateConfiguration({ ...BASE, report: "repo-report.json" }), /absolute/);
+  assert.throws(() => validateConfiguration({ ...BASE, caseId: "--api-key=synthetic" }), /--case/);
   assert.throws(() => validateConfiguration({ ...BASE, baseURL: "https://user:pass@example.test" }), /STASH_BASE_URL/);
   assert.throws(() => validateConfiguration({ ...BASE, baseURL: "http://100.100.100.100:9999" }), /STASH_BASE_URL/);
   assert.equal(validateConfiguration({ ...BASE, baseURL: "http://100.100.100.100:9999", allowPrivateHTTP: true }).endpoint,
@@ -145,4 +146,23 @@ test("unexpected live values yield a redacted FAIL with field checks", async () 
   assert.equal(report.results[1].reason, "GOLDEN_VALUE_MISMATCH");
   assert.equal(report.results[1].checks.find((c) => c.field === "duration").pass, false);
   assert.doesNotMatch(JSON.stringify(report), /2545/);
+});
+
+test("empty inventory is not a successful loader proof", async () => {
+  const report = await execute({ ...BASE, mode: "inventory", live: false }, {
+    fetchImpl: async () => new Response(JSON.stringify({
+      data: { version: inventory.version, listScrapers: [] },
+    })),
+  });
+  assert.equal(report.status, "FAIL");
+  assert.equal(report.results.length, 1);
+  assert.equal(report.results[0].reason, "INVALID_INVENTORY_RESPONSE");
+});
+
+test("unknown case identifiers are sanitized rather than replayed in evidence", async () => {
+  const report = await execute({ ...BASE, caseId: "E2E-UNKNOWN" }, { fetchImpl: mocked({}) });
+  assert.equal(report.status, "FAIL");
+  assert.equal(report.results.at(-1).id, "E2E-UNKNOWN-CASE");
+  assert.equal(report.results.at(-1).reason, "UNKNOWN_CASE_ID");
+  assert.doesNotMatch(JSON.stringify(report), /E2E-UNKNOWN"/);
 });
