@@ -10,6 +10,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 from scan_session_material import (
     cookie_header_is_replayable,
     is_netscape_cookie_record,
+    scan_json_lexical_fallback,
     scan_json_structure,
     scan_scraper_yaml,
     scan_text,
@@ -430,6 +431,56 @@ def test_json_benign_cli_passes(tmp_path):
     process = _run_production_scanner(
         tmp_path, {"data.json": '{"name": "example", "theme": "dark"}'})
     assert process.returncode == 0, process.stdout
+
+
+# QA-18 — malformed JSON must not fail open for short values: when
+# json.loads rejects the document, the lexical pair fallback applies the
+# same field policy as the parsed walk (any non-empty value counts).
+@pytest.mark.parametrize("source,rule", [
+    ('{"pass' + ESC + '0077ord": "abc",}', "CREDENTIAL_FIELD"),
+    ('{"Cook' + ESC + '0069e": "abc",}', "ACTIVE_COOKIE_FIELD"),
+    ('{"password": "abc",}', "CREDENTIAL_FIELD"),
+    ('{"pass' + ESC + '0077ord": 1234,}', "CREDENTIAL_FIELD"),
+    ('{"outer": {"pass' + ESC + '0077ord": "xy",},}', "CREDENTIAL_FIELD"),
+    ('{"password": "abc', "CREDENTIAL_FIELD"),
+    ('{"cookie": "",}', "ACTIVE_COOKIE_FIELD"),
+])
+def test_json_lexical_fallback_unit_positive(source, rule):
+    assert rule in scan_json_lexical_fallback(source)
+
+
+@pytest.mark.parametrize("source", [
+    '{"name": "example",}',
+    '{"password": null,}',
+    '{"password": "",}',
+    '{"password": "<LOCAL_ONLY_VALUE>",}',
+    '{"password_hint": "abc",}',
+    '{"theme": "dark", "count": 3,}',
+])
+def test_json_lexical_fallback_unit_benign(source):
+    assert scan_json_lexical_fallback(source) == set()
+
+
+@pytest.mark.parametrize("payload", [
+    '{"pass' + ESC + '0077ord": "abc",}',
+    '{"Cook' + ESC + '0069e": "abc",}',
+    '{"outer": {"pass' + ESC + '0077ord": "xy",},}',
+    '{"password": "abc",}',
+])
+def test_json_malformed_short_value_rejected_cli(tmp_path, payload):
+    process = _run_production_scanner(tmp_path, {"data.json": payload})
+    assert process.returncode == 1
+
+
+def test_json_malformed_benign_cli_passes(tmp_path):
+    process = _run_production_scanner(tmp_path, {"data.json": '{"name": "x",}'})
+    assert process.returncode == 0, process.stdout
+
+
+def test_scan_text_routes_unparseable_json_to_fallback(tmp_path):
+    path = tmp_path / "data.json"
+    path.write_text('{"password": "abc",}', encoding="utf-8")
+    assert "CREDENTIAL_FIELD" in scan_text(path, tmp_path)
 
 
 # F04 — driver header key case variants
