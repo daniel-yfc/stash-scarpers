@@ -76,7 +76,7 @@ routing:
 | RGBEE | PASS_WITH_EXCLUSIONS | PASS_WITH_EXCLUSIONS | Studio 尾隨底線；Performer stub |
 | Trance | PASS_WITH_EXCLUSIONS | FAIL | Search 60 筆無目標；Performer「指定なし」 |
 
-報告中的 URL 案例統計「有回傳欄位」不等於所有必填欄位符合預期。以上依**原報告的每 Scraper 狀態**，未對缺席欄位自動推論為失敗。201?（不採此類歷史統計）——請以該 v2 報告所列個案及本頁結論為準。
+報告中的 URL 案例統計「有回傳欄位」不等於所有必填欄位符合預期。以上依**原報告的每 Scraper 狀態**，未對缺席欄位自動推論為失敗；個別場景的實際 PASS 條件仍以原 QA v2 的欄位證據與後續獨立 Delta QA 為準。
 
 ## 3. Finding Ledger（待修、非已驗收）
 
