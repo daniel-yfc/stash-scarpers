@@ -54,6 +54,9 @@ routing:
 | D5 | KOShop 兩問題同一 Owner/PR | 相同 YAML；避免 overlapping PR 和漏測 | 無 |
 | D6 | 只做受影響的 Live Delta QA + 最小整合 Smoke | 減少無關第三方站點波動/資源浪費 | 實際發現跨 Scraper 共用機制回歸 |
 | D7 | 測試 PR 候選 ZIP，**不得以 main 現有安裝代替** | 已裝 main 的 21 packages 不代表分支版本 | 無 |
+| D8 | 第一波三條獨立平行 Draft PR，最多六條修復分支 | 首波各自專屬 YAML；第二波避開重疊檔案 | 新的共用檔案需求 |
+| D9 | 共用 stash-test 使用單一 QA Lease | 避免 Agent 交互安裝候選包與 Reload 污染 | 實際建立多套隔離測試實例 |
+| D10 | PR #92 為工作包文件 Owner | 實作者不能同步覆寫 docs 索引與工作包 | Controller 重新指派 Owner |
 
 ## 4. 不採納之 Perplexity 項目（仍保留作設計對照）
 

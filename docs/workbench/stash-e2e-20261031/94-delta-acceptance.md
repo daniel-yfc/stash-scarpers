@@ -100,3 +100,17 @@ routing:
 | `PRODUCTION_READY` | 另需 [Production Gate](../../30-production-gate.md) 完整檢查、QA-06 輪替/撤銷 attestations、正式環境登入/ACL/備份/回滾與使用者批准 |
 
 每個 Gate B 都需要**獨立 reviewer 核對實際私有 artifact**；只有本表的模板或 Agent 自行聲稱 PASS 不構成 `FIXED_VERIFIED`。
+
+
+## 5. Parallel Wave-1 PR QA lane (2026-10-31 amendment)
+
+Wave 1A = `fix/e2e-metadata-integrity`; Wave 1B = `fix/e2e-bravo-clips`; Wave 1C = `fix/e2e-acceed-auth-guard`. Each starts from main, maintains own YAML/fixture ownership, reports independent Gate A/B/C, and **must not install candidate scrapers concurrently**.
+
+**Exclusive staging lease protocol:** `QA_LEASE_REQUESTED` → `GRANTED` → record installed baseline/CDP/Stash build → install exact PR candidate ZIP (no duplicate scraper shadowing) → verify `installedPackages` + selected scraper identity + ZIP SHA-256 → run original cases and negatives → restore baseline → `RELEASED`. Any revision mismatch = `WRONG_REVISION / GATE_B_NOT_RUN`. If M0 restart/ACL/backups are not accepted, offline development continues but no live PASS is granted.
+
+**Minimum Wave-1 negative control:**
+- 1A: KOShop missing `product_id=99999999` contains no misleading writable scene metadata; Search→Detail valid case still works.
+- 1B: BRAVO Clips `284`/`282` fields equal the completed site; empty-title direct Fragment cannot emit bogus `%7Btitle%7D` URL.
+- 1C: ACCEED logged-out `ACSM051`/`ACST431` cannot produce a false product; anonymous name Search remains valid. Logged-in detail remains `BLOCKED_AUTH` unless independently authorized and tested.
+
+Full case and evidence fields remain in `1–4; **new developer heads require repinned candidate provenance and reviewer reapproval**. Documentation/fixtures alone do not certify runtime.

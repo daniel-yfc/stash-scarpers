@@ -28,6 +28,7 @@ routing:
 
 完成下列全部事項，才由 Controller/使用者**另行核准 Archive-only PR**：
 
+- [ ] 第一波三個 Draft 修復 PR 及依賴型第二波任務均有最終處置（合併、授權取消或上游轉交），並清楚標註 M6 Gate B 的證據狀態。
 - [ ] 本工作包定義的所有**已核准**實作 workstream 完成，對應分支 PR 由使用者決定合併或明確停止，不留誤認待處理的 Draft。
 - [ ] M0 重啟、備份、安全 Gate 完成或阻擋項已列入正式 owner／issue，無擅自升級 `PRODUCTION_READY`。
 - [ ] M6 Independent Live Delta QA 已產生**具實際候選 package SHA、Stash build、原案例、負例、reviewer 證據**的正式裁決。
@@ -43,8 +44,8 @@ routing:
 ```sh
 git switch -c docs/archive-stash-e2e-20261031
 git mv docs/workbench/stash-e2e-20261031 docs/archive/stash-e2e-20261031
-# 將移動後 6 個 Markdown 檔案 YAML front matter 的 status: draft 改為 status: archived。
-# 同步更新 docs/index.yml 的 6 筆 path/status（doc_id 保持不變），
+# 將移動後 9 個 Markdown 檔案 YAML front matter 的 status: draft 改為 status: archived。
+# 同步更新 docs/index.yml 的 9 筆 path/status（doc_id 保持不變），
 # 並將 docs/README.md 的 Workbench 連結換成 Archive 連結。
 python tools/check_docs_index.py
 python tools/check_scraper_docs.py
@@ -60,7 +61,7 @@ git diff --check
 - 必須連結最後 M6 verdict、修復 PR 清單、未結 external/upstream/security issue 清單。
 - 過去 Live E2E 的 `PASS` 只對**當時 pinned source + Stash version + site state**有效；歸檔不會凍結網站或代替未來監測。
 - Archive PR exact HEAD 的文件索引、格式及 CI PASS，通過 Maintainer review；**仍不可自行 merge**。
-- 合併歸檔後回讀 main 確認：暫存目錄不再存在、`docs/archive/stash-e2e-20261031/` 包含全部 6 檔、索引路徑正確且 `status: archived`。
+- 合併歸檔後回讀 main 確認：暫存目錄不再存在、`docs/archive/stash-e2e-20261031/` 包含全部 9 檔、索引路徑正確且 `status: archived`。
 
 ## 4. 最終交接記錄模板
 

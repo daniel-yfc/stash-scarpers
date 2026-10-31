@@ -474,3 +474,30 @@ documents:
   intents:
   - archive-handoff
   - workbench-lifecycle
+- doc_id: DOC-E2E-96
+  title: "Wave 1A Agent Prompt - Metadata Integrity"
+  path: docs/workbench/stash-e2e-20261031/96-agent-prompt-metadata-integrity.md
+  layer: repository
+  status: draft
+  intents:
+  - agent-prompt
+  - wave-1a
+  - metadata-integrity
+- doc_id: DOC-E2E-97
+  title: "Wave 1B Agent Prompt - BRAVO Clips"
+  path: docs/workbench/stash-e2e-20261031/97-agent-prompt-bravo-clips.md
+  layer: repository
+  status: draft
+  intents:
+  - agent-prompt
+  - wave-1b
+  - bravo-clips
+- doc_id: DOC-E2E-98
+  title: "Wave 1C Agent Prompt - ACCEED Auth Guard"
+  path: docs/workbench/stash-e2e-20261031/98-agent-prompt-acceed-guard.md
+  layer: repository
+  status: draft
+  intents:
+  - agent-prompt
+  - wave-1c
+  - acceed-auth-guard

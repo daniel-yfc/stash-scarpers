@@ -36,6 +36,13 @@ routing:
 | [93-design-decisions-and-references.md](93-design-decisions-and-references.md) | 已驗證程式碼事實、需要 A/B 實驗的假設、Perplexity 方案取捨、官方／repo 參照 |
 | [94-delta-acceptance.md](94-delta-acceptance.md) | Gate A/B/C、候選套件來源鏈、逐項驗收案例與紀錄範本 |
 | [95-archive-handoff.md](95-archive-handoff.md) | 完工判定、例外轉交、改存 `docs/archive/stash-e2e-20261031/` 的審核與索引更新程序 |
+| [96-agent-prompt-metadata-integrity.md](96-agent-prompt-metadata-integrity.md) | English Wave 1A: Justice01/KOShop/CK-Download |
+| [97-agent-prompt-bravo-clips.md](97-agent-prompt-bravo-clips.md) | English Wave 1B: BRAVO Clips and Fragment |
+| [98-agent-prompt-acceed-guard.md](98-agent-prompt-acceed-guard.md) | English Wave 1C: ACCEED authentication guard |
+
+## 平行開發（已規劃、未啟動）
+
+第一波三個互不重疊的程式碼分支：`fix/e2e-metadata-integrity`、`fix/e2e-bravo-clips`、`fix/e2e-acceed-auth-guard`。第二波最多三分支，依賴前置 PR 合併與必要根因證據。三個英文 Prompt 如上；檔案所有權、單一 `stash-test` QA Lease、候選 ZIP SHA 驗證與 Gate A/B/C 詳見 [實施規格](92-fix-implementation-spec.md)。本文件 PR 不授權 Agent 自行建立修復分支、操作測試實例或合併。
 
 ## 當前控制狀態（不是新測試結論）
 
