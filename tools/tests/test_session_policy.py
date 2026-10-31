@@ -483,6 +483,57 @@ def test_scan_text_routes_unparseable_json_to_fallback(tmp_path):
     assert "CREDENTIAL_FIELD" in scan_text(path, tmp_path)
 
 
+# QA-19 — malformed JSON whose sensitive value is a container (object or
+# array, including truncated/unclosed) must not fail open either: a
+# non-empty container under a sensitive key is flagged by key, mirroring
+# the parsed walk; empty containers stay clean, as in the parsed walk.
+@pytest.mark.parametrize("source,rule", [
+    ('{"password": {"value": "abc"},}', "CREDENTIAL_FIELD"),
+    ('{"password": ["abc"],}', "CREDENTIAL_FIELD"),
+    ('{"password": {"token": "abc"},}', "CREDENTIAL_FIELD"),
+    ('{"cookie": {"name": "session", "value": "abc"},}', "ACTIVE_COOKIE_FIELD"),
+    ('{"cookies": {},}', "ACTIVE_COOKIE_FIELD"),
+    ('{"authorization": ["Bearer abc"],}', "CREDENTIAL_FIELD"),
+    ('{"password": {"a": {"b": "abc"}},}', "CREDENTIAL_FIELD"),
+    ('{"password": {"value": "abc"', "CREDENTIAL_FIELD"),
+    ('{"password": ["abc"', "CREDENTIAL_FIELD"),
+    ('{"pass' + ESC + '0077ord": {"value": "abc"},}', "CREDENTIAL_FIELD"),
+])
+def test_json_lexical_container_unit_positive(source, rule):
+    assert rule in scan_json_lexical_fallback(source)
+
+
+@pytest.mark.parametrize("source", [
+    '{"password": {},}',
+    '{"password": [],}',
+    '{"password": { },}',
+    '{"password": [',
+    '{"theme": {"mode": "dark"},}',
+    '{"auth": {"user": "bob", "pass": "abc"},}',
+])
+def test_json_lexical_container_unit_benign(source):
+    assert scan_json_lexical_fallback(source) == set()
+
+
+@pytest.mark.parametrize("payload", [
+    '{"password": {"value": "abc"},}',
+    '{"password": ["abc"],}',
+    '{"cookie": {"name": "session", "value": "abc"},}',
+])
+def test_json_malformed_container_rejected_cli(tmp_path, payload):
+    process = _run_production_scanner(tmp_path, {"data.json": payload})
+    assert process.returncode == 1
+
+
+@pytest.mark.parametrize("payload", [
+    '{"theme": {"mode": "dark"},}',
+    '{"password": {},}',
+])
+def test_json_malformed_container_benign_cli_passes(tmp_path, payload):
+    process = _run_production_scanner(tmp_path, {"data.json": payload})
+    assert process.returncode == 0, process.stdout
+
+
 # F04 — driver header key case variants
 @pytest.mark.parametrize("field", ["key", "Key", "KEY", "kEy"])
 def test_driver_header_key_case_variants(field):
