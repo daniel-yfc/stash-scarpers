@@ -1,9 +1,15 @@
+scraper: scrapers/CK-Download.yml
 cases:
   - name: "CK-Download product 8872"
     classification: completed
     html: "product-8872.html"
     locale:
       text: "ブリーフ大好き親父と援交常習少年"
+    mappedExpect:
+      - field: Title
+        values: ["ブリーフ大好き親父と援交常習少年"]
+      - field: Code
+        values: ["RJ-00030-MG"]
     expect:
       - xpath: "//table[contains(@class,'prod_data')][1]//th[normalize-space(.)='DVDタイトル']/following-sibling::td[1][normalize-space()]"
         min: 1
@@ -24,6 +30,9 @@ cases:
     html: "product-16942.html"
     locale:
       text: "ORWE00079"
+    mappedExpect:
+      - field: Title
+        values: ["バーチャル彼氏 CK DOWNLOADオリジナル～智暉編～"]
     expect:
       - xpath: "//table[contains(@class,'prod_data')][1]//th[normalize-space(.)='DVDタイトル']/following-sibling::td[1][normalize-space()]"
         min: 1
@@ -37,14 +46,35 @@ cases:
     html: "product-34479.html"
     locale:
       text: "WKSN-00142"
+    mappedExpect:
+      - field: Title
+        values: ["[wakasen]HDD蔵出し 大人気モデルひろき君との初めての生ハメ撮りは種付け1発口に2発!"]
+      - field: Code
+        values: ["WKSN-00142"]
     expect:
-      - xpath: "//table[contains(@class,'prod_data')][1]//th[normalize-space(.)='DVDタイトル']/following-sibling::td[1][normalize-space()] | //div[@id='Contents']/h3[normalize-space()]/text() | //title"
+      - xpath: "(//table[contains(@class,'prod_data')][1]//th[normalize-space(.)='DVDタイトル']/following-sibling::td[1][normalize-space() and not(starts-with(normalize-space(.), 'DVD未収録'))])[1] | (//div[@id='Contents']/h3[normalize-space()]/text())[1][not(//table[contains(@class,'prod_data')][1]//th[normalize-space(.)='DVDタイトル']/following-sibling::td[1][normalize-space() and not(starts-with(normalize-space(.), 'DVD未収録'))])]"
         min: 1
-        max: 3
+        max: 1
+        values: ["[wakasen]HDD蔵出し 大人気モデルひろき君との初めての生ハメ撮りは種付け1発口に2発!"]
       - xpath: "//table[contains(@class,'prod_data')][1]//th[normalize-space(.)='プロダクトナンバー']/following-sibling::td[1]"
         min: 1
         max: 1
         values: ["WKSN-00142"]
+  - name: "CK-Download product 34418 controlled (STASH-E2E-08)"
+    classification: completed
+    html: "product-34418-controlled.html"
+    locale:
+      text: "ガチ検証"
+    mappedExpect:
+      - field: Title
+        values: ["[AVオリジナル]ガチ検証! ヤリチンサッカー部20才が女優の誘惑に負けて欲望丸出しSEX!?"]
+      - field: Code
+        values: ["ORCOAV028"]
+    expect:
+      - xpath: "(//table[contains(@class,'prod_data')][1]//th[normalize-space(.)='DVDタイトル']/following-sibling::td[1][normalize-space() and not(starts-with(normalize-space(.), 'DVD未収録'))])[1] | (//div[@id='Contents']/h3[normalize-space()]/text())[1][not(//table[contains(@class,'prod_data')][1]//th[normalize-space(.)='DVDタイトル']/following-sibling::td[1][normalize-space() and not(starts-with(normalize-space(.), 'DVD未収録'))])]"
+        min: 1
+        max: 1
+        values: ["[AVオリジナル]ガチ検証! ヤリチンサッカー部20才が女優の誘惑に負けて欲望丸出しSEX!?"]
   - name: "CK-Download Cloudflare challenge"
     classification: failure
     html: "failure-cloudflare.html"

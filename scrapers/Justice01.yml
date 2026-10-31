@@ -118,8 +118,13 @@ xPathScrapers:
                 with: ""
 
       URLs:
-        selector: "//link[@rel='canonical']/@href | //meta[@property='og:url']/@content"
-        concat: "\n"
+        # STASH-E2E-05: canonical is primary; og:url is a fallback only
+        # when canonical is absent. The old union + concat:"\n" merged
+        # both (usually identical) URLs into one newline-joined duplicate
+        # string. Parenthesised branches with a not(canonical) guard on
+        # the fallback emit exactly one URL (same pattern as the
+        # CK-Download Studio label/maker guard).
+        selector: "(//link[@rel='canonical']/@href)[1] | (//meta[@property='og:url']/@content)[1][not(//link[@rel='canonical']/@href)]"
 
       Details:
         selector: "$article//div[contains(@class,'entry-content')]//p//text()[normalize-space()]"
