@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "notes": "Pinned expectations from committed rendered HTML fixtures. These are NOT live results; revalidate source-page facts before promoting a case.",
+  "cases": [
+    {
+      "id": "E2E-TRANCE-40625",
+      "scraper": "Trance",
+      "sourceUrl": "https://www.trance-video.com/product/detail/40625",
+      "expected": {
+        "title": "【先行配信】熱狂球児 part28",
+        "code": "TR-16-0028-01",
+        "date": "2026-06-25",
+        "duration": 1545
+      },
+      "performerModelIds": [
+        "210",
+        "212"
+      ]
+    },
+    {
+      "id": "E2E-TRANCE-40641",
+      "scraper": "Trance",
+      "sourceUrl": "https://www.trance-video.com/product/detail/40641",
+      "searchQuery": "沖修斗",
+      "expected": {
+        "title": "【沖修斗】private sex6",
+        "code": "TC-05-0013-01",
+        "date": "2026-10-08",
+        "duration": 1167
+      }
+    }
+  ]
+}

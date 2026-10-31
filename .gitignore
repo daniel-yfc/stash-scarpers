@@ -15,5 +15,9 @@ dist/
 build/
 docs/reports/
 
+# Private Stash runtime reports / credentials
+e2e-results*.json
+stash-e2e-results*.json
+
 # Generated Stash scraper source index and ZIP packages
 _site/
