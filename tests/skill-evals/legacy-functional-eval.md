@@ -1,11 +1,10 @@
 ---
 doc_id: REF-VERIFY-61
-title: Eval Pack — 5 Tasks
+title: Legacy Functional Evaluation — 5 Tasks
 status: active
-layer: skill
+layer: repository
 owner: maintainer
 audience:
-  - agent
   - maintainer
 applies_to:
   - scrapers
@@ -16,7 +15,9 @@ routing:
     - evaluation
 ---
 
-# Eval Pack — 5 Tasks
+# Legacy Functional Evaluation — 5 Tasks
+
+**Maintainer evaluation corpus; never load as a runtime Skill reference.** These five tasks are test definitions, not current test results. Host execution, site evidence, and Stash loader verification are **NOT_RUN** unless accompanied by a pinned run and trace. See `skills/stash-scraper-builder/SKILL.md` for the actual runtime phase contract.
 
 **Load when:** testing the skill end-to-end.
 
@@ -31,7 +32,7 @@ routing:
 - [ ] `sceneByName` ⇒ `sceneByQueryFragment` present; otherwise both omitted.
 - [ ] Every selector is either verified on a real page/response or marked `# UNVERIFIED` with an explanation.
 - [ ] Official CommunityScrapers validator passes (or local stub with known limitations noted).
-- [ ] The complete YAML loads in the Stash runtime (loader pass). A validator pass alone is not load evidence (see `debugging.md`, Incident 3).
+- [ ] The complete YAML loads in the Stash runtime (loader pass). A validator pass alone is not load evidence (see `skills/stash-scraper-builder/references/debugging.md` (runtime-loader notes)).
 - [ ] Script tasks include the three install prerequisites in the **response**.
 - [ ] CDP task includes visible-CDP setup steps (or explicitly states "out of scope").
 
@@ -68,7 +69,7 @@ A scraper that returns the wrong studio is a fail, even if the YAML is valid.
 **Requirements:**
 
 - `sceneByURL` required; add `sceneByFragment` only if the site verifiably supports fragment scraping (never as a nil-pointer workaround).
-- Title cleaning from `field-quality.md`.
+- Title cleaning from `skills/stash-scraper-builder/references/field-quality.md`.
 - Date with `parseDate` (Go layout matching the site).
 - Performers with canonical JS from `field-quality.md`; `Gender` omitted unless explicit.
 - Studio `Name` only (or `fixed` for single-brand).

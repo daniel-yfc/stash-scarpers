@@ -51,6 +51,10 @@ def expected_markdown_paths() -> set[str]:
         path.relative_to(ROOT).as_posix()
         for path in (ROOT / "skills" / "stash-scraper-builder" / "references").glob("*.md")
     )
+    expected.update(
+        path.relative_to(ROOT).as_posix()
+        for path in (ROOT / "tests" / "skill-evals").glob("*.md")
+    )
     return expected
 
 

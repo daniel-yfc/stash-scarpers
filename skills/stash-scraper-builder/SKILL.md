@@ -72,7 +72,7 @@ Load only what the current phase needs; do not pre-read this table or follow ref
 | Network/multi-site special cases | `references/multi-site-network-scrapers.md` |
 | Schema errors, field shapes | `references/schema-checklist.md` |
 | Empty fields, nil pointer, loader failures | `references/debugging.md` |
-| Schema provenance or compatibility ambiguity | `references/upstream-sources.md` |
+| Schema provenance or compatibility ambiguity | `references/schema-provenance.md` |
 | Additional examples or patterns | `references/examples.md`, `references/best-practices.md` |
 
 Evaluation prompts, historical incident reviews, document registries and authoring test packs are maintainer tools, **not required runtime routes**. Repo-only verification and commands belong to `AGENTS.md` / `docs/50-testing-guide.md`. Do not open them merely to decide what scraper phase comes next.

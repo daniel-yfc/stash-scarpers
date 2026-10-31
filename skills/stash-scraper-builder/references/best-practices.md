@@ -131,4 +131,4 @@ xPathScrapers:
 ## Header (G4)
 
 - **Header** (top comment): list restrictions — UA, cookie, CDP, Python prerequisites — and `# Last Updated: YYYY-MM-DD`.
-- Cookie scrapers: note that users must edit the YAML file to refresh cookies.
+- For authenticated local deployments, use an isolated CDP browser profile outside Git. Never activate or refresh cookie blocks in tracked YAML (including `scrapers/private/`); committed examples must remain comment-only placeholders.

@@ -23,7 +23,7 @@ routing:
 
 [English README](README.md) · [文件索引](docs/README.md)
 
-本儲存庫用於製作與驗證 Stash 擷取器的 YAML，並非 Stash 主程式，也不是社群擷取器儲存庫（CommunityScrapers）。Schema 與 validator 的上游關係請參閱 [來源紀錄](skills/stash-scraper-builder/references/upstream-sources.md)。本文件為譯本，僅供輔助操作；schema、工具與各主題的權威文件仍為判定依據。採用範本、通過 schema 驗證或 CI 全綠，都不等於實際在目標網站上測試通過。
+本儲存庫用於製作與驗證 Stash 擷取器的 YAML，並非 Stash 主程式，也不是社群擷取器儲存庫（CommunityScrapers）。Schema 與 validator 的上游關係請參閱 [來源紀錄](docs/43-upstream-sources.md)。本文件為譯本，僅供輔助操作；schema、工具與各主題的權威文件仍為判定依據。採用範本、通過 schema 驗證或 CI 全綠，都不等於實際在目標網站上測試通過。
 
 ## 建置流程
 

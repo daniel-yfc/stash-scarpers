@@ -1,11 +1,10 @@
 ---
 doc_id: REF-OPS-73
 title: Incident Reviews
-status: active
-layer: skill
+status: archived
+layer: repository
 owner: maintainer
 audience:
-  - agent
   - maintainer
 applies_to:
   - scrapers
@@ -16,7 +15,9 @@ routing:
     - incidents
 ---
 
-# Incident Reviews
+# DEPRECATED — Historical Incident Reviews
+
+Archived on 2026-10-27. This is not a runtime Skill route or evidence of a current site pass. Transferable rules belong in current technical references; cite these cases only as historical provenance.
 
 **Load when:** a past failure looks similar and you need the transferable lesson, not the failure catalog.
 
@@ -59,7 +60,7 @@ routing:
 2. Choose the smallest verified runtime: XPath on public HTML, then real JSON response, then necessary script action, then CDP only when a simpler path demonstrably fails. A completed saved DOM proves selector behavior on that snapshot only.
 3. Add deterministic positive, optional/negative and failure-page cases to the fixture contract for the affected _class_ of problem; test card decoys, locale/layout variation or URL near-matches when relevant. For each configured search entity, author a populated result and separate detail case. The runner enforces only its documented assertions, not every authoring expectation; see the rendered-DOM fixture guide (**repo-only**: `docs/51-rendered-dom-fixture-testing.md`).
 4. Run schema, URL sort, policy, tests and documentation checks on the committed revision; record each result separately. No manifests means `UNVERIFIED`, not a fixture pass. Record raw live search and detail separately and require actual Stash/CDP output for a live-CDP claim.
-5. Promote a proposed family pattern to [`best-practices.md`](best-practices.md) or a runtime-specific reference only after an independent site/layout test and a counterexample have been reviewed. Then update [`schema-checklist.md`](schema-checklist.md), relevant executable regression tests, and the owning authoring checklist together. If only one site supports it, keep it in the incident record as a site-specific hypothesis.
+5. Promote a proposed family pattern to [`best-practices.md`](../../skills/stash-scraper-builder/references/best-practices.md) or a runtime-specific reference only after an independent site/layout test and a counterexample have been reviewed. Then update [`schema-checklist.md`](../../skills/stash-scraper-builder/references/schema-checklist.md), relevant executable regression tests, and the owning authoring checklist together. If only one site supports it, keep it in the incident record as a site-specific hypothesis.
 6. Do not mark production ready until the separate A–H production-gate evidence exists (**repo-only**: `docs/30-production-gate.md`). An audit recommendation or checklist completion is not verification.
 
 ### Incident 3: YAML shape defects surfaced only at runtime load

@@ -358,10 +358,10 @@ documents:
   - debugging
   - failures
 - doc_id: REF-OPS-73
-  title: Incident Reviews
-  path: skills/stash-scraper-builder/references/incident-reviews.md
-  layer: skill
-  status: active
+  title: Archived Incident Reviews
+  path: docs/archive/incident-reviews-2026-10.md
+  layer: repository
+  status: archived
   intents:
   - incidents
   - lessons-learned
@@ -374,9 +374,9 @@ documents:
   - schema
   - validation
 - doc_id: REF-VERIFY-61
-  title: Eval Pack — 5 Tasks
-  path: skills/stash-scraper-builder/references/eval-pack.md
-  layer: skill
+  title: Legacy Functional Evaluation — 5 Tasks
+  path: tests/skill-evals/legacy-functional-eval.md
+  layer: repository
   status: active
   intents:
   - evaluation
@@ -384,13 +384,21 @@ documents:
   read_after:
   - REF-VERIFY-60
 - doc_id: REF-OPS-00
-  title: Upstream Sources and Document Inventory
-  path: skills/stash-scraper-builder/references/upstream-sources.md
-  layer: skill
+  title: Upstream Sources and Maintainer Inventory
+  path: docs/43-upstream-sources.md
+  layer: repository
   status: active
   intents:
   - upstream-sources
   - provenance
+- doc_id: REF-OPS-01
+  title: Portable Schema and Runtime Provenance
+  path: skills/stash-scraper-builder/references/schema-provenance.md
+  layer: skill
+  status: active
+  intents:
+  - schema-provenance
+  - runtime-evidence
 - doc_id: REF-TPL-90
   title: Template Workflow Checklist
   path: skills/stash-scraper-builder/references/authoring-checklist.md

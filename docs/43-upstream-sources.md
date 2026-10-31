@@ -2,10 +2,9 @@
 doc_id: REF-OPS-00
 title: Upstream Sources and Document Inventory
 status: active
-layer: skill
+layer: repository
 owner: maintainer
 audience:
-  - agent
   - maintainer
 applies_to:
   - scrapers
@@ -16,7 +15,9 @@ routing:
     - upstream-sources
 ---
 
-# Upstream Sources and Document Inventory
+# Upstream Sources and Maintainer Inventory
+
+This document is for maintainers, provenance audits, and repository inventory. It is not a second runtime routing table. The portable runtime summary is at [`schema-provenance.md`](../skills/stash-scraper-builder/references/schema-provenance.md), selected conditionally by `SKILL.md`.
 
 ## Skill entry point
 
@@ -26,13 +27,13 @@ routing:
 
 | Document                         | Role                                                                     | Status                              |
 | -------------------------------- | ------------------------------------------------------------------------ | ----------------------------------- |
-| `upstream-sources.md`            | Source registry and maintenance notes                                    | Current                             |
+| `docs/43-upstream-sources.md` | Maintainer source registry and inventory | Current; not loaded during scraper authoring |
 | `best-practices.md`              | General authoring guidance (incl. anchors, studio maps, legacy patterns) | Audit with #21                      |
 | `cdp-workflow.md`                | Login and CDP workflows                                                  | Audit with #21/#26                  |
-| `eval-pack.md`                   | Five-task validation and regression pack                                 | Run under #26                       |
+| `tests/skill-evals/legacy-functional-eval.md` | Five-task evaluation corpus (maintainer-only) | Evaluate independently; not a runtime route |
 | `authoring-checklist.md`         | Template-to-scraper checklist                                            | Current                             |
 | `debugging.md`                   | Failure catalog and prevention checklist                                 | Current                             |
-| `incident-reviews.md`            | Incident write-ups and transferable lessons                              | Current                             |
+| `docs/archive/incident-reviews-2026-10.md` | Historical incident records | Archived; transfer rules into technical references |
 | `field-quality.md`               | Title and performer cleaning                                             | Current                             |
 | `examples.md`                    | Minimal examples, fixtures, and curated real-world gallery               | Audit with #21/#22/#24              |
 | `json-examples.md`               | JSON scraper examples                                                    | Audit with #21/#26                  |
@@ -60,7 +61,7 @@ routing:
 
 ## Maintenance
 
-The repository's [metadata feed integration guide](../../../docs/80-metadata-feed-integration.md)
+The repository's [metadata feed integration guide](80-metadata-feed-integration.md)
 derives consumer behavior from the official Stash Identify, Tagger, Auto Tagging
 manuals, GraphQL scraper types and scraper/Identify source linked there. These
 integration checks do not implement a stash-box publisher.
