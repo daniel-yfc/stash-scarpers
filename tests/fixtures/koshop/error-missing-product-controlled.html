@@ -1,0 +1,12 @@
+<!-- CONTROLLED fixture for STASH-E2E-06b (Wave 1A).
+     Reproduces the reported missing-product state (product_id=99999999):
+     the Live E2E QA report records that KOShop returned an error page
+     whose Title was "エラー | KO-SHOP…" and that the old scraper saved
+     it as the Scene Title. The page intentionally has NO
+     div.detail_product product structure. -->
+<html lang="ja">
+<head><title>エラー | KO-SHOP</title></head>
+<body>
+<div class="error">指定されたページは存在しません。</div>
+</body>
+</html>
