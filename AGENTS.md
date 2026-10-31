@@ -55,7 +55,7 @@ The official Node/Ajv validator is the only supported validator path. The remove
 
 - Return complete YAML, never a diff or fragment.
 - Keep scraped values in the source language.
-- Keep credentials, cookies, and browser state out of public scrapers.
+- Keep active cookies, credentials, authorization headers and browser state out of ALL tracked files, including `scrapers/private/`; only fully commented, placeholder-only cookie placements are permitted.
 - Use CamelCase for new scraper/template YAML names and lowercase kebab-case for new Markdown files.
 - Keep root scraper `name:` and do not emit unsupported `documentHeader` or `$vars` keys.
 - `sceneByFragment` is optional unless the target site verifiably supports it.

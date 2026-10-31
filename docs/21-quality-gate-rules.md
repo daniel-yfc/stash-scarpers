@@ -42,7 +42,7 @@ Do not use the removed Deno/localized validator.
 
 ### Rule 3: Credentials
 
-Public files under `scrapers/*.yml` must not contain `driver.cookies`. Authenticated variants belong under `scrapers/private/`.
+All Git-tracked scraper files, including `scrapers/private/*.yml`, must omit active `driver.cookies` (even empty values). Fully commented placeholder-only examples are allowed; real credentials and personal deployment copies belong outside this repository. `scrapers/private/` is a public path, not a security boundary.
 
 ### Rule 4: Fragment scraping is optional
 

@@ -74,7 +74,7 @@ Choose the simplest viable implementation path before writing any scraper.
 - For XPath/JSON fragment entry points, provide the action-required `queryURL`; script actions follow their script contract.
 - Mapped scrapers place scraped fields under the entity block (`scene:`, `performer:`, `group:`, `gallery:`); `common:` holds only `$name` string fragments.
 - `sceneByFragment` is not a nil-pointer workaround. Test non-matching fragment input and report upstream runtime failures.
-- Keep public scrapers free of cookies and browser state; use private paths for authenticated variants.
+- Keep all tracked scrapers (including `scrapers/private/`) free of active cookies and browser state; use private paths for authenticated variants.
 
 ## Reference map
 

@@ -28,7 +28,7 @@ routing:
 
 1. XPath/JSON scraper 必須有非空白根層 `name:`；檔名一致屬專案慣例。
 2. `driver.useCDP` 只能宣告於頂層 `driver` 區塊。
-3. 本儲存庫公開的 `scrapers/*.yml` 不得包含 `driver.cookies`；需要登入的版本置於 `scrapers/private/`，也不可提交真實工作階段材料。
+3. 所有受 Git 追蹤的 scraper（包含 `scrapers/private/`）一律不得啟用 `driver.cookies` 或提交實際工作階段材料；只准保留完整註解且僅有 placeholder 的範例，實際登入設定必須位於此 Git 工作樹之外。
 4. `sceneByFragment` 非通用必填；XPath/JSON fragment mapping 若存在，應符合其 action 的 `queryURL` 要求。
 5. 日期格式使用 Go reference layout，例如 `2006-01-02`。
 6. Schema、政策閘門、測試、fixture、即時搜尋／詳情頁與 live Stash/CDP 是不同驗證層，不可互相取代。

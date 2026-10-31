@@ -68,7 +68,7 @@ def check_scraper(source: str, path: Path) -> tuple[str, list[str]]:
     driver = config.get("driver") or {}
     if not isinstance(driver, dict):
         raise SourceError(f"{path.name}: driver must be a mapping")
-    if driver.get("cookies"):
+    if "cookies" in driver:
         raise SourceError(f"{path.name}: driver.cookies cannot be published")
     for item in driver.get("headers") or []:
         if not isinstance(item, dict):

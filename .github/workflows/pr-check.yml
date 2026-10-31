@@ -46,10 +46,16 @@ jobs:
           cache: npm
 
       - name: Install Node dependencies
-        run: npm ci || npm install
+        run: npm ci
 
       - name: Check documentation examples and contradictions
         run: python tools/check_scraper_docs.py
+
+      - name: Scan Git-tracked session material
+        run: python tools/scan_session_material.py
+
+      - name: Run security negative tests
+        run: python -m pytest tools/tests/test_session_policy.py -v
 
       - name: Get changed scraper files
         id: changed
