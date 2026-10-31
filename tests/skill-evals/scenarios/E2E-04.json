@@ -1,0 +1,20 @@
+{
+  "case_id": "E2E-04",
+  "spec_version": 1,
+  "synthetic_source": true,
+  "note": "Deterministic input/expected contract only; not a live Stash/CDP pass.",
+  "id": "E2E-04",
+  "kind": "date-fix",
+  "input_type": "text/html",
+  "source_url": "https://example.invalid/scenes/demo-04",
+  "input_body": "<time>15&nbsp;Jan&nbsp;2024</time>",
+  "expected_fields": {
+    "Date": "2024-01-15"
+  },
+  "contract": {
+    "transforms": [
+      "replace &nbsp; with space",
+      "parseDate Go layout 02 Jan 2006"
+    ]
+  }
+}

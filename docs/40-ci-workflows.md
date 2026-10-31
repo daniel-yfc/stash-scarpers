@@ -20,7 +20,7 @@ routing:
 
 # CI Workflows
 
-This map describes the eight workflow definitions in `.github/workflows/` reviewed on 2026-10-06. The date records a documentation review, not a passing run. GitHub Actions results must be checked for the exact commit; a skipped, filtered-out, or unrun job supplies no verification evidence.
+This map describes the repository GitHub Actions workflow definitions; the earlier eight-workflow inventory was reviewed on 2026-10-06, before further additions. The date records a documentation review, not a passing run. GitHub Actions results must be checked for the exact commit; a skipped, filtered-out, or unrun job supplies no verification evidence.
 
 ## Repository checks
 
@@ -65,6 +65,10 @@ python tools/check_metadata_feed.py
 | `scrutiny.yml` (Live Raw-Response Scrutiny)           | Manual                                      | Fetches HTTP and evaluates via JSDOM. Does not execute site JavaScript, render a browser DOM, or perform live Stash/CDP extraction.                                                                        |
 | `verification-staleness.yml` (Verification Staleness) | Weekly; scraper-path push to `main`; manual | Parses `validated_on` metadata and reports STALE / AGING / FRESH / UNKNOWN / NO_META buckets; opens a tracking issue when a scheduled run detects STALE scrapers.                                          |
 | `link-check.yml` (Advisory Documentation Links)       | Markdown-path PR; weekly; manual            | Checks repository Markdown links, including hidden `.github` documentation. `fail: false` keeps broken external links advisory: inspect the report; a green workflow is not proof that all links resolved. |
+
+## Skill evaluation contract workflow
+
+`skill-eval-contract.yml` runs the fixed corpus/schema validation, synthetic offline scorer negative tests, resource placement check and documentation index on qualifying PRs **without restricting the PR target branch**; it also supports qualifying `main` pushes and manual dispatch. A pass is **not** actual host Skill-loading evidence, workflow-stop verification or Stash/CDP functional E2E; see [`53-skill-evaluation.md`](53-skill-evaluation.md).
 
 ## Evidence boundaries
 

@@ -76,7 +76,7 @@ Supported keys:
 | `paginate` | boolean         | Walk search result pages                                         |
 
 Rules: never store credentials, cookies, or session material in a sidecar —
-use a logged-in browser session or `--cookie` at runtime. Prefer at least three
+use a logged-in isolated local browser session, or pass a locally authorized `SCRUTINY_COOKIE` process environment value to Scrutiny. The `--cookie` CLI option is forbidden; do not place credentials in argv, committed sidecars or logs. Prefer at least three
 detail URLs and one probe each of performer name, code, and partial title per
 site where the site supports search.
 
@@ -100,7 +100,7 @@ For meaningful site coverage, include detail layouts where variation is plausibl
 
 `validate.yml` runs path-filtered schema, URL sort, repository policy, pytest, safeguards, and documentation checks. `pr-check.yml` gives changed-scraper policy feedback. `fixture-manifests.yml`, `evidence-contract.yml`, and `cdp-evidence-gate.yml` have distinct fixture/claim scopes. `scrutiny.yml` is deliberately manual and raw-response only; `link-check.yml` is an advisory Markdown link check on Markdown PRs, weekly, and manually. Read [`40-ci-workflows.md`](40-ci-workflows.md) for the exact eight-workflow inventory, triggers, and proof boundaries.
 
-The five-task authoring evaluation in [`legacy-functional-eval.md`](../tests/skill-evals/legacy-functional-eval.md) is not an executable GitHub Actions evaluation. No workflow result should be represented as its 5/5 score. Neither fixture control nor the CDP claim gate launches a live Stash browser session.
+The five-task authoring evaluation in [`legacy-functional-eval.md`](../tests/skill-evals/legacy-functional-eval.md) is not an executable GitHub Actions evaluation. The new `skill-eval-contract.yml` validates the case corpus and offline negative tests only; it must not be represented as an actual Host Skill execution or 5/5 functional score. See [`53-skill-evaluation.md`](53-skill-evaluation.md). Neither fixture control nor the CDP claim gate launches a live Stash browser session.
 
 ## Submission checklist
 
@@ -113,7 +113,7 @@ The five-task authoring evaluation in [`legacy-functional-eval.md`](../tests/ski
 ## Troubleshooting
 
 - Missing root `name:`: ensure it is nonempty at column zero; a filename alone does not satisfy the schema.
-- Public `driver.cookies`: remove session material; private scraper policy is separate from upstream schema support.
+- Active `driver.cookies` in any Git-tracked scraper (including `scrapers/private/`): remove the block; use commented placeholders and keep private deployment copies outside Git. This repository policy is separate from upstream schema support.
 - Invalid `parseDate`: use a Go layout such as `2006-01-02`, not `YYYY` or `%Y` tokens.
 - Missing Python dependencies: install `requirements.txt`. For script syntax, use `bash -n tools/<script>.sh` or invoke scripts with `bash`.
 - Raw response differs from rendered DOM: save and classify both sanitized responses before revising selectors; do not turn snapshot evidence into a live-CDP claim.

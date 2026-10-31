@@ -1,0 +1,72 @@
+{
+  "suite": "near-miss",
+  "skill_id": "stash-scraper-builder",
+  "expected_skill_path": "skills/stash-scraper-builder/SKILL.md",
+  "repeat_per_host": 3,
+  "note": "Ten disambiguation cases; expected invocation is assessed by host load trace.",
+  "cases": [
+    {
+      "id": "NM-01",
+      "kind": "trigger",
+      "prompt": "WS-F: Review a Stash scraper without editing its YAML.",
+      "should_load": true,
+      "intent": "REVIEW_ONLY"
+    },
+    {
+      "id": "NM-02",
+      "kind": "trigger",
+      "prompt": "Can you validate this Stash sceneByFragment config but not commit?",
+      "should_load": true,
+      "intent": "VALIDATE_ONLY"
+    },
+    {
+      "id": "NM-03",
+      "kind": "trigger",
+      "prompt": "I have a Go RE2 date postProcess issue in a Stash script scraper.",
+      "should_load": true,
+      "intent": "DEBUG"
+    },
+    {
+      "id": "NM-04",
+      "kind": "trigger",
+      "prompt": "Review my Skill's trigger sentence and package its zip.",
+      "should_load": false
+    },
+    {
+      "id": "NM-05",
+      "kind": "trigger",
+      "prompt": "Fix the GitHub Actions PR check trigger for scraper YAML changes.",
+      "should_load": false
+    },
+    {
+      "id": "NM-06",
+      "kind": "trigger",
+      "prompt": "Explain how to call the Stash GraphQL API for Identify.",
+      "should_load": false
+    },
+    {
+      "id": "NM-07",
+      "kind": "trigger",
+      "prompt": "Rewrite an unrelated Scrapy spider using CDP.",
+      "should_load": false
+    },
+    {
+      "id": "NM-08",
+      "kind": "trigger",
+      "prompt": "Draft a Stash-box integration workflow, not CommunityScrapers.",
+      "should_load": false
+    },
+    {
+      "id": "NM-09",
+      "kind": "trigger",
+      "prompt": "Audit my repo's documentation index and CI path filters.",
+      "should_load": false
+    },
+    {
+      "id": "NM-10",
+      "kind": "trigger",
+      "prompt": "How do I edit YAML frontmatter for a WordPress crawler skill?",
+      "should_load": false
+    }
+  ]
+}

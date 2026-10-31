@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WS-F individual Skill evaluation case",
+  "type": "object",
+  "required": [
+    "id",
+    "kind",
+    "prompt"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^(POS|NEG|NM|STOP|E2E)-[0-9]{2}$"
+    },
+    "kind": {
+      "enum": [
+        "trigger",
+        "stop",
+        "functional"
+      ]
+    },
+    "prompt": {
+      "type": "string",
+      "minLength": 12,
+      "maxLength": 3000
+    },
+    "should_load": {
+      "type": "boolean"
+    },
+    "intent": {
+      "enum": [
+        "CREATE",
+        "REVISE",
+        "VALIDATE_ONLY",
+        "DEBUG",
+        "REVIEW_ONLY"
+      ]
+    },
+    "max_phase": {
+      "enum": [
+        "P0",
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6"
+      ]
+    },
+    "expected_status": {
+      "enum": [
+        "FAIL",
+        "BLOCKED"
+      ]
+    },
+    "must_not_write": {
+      "type": "boolean"
+    },
+    "prohibited_evidence": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "SCHEMA",
+          "VALUE_MATCH",
+          "SCRIPT_IO",
+          "FIXTURE_SITE",
+          "LOADER",
+          "LIVE_SEARCH",
+          "LIVE_DETAIL",
+          "CDP"
+        ]
+      }
+    },
+    "required_evidence": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "SCHEMA",
+          "VALUE_MATCH",
+          "SCRIPT_IO",
+          "FIXTURE_SITE",
+          "LOADER",
+          "LIVE_SEARCH",
+          "LIVE_DETAIL",
+          "CDP"
+        ]
+      }
+    },
+    "legacy_task_number": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "source_path": {
+      "type": "string",
+      "const": "tests/skill-evals/legacy-functional-eval.md"
+    },
+    "scenario_ref": {
+      "type": "string",
+      "pattern": "^tests/skill-evals/scenarios/E2E-[0-9]{2}\\.json$"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "trigger"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "should_load"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "stop"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "should_load",
+          "max_phase",
+          "must_not_write",
+          "prohibited_evidence"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "functional"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "should_load",
+          "intent",
+          "legacy_task_number",
+          "required_evidence",
+          "source_path",
+          "scenario_ref"
+        ],
+        "properties": {
+          "should_load": {
+            "const": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "should_load": {
+            "const": true
+          }
+        },
+        "required": [
+          "should_load"
+        ]
+      },
+      "then": {
+        "required": [
+          "intent"
+        ]
+      }
+    }
+  ]
+}

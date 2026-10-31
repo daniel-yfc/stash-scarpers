@@ -1,0 +1,85 @@
+{
+  "suite": "functional-e2e",
+  "skill_id": "stash-scraper-builder",
+  "expected_skill_path": "skills/stash-scraper-builder/SKILL.md",
+  "repeat_per_host": 3,
+  "note": "Five legacy authoring tasks; real loader/site/CDP evidence remains NOT_RUN until independently collected.",
+  "cases": [
+    {
+      "id": "E2E-01",
+      "kind": "functional",
+      "prompt": "Create new XPath scraper from completed HTML with verified selectors.",
+      "should_load": true,
+      "intent": "CREATE",
+      "legacy_task_number": 1,
+      "source_path": "tests/skill-evals/legacy-functional-eval.md",
+      "required_evidence": [
+        "SCHEMA",
+        "VALUE_MATCH",
+        "LOADER"
+      ],
+      "scenario_ref": "tests/skill-evals/scenarios/E2E-01.json"
+    },
+    {
+      "id": "E2E-02",
+      "kind": "functional",
+      "prompt": "Create JSON scraper from observed JSON API response; search modes verified.",
+      "should_load": true,
+      "intent": "CREATE",
+      "legacy_task_number": 2,
+      "source_path": "tests/skill-evals/legacy-functional-eval.md",
+      "required_evidence": [
+        "SCHEMA",
+        "VALUE_MATCH",
+        "LOADER"
+      ],
+      "scenario_ref": "tests/skill-evals/scenarios/E2E-02.json"
+    },
+    {
+      "id": "E2E-03",
+      "kind": "functional",
+      "prompt": "Create script scraper with Python entrypoints and dependency execution.",
+      "should_load": true,
+      "intent": "CREATE",
+      "legacy_task_number": 3,
+      "source_path": "tests/skill-evals/legacy-functional-eval.md",
+      "required_evidence": [
+        "SCHEMA",
+        "SCRIPT_IO",
+        "LOADER"
+      ],
+      "scenario_ref": "tests/skill-evals/scenarios/E2E-03.json"
+    },
+    {
+      "id": "E2E-04",
+      "kind": "functional",
+      "prompt": "Repair Stash Date with replace before Go parseDate; return complete file.",
+      "should_load": true,
+      "intent": "REVISE",
+      "legacy_task_number": 4,
+      "source_path": "tests/skill-evals/legacy-functional-eval.md",
+      "required_evidence": [
+        "SCHEMA",
+        "VALUE_MATCH",
+        "LOADER"
+      ],
+      "scenario_ref": "tests/skill-evals/scenarios/E2E-04.json"
+    },
+    {
+      "id": "E2E-05",
+      "kind": "functional",
+      "prompt": "Create and verify a safe authenticated CDP scraper in an authorized isolated profile.",
+      "should_load": true,
+      "intent": "CREATE",
+      "legacy_task_number": 5,
+      "source_path": "tests/skill-evals/legacy-functional-eval.md",
+      "required_evidence": [
+        "SCHEMA",
+        "LOADER",
+        "CDP",
+        "VALUE_MATCH"
+      ],
+      "scenario_ref": "tests/skill-evals/scenarios/E2E-05.json"
+    }
+  ]
+}

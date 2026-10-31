@@ -1,0 +1,97 @@
+name: Skill Evaluation Contract
+
+on:
+  pull_request:
+    paths:
+      - "skills/stash-scraper-builder/**"
+      - "tests/skill-evals/**"
+      - "tools/evals/**"
+      - "tools/tests/test_skill_eval.py"
+      - "docs/53-skill-evaluation.md"
+      - "docs/index.yml"
+      - ".github/workflows/skill-eval-contract.yml"
+  push:
+    branches: [main]
+    paths:
+      - "skills/stash-scraper-builder/**"
+      - "tests/skill-evals/**"
+      - "tools/evals/**"
+      - "tools/tests/test_skill_eval.py"
+      - "docs/53-skill-evaluation.md"
+      - "docs/index.yml"
+      - ".github/workflows/skill-eval-contract.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  corpus-and-contract:
+    name: Corpus, Trace Scorer Unit Tests and Documentation
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact PR head (not an implicit test merge)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+
+      - name: Record evaluated head and tree
+        run: |
+          git rev-parse HEAD
+          git rev-parse HEAD^{tree}
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install Python dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Setup Node for stacked-PR regression
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Validate fixed case corpus and expectations
+        run: python tools/evals/validate_cases.py --json
+
+      - name: Exercise negative gates and offline trace checker
+        run: python -m pytest tools/tests/test_skill_eval.py -v
+
+      - name: Run full scraper and repo policy regressions
+        run: |
+          node validator/index.mjs -a --ci
+          node validator/index.mjs -a -s --ci
+          bash tools/validate-all.sh
+          python -m pytest tools/tests/ -v
+          python tools/check_scraper_docs.py
+
+      - name: Smoke-test offline host scorer without inventing results
+        shell: bash
+        run: |
+          python tools/evals/evaluate_traces.py --host codex --repo-sha "$(git rev-parse HEAD)" --trace-dir logs/skill-evals/traces
+          set +e
+          python tools/evals/evaluate_traces.py --host codex --repo-sha "$(git rev-parse HEAD)" --trace-dir logs/skill-evals/traces --require-complete
+          status=$?
+          set -e
+          if [ "$status" -ne 2 ]; then
+            echo "Fail-closed host-evidence gate did not return 2"
+            exit 1
+          fi
+
+      - name: Verify resource placement and documentation index
+        run: |
+          python tools/check_resource_placement.py
+          python tools/check_docs_index.py
+
+      - name: State host-evaluation proof boundary
+        run: echo "PASS covers corpus/schema/unit tests only; host Skill loads and functional Stash/CDP remain NOT_RUN."

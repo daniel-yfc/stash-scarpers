@@ -1,0 +1,22 @@
+{
+  "case_id": "E2E-03",
+  "spec_version": 1,
+  "synthetic_source": true,
+  "note": "Deterministic input/expected contract only; not a live Stash/CDP pass.",
+  "id": "E2E-03",
+  "kind": "script",
+  "input_type": "application/json",
+  "source_url": "https://example.invalid/script/stdin",
+  "input_body": "{\"url\":\"https://example.invalid/scenes/demo-03\",\"mode\":\"sceneByURL\"}",
+  "expected_fields": {
+    "Title": "Script Scene",
+    "Performers": [
+      "Mio"
+    ]
+  },
+  "contract": {
+    "stdin": "Stash script action envelope",
+    "stdout": "scene metadata JSON object",
+    "requires": "explicit local Python dependency and script file"
+  }
+}

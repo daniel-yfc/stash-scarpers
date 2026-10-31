@@ -1,0 +1,19 @@
+{
+  "case_id": "E2E-02",
+  "spec_version": 1,
+  "synthetic_source": true,
+  "note": "Deterministic input/expected contract only; not a live Stash/CDP pass.",
+  "id": "E2E-02",
+  "kind": "json",
+  "input_type": "application/json",
+  "source_url": "https://example.invalid/api/scenes/demo-02",
+  "input_body": "{\"scene\":{\"title\":\"JSON Scene\",\"release_date\":\"2024-02-10\",\"studio\":\"JSON Studio\",\"cast\":[\"Rei\"]}}",
+  "expected_fields": {
+    "Title": "JSON Scene",
+    "Date": "2024-02-10",
+    "Studio": "JSON Studio",
+    "Performers": [
+      "Rei"
+    ]
+  }
+}
