@@ -172,6 +172,7 @@ def scan_json_structure(text: str) -> set[str]:
 
 
 JSON_PAIR = re.compile(r'"((?:\\.|[^"\\])*)"\s*:\s*("(?:\\.|[^"\\])*"??|[^\s,}\]"\{\[]+)')
+JSON_CONTAINER = re.compile(r'"((?:\\.|[^"\\])*)"\s*:\s*([\{\[])')
 
 
 def _decode_json_string(raw: str) -> str | None:
@@ -193,9 +194,12 @@ def scan_json_lexical_fallback(text: str) -> set[str]:
     \\uXXXX escapes), and apply the same field policy as the parsed walk.
     Only used when the whole-document parse failed; well-formed JSON keeps
     the exact parsed semantics (including schema-name exclusions). The
-    lexical value token covers scalar values (string/number/boolean/null);
-    a sensitive key whose value is itself an object or array does not pair
-    lexically, so scanning continues into its contents instead.
+    lexical value token covers scalar values (string/number/boolean/null).
+    QA-19: a sensitive key whose value is a container does not pair
+    lexically, so a non-empty object/array value (including a truncated,
+    unclosed one) is flagged by key, mirroring the parsed walk, which
+    rejects non-empty dict/list values and ignores empty ones; scanning
+    also continues into the container's contents for nested pairs.
     """
     errors: set[str] = set()
     for match in JSON_PAIR.finditer(text):
@@ -215,6 +219,21 @@ def scan_json_lexical_fallback(text: str) -> set[str]:
         elif SENSITIVE_KEY.fullmatch(key):
             if value not in ("", "null") and not is_placeholder(value):
                 errors.add("CREDENTIAL_FIELD")
+    for match in JSON_CONTAINER.finditer(text):
+        key = _decode_json_string(match.group(1))
+        if key is None:
+            continue
+        if not (COOKIE_FIELD.fullmatch(key) or SENSITIVE_KEY.fullmatch(key)):
+            continue
+        if COOKIE_FIELD.fullmatch(key):
+            # Presence alone is disallowed, mirroring the parsed walk.
+            errors.add("ACTIVE_COOKIE_FIELD")
+            continue
+        closer = "}" if match.group(2) == "{" else "]"
+        rest = text[match.end():].lstrip()
+        if not rest or rest.startswith(closer):
+            continue  # empty container: no material, mirrors the parsed walk
+        errors.add("CREDENTIAL_FIELD")
     return errors
 
 
