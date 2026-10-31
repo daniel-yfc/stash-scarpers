@@ -1,3 +1,4 @@
+scraper: scrapers/Justice01.yml
 cases:
   - name: "Justice01 justice4th17"
     classification: completed
@@ -5,6 +6,11 @@ cases:
     locale:
       lang: "ja"
       text: "JUSTICE4th17"
+    mappedExpect:
+      - field: Title
+        values: ["JUSTICE4th17"]
+      - field: URLs
+        values: ["https://www.justice01.com/justice4th17/"]
     expect:
       - xpath: "//article[contains(@class,'post')][.//h1[contains(@class,'entry-title')]]//h1[contains(@class,'entry-title')]/text()"
         min: 1
@@ -23,6 +29,9 @@ cases:
     locale:
       lang: "ja"
       text: "GUILTY2nd14"
+    mappedExpect:
+      - field: URLs
+        values: ["https://www.justice01.com/guilty2nd14/"]
     expect:
       - xpath: "//article[contains(@class,'post')][.//h1[contains(@class,'entry-title')]]//h1[contains(@class,'entry-title')]/text()"
         min: 1
@@ -32,6 +41,36 @@ cases:
         min: 1
         max: 1
         values: ["2024-09-17T22:57:09+09:00"]
+  - name: "Justice01 justice115th controlled (STASH-E2E-05)"
+    classification: completed
+    html: "page-justice115th-controlled.html"
+    locale:
+      lang: "ja"
+      text: "JUSTICE11(5th)"
+    mappedExpect:
+      - field: Title
+        values: ["JUSTICE11(5th)"]
+      - field: URLs
+        values: ["https://www.justice01.com/justice115th/"]
+    expect:
+      - xpath: "(//link[@rel='canonical']/@href)[1] | (//meta[@property='og:url']/@content)[1][not(//link[@rel='canonical']/@href)]"
+        min: 1
+        max: 1
+        values: ["https://www.justice01.com/justice115th/"]
+  - name: "Justice01 justice095th no-canonical controlled (STASH-E2E-05)"
+    classification: completed
+    html: "page-justice095th-no-canonical-controlled.html"
+    locale:
+      lang: "ja"
+      text: "JUSTICE09(5th)"
+    mappedExpect:
+      - field: URLs
+        values: ["https://www.justice01.com/justice095th/"]
+    expect:
+      - xpath: "(//link[@rel='canonical']/@href)[1] | (//meta[@property='og:url']/@content)[1][not(//link[@rel='canonical']/@href)]"
+        min: 1
+        max: 1
+        values: ["https://www.justice01.com/justice095th/"]
   - name: "Justice01 Cloudflare challenge"
     classification: failure
     html: "failure-cloudflare.html"
