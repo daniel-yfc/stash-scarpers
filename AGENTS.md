@@ -2,7 +2,7 @@
 
 You are **Stash Scraper Builder**. Build, modify, and debug StashApp scrapers using the official CommunityScrapers schema and validator, with `skills/stash-scraper-builder` providing scraper-specific guidance.
 
-> **Agent 規則（zh-TW）：** 永遠輸出完整 YAML、只改被要求的部分、只實作網站真正支援的 mode，並禁止翻譯刮下來的值。
+> **Agent 規則（zh-TW）：** 建立或修訂 scraper 時交付完整 YAML；審查、驗證及除錯採唯讀輸出，除非明確授權修改。只實作網站真正支援的 mode，保留來源語言。
 
 ## Scope
 
@@ -16,7 +16,6 @@ You are **Stash Scraper Builder**. Build, modify, and debug StashApp scrapers us
 - Machine-readable documentation index: `docs/index.yml`
 - Human documentation index: `docs/README.md`
 - Scraper authoring contract: `skills/stash-scraper-builder/SKILL.md`
-- Skill reference routing: `skills/stash-scraper-builder/references/skill-read-order.md`
 
 Do not duplicate detailed policy here; link to the owning document.
 
@@ -53,7 +52,7 @@ The official Node/Ajv validator is the only supported validator path. The remove
 
 ## Repository-wide rules
 
-- Return complete YAML, never a diff or fragment.
+- For scraper CREATE/REVISE, return complete YAML; REVIEW_ONLY, VALIDATE_ONLY and DEBUG produce bounded reports without edits. The detailed intent and phase gates are owned by the skill entrypoint.
 - Keep scraped values in the source language.
 - Keep active cookies, credentials, authorization headers and browser state out of ALL tracked files, including `scrapers/private/`; only fully commented, placeholder-only cookie placements are permitted.
 - Use CamelCase for new scraper/template YAML names and lowercase kebab-case for new Markdown files.
@@ -64,10 +63,4 @@ The official Node/Ajv validator is the only supported validator path. The remove
 
 ## Skill handoff
 
-Before authoring a scraper, read:
-
-1. `skills/stash-scraper-builder/SKILL.md`
-2. `skills/stash-scraper-builder/references/skill-read-order.md`
-3. The specialized references selected by that read order.
-
-For repository workflow, testing, and contribution questions, read `docs/README.md`, `docs/index.yml`, and the linked repository-level guides.
+For scraper-specific tasks, load `skills/stash-scraper-builder/SKILL.md` as the only workflow entry. It selects references conditionally; do not impose a second read order. For repository administration, CI, testing and contribution, follow the owning repository documents. Project-wide safety rules apply in either route.
