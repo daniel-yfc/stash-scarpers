@@ -1,4 +1,111 @@
+scraper: scrapers/BRAVO.yml
 cases:
+  - name: "BRAVO clip 284"
+    classification: completed
+    html: "clip-284.html"
+    locale:
+      lang: "ja"
+      text: "284"
+    mappedExpect:
+      - field: Title
+        values: ["デカマラ同士 目隠し交尾"]
+      - field: Code
+        values: ["284"]
+      - field: Duration
+        values: ["1800"]
+      - field: URLs
+        routeThrough: sceneByURL
+        values: ["https://www.bravo-japan.com/clips/284"]
+      - field: Details
+        values: ["フィクスチャ用の説明文です。"]
+      - field: Tags.Name
+        values: ["テスト,フィクスチャ"]
+      - field: Image
+        values: ["https://example.invalid/clip-284-poster.jpg"]
+    expect:
+      - xpath: "//h1"
+        min: 1
+        max: 1
+        values: ["デカマラ同士 目隠し交尾"]
+      - xpath: "//h2[normalize-space()='Clip']/preceding::h2[1]"
+        min: 1
+        max: 1
+        values: ["284"]
+      - xpath: "//link[@rel='canonical']/@href"
+        min: 1
+        max: 1
+        values: ["https://www.bravo-japan.com/clips/284"]
+    optionalField:
+      xpath: "//h2[normalize-space()='品番']"
+      expectedCount: 0
+  - name: "BRAVO clip 282"
+    classification: completed
+    html: "clip-282.html"
+    locale:
+      lang: "ja"
+      text: "282"
+    mappedExpect:
+      - field: Title
+        values: ["初撮影ヤマト５Ｐ"]
+      - field: Code
+        values: ["282"]
+      - field: Duration
+        values: ["1800"]
+      - field: URLs
+        routeThrough: sceneByURL
+        values: ["https://www.bravo-japan.com/clips/282"]
+      - field: Details
+        values: ["フィクスチャ用の説明文です。"]
+      - field: Tags.Name
+        values: ["テスト,フィクスチャ"]
+      - field: Image
+        values: ["https://static.wixstatic.com/media/fixture-clip-282-cover.jpg"]
+    expect:
+      - xpath: "//h1"
+        min: 1
+        max: 1
+        values: ["初撮影ヤマト５Ｐ"]
+      - xpath: "//h2[normalize-space()='Clip']/preceding::h2[1]"
+        min: 1
+        max: 1
+        values: ["282"]
+      - xpath: "//link[@rel='canonical']/@href"
+        min: 1
+        max: 1
+        values: ["https://www.bravo-japan.com/clips/282"]
+    optionalField:
+      xpath: "//h2[normalize-space()='品番']"
+      expectedCount: 0
+  - name: "BRAVO clip missing title"
+    classification: completed
+    html: "clip-missing-title.html"
+    locale:
+      lang: "ja"
+      text: "999"
+    mappedExpect:
+      - field: Title
+        values: []
+      - field: Code
+        values: ["999"]
+      - field: Duration
+        values: ["1800"]
+      - field: URLs
+        routeThrough: sceneByURL
+        values: ["https://www.bravo-japan.com/clips/999"]
+      - field: Image
+        values: []
+    expect:
+      - xpath: "//h2[normalize-space()='Clip']/preceding::h2[1]"
+        min: 1
+        max: 1
+        values: ["999"]
+      - xpath: "//link[@rel='canonical']/@href"
+        min: 1
+        max: 1
+        values: ["https://www.bravo-japan.com/clips/999"]
+    optionalField:
+      xpath: "//h1"
+      expectedCount: 0
   - name: "BRAVO dvd 281"
     classification: completed
     html: "dvd-281.html"

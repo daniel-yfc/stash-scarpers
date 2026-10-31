@@ -1,27 +1,40 @@
 # BRAVO-JAPAN (bravo-japan.com) — Wix dynamic-pages site (配信作品紹介).
 # Public CDP version: driver.useCDP: true; no driver.cookies.
-# Verification status (2026-09-06, anonymous fetch of live pages):
-#   VERIFIED against https://www.bravo-japan.com/clips/275 (SSR source):
-#   - Wix renders clip data via wix-warmup-data ssrPropsUpdates; after CDP
-#     hydration the following comps carry content (stable per template):
-#       #comp-kbfkf16x  h1.font_0   work title (シンタ兄貴とS熊兄貴)
-#       #comp-kbfkf17h  p.font_8    description
-#       #comp-kbfljjti  h2          CLIP No. (275)
-#       #comp-kbfmf948  h2          time in minutes (37) + separate min label
-#     og:title is just the CLIP No.; og:image is empty for this template.
-#   - collection schema (配信作品紹介) has: title, clipNo, description, tag,
-#     time, price, pv, store links — NO release date field.
-#   - tags: meta[name=keywords] (comma-separated, source language).
-#   - list pages: /clips (最新), /copy-N-of-clips (category/role variants);
-#     detail URLs are /clips/{clipNo}. No keyword search endpoint exists
-#     (Wix) — sceneByName intentionally omitted.
-# Selector risk: Wix comp- IDs are template-stable but a site redesign
-# breaks them; re-verify comp ids against a fresh page before trusting.
-# Date/Studio: no verifiable per-clip date; studio brand omitted rather than
-# fabricated/invented (site covers BRAVO/GMPD/etc. lines).
-# 2026-10-06: re-verified against /clips/284, /clips/282, /clips/283 —
-# all detail selectors healthy; site has no search box (probes N/A).
-# Last Updated: 2026-10-06
+# Clips-only scraper (Wave 1B, STASH-E2E-03 / BRAVO part of STASH-E2E-04).
+# Verification status (2026-11-01, live rendered DOM for /clips/284 and
+# /clips/282, plus the raw-text fetch of the same pages):
+#   - Rendered heading order is identical on both pages: h2 BRAVO-JAPAN,
+#     h2 GO to BRAVO-CLIPS, h1 work title, h2 description, h2 clip number,
+#     h2 "Clip", h2 duration minutes, h2 作品TIME, h2 min.
+#   - Title source: the single h1. Code source: the h2 immediately before
+#     the "Clip" label (284 / 282), which agrees with the document title and
+#     the canonical URL's last segment. Duration source: the h2 immediately
+#     before the 作品TIME label (30 on both pages, hence 1800 seconds).
+#   - Details source: the first h2 following the h1 (rendered description
+#     hangs under an h2, not a <p>). Tags: meta[name=keywords], preserved
+#     from the previous scraper (E2E observed Tags present on clips/284).
+#   - "品番" does NOT appear in the rendered Clips text at all, so the old
+#     DVD selectors (h2 around 品番) returned nothing for Title/Code here.
+#     That is the STASH-E2E-03 root cause, not a Stash runtime bug.
+#   - Image: NO verified live cover was disclosed by the rendered-DOM
+#     inspection. The only verified wixstatic image was the shared myfans
+#     logo GIF, which must never be returned as a cover. The selector below
+#     therefore takes a video poster first, then a non-GIF wixstatic image,
+#     and excludes every .gif. A live cover value remains UNVERIFIED until
+#     Gate B checks it on stash-test; do not claim one from this YAML alone.
+#   - Date/Studio: the Clips source provides no release date and no
+#     per-clip studio; both fields stay absent rather than fabricated.
+#   - sceneByFragment removed: with an empty scene Title it expanded to
+#     clips/{title} and produced clips/%7Btitle%7D false metadata
+#     (STASH-E2E-04, BRAVO part). sceneByQueryFragment with queryURL
+#     "{url}" is retained, as required by local quality policy.
+#   - DVD support is NOT added here. /dvds/ routing belongs to Wave 2E
+#     (feat/e2e-bravo-dvds) after this PR merges, with its own
+#     dvdSceneScraper and DVD DOM evidence. The old DVD selectors are
+#     therefore not kept as a dead second scraper in this file.
+# Selector risk: Wix layout is template-stable but a site redesign breaks
+# these label-adjacency selectors; re-verify against a fresh page first.
+# Last Updated: 2026-11-01
 
 name: Bravo-Japan
 
@@ -30,44 +43,28 @@ sceneByURL:
     url:
       - "bravo-japan.com/clips/"
       - "www.bravo-japan.com/clips/"
-    scraper: sceneScraper
+    scraper: clipSceneScraper
 
 sceneByQueryFragment:
   action: scrapeXPath
   queryURL: "{url}"
-  scraper: sceneScraper
-
-sceneByFragment:
-  action: scrapeXPath
-  queryURL: "https://www.bravo-japan.com/clips/{title}"
-  queryURLReplace:
-    title:
-      - regex: '\.[^.]+$'
-        with: ""
-      - regex: "[^0-9]+([0-9]+)$"
-        with: "$1"
-      - regex: '^\s+|\s+$'
-        with: ""
-  scraper: sceneScraper
+  scraper: clipSceneScraper
 
 xPathScrapers:
-  sceneScraper:
-    common:
-      $title: "//div[@id='comp-kbfkf16x']"
-      $desc: "//div[@id='comp-kbfkf17h']"
-
+  clipSceneScraper:
     scene:
       Title:
-        # Wix redesign 2026-10-17: title is h2 before 品番 label. Verified on dvds/376,347,372.
-        selector: "//h2[contains(.,'品番')]/preceding::h2[2]"
+        # Clips rendered DOM: the single h1 is the work title.
+        selector: "//h1[1]"
         postProcess:
           - replace:
               - regex: "^\\s+|\\s+$"
                 with: ""
 
       Code:
-        # Wix redesign 2026-10-17: code follows 品番 label. Verified on dvds/376,347,372.
-        selector: "//h2[contains(.,'品番')]/following::h2[1]"
+        # Clips rendered DOM: clip number is the h2 immediately before
+        # the "Clip" label; agrees with document title and canonical path.
+        selector: "//h2[normalize-space()='Clip']/preceding::h2[1]"
         postProcess:
           - replace:
               - regex: "^\\s+|\\s+$"
@@ -77,7 +74,9 @@ xPathScrapers:
         selector: "//link[@rel='canonical']/@href"
 
       Duration:
-        selector: "//div[@id='comp-kbfmf948']//h2"
+        # Clips rendered DOM: minutes are the h2 immediately before
+        # the 作品TIME label; converted to seconds as before.
+        selector: "//h2[normalize-space()='作品TIME']/preceding::h2[1]"
         postProcess:
           - javascript: |
               var v = value || "";
@@ -95,14 +94,18 @@ xPathScrapers:
           split: ","
 
       Details:
-        selector: "$desc//p[1]"
+        # Clips rendered DOM: description is the first h2 after the h1.
+        selector: "//h1[1]/following::h2[1]"
         postProcess:
           - replace:
               - regex: "^\\s+|\\s+$"
                 with: ""
 
-      Image: # Wix redesign 2026-10-17: product image has alt=title. Verified on dvds/376,347,372.
-        selector: "//img[@alt!='' and contains(@src,'wixstatic')]/@src"
+      Image: # Video poster first, then a non-GIF wixstatic image.
+        # The .gif exclusion removes the shared myfans logo GIF, the only
+        # wixstatic image verified in the rendered-DOM inspection.
+        # Live cover value: UNVERIFIED until Gate B (see header comment).
+        selector: "//video/@poster | //img[contains(@src,'wixstatic') and not(contains(@src,'.gif'))]/@src"
         postProcess:
           - javascript: |
               var v = value || "";
