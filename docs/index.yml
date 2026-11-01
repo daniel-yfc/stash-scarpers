@@ -1,7 +1,7 @@
 version: 1
 documents:
 - doc_id: DOC-E2E-61
-  title: BRAVO DVD Wave 2E Plan
+  title: BRAVO DVD Wave 2E Detailed Implementation Plan
   path: docs/61-bravo-dvd-wave-2e.md
   layer: repository
   status: draft
