@@ -1,6 +1,10 @@
 <!-- Fixture-local missing-title Clips page. No h1 is present on purpose:
      a scene whose Title is empty must not be rescued by a bogus value, and
-     its clip number must still be readable from the Clip label pair. -->
+     its clip number must still be readable from the Clip label pair.
+     LIMITATION (recorded for Gate B, not hidden): Code/Duration/URL here
+     are page-derived values, not invented, but a Title-less result is
+     incomplete and must NOT be accepted as a successful scrape in Gate B.
+     Declarative scrapeXPath has no cross-field guard to suppress them. -->
 <html lang="ja">
 <head>
 <link rel="canonical" href="https://www.bravo-japan.com/clips/999">

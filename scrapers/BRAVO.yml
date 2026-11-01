@@ -16,12 +16,26 @@
 #   - "品番" does NOT appear in the rendered Clips text at all, so the old
 #     DVD selectors (h2 around 品番) returned nothing for Title/Code here.
 #     That is the STASH-E2E-03 root cause, not a Stash runtime bug.
-#   - Image: NO verified live cover was disclosed by the rendered-DOM
-#     inspection. The only verified wixstatic image was the shared myfans
-#     logo GIF, which must never be returned as a cover. The selector below
-#     therefore takes a video poster first, then a non-GIF wixstatic image,
-#     and excludes every .gif. A live cover value remains UNVERIFIED until
-#     Gate B checks it on stash-test; do not claim one from this YAML alone.
+#   - Image: SOURCE_IMAGE_UNVERIFIED. NO verified live cover was disclosed
+#     by the rendered-DOM inspection: a video player is present on both
+#     Clips pages, but its poster attribute URL was not disclosed, and the
+#     only verified wixstatic image was the shared myfans logo GIF, which
+#     must never be returned as a cover. The selector below is therefore
+#     narrowed to the product video's own poster attribute ONLY, with no
+#     <img> fallback of any kind: no logo, no unrelated site artwork, no
+#     broad non-GIF Wix image can be returned. If the live video has no
+#     poster attribute, Image is empty (fail-closed). A live poster value
+#     remains UNVERIFIED until Gate B checks it on stash-test; do not
+#     claim one from this YAML alone, and do not treat the controlled
+#     fixture poster URLs as real website covers.
+#   - Title-less limitation: declarative scrapeXPath fields are
+#     independent, so this YAML has no cross-field guard that suppresses
+#     Code/Duration/URLs when Title is empty. On a Title-less page those
+#     three values are still page-derived (Clip label pair, duration
+#     label, canonical URL), not invented — but a Title-less result is
+#     incomplete and must NOT be accepted as a successful scrape in
+#     Gate B. That runtime acceptance question is recorded for Gate B,
+#     not papered over here.
 #   - Date/Studio: the Clips source provides no release date and no
 #     per-clip studio; both fields stay absent rather than fabricated.
 #   - sceneByFragment removed: with an empty scene Title it expanded to
@@ -34,7 +48,9 @@
 #     therefore not kept as a dead second scraper in this file.
 # Selector risk: Wix layout is template-stable but a site redesign breaks
 # these label-adjacency selectors; re-verify against a fresh page first.
-# Last Updated: 2026-11-01
+# Last Updated: 2026-11-01 (stabilization: Image narrowed to poster-only,
+# historical fixture manifest restored; Clips cases isolated in
+# bravo-clips-fixtures.yml)
 
 name: Bravo-Japan
 
@@ -101,11 +117,12 @@ xPathScrapers:
               - regex: "^\\s+|\\s+$"
                 with: ""
 
-      Image: # Video poster first, then a non-GIF wixstatic image.
-        # The .gif exclusion removes the shared myfans logo GIF, the only
-        # wixstatic image verified in the rendered-DOM inspection.
-        # Live cover value: UNVERIFIED until Gate B (see header comment).
-        selector: "//video/@poster | //img[contains(@src,'wixstatic') and not(contains(@src,'.gif'))]/@src"
+      Image: # Product video poster ONLY. No <img> fallback: this removes
+        # the previous broad non-GIF Wix fallback, whose union order was
+        # document-order dependent and could return unrelated site artwork.
+        # SOURCE_IMAGE_UNVERIFIED for live: Gate B must confirm the actual
+        # live poster value, or its absence (then Image stays empty).
+        selector: "//video/@poster"
         postProcess:
           - javascript: |
               var v = value || "";

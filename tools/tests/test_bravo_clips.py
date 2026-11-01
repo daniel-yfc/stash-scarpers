@@ -58,8 +58,65 @@ def test_clip_selectors_are_not_dvd_selectors():
     assert "Studio" not in clip
 
 
-def test_clip_image_excludes_placeholder_gif():
+def test_clip_image_is_poster_only():
+    # Stabilization: no <img> fallback at all. The previous union was
+    # document-order dependent and could return unrelated Wix artwork;
+    # poster-only is fail-closed (no poster attribute -> no Image).
+    # Live poster value is SOURCE_IMAGE_UNVERIFIED, pending Gate B.
     data = load()
     selector = data["xPathScrapers"]["clipSceneScraper"]["scene"]["Image"]["selector"]
-    assert ".gif" in selector
-    assert "not(" in selector
+    assert selector == "//video/@poster"
+    assert "img" not in selector
+    text = BRAVO.read_text()
+    assert "SOURCE_IMAGE_UNVERIFIED" in text
+
+
+def test_historical_fixture_manifest_preserved():
+    # The archived evidence record pins this file by digest; Wave 1B must
+    # not edit it. Clips cases live in bravo-clips-fixtures.yml instead.
+    import hashlib
+
+    import yaml as yaml_lib
+
+    historical = ROOT / "tests" / "fixtures" / "bravo" / "bravo-fixtures.yml"
+    digest = hashlib.sha256(historical.read_bytes()).hexdigest()
+    assert digest == "be1885d2097683e8c4ae5f2440120e8bd7945ac16f62c1910ac87e5d009d39b2"
+    manifest = yaml_lib.safe_load(historical.read_text())
+    assert "scraper" not in manifest
+    names = [c["name"] for c in manifest["cases"]]
+    assert names == [
+        "BRAVO dvd 281",
+        "BRAVO dvd 046",
+        "BRAVO Cloudflare challenge",
+    ]
+    evidence = yaml_lib.safe_load(
+        (ROOT / "docs" / "archive" / "evidence" / "status" / "bravo.yml").read_text()
+    )
+    fixture = evidence["states"]["fixture"]
+    assert fixture["artifact"] == "tests/fixtures/bravo/bravo-fixtures.yml"
+    assert fixture["sha256"] == digest
+    assert fixture["captured_at"] == "2026-10-14T19:09:10+08:00"
+
+
+def test_clips_manifest_is_isolated():
+    import yaml as yaml_lib
+
+    manifest = yaml_lib.safe_load(
+        (ROOT / "tests" / "fixtures" / "bravo" / "bravo-clips-fixtures.yml").read_text()
+    )
+    assert manifest["scraper"] == "scrapers/BRAVO.yml"
+    names = [c["name"] for c in manifest["cases"]]
+    assert "BRAVO clip 284" in names
+    assert "BRAVO clip 282" in names
+    assert "BRAVO clip missing title" in names
+    assert "BRAVO clip no verified cover" in names
+    assert "BRAVO clip 284 with extra headings" in names
+    assert not any("dvd" in n.lower() for n in names)
+
+
+def test_title_less_limitation_is_documented():
+    # Declarative XPath cannot suppress Code/Duration/URLs when Title is
+    # empty; that limitation must be recorded, not hidden, for Gate B.
+    text = BRAVO.read_text()
+    assert "Title-less" in text or "Title-less limitation" in text
+    assert "must NOT be accepted as a successful scrape" in text

@@ -1,0 +1,189 @@
+# Wave 1B Clips mapping tests, isolated from the historical manifest.
+# Historical bravo-fixtures.yml (DVD + Cloudflare cases, evidence digest
+# be1885d2...) is restored byte-for-byte from main and must NOT be edited
+# to accommodate these cases; that is why this separate manifest exists.
+# Poster URLs and description/keywords in these fixtures are CONTROLLED
+# fixture-local values, NOT real website covers or live copy.
+# Live Image value: SOURCE_IMAGE_UNVERIFIED, pending Gate B.
+scraper: scrapers/BRAVO.yml
+cases:
+  - name: "BRAVO clip 284"
+    classification: completed
+    html: "clip-284.html"
+    locale:
+      lang: "ja"
+      text: "284"
+    mappedExpect:
+      - field: Title
+        values: ["デカマラ同士 目隠し交尾"]
+      - field: Code
+        values: ["284"]
+      - field: Duration
+        values: ["1800"]
+      - field: URLs
+        routeThrough: sceneByURL
+        values: ["https://www.bravo-japan.com/clips/284"]
+      - field: Details
+        values: ["フィクスチャ用の説明文です。"]
+      - field: Tags.Name
+        values: ["テスト,フィクスチャ"]
+      - field: Image
+        values: ["https://example.invalid/clip-284-poster.jpg"]
+    expect:
+      - xpath: "//h1"
+        min: 1
+        max: 1
+        values: ["デカマラ同士 目隠し交尾"]
+      - xpath: "//h2[normalize-space()='Clip']/preceding::h2[1]"
+        min: 1
+        max: 1
+        values: ["284"]
+      - xpath: "//link[@rel='canonical']/@href"
+        min: 1
+        max: 1
+        values: ["https://www.bravo-japan.com/clips/284"]
+    optionalField:
+      xpath: "//h2[normalize-space()='品番']"
+      expectedCount: 0
+  - name: "BRAVO clip 282"
+    classification: completed
+    html: "clip-282.html"
+    locale:
+      lang: "ja"
+      text: "282"
+    mappedExpect:
+      - field: Title
+        values: ["初撮影ヤマト５Ｐ"]
+      - field: Code
+        values: ["282"]
+      - field: Duration
+        values: ["1800"]
+      - field: URLs
+        routeThrough: sceneByURL
+        values: ["https://www.bravo-japan.com/clips/282"]
+      - field: Details
+        values: ["フィクスチャ用の説明文です。"]
+      - field: Tags.Name
+        values: ["テスト,フィクスチャ"]
+      - field: Image
+        values: ["https://example.invalid/clip-282-poster.jpg"]
+    expect:
+      - xpath: "//h1"
+        min: 1
+        max: 1
+        values: ["初撮影ヤマト５Ｐ"]
+      - xpath: "//h2[normalize-space()='Clip']/preceding::h2[1]"
+        min: 1
+        max: 1
+        values: ["282"]
+      - xpath: "//link[@rel='canonical']/@href"
+        min: 1
+        max: 1
+        values: ["https://www.bravo-japan.com/clips/282"]
+    optionalField:
+      xpath: "//h2[normalize-space()='品番']"
+      expectedCount: 0
+  - name: "BRAVO clip missing title"
+    classification: completed
+    html: "clip-missing-title.html"
+    locale:
+      lang: "ja"
+      text: "999"
+    mappedExpect:
+      - field: Title
+        values: []
+      - field: Code
+        values: ["999"]
+      - field: Duration
+        values: ["1800"]
+      - field: URLs
+        routeThrough: sceneByURL
+        values: ["https://www.bravo-japan.com/clips/999"]
+      - field: Image
+        values: []
+    expect:
+      - xpath: "//h2[normalize-space()='Clip']/preceding::h2[1]"
+        min: 1
+        max: 1
+        values: ["999"]
+      - xpath: "//link[@rel='canonical']/@href"
+        min: 1
+        max: 1
+        values: ["https://www.bravo-japan.com/clips/999"]
+    optionalField:
+      xpath: "//h1"
+      expectedCount: 0
+  - name: "BRAVO clip no verified cover"
+    classification: completed
+    html: "clip-no-cover.html"
+    locale:
+      lang: "ja"
+      text: "283"
+    mappedExpect:
+      - field: Title
+        values: ["フィクスチャ用のタイトル"]
+      - field: Code
+        values: ["283"]
+      - field: Duration
+        values: ["1800"]
+      - field: URLs
+        routeThrough: sceneByURL
+        values: ["https://www.bravo-japan.com/clips/283"]
+      - field: Details
+        values: ["フィクスチャ用の説明文です。"]
+      - field: Tags.Name
+        values: ["テスト,フィクスチャ"]
+      - field: Image
+        values: []
+    expect:
+      - xpath: "//h1"
+        min: 1
+        max: 1
+        values: ["フィクスチャ用のタイトル"]
+      - xpath: "//img[contains(@src,'fixture-unrelated-site-artwork')]"
+        min: 1
+        max: 1
+    optionalField:
+      xpath: "//video"
+      expectedCount: 0
+  - name: "BRAVO clip 284 with extra headings"
+    classification: completed
+    html: "clip-extra-headings.html"
+    locale:
+      lang: "ja"
+      text: "284"
+    mappedExpect:
+      - field: Title
+        values: ["デカマラ同士 目隠し交尾"]
+      - field: Code
+        values: ["284"]
+      - field: Duration
+        values: ["1800"]
+      - field: URLs
+        routeThrough: sceneByURL
+        values: ["https://www.bravo-japan.com/clips/284"]
+      - field: Details
+        values: ["フィクスチャ用の説明文です。"]
+      - field: Tags.Name
+        values: ["テスト,フィクスチャ"]
+      - field: Image
+        values: ["https://example.invalid/clip-284-poster.jpg"]
+    expect:
+      - xpath: "//h1"
+        min: 1
+        max: 1
+        values: ["デカマラ同士 目隠し交尾"]
+      - xpath: "//h2[normalize-space()='Clip']/preceding::h2[1]"
+        min: 1
+        max: 1
+        values: ["284"]
+      - xpath: "//h2[normalize-space()='作品TIME']/preceding::h2[1]"
+        min: 1
+        max: 1
+        values: ["30"]
+    optionalField:
+      xpath: "//h2[normalize-space()='品番']"
+      expectedCount: 0
+  - name: "BRAVO Cloudflare challenge"
+    classification: failure
+    html: "failure-cloudflare.html"
