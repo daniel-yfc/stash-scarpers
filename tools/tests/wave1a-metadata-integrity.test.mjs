@@ -30,6 +30,10 @@ function loadDoc(fixturePath) {
   return dom.window.document;
 }
 
+function loadDocString(html) {
+  return new JSDOM(html).window.document;
+}
+
 function resolveSelector(selector, common = {}) {
   let expanded = selector;
   const entries = Object.entries(common).sort((a, b) => b[0].length - a[0].length);
@@ -116,6 +120,56 @@ test("Wave1A E2E-05: og:url is used only when canonical is missing", () => {
   );
 });
 
+test("Wave1A E2E-05: no canonical and no og:url yields no URL (no fabrication)", () => {
+  const doc = loadDocString(
+    '<html><head><title>JUSTICE09(5th) | JUSTICE</title></head><body>'
+    + '<article class="post"><h1 class="entry-title">JUSTICE09(5th)</h1></article>'
+    + "</body></html>",
+  );
+  assert.deepEqual(
+    fieldValues(doc, justice.xPathScrapers.sceneScraper, "scene", "URLs"),
+    [],
+  );
+});
+
+// Stabilization (Task B, case 4) — canonical present but empty/invalid:
+// * Before the stabilization fix, an empty or whitespace-only canonical
+//   href still counted as "present": the selector emitted one empty
+//   value ("") and the not(canonical) guard suppressed the valid og:url
+//   fallback. The guard now tests normalize-space(@href), so an empty /
+//   whitespace-only canonical falls back to og:url exactly like an
+//   absent canonical (asserted below).
+// * A non-empty but malformed canonical still wins and the og:url is
+//   NOT used: XPath cannot validate URL syntax, no such page exists in
+//   the captured evidence, and guessing a validity rule in the selector
+//   could reject legitimate URLs. This residual behavior is documented
+//   here rather than silently "fixed" (asserted below so any change is
+//   a deliberate, reviewed event).
+test("Wave1A E2E-05: empty or whitespace canonical falls back to og:url", () => {
+  for (const href of ["", "   "]) {
+    const doc = loadDocString(
+      `<html><head><link rel="canonical" href="${href}">`
+      + '<meta property="og:url" content="https://www.justice01.com/justice095th/"></head>'
+      + '<body><article class="post"><h1 class="entry-title">JUSTICE09(5th)</h1></article></body></html>',
+    );
+    const urls = fieldValues(doc, justice.xPathScrapers.sceneScraper, "scene", "URLs");
+    assert.deepEqual(urls, ["https://www.justice01.com/justice095th/"], `href=${JSON.stringify(href)}`);
+    assert.ok(!urls.join("").includes("\n"), "URL must not contain a newline");
+  }
+});
+
+test("Wave1A E2E-05: non-empty malformed canonical still wins (documented limitation)", () => {
+  const doc = loadDocString(
+    '<html><head><link rel="canonical" href="not-a-url">'
+    + '<meta property="og:url" content="https://www.justice01.com/justice095th/"></head>'
+    + '<body><article class="post"><h1 class="entry-title">JUSTICE09(5th)</h1></article></body></html>',
+  );
+  assert.deepEqual(
+    fieldValues(doc, justice.xPathScrapers.sceneScraper, "scene", "URLs"),
+    ["not-a-url"],
+  );
+});
+
 // ---- STASH-E2E-06a: KOShop search URLs keep product_id -------------------
 
 test("Wave1A E2E-06a: search URLs preserve and normalize product_id only", () => {
@@ -147,6 +201,16 @@ test("Wave1A E2E-06a: search URL javascript rejects links without product_id", (
     run("https://www.ko-shop.com/products/detail.php?product_id=41979&utm_source=x"),
     "https://www.ko-shop.com/products/detail.php?product_id=41979",
   );
+  // Tracking parameters before and after product_id must not corrupt
+  // the product identity: only product_id survives normalization.
+  assert.equal(
+    run("https://www.ko-shop.com/products/detail.php?utm_source=x&product_id=41979&from=search"),
+    "https://www.ko-shop.com/products/detail.php?product_id=41979",
+  );
+  assert.equal(
+    run("/products/detail.php?from=search&product_id=40445"),
+    "https://www.ko-shop.com/products/detail.php?product_id=40445",
+  );
 });
 
 // ---- STASH-E2E-06b: KOShop missing product fails closed ------------------
@@ -154,13 +218,36 @@ test("Wave1A E2E-06a: search URL javascript rejects links without product_id", (
 test("Wave1A E2E-06b: missing-product error page yields no writable metadata", () => {
   const doc = loadDoc("tests/fixtures/koshop/error-missing-product-controlled.html");
   const scene = koshop.xPathScrapers.sceneScraper;
-  for (const field of ["Title", "Code", "Date", "Details", "Image", "Studio.Name", "Tags.Name"]) {
+  // Every product-derived field, asserted individually: no Title, Code,
+  // Date, Details, Image, Studio (name or URLs) or Tags may be emitted
+  // for the controlled product_id=99999999 error page.
+  for (const field of ["Title", "Code", "Date", "Details", "Image", "Studio.Name", "Studio.URLs", "Tags.Name"]) {
     assert.deepEqual(fieldValues(doc, scene, "scene", field), [], `scene ${field} must be empty`);
   }
   const group = koshop.xPathScrapers.groupScraper;
-  for (const field of ["Name", "Aliases", "Duration", "FrontImage", "Date", "Studio.Name"]) {
+  for (const field of ["Name", "Aliases", "Duration", "FrontImage", "Date", "Synopsis", "Studio.Name", "Studio.URLs"]) {
     assert.deepEqual(fieldValues(doc, group, "group", field), [], `group ${field} must be empty`);
   }
+});
+
+// Documented limitation (STASH-E2E-06b): scene and group URLs are
+// fixed: "{inputURL}". The YAML schema offers no conditional fixed
+// value, so on a missing-product scrape Stash will still substitute the
+// requested (bogus) URL as the scene/group URL — that echo is input
+// data, not extracted metadata, and this suite deliberately asserts the
+// raw template to keep the limitation visible. A URL-only result must
+// NOT be described as fully safe until Gate B verifies actual Stash
+// behavior with the candidate package.
+test("Wave1A E2E-06b: URLs remains the fixed {inputURL} echo (documented limitation)", () => {
+  const doc = loadDoc("tests/fixtures/koshop/error-missing-product-controlled.html");
+  assert.deepEqual(
+    fieldValues(doc, koshop.xPathScrapers.sceneScraper, "scene", "URLs"),
+    ["{inputURL}"],
+  );
+  assert.deepEqual(
+    fieldValues(doc, koshop.xPathScrapers.groupScraper, "group", "URLs"),
+    ["{inputURL}"],
+  );
 });
 
 test("Wave1A E2E-06b: valid KOShop detail still yields its code and h2 title", () => {
@@ -170,6 +257,39 @@ test("Wave1A E2E-06b: valid KOShop detail still yields its code and h2 title", (
   assert.deepEqual(fieldValues(doc, scene, "scene", "Title"), ["JUSTICE 5th 03"]);
   const doc2 = loadDoc("tests/fixtures/koshop/product-38513.html");
   assert.deepEqual(fieldValues(doc2, scene, "scene", "Code"), ["KKUR117_DVD"]);
+  // Frozen control 41979 → BWB365_DVD comes from the Live E2E evidence;
+  // its detail page HTML was never captured offline, so this suite does
+  // NOT claim a 41979 detail pass. Offline, the search side of the
+  // control is asserted: card 41979 keeps its identity and title.
+  const search = loadDoc("tests/fixtures/koshop/search-41979-controlled.html");
+  assert.deepEqual(
+    fieldValues(search, koshop.xPathScrapers.searchScraper, "scene", "Title"),
+    ["ナマ狂い種壺待機", "JUSTICE 5th 03"],
+  );
+  // The 41979 detail scrape itself (expect Code BWB365_DVD) is a Gate B
+  // case; Search → Detail is not claimed as Live PASS here.
+});
+
+test("Wave1A E2E-06b: valid KOShop group result extracts from the same detail page", () => {
+  // groupByURL routes the same product detail page to groupScraper
+  // (verified site behavior recorded in scrapers/KOShop.yml). Offline
+  // this verifies the group selectors against captured pages; the
+  // Stash runtime group mode itself remains a Gate B check.
+  const group = koshop.xPathScrapers.groupScraper;
+  const doc = loadDoc("tests/fixtures/koshop/product-40445.html");
+  assert.deepEqual(fieldValues(doc, group, "group", "Name"), ["JUSTICE 5th 03"]);
+  assert.deepEqual(fieldValues(doc, group, "group", "Aliases"), ["JUS180_DVD"]);
+  assert.deepEqual(fieldValues(doc, group, "group", "Duration"), ["16800"]);
+  assert.deepEqual(fieldValues(doc, group, "group", "Date"), ["2024-07-19"]);
+  assert.deepEqual(fieldValues(doc, group, "group", "Studio.Name"), ["JUSTICE"]);
+  assert.deepEqual(
+    fieldValues(doc, group, "group", "FrontImage"),
+    ["https://www.ko-shop.com/upload/save_image/84/JUS180_DVD.jpg"],
+  );
+  const doc2 = loadDoc("tests/fixtures/koshop/product-38513.html");
+  assert.deepEqual(fieldValues(doc2, group, "group", "Name"), ["体育教師 8"]);
+  assert.deepEqual(fieldValues(doc2, group, "group", "Aliases"), ["KKUR117_DVD"]);
+  assert.deepEqual(fieldValues(doc2, group, "group", "Duration"), ["6420"]);
 });
 
 // ---- STASH-E2E-08: CK-Download Title priority ----------------------------
