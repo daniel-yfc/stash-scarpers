@@ -1,5 +1,23 @@
 version: 1
 documents:
+- doc_id: DOC-E2E-61
+  title: BRAVO DVD Wave 2E Plan
+  path: docs/61-bravo-dvd-wave-2e.md
+  layer: repository
+  status: draft
+  intents:
+  - bravo
+  - dvd-routing
+  - wave-2e
+- doc_id: DOC-E2E-62
+  title: STASH-E2E-02 Upstream Panic Report Preparation
+  path: docs/62-stash-panic-upstream-report.md
+  layer: repository
+  status: draft
+  intents:
+  - stash-panic
+  - upstream-issue
+  - graphql
 - doc_id: DOC-INTEGRATION-80
   title: Metadata Feed Integration
   path: docs/80-metadata-feed-integration.md
