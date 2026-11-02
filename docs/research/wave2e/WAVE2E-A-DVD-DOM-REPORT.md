@@ -1,4 +1,5 @@
-> **Independent QA correction (2026-11-02):** This first-pass report is **not sufficient for final `dvdSceneScraper` XPath implementation**. Its prior `HANDOFF_STATUS=READY` is superseded by [WAVE2E-A-DVD-DOM-AUDIT-ADDENDUM.md](WAVE2E-A-DVD-DOM-AUDIT-ADDENDUM.md): **`HANDOFF_STATUS=BLOCKED`** until both primary DVD complete rendered HTML and live XPath cardinality are proven. Source-based corrections for DVD 046, image, studio/label, 084 missing description, and recapture SHA are detailed there.
+> **Current status (2026-11-02, see [reconciliation](WAVE2E-A-HANDOFF-STATUS.md)):** This report is the historical **text-only** research snapshot. The later [Raw-DOM author addendum](RAW-DOM-VERIFICATION-ADDENDUM.md) reports completed 11-page CDP evidence and sets **AUTHOR_HANDOFF_STATUS=READY**, superseding the earlier 046 Title rejection, 084 heading absence and no-image hypothesis. A subsequent [independent review](RAW-DOM-HANDOFF-QA-REVIEW.md) is **CHANGES_REQUESTED** for independently reproducible raw inputs and per-page results. Therefore **G1 is PROVISIONAL_NOT_INDEPENDENTLY_ACCEPTED**, and Agent F cannot yet modify official runtime YAML (G0 also blocked). The first-pass conclusions and YAML below are historical, **not** the current decision.
+
 
 # WAVE2E-A-DVD-DOM-REPORT.md
 Assignment: WAVE2E-A-DVD-DOM-20261102 / WS-2E-10 / Agent A（DVD DOM Research）
@@ -125,7 +126,7 @@ Captured/verified: 2026-11-02（Asia/Taipei, 04:14–04:20 session）
 9. 資料模型：DVD 頁為多場景合輯。依任務指示不加入 groupByURL／Group scraping，但請在 YAML 註解與文件記錄「Scene 承接 = 整片」的語意限制。
 10. 路由：`/dvds/` 必須路由至 dvdSceneScraper（Stash `strings.Contains` 匹配風險由 Agent B/F 測試），QueryFragment 對 DVD 輸入不得落到 clipSceneScraper。
 
-## 10. Mandatory Handoff
+## 10. Historical Mandatory Handoff (first-pass snapshot; superseded)
 
 ```yaml
 ASSIGNMENT_ID: WAVE2E-A-DVD-DOM-20261102
