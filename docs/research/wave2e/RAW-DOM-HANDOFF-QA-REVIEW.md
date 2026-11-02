@@ -1,3 +1,5 @@
+> **Independent reviewer status (see [A handoff reconciliation](WAVE2E-A-HANDOFF-STATUS.md)):** `CHANGES_REQUESTED` is the still-open **independent evidence reproducibility verdict**, not a rejection of the author Agent A `READY` handoff or a claim the source results are fabricated. Both verdicts must remain visible to B/C/F; G1 is `PROVISIONAL_NOT_INDEPENDENTLY_ACCEPTED` until a documented replay or Controller risk decision.
+
 # Wave 2E — Independent Review of Raw-DOM Handoff (Agent A, WS-2E-10)
 
 - Audit UTC: `2026-11-02T10:11:29.413Z`
