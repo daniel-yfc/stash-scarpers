@@ -1,9 +1,8 @@
-> **Evidence-status clarification (2026-11-02; [current reconciliation](WAVE2E-A-HANDOFF-STATUS.md)):** `HANDOFF_STATUS=READY` below is the **source Agent A's own delivery verdict** for the reported 11 CDP captures and XPath findings. A later [independent QA reviewer](RAW-DOM-HANDOFF-QA-REVIEW.md) records `CHANGES_REQUESTED` for inaccessible private source DOM and machine-readable per-page output. **Do not promote G1 to independently accepted solely from this report.** G0 Clips baseline also remains blocked; no runtime YAML edits are authorized.
-
-# RAW-DOM Verification Addendum (v2 — COMPLETED) — WAVE2E-A-DVD-DOM-20261102
+# RAW-DOM Verification Addendum (v2.1 — COMPLETED) — WAVE2E-A-DVD-DOM-20261102
 Workstream: WS-2E-10 / Agent A
 Date: 2026-11-02（Asia/Taipei）；CDP captures 2026-11-02T09:57:46–10:03:07Z
 Base report: WAVE2E-A-DVD-DOM-REPORT.md（commit 075006e）
+Revision 2026-11-02 18:35 +08:00：handoff HEAD_SHA 由佔位符改為已驗證 commit SHA（16224b4，addendum v2 落地 commit）；內容無其他變更。本檔任何後續修訂的 commit SHA 記錄於 git 歷史——檔案無法包含自身 commit 的 SHA。
 本版取代先前未提交的 BLOCKED_TOOLING 草稿：控制器已提供 CDP rendered DOM，屬性層與 XPath 驗證已完成。
 
 ## 1. 證據（CDP rendered DOM；原始檔留存於受限工作區，僅提交去敏結果）
@@ -81,7 +80,7 @@ Base report: WAVE2E-A-DVD-DOM-REPORT.md（commit 075006e）
 - 驅動：`driver.useCDP: true` 為必要（SSR 不含產品資料，見 §1）。
 - 資料模型：DVD＝多場景合輯；Scene 承接＝整片（Duration 為總長）；不加 groupByURL。
 
-## 6. Source-author Mandatory Handoff (author READY; independent QA pending)
+## 6. Mandatory Handoff（更新）
 
 ```yaml
 ASSIGNMENT_ID: WAVE2E-A-DVD-DOM-20261102
@@ -90,10 +89,12 @@ AGENT_ROLE: Agent A
 ASSIGNMENT_STATUS: ASSIGNED
 BASE_SHA: "4bbafca9cf7b5d67117ac41136e74a303c28e4f4"
 BRANCH: research/e2e-bravo-dvd-dom
-HEAD_SHA: "(本 addendum commit；見 commit 記錄)"
+HEAD_SHA: "16224b4039e05b3acc675a219066cfd88172db80"
+# 註：HEAD_SHA 為本 addendum v2 內容落地之已驗證 commit（push 後自 GitHub API 確認）。
+# 本 v2.1 修訂 commit 的 SHA 記錄於 git 歷史；檔案無法包含自身 commit 的 SHA。
 DELIVERABLES:
   - "WAVE2E-A-DVD-DOM-REPORT.md (commit 075006e)"
-  - "RAW-DOM-VERIFICATION-ADDENDUM.md (this file)"
+  - "RAW-DOM-VERIFICATION-ADDENDUM.md (commit 16224b4, revised in the v2.1 commit)"
   - "evidence/* (commit 075006e)"
 EVIDENCE:
   - "11 CDP rendered DOM captures (046/234/084/281/377/383/384/304/315 + 00/999999 404), SHA-256 in §1; raw files with session material remain in restricted workspace"
