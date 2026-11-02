@@ -1,3 +1,5 @@
+> **Historical audit snapshot (2026-11-02T10:03Z; see [current status](WAVE2E-A-HANDOFF-STATUS.md)):** Its `BLOCKED` assessment applied **before** the later [11-capture author Raw-DOM report](RAW-DOM-VERIFICATION-ADDENDUM.md). The author now reports `READY`; a subsequent [independent QA review](RAW-DOM-HANDOFF-QA-REVIEW.md) is separately `CHANGES_REQUESTED` until the private evidence can be replayed. Do not treat this earlier audit's `HANDOFF_STATUS=BLOCKED` as today's author status, or its historical observations as negating later source evidence. **G1 is still not independently accepted.**
+
 # Wave 2E Agent A — Independent Evidence Audit Addendum
 
 - Assignment: `WAVE2E-A-DVD-DOM-20261102` / WS-2E-10
@@ -80,7 +82,7 @@ The replay tool is not evidence of a live capture, and its synthetic smoke test 
 
 **Hard stop for Agent F:** Require completed current 234 and 084 DOM, HTTP/navigation & canonical proof, verified XPath values/cardinality including negative cases, and clear product-vs-scene semantics. `HANDOFF_STATUS=BLOCKED` until those conditions are met. Existing Draft PR #93 remains unmerged and no production scraper file is changed by Agent A.
 
-## 5. Structured handoff override
+## 5. Historical handoff snapshot (as-of audit; superseded)
 
 ```yaml
 ASSIGNMENT_ID: WAVE2E-A-DVD-DOM-20261102
