@@ -1,0 +1,57 @@
+# Sanitized text capture (NOT raw DOM)
+# assignment: WAVE2E-A-DVD-DOM-20261102 / WS-2E-10 / Agent A
+# url: https://www.bravo-japan.com/dvds/046
+# role: HISTORICAL-CROSSCHECK-2-LEADING-ZERO
+# <title> tag as returned: 046
+# captured_at: 2026-11-02T04:14-04:20+08:00 (session)
+# method: anonymous read-only fetch, post-render text extraction; '##' markers reflect heading elements as reported by the extraction layer
+# NOTE: dvd-281/dvd-046 long descriptions abbreviated in this sanitized copy to cross-check fields only; field values are verbatim.
+# --------------------------------------------------------
+
+046
+
+## BRAVO-JAPAN
+
+BRAVO!
+ooooPS!!
+
+AJITO
+​Lucifer
+
+## ​GO to BRAVO-CLIPS
+
+## ゆるゆる雄太のデブ竿ぽちゃ穴食べ放題!
+
+## ​品番
+
+## 046
+
+## BR -
+
+## 収録時間
+
+## 260
+
+## min
+
+## 2
+
+## ​枚組
+
+## 枚数
+
+## 発売日
+
+## 2010年09月30日
+
+## 定価
+
+## 10,500円
+
+## ooooPS!!
+
+## レーベル
+
+## 備考
+
+（描述區塊：堂々260分収録のデブ淫乱超大作2枚組… 複數 Part 構成，詳見原始擷取記錄）

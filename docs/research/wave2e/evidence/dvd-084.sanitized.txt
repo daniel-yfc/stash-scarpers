@@ -1,0 +1,38 @@
+# Sanitized text capture (NOT raw DOM)
+# assignment: WAVE2E-A-DVD-DOM-20261102 / WS-2E-10 / Agent A
+# url: https://www.bravo-japan.com/dvds/084
+# role: PRIMARY-2
+# <title> tag as returned: 084
+# captured_at: 2026-11-02T04:14-04:20+08:00 (session)
+# method: anonymous read-only fetch, post-render text extraction; '##' markers reflect heading elements as reported by the extraction layer
+# NOTE: dvd-281/dvd-046 long descriptions abbreviated in this sanitized copy to cross-check fields only; field values are verbatim.
+# --------------------------------------------------------
+
+top of page
+戻る
+
+少年集団強姦
+
+​品番
+084
+BR -
+収録時間
+140
+min
+1
+​枚組
+枚数
+発売日
+2012年11月17日
+定価
+8,800 円
+Lucifer
+レーベル
+備考
+廃盤
+
+直販ショップで購入
+
+取扱店で購入
+
+bottom of page

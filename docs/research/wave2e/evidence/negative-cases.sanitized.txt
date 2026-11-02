@@ -1,0 +1,25 @@
+# Negative-case capture log (sanitized)
+# assignment: WAVE2E-A-DVD-DOM-20261102 / WS-2E-10 / Agent A
+# captured_at: 2026-11-02T04:14-04:20+08:00 (session)
+
+CASE NEG-NOTFOUND-1
+url: https://www.bravo-japan.com/dvds/999999
+result: FETCH_FAILED (tool returned: Failed to fetch content)
+classification: NOT_FOUND_LIKELY / FETCH_FAILURE — HTTP status NOT directly observable; NOT a completed DOM.
+
+CASE NEG-NOTFOUND-2
+url: https://www.bravo-japan.com/dvds/00
+result: FETCH_FAILED (tool returned: Failed to fetch content)
+classification: NOT_FOUND_LIKELY / FETCH_FAILURE — HTTP status NOT directly observable; NOT a completed DOM.
+
+CASE NEG-CHALLENGE
+result: NOT_OBSERVED in this session. All 6 successful fetches returned product content with no Cloudflare/verification interstitial.
+Historical reference only: tests/fixtures/bravo/failure-cloudflare.html (154 bytes) + bravo-fixtures.yml "BRAVO Cloudflare challenge" case.
+
+CASE NEG-IMAGE-MISGRAB
+result: NOT_OBSERVED for DVD pages (text extraction carries no image nodes).
+Adjacent evidence (PR #93, clips): shared myfans logo GIF is the only verified wixstatic image on clip pages; unrelated non-GIF Wix artwork can appear. Unverified for DVD pages.
+
+CASE NEG-MISSING-OPTIONAL-FIELD
+url: https://www.bravo-japan.com/dvds/084 (valid product page)
+observation: no description block after 備考 (備考=廃盤); Details SOURCE_FIELD_ABSENT on this valid page.

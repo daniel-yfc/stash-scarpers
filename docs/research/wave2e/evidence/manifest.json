@@ -1,0 +1,23 @@
+{
+  "assignment_id": "WAVE2E-A-DVD-DOM-20261102",
+  "workstream_id": "WS-2E-10",
+  "agent_role": "Agent A",
+  "base_sha": "4bbafca9cf7b5d67117ac41136e74a303c28e4f4",
+  "captured_at": "2026-11-02T04:14-04:20+08:00 (Asia/Taipei session)",
+  "capture_method": "anonymous read-only fetch of live URLs, post-render text extraction (sanitized; NOT raw DOM, NOT CDP, no session material)",
+  "baseline_verification": {
+    "main_head": "4bbafca9cf7b5d67117ac41136e74a303c28e4f4 (verified via GitHub API 2026-11-02; last commit 2026-10-31, merge of PR #90)",
+    "pr93": "OPEN / DRAFT / NOT merged; head 86e34a24642dad2e64ae984e7e9182605e98cbcf (fix/e2e-bravo-clips); Clips-only scope; DVD URLs reserved for Wave 2E",
+    "pr98": "OPEN / DRAFT / NOT merged; head 0c97068c1822fe7db8f069bb0466b921761630cc (docs/e2e-wave-2e-upstream-panic-20261101)",
+    "historical_fixtures": "dvd-281.html (40ff15e...), dvd-046.html (8d129e0...), dvd-173.html (9030729...), dvd-215.html (73628ce...), bravo-fixtures.yml (f38a38e..., cases: dvd 281, dvd 046, Cloudflare)"
+  },
+  "evidence_files": {
+    "dvd-046.sanitized.txt": "7b25621aa3e8aeda56b40f5bf8699daff517a1c0eb1624ebf6149f72a10b7b4f",
+    "dvd-084-recapture.sanitized.txt": "3e3697d7f34bcf63153a9628a0441ecf152c4698203ffe7f20fa38bfdcab28ea",
+    "dvd-084.sanitized.txt": "2c3929fd84640bf7e64c6ef722f95a26903d095a42f23ae4625d70d20758872c",
+    "dvd-234.sanitized.txt": "de5677bbe64deff727bec013783e0f7dbbcc1e7f362536cf4c09d98986178408",
+    "dvd-281.sanitized.txt": "bf6eb0c8bfebf0cf7d8681a3e8b7f467b9851ac78f202161d5b410d2133f89f6",
+    "negative-cases.sanitized.txt": "7366f9f69180f1e98a244f818f1ecfc9b1fb375fb66195afda00d959931f64e5"
+  },
+  "privacy": "no cookies, session tokens, auth material, or raw HTML captured; safe for sanitized handoff"
+}
