@@ -42,7 +42,12 @@ This directory contains repository-level workflow, architecture, testing, and ma
 | [`50-testing-guide.md`](50-testing-guide.md)                               | Testing and live-scrutiny guidance                        |
 | [`51-rendered-dom-fixture-testing.md`](51-rendered-dom-fixture-testing.md) | Rendered DOM fixture contract and authoring expectations  |
 | [`81-graphql-api-reference.md`](81-graphql-api-reference.md)               | Stash GraphQL API reference (endpoint, schema, mutations) |
-| [`61-bravo-dvd-wave-2e.md`](61-bravo-dvd-wave-2e.md)                 | Planned Wave 2E dedicated BRAVO DVD URL route / acceptance             |\n| [`62-stash-panic-upstream-report.md`](62-stash-panic-upstream-report.md) | STASH-E2E-02 upstream panic reproduction / issue preparation           |\n| [`60-live-test-status.md`](60-live-test-status.md)                         | Live-site verification status                             |
+| [`61-bravo-dvd-wave-2e.md`](61-bravo-dvd-wave-2e.md) | Wave 2E DVD implementation plan, gates, responsibilities |
+| [`62-stash-panic-upstream-report.md`](62-stash-panic-upstream-report.md) | STASH-E2E-02 upstream panic reporting and evidence |
+| [`63-wave2e-agent-b-assignment-addendum.md`](63-wave2e-agent-b-assignment-addendum.md) | Agent B routing, 404 validity and QueryFragment tests |
+| [`64-wave2e-agent-c-assignment-addendum.md`](64-wave2e-agent-c-assignment-addendum.md) | Agent C DVD fixtures, negative cases and data provenance |
+| [`65-wave2e-agent-f-assignment-addendum.md`](65-wave2e-agent-f-assignment-addendum.md) | Agent F single-writer integration, metadata policy and gates |
+| [`60-live-test-status.md`](60-live-test-status.md)                         | Live-site verification status                             |
 | [`70-template-workflow.md`](70-template-workflow.md)                       | Template-to-scraper workflow                              |
 | [`71-test-report-template.md`](71-test-report-template.md)                 | Full-suite test report format                             |
 | [`72-evaluation-report-template.md`](72-evaluation-report-template.md)     | Local evaluation report format (standalone)               |
