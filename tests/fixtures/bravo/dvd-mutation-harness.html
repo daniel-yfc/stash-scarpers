@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="keywords" content="サイト共通キーワード1,サイト共通キーワード2">
+  <title>SYNTHETIC_REGRESSION - mutation harness (clips-structured stand-in)</title>
+  <!--
+    SYNTHETIC_REGRESSION / MUTATION_HARNESS_ONLY (WS-2E-40, Agent C).
+    This page reproduces the Wave 1B CLIPS rendered-DOM heading order
+    (h1 title, h2 description, h2 code, h2 "Clip", h2 minutes, h2 作品TIME,
+    h2 min, video poster) so the shared fixture runner's mappedExpect
+    machinery can be exercised against the production clipSceneScraper
+    that exists on the base branch. It is used ONLY by mutation tests in
+    tools/tests/test_bravo_dvds.py to prove that wrong expectations
+    (dropped leading zeros, logo-as-Image, cross-family URL routing,
+    expected-empty-but-value-present) are rejected. It is NOT a model of
+    a BRAVO DVD page and must not be cited as DVD DOM evidence.
+  -->
+  <link rel="canonical" href="https://www.bravo-japan.com/dvds/046">
+</head>
+<body>
+  <h1>046</h1>
+  <h2>ミューテーション用の説明文です。</h2>
+  <h2>046</h2>
+  <h2>Clip</h2>
+  <h2>30</h2>
+  <h2>作品TIME</h2>
+  <h2>min</h2>
+  <video poster="https://example.invalid/dvd-046-harness-poster.jpg"></video>
+  <div id="SITE_HEADER"><img src="https://example.invalid/site-logo.gif" alt="BRAVO-JAPAN"></div>
+</body>
+</html>
