@@ -1,3 +1,5 @@
+> **Evidence-status clarification (2026-11-02; [current reconciliation](WAVE2E-A-HANDOFF-STATUS.md)):** `HANDOFF_STATUS=READY` below is the **source Agent A's own delivery verdict** for the reported 11 CDP captures and XPath findings. A later [independent QA reviewer](RAW-DOM-HANDOFF-QA-REVIEW.md) records `CHANGES_REQUESTED` for inaccessible private source DOM and machine-readable per-page output. **Do not promote G1 to independently accepted solely from this report.** G0 Clips baseline also remains blocked; no runtime YAML edits are authorized.
+
 # RAW-DOM Verification Addendum (v2 — COMPLETED) — WAVE2E-A-DVD-DOM-20261102
 Workstream: WS-2E-10 / Agent A
 Date: 2026-11-02（Asia/Taipei）；CDP captures 2026-11-02T09:57:46–10:03:07Z
@@ -79,7 +81,7 @@ Base report: WAVE2E-A-DVD-DOM-REPORT.md（commit 075006e）
 - 驅動：`driver.useCDP: true` 為必要（SSR 不含產品資料，見 §1）。
 - 資料模型：DVD＝多場景合輯；Scene 承接＝整片（Duration 為總長）；不加 groupByURL。
 
-## 6. Mandatory Handoff（更新）
+## 6. Source-author Mandatory Handoff (author READY; independent QA pending)
 
 ```yaml
 ASSIGNMENT_ID: WAVE2E-A-DVD-DOM-20261102
