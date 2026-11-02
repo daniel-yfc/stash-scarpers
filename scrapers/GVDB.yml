@@ -1,0 +1,288 @@
+# GVDB performer scraper (md.gvdb.org) — performerByURL only, performer fields only.
+# No scene modes and no search modes: GVDB model pages are the only source used.
+#
+# Page structure (verified 2026-11-03 against user-supplied rendered HTML for
+# models 159685 and 54676):
+# - WordPress post: <article id="post-<GVDB ID>">, body in div.entry-content.
+# - The first <p> holds the profile lines as <br>-separated text nodes:
+#   "Name: <names>", "Age: ..", "Height: ..", "Weight: ..", "P-Size: ..cm",
+#   "Works:", then the first "[ Studio ] <names>" heading as its last text node.
+# - Every later "[ Studio ] <names>" heading is its own <p>, followed by a <ul>
+#   of works. A studio's works may be split per stage name, repeating the name
+#   as a standalone <p> (54676: "旬（しゅん） Shun", "yuto").
+# - "[ Subscription Channel ]" is a heading <p> whose following <ul> holds the
+#   performer's external channel links (54676: MyFans / OnlyFans / CandFans /
+#   Libidox). 159685 has no such section and no <a> at all in .entry-content.
+# - Studios:/Tags:/Published: live in the article footer, outside .entry-content,
+#   so Country keyword matching scoped to .entry-content ignores footer/comments.
+#
+# Name grammar: a name list is one or more name-sets separated by " / ".
+# Each set is [JP name] [(kana) or （kana）] [Romaji], any part may be missing
+# (JP+Romaji, Romaji-only, JP-only). A profile may add an "AKA:" line with
+# more name-sets (6155), and a set may carry a "(or <name-set>)" alternate
+# (6155: "ボブ Bobu (orしゅん Shun)") — the "(or …)" content is another
+# name-set, not a kana reading. The Romaji segment is the trailing ASCII
+# part; everything before it is the JP name. A space inside the JP name is
+# cleaned away in the output (6180: page "加藤 拓 Kato Taku" -> Name "加藤拓",
+# alias "Kato Taku"); spaces inside Romaji are kept. Kana readings never kept.
+# Bracketed text is a studio/series name, never a performer name
+# (e.g. "[ Yutoの秘密部屋 ]" has no name after "]").
+#
+# Plain HTTP fetches of md.gvdb.org returned 403 in testing (2026-10 and
+# 2026-11) while a real browser loads the site fine, so CDP is required
+# (same situation as RGBEE / GVWiki).
+#
+# GVDB ID custom field: YAML scrapers cannot return custom_fields (the
+# v0.31.1 scraper schema has no such performer field; upstream stash #6394).
+# Companion tool tools/gvdb_custom_fields.py writes it afterwards via GraphQL
+# performerUpdate custom_fields partial, deriving the ID from the performer's
+# md.gvdb.org URL kept in URLs by this scraper. Dry-run by default.
+#
+# Verification status (2026-11-03): every XPath below was executed against
+# thirteen rendered HTML pages (lxml) and every javascript postProcess was
+# executed in node on the extracted values — 117/117 field checks match the
+# expected values exactly (see GVDB.test.yaml). Covered branches: Country
+# TW via Taiwan-label studio majorities (161913, 161611) and via profile
+# keywords (161064, 72533), Country blank via an Asia keyword in a heading
+# line (22153 via 亜細亜 in the AMW label), Country JP despite an アジア
+# work title in <li> (6142, 6194 — under the graded rule, work titles are
+# not Country evidence), all-blank numeric fields (22153,
+# 72533, 53003, 117270, 6142, 6155), JP name with a space (6180), two studio
+# brackets on one heading line (72533), Romaji-only name "Mr. J" (6142),
+# profile AKA line + "(or …)" alternate name-sets (6155), Subscription
+# Channel links incl. FansOne (54676, 161913, 161611 — all direct hrefs in
+# the page HTML, no redirect wrappers). Profile label lines may lack the
+# colon ("Height 177" on 126493, a bare "Height" line on 157152): the
+# numeric selectors therefore match the label without a colon, and the
+# Aliases parser explicitly skips colon-less label lines so they are never
+# misread as stage names. A kana reading may contain "/" (20575:
+# "(あきひと/みなと)"), so readings are stripped before name-sets are
+# split. Additional performer pages from derived-ID and user-specified
+# rounds pass at the javascript-logic level only.
+# Stash runtime load test NOT yet done: validator pass is not runtime
+# evidence.
+name: GVDB
+
+driver:
+  useCDP: true
+  headers:
+    - Key: User-Agent
+      Value: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36
+
+performerByURL:
+  - action: scrapeXPath
+    url:
+      - md.gvdb.org/
+    scraper: performerScraper
+
+xPathScrapers:
+  performerScraper:
+    common:
+      $entry: "//div[contains(concat(' ', normalize-space(@class), ' '), ' entry-content ')]"
+    performer:
+      Name:
+        selector: "$entry/p[1]/text()[contains(.,'Name:')]"
+        postProcess:
+          - javascript: |
+              var v = value || "";
+              v = v.replace(/^\s*Name:\s*/, "");
+              var first = (v.split("/")[0] || "").replace(/\([^)]*\)/g, "").replace(/（[^）]*）/g, "").replace(/\s+/g, " ").trim();
+              // The JP name is everything before the trailing Romaji segment.
+              // A space inside the JP name is cleaned away (6180: the page
+              // shows "加藤 拓 Kato Taku"; the stored Name is "加藤拓").
+              // Spaces inside the Romaji segment are kept ("Kato Taku").
+              var m = first.match(/^(.*?)\s+([A-Za-z]+(?:[ .'-]+[A-Za-z]+)*)$/);
+              if (m && m[1] && /^[\u3040-\u30FF\u3400-\u4DBF\u4E00-\u9FFF]+(?:\s+[\u3040-\u30FF\u3400-\u4DBF\u4E00-\u9FFF]+)*$/.test(m[1])) return m[1].replace(/\s+/g, "");
+              if (/^[\u3040-\u30FF\u3400-\u4DBF\u4E00-\u9FFF\s]+$/.test(first)) return first.replace(/\s+/g, "");
+              return first;
+      Aliases:
+        # All <p> text lines of .entry-content: the Name line, an optional
+        # profile "AKA:" line (6155), every "[ Studio ] <names>" heading,
+        # and standalone stage-name <p>s. Other label lines (Age:/Height:/...)
+        # contain ":" and are skipped; work titles live in <li>, never in
+        # <p>, so they cannot leak in. A "(or <name-set>)" parenthetical is
+        # an alternate name-set, not a kana reading, and is kept as a set.
+        # The javascript parses name-sets, drops kana readings, drops the
+        # primary Name, drops decorative non-name sets (e.g. the kaomoji
+        # stage name on 54676) via a strict JP/Romaji character whitelist,
+        # dedupes, and joins with ", " (Stash splits Aliases on ",").
+        selector: "$entry/p/text()"
+        concat: "\n"
+        postProcess:
+          - javascript: |
+              var JP_CHARS = "[\\u3040-\\u30FF\\u3400-\\u4DBF\\u4E00-\\u9FFF]";
+              var JP_NAME_RE = new RegExp("^[A-Za-z]?" + JP_CHARS + "+(?:\\s+" + JP_CHARS + "+)*$");
+              var ROMAJI_RE = /^[A-Za-z]+(?:[ .'-]+[A-Za-z]+)*$/;
+              // Split one cleaned name-set into [jp, romaji]; null when the set
+              // is not a plausible name (e.g. decorative kaomoji stage names).
+              // The JP part is everything before the trailing Romaji segment
+              // and may contain a space ("加藤 拓 Kato Taku").
+              function splitSet(s) {
+                var jp = "",
+                  romaji = "";
+                var m = s.match(/^(.*?)\s+([A-Za-z]+(?:[ .'-]+[A-Za-z]+)*)$/);
+                if (m) {
+                  jp = m[1];
+                  romaji = m[2];
+                } else if (ROMAJI_RE.test(s)) {
+                  romaji = s;
+                } else {
+                  jp = s;
+                }
+                if (jp && !JP_NAME_RE.test(jp)) return null;
+                if (!jp && !romaji) return null;
+                // Clean spaces out of the JP name ("加藤 拓" -> "加藤拓");
+                // Romaji word spaces stay ("Kato Taku").
+                return [jp.replace(/\s+/g, ""), romaji];
+              }
+              function primaryOf(nameLine) {
+                var first = nameLine.substring(5).split("/")[0].replace(/\([^)]*\)/g, "").replace(/（[^）]*）/g, "").replace(/\s+/g, " ").trim();
+                var parts = splitSet(first);
+                if (parts && parts[0]) return parts[0];
+                return first;
+              }
+              function parseSets(str, primary, out, seen) {
+                // A parenthetical "(or <name-set>)" is an alternate name-set,
+                // not a kana reading (6155: "ボブ Bobu (orしゅん Shun)"): lift
+                // it out as an extra set before other parentheticals are
+                // stripped as readings.
+                var extra = [];
+                str = str.replace(/\(or\s*([^)]*)\)/gi, function (m, g) {
+                  extra.push(g);
+                  return " ";
+                });
+                str = str.replace(/（or\s*([^）]*)）/gi, function (m, g) {
+                  extra.push(g);
+                  return " ";
+                });
+                // Strip kana readings BEFORE splitting the name-sets: a
+                // reading may itself contain "/" (20575: "湊 (あきひと/みなと)
+                // Akihito / Minato"), which is not a set separator.
+                str = str.replace(/\([^)]*\)/g, "").replace(/（[^）]*）/g, "");
+                var parts = str.split("/").concat(extra);
+                for (var i = 0; i < parts.length; i++) {
+                  var s = parts[i].replace(/\([^)]*\)/g, "").replace(/（[^）]*）/g, "").replace(/\s+/g, " ").trim();
+                  if (!s) continue;
+                  var pair = splitSet(s);
+                  if (!pair) continue;
+                  var names = [];
+                  if (pair[0]) names.push(pair[0]);
+                  if (pair[1]) names.push(pair[1]);
+                  for (var j = 0; j < names.length; j++) {
+                    var n = names[j];
+                    if (n === primary || seen[n]) continue;
+                    seen[n] = true;
+                    out.push(n);
+                  }
+                }
+              }
+              var lines = (value || "").split("\n");
+              var primary = "";
+              for (var a = 0; a < lines.length; a++) {
+                var t = lines[a].trim();
+                if (t.indexOf("Name:") === 0) {
+                  primary = primaryOf(t);
+                  break;
+                }
+              }
+              var out = [];
+              var seen = {};
+              for (var b = 0; b < lines.length; b++) {
+                var line = lines[b].trim();
+                if (!line) continue;
+                if (line.indexOf("Name:") === 0) {
+                  parseSets(line.substring(5), primary, out, seen);
+                  continue;
+                }
+                if (line.indexOf("AKA:") === 0) {
+                  // Profile "AKA:" line (6155): more stage names, same grammar.
+                  parseSets(line.substring(4), primary, out, seen);
+                  continue;
+                }
+                if (line.charAt(0) === "[") {
+                  var close = line.indexOf("]");
+                  if (close < 0) continue;
+                  var suffix = line.substring(close + 1).trim();
+                  if (suffix) parseSets(suffix, primary, out, seen);
+                  continue;
+                }
+                // Profile label lines carry a colon ("Age:", "Works:") and
+                // are skipped below — but a colon-less label line exists in
+                // the wild (157152: a bare "Height" line) and would otherwise
+                // be misread as a standalone stage name.
+                if (/^(?:Age|Height|Weight|P-Size|Works)\b/.test(line)) continue;
+                if (line.indexOf(":") >= 0 || line.indexOf("[") >= 0) continue;
+                parseSets(line, primary, out, seen);
+              }
+              return out.join(", ");
+      PenisLength:
+        selector: "$entry/p[1]/text()[contains(.,'P-Size')]"
+        postProcess:
+          - javascript: |
+              var m = (value || "").match(/([0-9]+(?:\.[0-9]+)?)/);
+              return m ? m[1] : "";
+      Height:
+        selector: "$entry/p[1]/text()[contains(.,'Height')]"
+        postProcess:
+          - javascript: |
+              var m = (value || "").match(/([0-9]+(?:\.[0-9]+)?)/);
+              return m ? m[1] : "";
+      Weight:
+        selector: "$entry/p[1]/text()[contains(.,'Weight')]"
+        postProcess:
+          - javascript: |
+              var m = (value || "").match(/([0-9]+(?:\.[0-9]+)?)/);
+              return m ? m[1] : "";
+      Gender:
+        fixed: MALE
+      Country:
+        # Graded keyword rule (user-set 2026-11-03; graded refinement the
+        # same day after 126493): only the <p> lines are evidence — the
+        # profile lines and the "[ Studio ]" heading lines. Work titles
+        # live in <li> and never count. TW when a Taiwan keyword
+        # (台湾/Taiwan/Gayerdar) appears in a Name/AKA profile line, or
+        # when Taiwan-label studios form the majority of the studio
+        # headings (Subscription excluded). Empty when an Asia keyword
+        # (アジア/亜細亜) appears in a profile or heading line — the
+        # page's own label is Asia-level with no country (22153). JP
+        # otherwise. 126493 is a JP performer with one Taiwan-label
+        # release among 14 studio groups plus an アジア marketing work
+        # title, so it resolves to JP; 6194/6142 likewise resolve to JP
+        # because their only アジア evidence is a work title.
+        selector: "$entry/p/text()"
+        concat: "\n"
+        postProcess:
+          - javascript: |
+              var TW_RE = /台湾|Taiwan|Gayerdar/i;
+              var ASIA_RE = /アジア|亜細亜/;
+              var lines = (value || "").split("\n");
+              var profileTW = false;
+              var strongAsia = false;
+              var studios = 0;
+              var twStudios = 0;
+              for (var i = 0; i < lines.length; i++) {
+                var line = lines[i].replace(/\s+/g, " ").trim();
+                if (!line) continue;
+                if (/^(?:Name|AKA):/.test(line)) {
+                  if (TW_RE.test(line)) profileTW = true;
+                  if (ASIA_RE.test(line)) strongAsia = true;
+                } else if (line.charAt(0) === "[") {
+                  if (ASIA_RE.test(line)) strongAsia = true;
+                  if (!/Subscription/i.test(line)) {
+                    studios++;
+                    var close = line.indexOf("]");
+                    var bracket = close >= 0 ? line.substring(0, close + 1) : line;
+                    if (TW_RE.test(bracket)) twStudios++;
+                  }
+                }
+              }
+              if (profileTW || (studios > 0 && twStudios * 2 > studios)) return "TW";
+              if (strongAsia) return "";
+              return "JP";
+      Ethnicity:
+        fixed: Asian
+      URLs:
+        # The performer's GVDB page (canonical), then every link in the
+        # "[ Subscription Channel ]" list when the section exists.
+        selector: "//link[@rel='canonical']/@href | //div[contains(concat(' ', normalize-space(@class), ' '), ' entry-content ')]/p[contains(normalize-space(.),'Subscription Channel')]/following-sibling::ul[1]//a/@href"
+# Last Updated: 2026-11-03

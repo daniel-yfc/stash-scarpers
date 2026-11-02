@@ -1,0 +1,62 @@
+# GVDB live-test fixtures (verified 2026-11-03 against user-supplied rendered
+# HTML for all thirteen URLs below: every XPath executed with lxml, every
+# javascript postProcess executed in node on the extracted values, all fields
+# match the expectations below exactly — 117/117 field checks)
+# 159685: Name=颯汰, Aliases="Sota, 結城晴翔, Haruto Yuki", PenisLength=16,
+#   Height=176, Weight=70, Gender=MALE, Country=JP, Ethnicity=Asian,
+#   URLs=[https://md.gvdb.org/159685/] (no Subscription Channel section)
+# 54676: Name=緑川瀬斗, Aliases="Midorikawa Seto, 朝日奈ふゆと, Asahina Fuyuto,
+#   そら, Sora, れい, Rei, 旬, Shun, yuto", PenisLength=17, Height=170,
+#   Weight=56, Gender=MALE, Country=JP, Ethnicity=Asian,
+#   URLs=[GVDB page, MyFans, OnlyFans, CandFans, Libidox] (5 total)
+# 161913: Name=酒店少爺, Aliases="Nex", PenisLength=(blank), Height=167,
+#   Weight=55, Country=TW (台湾/Gayerdar), URLs=[GVDB page, FansOne] —
+#   channel href is a direct link in the page HTML (no redirect wrapper)
+# 22153: Name=郁弥, Aliases="Yuya", all numeric fields blank, Country=(blank)
+#   (亜細亜 keyword only), URLs=[GVDB page]
+# 6180: Name=加藤拓 (page shows "加藤 拓": space inside a JP name is cleaned
+#   away), Aliases="Kato Taku", PenisLength=(blank), Height=175, Weight=70,
+#   Country=JP, URLs=[GVDB page]
+# 161064: Name=台湾からの留学生, Aliases="Student from Taiwan", PenisLength=17,
+#   Height=180, Weight=55, Country=TW (triggered by the Name line itself),
+#   URLs=[GVDB page]
+# 161611: Name=達陸, Aliases="Daluy", PenisLength=(blank), Height=174,
+#   Weight=70, Country=TW, URLs=[GVDB page, FansOne]
+# 53003: Name=ガッチリノンケラガーマン, Aliases="Manly Straight Rugby Player",
+#   all numeric fields blank, Country=JP, URLs=[GVDB page]
+# 117270: Name=ゆうき, Aliases="Yuki", all numeric fields blank, Country=JP,
+#   URLs=[GVDB page]
+# 72533: Name=台湾留学生, Aliases="Taiwanese Student", all numeric fields
+#   blank, Country=TW ("Taiwanese" contains the Taiwan keyword; the first
+#   Works line carries two studio brackets "[ G@MES VIDEO ] [ MEGA HUNK Ch ]"
+#   and correctly yields no extra aliases), URLs=[GVDB page]
+# 6142: Name="Mr. J" (Romaji-only, kept whole), Aliases=(none), all numeric
+#   fields blank, Country=JP, URLs=[GVDB page]. The only アジア evidence
+#   on the page is a work title inside <li>, which the graded Country
+#   rule does not count (it previously left Country blank).
+# 6155: Name=アツシ, Aliases="Atsushi, ボブ, Bobu, しゅん, Shun, ホクト, Hokuto",
+#   all numeric fields blank, Country=JP, URLs=[GVDB page]. The profile has
+#   an "AKA: ボブ Bobu (orしゅん Shun)" line (a text node inside the first
+#   <p>): AKA lines are parsed like the Name line, and a "(or <name-set>)"
+#   parenthetical is an alternate name-set, not a kana reading.
+# 6194: Name=葉月健太, Aliases="Haduki Kenta", PenisLength=(blank),
+#   Height=174, Weight=64, Country=JP, URLs=[GVDB page]. The アジア
+#   keyword sits only in a work title inside an <li>: under the graded
+#   Country rule, work titles are not Country evidence (they never reach
+#   the Aliases lines either, which read <p> text only).
+# No probes: the scraper is performerByURL only, no search modes exist.
+urls:
+  - https://md.gvdb.org/159685/
+  - https://md.gvdb.org/54676/
+  - https://md.gvdb.org/161913/
+  - https://md.gvdb.org/22153/
+  - https://md.gvdb.org/6180/
+  - https://md.gvdb.org/161064/
+  - https://md.gvdb.org/161611/
+  - https://md.gvdb.org/53003/
+  - https://md.gvdb.org/117270/
+  - https://md.gvdb.org/72533/
+  - https://md.gvdb.org/6142/
+  - https://md.gvdb.org/6155/
+  - https://md.gvdb.org/6194/
+multi: true
