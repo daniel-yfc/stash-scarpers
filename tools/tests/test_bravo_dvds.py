@@ -1,4 +1,4 @@
-"""Wave 2E WS-2E-40 - BRAVO DVD fixture engineering regression (Agent C, v2).
+"""Wave 2E WS-2E-40 - BRAVO DVD fixture engineering regression (Agent C, v2.1).
 
 Evidence basis
 --------------
@@ -13,15 +13,27 @@ What these tests enforce
 ------------------------
 * Green here and now: manifest structure, Agent A verified-value matrix,
   404 fail-closed behaviour, isolation from the archived historical
-  manifest and the Wave 1B Clips manifest, historical digest preservation,
-  and mutation tests proving the shared fixture runner rejects wrong
-  expectations.
+  manifest and the Wave 1B Clips manifest (case names AND html filenames),
+  historical digest preservation, and mutation tests proving the shared
+  fixture runner rejects wrong expectations.
 * Deliberately red on the scaffold branch (and asserted as such): running
   the full DVD manifest must fail with "Ambiguous entrypoint; specify
   scraper for sceneByURL" until Agent F implements the /dvds/ route and
   dvdSceneScraper. When implemented, the same test requires a full PASS.
 * Conditional guards (active once dvdSceneScraper exists): no stale //h1
   or comp-kbfkf16x selectors, no site-generic keywords as Tags.
+
+Revision v2.1 (review fixes)
+----------------------------
+* C-FIX-1: DVD case names renamed so none collide with the archived
+  historical manifest ("BRAVO dvd 046"/"BRAVO dvd 281" now carry a
+  "(synthetic regression)" suffix; the failure control is renamed
+  "BRAVO dvd Cloudflare challenge (dvd manifest control)"). The isolation
+  test now also asserts html-filename isolation.
+* C-FIX-2: test_dvd_manifest_does_not_reuse_stale_h1_selectors guards the
+  failure case (which has no expect block) via case.get("expect", []).
+* C-FIX-3: the report handoff now references the real deliverables commit
+  SHA (no placeholder).
 
 These tests do NOT claim live/runtime verification (Gate B) and do not
 modify the shared runner, scrapers/BRAVO.yml, tools/tests/test_bravo_clips.py
@@ -289,8 +301,14 @@ def test_dvd_manifest_is_isolated_from_historical_and_clips():
     dvd_names = {c["name"] for c in dvd_cases()}
     historical_names = {c["name"] for c in load_manifest(HISTORICAL_MANIFEST)["cases"]}
     clips_names = {c["name"] for c in load_manifest(CLIPS_MANIFEST)["cases"]}
-    assert not (dvd_names & historical_names)
-    assert not (dvd_names & clips_names)
+    # C-FIX-1: neither case names nor fixture html filenames may collide.
+    assert not (dvd_names & historical_names), dvd_names & historical_names
+    assert not (dvd_names & clips_names), dvd_names & clips_names
+    dvd_htmls = {c["html"] for c in dvd_cases()}
+    historical_htmls = {c["html"] for c in load_manifest(HISTORICAL_MANIFEST)["cases"]}
+    clips_htmls = {c["html"] for c in load_manifest(CLIPS_MANIFEST)["cases"]}
+    assert not (dvd_htmls & historical_htmls), dvd_htmls & historical_htmls
+    assert not (dvd_htmls & clips_htmls), dvd_htmls & clips_htmls
     assert WAVE_1B_CLIPS_CASE_NAMES <= clips_names
     for case in dvd_cases():
         assert not case["html"].startswith("clip-"), case["name"]
@@ -299,8 +317,9 @@ def test_dvd_manifest_is_isolated_from_historical_and_clips():
 def test_dvd_manifest_does_not_reuse_stale_h1_selectors():
     # The current DOM has h1 = 0 on all verified pages; the historical
     # h1/comp-ID selectors are obsolete and must not reappear here.
+    # C-FIX-2: the failure control case has no expect block - guard it.
     for case in dvd_cases():
-        for assertion in case["expect"]:
+        for assertion in case.get("expect", []):
             assert "//h1" not in assertion["xpath"], case["name"]
             assert "comp-kbfkf16x" not in assertion["xpath"], case["name"]
 
