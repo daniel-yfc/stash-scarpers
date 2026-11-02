@@ -1,10 +1,14 @@
-# Wave 2E (WS-2E-40) - BRAVO DVD fixture manifest, v2 (updated spec).
+# Wave 2E (WS-2E-40) - BRAVO DVD fixture manifest, v2.1 (updated spec).
 # Isolated from:
 #   - the archived historical manifest (bravo-fixtures.yml, evidence digest
 #     be1885d2097683e8c4ae5f2440120e8bd7945ac16f62c1910ac87e5d009d39b2,
 #     preserved byte-for-byte; its old Wix comp-ID / h1 selectors are
 #     OBSOLETE for the current site but the file itself must never be edited),
 #   - the Wave 1B Clips manifest (bravo-clips-fixtures.yml).
+#   Every case name and fixture html filename in THIS manifest is unique
+#   across all three manifests (C-FIX-1): positive cases carry the
+#   "(synthetic regression)" suffix and the failure control is renamed
+#   "BRAVO dvd Cloudflare challenge (dvd manifest control)".
 #
 # Evidence basis (Agent A, WS-2E-10):
 #   docs/research/wave2e/RAW-DOM-VERIFICATION-ADDENDUM.md
@@ -53,7 +57,9 @@ cases:
   # C-P case - positive, sanitized reconstruction of the CDP rendered DOM
   # verified by Agent A (RAW-DOM-VERIFICATION-ADDENDUM.md). Title / Code /
   # URLs / Date / Studio / Duration values are Agent A verified.
-  - name: "BRAVO dvd 234"
+  # Case name carries the (synthetic regression) suffix so it can never
+  # collide with the archived historical manifest's case names (C-FIX-1).
+  - name: "BRAVO dvd 234 (synthetic regression)"
     classification: completed
     html: "dvd-synthetic-234.html"
     locale:
@@ -130,7 +136,9 @@ cases:
   # C-P case - positive, sanitized reconstruction of the CDP rendered DOM
   # verified by Agent A (RAW-DOM-VERIFICATION-ADDENDUM.md). Title / Code /
   # URLs / Date / Studio / Duration values are Agent A verified.
-  - name: "BRAVO dvd 084"
+  # Case name carries the (synthetic regression) suffix so it can never
+  # collide with the archived historical manifest's case names (C-FIX-1).
+  - name: "BRAVO dvd 084 (synthetic regression)"
     classification: completed
     html: "dvd-synthetic-084.html"
     locale:
@@ -207,7 +215,9 @@ cases:
   # C-P case - positive, sanitized reconstruction of the CDP rendered DOM
   # verified by Agent A (RAW-DOM-VERIFICATION-ADDENDUM.md). Title / Code /
   # URLs / Date / Studio / Duration values are Agent A verified.
-  - name: "BRAVO dvd 281"
+  # Case name carries the (synthetic regression) suffix so it can never
+  # collide with the archived historical manifest's case names (C-FIX-1).
+  - name: "BRAVO dvd 281 (synthetic regression)"
     classification: completed
     html: "dvd-synthetic-281.html"
     locale:
@@ -284,7 +294,9 @@ cases:
   # C-P case - positive, sanitized reconstruction of the CDP rendered DOM
   # verified by Agent A (RAW-DOM-VERIFICATION-ADDENDUM.md). Title / Code /
   # URLs / Date / Studio / Duration values are Agent A verified.
-  - name: "BRAVO dvd 046"
+  # Case name carries the (synthetic regression) suffix so it can never
+  # collide with the archived historical manifest's case names (C-FIX-1).
+  - name: "BRAVO dvd 046 (synthetic regression)"
     classification: completed
     html: "dvd-synthetic-046.html"
     locale:
@@ -361,7 +373,9 @@ cases:
   # C-P case - positive, sanitized reconstruction of the CDP rendered DOM
   # verified by Agent A (RAW-DOM-VERIFICATION-ADDENDUM.md). Title / Code /
   # URLs / Date / Studio / Duration values are Agent A verified.
-  - name: "BRAVO dvd 377"
+  # Case name carries the (synthetic regression) suffix so it can never
+  # collide with the archived historical manifest's case names (C-FIX-1).
+  - name: "BRAVO dvd 377 (synthetic regression)"
     classification: completed
     html: "dvd-synthetic-377.html"
     locale:
@@ -438,7 +452,9 @@ cases:
   # C-P case - positive, sanitized reconstruction of the CDP rendered DOM
   # verified by Agent A (RAW-DOM-VERIFICATION-ADDENDUM.md). Title / Code /
   # URLs / Date / Studio / Duration values are Agent A verified.
-  - name: "BRAVO dvd 384"
+  # Case name carries the (synthetic regression) suffix so it can never
+  # collide with the archived historical manifest's case names (C-FIX-1).
+  - name: "BRAVO dvd 384 (synthetic regression)"
     classification: completed
     html: "dvd-synthetic-384.html"
     locale:
@@ -667,6 +683,8 @@ cases:
       xpath: "//img[@alt!='' and contains(@src,'wixstatic')]/@src"
       expectedCount: 0
   # C-N case - real archived Cloudflare challenge page (failure).
-  - name: "BRAVO Cloudflare challenge"
+  # Renamed (C-FIX-1) so it cannot collide with the historical manifest's
+  # "BRAVO Cloudflare challenge" case name.
+  - name: "BRAVO dvd Cloudflare challenge (dvd manifest control)"
     classification: failure
     html: "failure-cloudflare.html"
