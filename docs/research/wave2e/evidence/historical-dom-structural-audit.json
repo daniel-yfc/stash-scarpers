@@ -1,0 +1,178 @@
+{
+  "assignment_id": "WAVE2E-A-DVD-DOM-20261102",
+  "workstream_id": "WS-2E-10",
+  "checked_at_utc": "2026-11-02T10:03:01.877Z",
+  "base_main": "4bbafca9cf7b5d67117ac41136e74a303c28e4f4",
+  "source_branch_head": "075006e7685375d4a8b3e2ef94d57d1eed49ddca",
+  "method": "Read full 2026-10-14 GitHub rendered-DOM blob; static h2 sequence and meta/img attribute checks. NOT full XPath engine. No new live captured DOM.",
+  "source_records": [
+    {
+      "dvd": "281",
+      "source_git_blob_sha1": "40ff15e9a9a2dfa2ad19a2f190f41d5a58d80ff2",
+      "source_path": "tests/fixtures/bravo/dvd-281.html",
+      "source_saved_at": "2026-10-14T10:46:07.479Z",
+      "source_type": "HISTORICAL_2026_10_14_RENDERED_DOM_SNAPSHOT_NOT_LIVE",
+      "h1_static_count": 0,
+      "h2_static_count": 22,
+      "h2_before_code_last_three": [
+        "​GO to BRAVO-CLIPS",
+        "熊ケツ4",
+        "しゅうた参上！"
+      ],
+      "title_main_prior_h2_2_static_value": "熊ケツ4",
+      "code_label_static_count": 1,
+      "code_next_h2_static_value": "281",
+      "total_dvd_minutes_next_h2_static_value": "120",
+      "release_date_next_h2_static_value": "2020年7月31日",
+      "release_label_preceding_h2_static_value": "ooooPS!!",
+      "head_html_title": "281",
+      "og_title": "281",
+      "canonical": "https://www.bravo-japan.com/dvds/281",
+      "meta_description_present": true,
+      "meta_keywords_present": true,
+      "meta_keywords_preview": "BL, ぽっちゃり, アナル, ガチムチ, グローリーホール, バイセクシャル, ホモ, 潮噴き, 肉便器",
+      "og_image_present": true,
+      "og_image_asset_id": "3b5bfe_0596c35011ea4c23a0ef4607b5f15b1f~mv2.jpg",
+      "img_same_as_og_asset_static_count": 1,
+      "img_same_as_og_asset_alt": [
+        "熊ケ��ツ4"
+      ],
+      "all_img_static_count": 37,
+      "video_static_count": 4,
+      "comments": "Static HTML markup analysis, not an XPath engine evaluation or current live DOM claim."
+    },
+    {
+      "dvd": "046",
+      "source_git_blob_sha1": "8d129e08bc96f3a54dcd3887f9e1b5d4587e8fd7",
+      "source_path": "tests/fixtures/bravo/dvd-046.html",
+      "source_saved_at": "2026-10-14T10:46:02.714Z",
+      "source_type": "HISTORICAL_2026_10_14_RENDERED_DOM_SNAPSHOT_NOT_LIVE",
+      "h1_static_count": 0,
+      "h2_static_count": 22,
+      "h2_before_code_last_three": [
+        "​GO to BRAVO-CLIPS",
+        "ゆるゆる雄太のデブ竿ぽちゃ穴食べ放題!",
+        "​"
+      ],
+      "title_main_prior_h2_2_static_value": "ゆるゆる雄太のデブ竿ぽちゃ穴食べ放題!",
+      "code_label_static_count": 1,
+      "code_next_h2_static_value": "046",
+      "total_dvd_minutes_next_h2_static_value": "260",
+      "release_date_next_h2_static_value": "2010年09月30日",
+      "release_label_preceding_h2_static_value": "ooooPS!!",
+      "head_html_title": "046",
+      "og_title": "046",
+      "canonical": "https://www.bravo-japan.com/dvds/046",
+      "meta_description_present": true,
+      "meta_keywords_present": true,
+      "meta_keywords_preview": "BL, ぽっちゃり, アナル, ガチムチ, グローリーホール, バイセクシャル, ホモ, 潮噴き, 肉便器",
+      "og_image_present": true,
+      "og_image_asset_id": "3b5bfe_eeaa516f67aa4222a2ea339b5f3a98b7~mv2.jpg",
+      "img_same_as_og_asset_static_count": 1,
+      "img_same_as_og_asset_alt": [
+        "ゆるゆる雄太のデブ竿ぽちゃ穴食べ放題!"
+      ],
+      "all_img_static_count": 7,
+      "video_static_count": 4,
+      "comments": "Static HTML markup analysis, not an XPath engine evaluation or current live DOM claim."
+    },
+    {
+      "dvd": "173",
+      "source_git_blob_sha1": "9030729f7631ec8f4d5f6878aa08151bf783cdf3",
+      "source_path": "tests/fixtures/bravo/dvd-173.html",
+      "source_saved_at": "2026-10-14T10:45:31.155Z",
+      "source_type": "HISTORICAL_2026_10_14_RENDERED_DOM_SNAPSHOT_NOT_LIVE",
+      "h1_static_count": 0,
+      "h2_static_count": 22,
+      "h2_before_code_last_three": [
+        "​GO to BRAVO-CLIPS",
+        "筋肉BANANA",
+        "自分のチンポ型ディルドをハメた台湾BOY!"
+      ],
+      "title_main_prior_h2_2_static_value": "筋肉BANANA",
+      "code_label_static_count": 1,
+      "code_next_h2_static_value": "173",
+      "total_dvd_minutes_next_h2_static_value": "110",
+      "release_date_next_h2_static_value": "2016年7月13日",
+      "release_label_preceding_h2_static_value": "BRAVO!",
+      "head_html_title": "173",
+      "og_title": "173",
+      "canonical": "https://www.bravo-japan.com/dvds/173",
+      "meta_description_present": true,
+      "meta_keywords_present": true,
+      "meta_keywords_preview": "BL, ぽっちゃり, アナル, ガチムチ, グローリーホール, バイセクシャル, ホモ, 潮噴き, 肉便器",
+      "og_image_present": true,
+      "og_image_asset_id": "3b5bfe_ae471427950941ffb0360fd053e54b0a~mv2_d_2000_1340_s_2.jpg",
+      "img_same_as_og_asset_static_count": 1,
+      "img_same_as_og_asset_alt": [
+        "筋肉BANANA"
+      ],
+      "all_img_static_count": 30,
+      "video_static_count": 4,
+      "comments": "Static HTML markup analysis, not an XPath engine evaluation or current live DOM claim."
+    },
+    {
+      "dvd": "215",
+      "source_git_blob_sha1": "73628ce49f23c46bdacb67afa42aad29f2204871",
+      "source_path": "tests/fixtures/bravo/dvd-215.html",
+      "source_saved_at": "2026-10-14T10:45:36.357Z",
+      "source_type": "HISTORICAL_2026_10_14_RENDERED_DOM_SNAPSHOT_NOT_LIVE",
+      "h1_static_count": 0,
+      "h2_static_count": 22,
+      "h2_before_code_last_three": [
+        "​GO to BRAVO-CLIPS",
+        "種竿狂",
+        "​"
+      ],
+      "title_main_prior_h2_2_static_value": "種竿狂",
+      "code_label_static_count": 1,
+      "code_next_h2_static_value": "215",
+      "total_dvd_minutes_next_h2_static_value": "125",
+      "release_date_next_h2_static_value": "2017年12月22日",
+      "release_label_preceding_h2_static_value": "BRAVO!",
+      "head_html_title": "215",
+      "og_title": "215",
+      "canonical": "https://www.bravo-japan.com/dvds/215",
+      "meta_description_present": true,
+      "meta_keywords_present": true,
+      "meta_keywords_preview": "BL, ぽっちゃり, アナル, ガチムチ, グローリーホール, バイセクシャル, ホモ, 潮噴き, 肉便器",
+      "og_image_present": true,
+      "og_image_asset_id": "3b5bfe_086b8b264165460ea74ec76b4681fc6c~mv2.jpg",
+      "img_same_as_og_asset_static_count": 1,
+      "img_same_as_og_asset_alt": [
+        "種竿狂"
+      ],
+      "all_img_static_count": 53,
+      "video_static_count": 4,
+      "comments": "Static HTML markup analysis, not an XPath engine evaluation or current live DOM claim."
+    }
+  ],
+  "cross_page": {
+    "all_h1_count_zero": true,
+    "all_h2_count_22": true,
+    "all_historical_preceding2_resolve_to_product_title": true,
+    "sitewide_keywords_identical": true,
+    "all_og_image_hero_media_id_correspondence": true
+  },
+  "prior_sanitized_evidence_sha256": "6/6 previously committed files matched their manifest SHA-256 as independently recomputed via JS SHA-256 on exact UTF-8 contents",
+  "recapture_084": {
+    "whole_file_equal": false,
+    "reason": "Different '# role:' header: PRIMARY-2 vs PRIMARY-2-REPRODUCIBILITY",
+    "body_equal_after_first_newline_top_of_page": true,
+    "body_sha256": "b4d300cc885172324f3cf76963f654727f6eeb461aed66770e0b6a5eccf32eca",
+    "prior_file_sha256": "2c3929fd84640bf7e64c6ef722f95a26903d095a42f23ae4625d70d20758872c",
+    "recapture_file_sha256": "3e3697d7f34bcf63153a9628a0441ecf152c4698203ffe7f20fa38bfdcab28ea"
+  },
+  "live_primary": {
+    "dvd_234": "NO_VERIFIED_RENDERED_DOM",
+    "dvd_084": "NO_VERIFIED_RENDERED_DOM",
+    "current_session_public_web": "FETCH_CACHE_MISS",
+    "container_dns": "www.bravo-japan.com: RESOLUTION_FAILURE",
+    "server_http_status": null,
+    "cdp_status": "NOT_RUN",
+    "xpath_live_cardinality": "NOT_RUN",
+    "classification": "UNVERIFIED_NOT_BLOCKED_SITE"
+  },
+  "verdict": "BLOCKED_FOR_FINAL_XPATH_AND_AGENT_F_IMPLEMENTATION",
+  "privacy": "No raw HTML, cookies, auth headers, session material or full product descriptions are republished."
+}

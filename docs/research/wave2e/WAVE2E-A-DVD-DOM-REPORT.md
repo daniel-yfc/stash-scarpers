@@ -1,3 +1,5 @@
+> **Independent QA correction (2026-11-02):** This first-pass report is **not sufficient for final `dvdSceneScraper` XPath implementation**. Its prior `HANDOFF_STATUS=READY` is superseded by [WAVE2E-A-DVD-DOM-AUDIT-ADDENDUM.md](WAVE2E-A-DVD-DOM-AUDIT-ADDENDUM.md): **`HANDOFF_STATUS=BLOCKED`** until both primary DVD complete rendered HTML and live XPath cardinality are proven. Source-based corrections for DVD 046, image, studio/label, 084 missing description, and recapture SHA are detailed there.
+
 # WAVE2E-A-DVD-DOM-REPORT.md
 Assignment: WAVE2E-A-DVD-DOM-20261102 / WS-2E-10 / Agent A（DVD DOM Research）
 Report language: zh-TW
@@ -132,7 +134,7 @@ AGENT_ROLE: Agent A
 ASSIGNMENT_STATUS: ASSIGNED
 BASE_SHA: "4bbafca9cf7b5d67117ac41136e74a303c28e4f4"
 BRANCH: research/e2e-bravo-dvd-dom
-HEAD_SHA: "NOT_COMMITTED"
+HEAD_SHA: "RESOLVE_GITHUB_REF_AFTER_COMMIT"
 CHANGED_FILES: []
 DELIVERABLES:
   - "WAVE2E-A-DVD-DOM-REPORT.md (this report)"
@@ -167,5 +169,5 @@ RISKS_AND_DECISIONS:
   - "FACT: main BRAVO.yml current Title selector (preceding::h2[2]) conflicts with the 046 template shape observed live"
   - "INFERENCE: at least 3 presentation variants exist (234/281-type, 046-type, 084-type)"
   - "DECISION: Image fail-closed; no img fallback; no URL-derived Title/Code; no groupByURL"
-HANDOFF_STATUS: READY
+HANDOFF_STATUS: BLOCKED
 ```
