@@ -18,6 +18,33 @@ documents:
   - stash-panic
   - upstream-issue
   - graphql
+- doc_id: DOC-E2E-63
+  title: Wave 2E Agent B Routing Assignment Addendum
+  path: docs/63-wave2e-agent-b-assignment-addendum.md
+  layer: repository
+  status: draft
+  intents:
+  - wave-2e
+  - routing-tests
+  - agent-b
+- doc_id: DOC-E2E-64
+  title: Wave 2E Agent C Fixture Assignment Addendum
+  path: docs/64-wave2e-agent-c-assignment-addendum.md
+  layer: repository
+  status: draft
+  intents:
+  - wave-2e
+  - fixtures
+  - agent-c
+- doc_id: DOC-E2E-65
+  title: Wave 2E Agent F Integration Assignment Addendum
+  path: docs/65-wave2e-agent-f-assignment-addendum.md
+  layer: repository
+  status: draft
+  intents:
+  - wave-2e
+  - implementation
+  - agent-f
 - doc_id: DOC-INTEGRATION-80
   title: Metadata Feed Integration
   path: docs/80-metadata-feed-integration.md
