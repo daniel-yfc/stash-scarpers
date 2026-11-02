@@ -78,6 +78,13 @@ DVD canonical and ``Tags`` returns a non-empty list that is *identical
 across four different DVDs* — i.e. plausible, partial, cross-mode metadata.
 See ``WAVE2E-B-ROUTING-REPORT.md`` for the decision record
 (``FALSE_METADATA_RISK_CONFIRMED`` / ``RELEASE_BLOCKER``).
+
+Addendum (docs/63) — B-08/B-09: route selection and product validity are
+independent assertions.  The ``TestRouteVersusProductValidity`` section
+pins the fail-closed validity gate (product marker + Title + string Code
+identical to the canonical's last segment): ``/dvds/00`` and
+``/dvds/999999`` route to ``dvdSceneScraper`` by URL shape yet are NOT
+valid products, even though their canonical link is populated.
 """
 
 import copy
@@ -524,6 +531,33 @@ def eval_clip_selector(dom, selector):
             if seen_h1 and n.tag == "h2":
                 return [_text(n)]
         return []
+    m = re.fullmatch(r"//h2\[contains\(\.,'(.+)'\)\]", selector)
+    if m:
+        label = m.group(1)
+        return [_text(n) for n in dom.order if n.tag == "h2" and label in _text(n)]
+    m = re.fullmatch(r"//h2\[contains\(\.,'(.+)'\)\]/preceding::h2\[(\d+)\]", selector)
+    if m:
+        label, idx = m.group(1), int(m.group(2))
+        h2s = [n for n in dom.order if n.tag == "h2"]
+        for i, n in enumerate(h2s):
+            if label in _text(n):
+                return [_text(h2s[i - idx])] if i - idx >= 0 else []
+        return []
+    m = re.fullmatch(r"//h2\[contains\(\.,'(.+)'\)\]/following::h2\[(\d+)\]", selector)
+    if m:
+        label, idx = m.group(1), int(m.group(2))
+        h2s = [n for n in dom.order if n.tag == "h2"]
+        for i, n in enumerate(h2s):
+            if label in _text(n):
+                return [_text(h2s[i + idx])] if i + idx < len(h2s) else []
+        return []
+    m = re.fullmatch(r"//img\[@alt!='' and contains\(@src,'wixstatic'\)\]/@src", selector)
+    if m:
+        return [
+            n.attrs["src"]
+            for n in dom.order
+            if n.tag == "img" and n.attrs.get("alt") and "wixstatic" in n.attrs.get("src", "")
+        ]
     raise AssertionError(f"Unsupported selector shape in route test evaluator: {selector}")
 
 
@@ -581,6 +615,172 @@ class TestQueryFragmentOfflineExtraction:
         # handler would be false metadata.
         tag_sets = [tuple(clip_extract_on(f)["Tags"]) for f in DVD_FIXTURES]
         assert len(set(tag_sets)) == 1
+
+
+# --------------------------------------------------------------------------
+# B-08/B-09 (assignment addendum, docs/63) — Route selection is NOT product
+# validity.  Two independent assertions:
+#   (1) Stash-compatible first-match handler selection (sections above).
+#   (2) Content validity of what the selected handler would extract.
+# A 404 page can satisfy (1) — its URL shape matches the DVD route — and
+# still carry a canonical link, so (2) must reject it explicitly.  The
+# validity oracle follows Agent A's raw-DOM addendum (commit 16224b4):
+# the product marker //h2[contains(.,'品番')] is the validity gate, Title
+# and Code come from its neighbouring h2 elements, Code is a string and
+# must equal the canonical's last segment (leading zeros preserved).
+# Agent A's status pair is recorded, not upgraded: AUTHOR_HANDOFF=READY,
+# INDEPENDENT_EVIDENCE_ACCEPTANCE=CHANGES_REQUESTED.  The historical repo
+# fixtures below independently reproduce A's reported Title/Code for
+# dvds/046 and dvds/281; that is partial corroboration, not G1 acceptance.
+# --------------------------------------------------------------------------
+
+# Agent A's final-spec selector subset relevant to validity.  Used ONLY as
+# a test extractor; Agent B does not implement production YAML.
+DVD_VALIDITY_SELECTORS = {
+    "Marker": "//h2[contains(.,'品番')]",
+    "Title": "//h2[contains(.,'品番')]/preceding::h2[2]",
+    "Code": "//h2[contains(.,'品番')]/following::h2[1]",
+    "URLs": "//link[@rel='canonical']/@href",
+    "Image": "//img[@alt!='' and contains(@src,'wixstatic')]/@src",
+}
+
+
+def extract_with(dom, selectors):
+    return {
+        field: [v.strip() for v in eval_clip_selector(dom, selector)]
+        for field, selector in selectors.items()
+    }
+
+
+def parse_html(text):
+    dom = _DOM()
+    dom.feed(text)
+    return dom
+
+
+def dvd_extract_on(fixture_name):
+    text = (DVD_FIXTURE_DIR / fixture_name).read_text(encoding="utf-8", errors="replace")
+    return extract_with(parse_html(text), DVD_VALIDITY_SELECTORS)
+
+
+def product_validity(extract, url):
+    """Fail-closed product-validity gate (B-09).
+
+    Returns (is_valid, reasons).  A result is a valid product only when
+    the product marker exists, Title is non-empty, Code is a non-empty
+    string identical to the canonical URL's last segment, and the
+    extracted canonical equals the requested URL.  A populated canonical
+    alone proves nothing.
+    """
+    reasons = []
+    segment = url.rstrip("/").rsplit("/", 1)[-1]
+    if not extract["Marker"]:
+        reasons.append("product marker (品番) absent")
+    if not extract["Title"] or not extract["Title"][0]:
+        reasons.append("Title empty")
+    code = extract["Code"][0] if extract["Code"] else ""
+    if not code:
+        reasons.append("Code empty")
+    elif code != segment:
+        reasons.append(f"Code/URL identity mismatch: Code {code!r} != URL segment {segment!r}")
+    canonical = extract["URLs"][0] if extract["URLs"] else ""
+    if canonical != url:
+        reasons.append(f"canonical mismatch: {canonical!r} != {url!r}")
+    return (not reasons, reasons)
+
+
+# A 404 DVD page modelled on the characteristics Agent A documented for
+# /dvds/00 and /dvds/999999 (raw DOM stays in A's restricted workspace;
+# this is a modelled control, not A's evidence): document title is a 404,
+# a canonical link IS present and points at the 404 URL itself, the same
+# site-generic keywords meta is present, there is no 品番 marker, and the
+# only wixstatic image is an alt-less site asset.
+SYNTHETIC_404_TEMPLATE = """<html lang="ja"><head>
+<title>404 | bravo-works</title>
+<link rel="canonical" href="{url}">
+<meta name="keywords" content="BL, ぽっちゃり, アナル, ガチムチ">
+</head><body>
+<h2>BRAVO-JAPAN</h2>
+<h2>404 Not Found</h2>
+<img src="https://static.wixstatic.com/media/site-asset.png" alt="">
+</body></html>"""
+
+
+class TestRouteVersusProductValidity:
+    @pytest.mark.parametrize(
+        "fixture,url,title,code",
+        [
+            ("dvd-046.html", DVD_URL_046, "ゆるゆる雄太のデブ竿ぽちゃ穴食べ放題!", "046"),
+            ("dvd-281.html", "https://www.bravo-japan.com/dvds/281", "熊ケツ4", "281"),
+            ("dvd-173.html", "https://www.bravo-japan.com/dvds/173", "筋肉BANANA", "173"),
+            ("dvd-215.html", "https://www.bravo-japan.com/dvds/215", "種竿狂", "215"),
+        ],
+    )
+    def test_historical_dvd_products_are_valid(self, fixture, url, title, code):
+        extract = dvd_extract_on(fixture)
+        assert extract["Title"] == [title]
+        assert extract["Code"] == [code]
+        assert isinstance(extract["Code"][0], str)  # "046", never int 46
+        valid, reasons = product_validity(extract, url)
+        assert valid, reasons
+
+    @pytest.mark.parametrize("url", ["https://www.bravo-japan.com/dvds/00", "https://www.bravo-japan.com/dvds/999999"])
+    def test_404_routes_by_shape_but_is_not_a_product(self, url):
+        # (1) Route selection: the URL shape matches the DVD route.
+        assert select_handler(candidate_routes(), url) == "dvdSceneScraper"
+        # (2) Product validity: rejected, even though a canonical exists.
+        dom = parse_html(SYNTHETIC_404_TEMPLATE.format(url=url))
+        extract = extract_with(dom, DVD_VALIDITY_SELECTORS)
+        assert extract["Marker"] == []
+        assert extract["Title"] == [] and extract["Code"] == []
+        # The hazard, pinned: URLs is populated on an invalid product.
+        assert extract["URLs"] == [url]
+        valid, reasons = product_validity(extract, url)
+        assert not valid
+        assert any("marker" in r for r in reasons)
+
+    @pytest.mark.parametrize("url", ["https://www.bravo-japan.com/dvds/00", "https://www.bravo-japan.com/dvds/999999"])
+    def test_404_through_clip_selectors_also_fails_validity(self, url):
+        # The same partial-metadata shape appears if a 404 DVD page is
+        # reached through the Clips XPath set (e.g. via QueryFragment):
+        # canonical + site-generic Tags populated, core fields empty.
+        dom = parse_html(SYNTHETIC_404_TEMPLATE.format(url=url))
+        clip = load_production()["xPathScrapers"]["clipSceneScraper"]["scene"]
+        selectors = {
+            "Marker": "//h2[contains(.,'品番')]",
+            "Title": clip["Title"]["selector"],
+            "Code": clip["Code"]["selector"],
+            "URLs": clip["URLs"]["selector"],
+        }
+        extract = extract_with(dom, selectors)
+        assert extract["URLs"] == [url]
+        valid, _ = product_validity(extract, url)
+        assert not valid
+
+    def test_404_image_selector_is_fail_closed(self):
+        # A's Image selector returns nothing on the modelled 404 even
+        # though a wixstatic site asset is present (alt is empty).  A real
+        # product page without a cover must likewise yield no Image rather
+        # than site artwork; /dvds/084's sold-out artwork is a separate
+        # policy case for F/Controller, not generic-absence evidence.
+        url = "https://www.bravo-japan.com/dvds/00"
+        dom = parse_html(SYNTHETIC_404_TEMPLATE.format(url=url))
+        extract = extract_with(dom, DVD_VALIDITY_SELECTORS)
+        assert extract["Image"] == []
+
+    def test_route_and_validity_are_independent_axes(self):
+        # Same handler, opposite validity — neither implies the other.
+        routes = candidate_routes()
+        assert select_handler(routes, DVD_URL_046) == "dvdSceneScraper"
+        assert select_handler(routes, "https://www.bravo-japan.com/dvds/00") == "dvdSceneScraper"
+        assert product_validity(dvd_extract_on("dvd-046.html"), DVD_URL_046)[0] is True
+        dom = parse_html(SYNTHETIC_404_TEMPLATE.format(url="https://www.bravo-japan.com/dvds/00"))
+        assert product_validity(extract_with(dom, DVD_VALIDITY_SELECTORS), "https://www.bravo-japan.com/dvds/00")[0] is False
+
+    def test_unmatched_control_has_no_handler(self):
+        # B-08 control case; the resulting Stash behaviour is upstream
+        # issue #97, tracked separately and not asserted here.
+        assert select_handler(candidate_routes(), "https://example.com/dvds/234") is None
 
 
 # --------------------------------------------------------------------------

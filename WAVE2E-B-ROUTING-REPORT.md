@@ -4,6 +4,7 @@
 - Role: Agent B（Routing / Test Engineering）
 - 交付物：`tools/tests/test_bravo_dvd_routes.py`（新檔）+ 本報告
 - 結論先行：路由測試套件已建立並可執行；QueryFragment 跨模式誤擷取風險經離線證據確認存在，標記 `RELEASE_BLOCKER=QUERY_FRAGMENT_FALSE_METADATA`，`HANDOFF_STATUS=CHANGES_REQUESTED`。本結論不是對 production YAML 的修改要求由 B 執行，而是要求 Controller 在 Agent F 整合前先做決策（見 §7）。
+- **Addendum 回應（`docs/63-wave2e-agent-b-assignment-addendum.md`，PR #98 @ `989e05e`）：見 §11（2026-11-03 補充）。**
 
 ## 1. Baseline
 
@@ -184,3 +185,55 @@ def test_no_direct_scene_by_fragment():
 | 未修改檔案核對 | `git status`：僅新增 `tools/tests/test_bravo_dvd_routes.py` 與本報告；`scrapers/BRAVO.yml`、`tools/tests/test_bravo_clips.py`、所有 fixtures 位元組未變（digest 見 §1） |
 
 備註：未執行 `npm ci` 的乾淨環境下，全套件有 8 項失敗（validator / scrutiny / fixture self-test 需 node 相依），已以 `git stash` 在無本任務檔案的 BASE_SHA 上複現相同 8 項，屬環境相依、非本任務回歸；`npm ci` 後全數消失。
+
+## 11. Addendum 回應 — B-08 / B-09 / B-10（docs/63，2026-11-03 補充）
+
+依據文件：`docs/63-wave2e-agent-b-assignment-addendum.md`（PR #98 HEAD `989e05e1256e321705b1ebfe7a9642c9a8c1f6c8` 已核對）。本節補充（不取代）§1–§10；權限邊界不變：不改 `scrapers/BRAVO.yml`、不改 `test_bravo_clips.py`、不操作 stash-test。
+
+證據狀態紀律（依 addendum 要求雙軌記錄，不升級）：Agent A raw-DOM 報告（commit `16224b4`）為 `AUTHOR_HANDOFF=READY`；獨立審查（commit `0160f66`）為 `INDEPENDENT_EVIDENCE_ACCEPTANCE=CHANGES_REQUESTED`（原始 DOM 與逐頁機器可讀評估結果不在 repo 內）。故 §11 的產品有效性 oracle 採 A 的規格（marker / Title / Code XPath 與有效性 gate 定義），但 B 的可執行斷言只建立在 repo 內可複核的材料上：歷史 DVD fixtures（離線）＋依 A §3 文件化特徵建模的 synthetic 404 控制頁（明示為建模，非 A 的原始證據）。一項部分佐證：歷史 fixture `dvd-046`/`dvd-281` 以 A 規格 selector 擷出的 Title/Code（`ゆるゆる雄太のデブ竿ぽちゃ穴食べ放題!`/`046`、`熊ケツ4`/`281`）與 A 報告矩陣完全一致——這是對 A 兩個頁面欄位值的獨立離線複現，不構成 G1 整體接受。
+
+### 11.1 B-08 — 路由選擇 ≠ 產品有效性（雙軸矩陣）
+
+測試：`TestRouteVersusProductValidity`（新增 11 項，全數通過）。有效性 gate（fail-closed）：`品番` marker 存在 ∧ Title 非空 ∧ Code 為非空**字串**且與 canonical 最後段完全相等 ∧ canonical 與請求 URL 相等；任一不成立即拒絕，並回傳理由清單。
+
+| Case | (1) Handler（candidate config） | (2) 產品有效性 | 關鍵 oracle |
+|---|---|---|---|
+| `/dvds/234` | `dvdSceneScraper` | 有效（A 矩陣：Title/Code 234/canonical 一致；B 離線 fixture 未含 234，以 A 規格為準、待 F/Gate B 複核） | A §2 |
+| `/dvds/084` | `dvdSceneScraper` | 有效產品；Details 可為空（`SOURCE_FIELD_ABSENT`，不得回補）；Image 為 soldout 圖属政策案（見 11.2） | A §2/§5 |
+| `/dvds/046` | `dvdSceneScraper` | 有效；Code = 字串 `"046"`（測試斷言型別與值，禁止 int 46） | 歷史 fixture 實跑 + A §2 互相佐證 |
+| `/dvds/281`、`/dvds/173`、`/dvds/215` | `dvdSceneScraper` | 有效（Title/Code/canonical 三者一致） | 歷史 fixture 實跑 |
+| `/dvds/00`（404） | `dvdSceneScraper`（依 URL 形狀） | **拒絕**：marker 不存在、Title/Code 空；canonical 仍被填入（= 被 pin 住的危害） | synthetic 404（依 A §3 建模）+ A §3 |
+| `/dvds/999999`（404） | `dvdSceneScraper`（依 URL 形狀） | **拒絕**：同上；且經 Clips selector 集擷取時同樣呈現「canonical 已填、核心欄位空」的部分 metadata，validity 同樣拒絕 | synthetic 404 + A §3 |
+| `/clips/284`、`/clips/282` | `clipSceneScraper` | Clips 契約不變（§8），不經 DVD handler | §3/§8 |
+| `example.com` 未匹配控制 | 無 handler | 不適用；其後 Stash 行為屬 upstream issue #97，獨立追蹤、本套件不斷言 | §2 |
+
+雙軸獨立性另有專項測試：同一批 URL 中 `/dvds/046`（handler=DVD, valid=True）與 `/dvds/00`（handler=DVD, valid=False）並列，證明 (1) 不能推論 (2)、(2) 也不能推論 (1)。
+
+### 11.2 B-09 — 404 fail-closed：機制評估與建議
+
+事實前提：Stash declarative XPath 欄位彼此獨立（Wave 1B 已就 Clips Title-less 案例記錄同一限制），**沒有任何 YAML 機制能讓單一欄位的條件自動守護其他欄位**。404 頁上 Title/Code（marker 相鄰 selector）天然為空，但 URLs（canonical selector 與 marker 無關）仍會被填入——這正是必須被偵測並拒絕的 wrong-but-plausible 部分 metadata。可行機制（皆為評估，未由 B 實作）：
+
+| 機制 | 內容 | 證據/可行性 | 代價與風險 |
+|---|---|---|---|
+| (i) 逐欄位 XPath 自守護 | 對與 marker 無內建關聯的欄位（URLs、Tags 等），把 selector 改為以 marker 存在為條件的 XPath 1.0 形式，例如於 predicate 中引用文件全域節點集（`boolean(//h2[contains(.,'品番')])`） | XPath 1.0 語法層成立；Stash 使用 `antchfx/xpath`（XPath 1.0 相容實作），但全域節點集 predicate 在該實作與 Stash `getXPathQuery` 下的實際行為**未驗證**，需 F 在整合時以 fixture + Gate B 實證 | selector 可讀性下降；每個欄位都要個別處理；若實作不支援，會以「永遠空」或「永遠有值」的形狀靜默失敗，比現況更難察覺 |
+| (ii) Consumer validity gate（文件化驗收門） | 在 QA/消費者層明文規定：結果須通過 11.1 的 gate（marker/Title/Code/canonical 身份一致）才可接受為成功 scrape；Stash 回傳的部分物件不自動視為成功 | 與 Wave 1B 對 Title-less 結果的既有處置（「must NOT be accepted as a successful scrape in Gate B」）同一模式，已有先例 | 不阻止 runtime 產生部分物件；依賴消費者紀律，自動化管線（如 Identify 批次）若未實作 gate 仍會吃入部分 metadata |
+| (iii) 不做 YAML 層防護、僅文件記錄 | 記錄 404 canonical 危害與已知限制 | 成本最低 | 部分 metadata 會被誤認為成功，違反 addendum 的 fail-closed 要求，不建議單獨採用 |
+
+**B 的建議**：(ii) 為必要底線（Gate B 驗收與任何自動消費者都必須實作 11.1 gate，本套件的 `product_validity` 可直接作為參考實作）；(i) 由 F 在整合時以專項 fixture 驗證 `antchfx` 支援度後再決定是否採用於 URLs/Tags，若採用，(ii) 仍須保留作為第二層。Image 方面：A 規格的 Image selector（alt 非空 ∧ wixstatic）在建模 404 上回傳空（已 pin 為測試），天然 fail-closed，不需額外機制；`/dvds/084` 的 soldout 圖是「有圖但政策上是否採用」的決策案，不得被引用為「無圖頁面會 fallback」的證據，亦不得因此引入更廣的 fallback selector。
+
+### 11.3 B-10 — QueryFragment 與 harness 獨立性（確認）
+
+- QueryFragment：維持 §7 決策 `FALSE_METADATA_RISK_CONFIRMED` + `RELEASE_BLOCKER=QUERY_FRAGMENT_FALSE_METADATA` 不變；addendum 的要求（不得假設 `sceneByURL` 會在 QF 模式被諮詢、標記 blocker、提最小緩解、待 Controller 決策）與 §7 內容一致，無新增動作。11.1 的 404×Clips-selector 測試另補強了 QF 風險面：即使是 404 DVD 頁，經 Clips 集擷取仍會產生「canonical 已填」的部分結果。
+- Harness 獨立性：維持 §6 結論與作法——effective-routing 測試（本套件）與 field 測試（fixture runner）分離；`mappedExpect.scraper` 明示指定只證明欄位層。未改 production YAML、未刪共用 Clips 測試的單路由斷言（其雙路由修訂仍依 §9 由 F 執行）。
+
+### 11.4 更新後測試結果
+
+| 指令 | 結果 |
+|---|---|
+| `python -m pytest tools/tests/test_bravo_dvd_routes.py tools/tests/test_bravo_clips.py -q` | 69 passed, 9 xfailed（新增 11 項產品有效性測試全數通過；xfail 組成不變） |
+
+### 11.5 更新後 Handoff 補充（取代 §10 後的狀態認知，不改 HANDOFF_STATUS）
+
+- `HANDOFF_STATUS` 維持 `CHANGES_REQUESTED`（理由不變：QueryFragment blocker 待 Controller 決策；本 addendum 工作本身已完成）。
+- 新增交付：B-08 雙軸矩陣（11.1）、B-09 機制評估與建議（11.2）、`TestRouteVersusProductValidity` 11 項測試（含 `product_validity` 參考實作，供 F/Gate B 採用）。
+- 給 F 的新增輸入：整合 `dvdSceneScraper` 時，URLs/Tags 欄位是否採 (i) 逐欄位自守護，須先以 fixture 驗證 `antchfx` 對全域節點集 predicate 的支援；Gate B 案例表新增 `/dvds/00`、`/dvds/999999` 兩個 404 負例（期望：validity gate 拒絕，而非「有回傳物件」）。
