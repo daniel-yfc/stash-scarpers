@@ -26,7 +26,25 @@ routing:
 **Tracking:** STASH-E2E-02a / proposed implementation branch `feat/e2e-bravo-dvds`.  
 **Dependencies:** [Wave 1B Clips PR #93](https://github.com/daniel-yfc/stash-scarpers/pull/93), [planning PR #98](https://github.com/daniel-yfc/stash-scarpers/pull/98).  
 **Upstream issue:** [STASH-E2E-02 / WS-D local issue #97](https://github.com/daniel-yfc/stash-scarpers/issues/97); see [separate upstream-preparation document](62-stash-panic-upstream-report.md).  
-**Status (2026-11-02):** `PLANNED / NOT_IMPLEMENTED / NOT_LIVE_VERIFIED`. All agent assignments, work branches, acceptance conditions, and commands below are **proposals**, not claims that work was performed or agents were actually assigned. PR #93 and #98 were Draft at the time of this review. **Do not merge or deploy without controller/maintainer authorization.**
+**Status (2026-11-02):** `PLANNED / DVD_NOT_IMPLEMENTED / G0_BLOCKED_LIVE_QA / G1_INDEPENDENT_REVIEW_CHANGES_REQUESTED`. Agent A and D handoffs are now committed; their separate author/reviewer verdicts must be preserved. PR #93 and #98 remain Draft. **Do not merge, edit runtime YAML, or deploy without controller/maintainer authorization and the specified gates.**
+
+## 2026-11-02 assignment addenda and evidence checkpoint
+
+**Published assignment amendments (workstream owners must read these alongside their initial assignments):**
+
+| Agent | Binding addendum | Scope |
+| --- | --- | --- |
+| **B** | [DOC-E2E-63 — Routing Assignment Addendum](63-wave2e-agent-b-assignment-addendum.md) | Effective URL handler vs content validity; 404 canonical is not proof of product; QueryFragment |
+| **C** | [DOC-E2E-64 — Fixture Assignment Addendum](64-wave2e-agent-c-assignment-addendum.md) | Nine source-reported DVD DOM samples, two 404 negatives, 084 empty Details/sold-out image, CDP, evidence provenance |
+| **F** | [DOC-E2E-65 — Integration Assignment Addendum](65-wave2e-agent-f-assignment-addendum.md) | Candidate selectors, single-writer rules, pending mapping decisions, G0/G1 gates |
+
+**Agent A evidence state:** [Raw-DOM author addendum (commit 16224b4)](https://github.com/daniel-yfc/stash-scarpers/blob/16224b4039e05b3acc675a219066cfd88172db80/docs/research/wave2e/RAW-DOM-VERIFICATION-ADDENDUM.md) reports 9/9 lxml XPath field checks on nine DVD products plus two 404 examples; **author handoff is READY**. A later [independent review (commit 0160f6)](https://github.com/daniel-yfc/stash-scarpers/blob/0160f664888dd69e4fe33d6de2f632282d8af3c3/docs/research/wave2e/RAW-DOM-HANDOFF-QA-REVIEW.md) is **CHANGES_REQUESTED** for independent evidence replay (raw DOM and per-page evaluator results unavailable to the reviewer). These are **different verdicts**. Treat G1 as provisional until evidence can be independently checked or a Controller signs an explicitly scoped risk decision. Source-reported 9/9 is not independently replayed by editing this plan.
+
+**Agent D baseline:** [WS-2E-00 report](https://github.com/daniel-yfc/stash-scarpers/blob/docs/wave2e-d-baseline-ci-20261102/docs/WAVE2E-D-BASELINE-CI-REPORT.md) records exact-head PR #93 CI/CodeQL PASS but **independent Clips Gate B NOT_RUN**, verdict `BASELINE_BLOCKED_LIVE_QA` and **merge NOT_AUTHORIZED**. Therefore G0 remains blocked and Agent F cannot yet implement the official DVD YAML.
+
+**Evidence-based defaults pending Controller review:** omit generic DVD Tags; do not automatically equate product `レーベル` to Stash Studio; omit full DVD duration for per-scene records unless whole-DVD Scene mapping is explicitly approved; exclude 084 `BR-084soldout.jpg` from genuine covers by default. Product validity needs more than a populated canonical link, because the reported 404 pages carry canonical URLs. Preserve `driver.useCDP: true`. DVD URL routing cannot fix the upstream unmatched-URL panic [#97](https://github.com/daniel-yfc/stash-scarpers/issues/97).
+
+---
 
 ## 1. Objective, constraints, and failure-first decision
 
@@ -356,4 +374,4 @@ Rebases or changes to `BRAVO.yml`, fixture manifests or candidate package **inva
 
 **Final verdict required:** `DVD_URL_SCRAPING_FIXED_VERIFIED` **only** after the above evidence; `PANIC_NOT_OBSERVED`, `YAML_CHANGED`, or `FIXTURES_PASS` alone are insufficient.
 
-**Next actions:** assign Agents A–E as proposed (not yet launched); have F own integration specification now but defer production YAML modifications until G0/G1. A/B/C deliver isolated, traceable handoffs; authorized independent QA alone performs Gate B on `stash-test`.
+**Next actions (2026-11-02 checkpoint):** Agent A has submitted research with source-author READY but independent evidence review CHANGES_REQUESTED; Agent D reports G0 BLOCKED_LIVE_QA; Agents B and C can continue isolated tests and fixtures under DOC-E2E-63/64. Agent F may plan integration under DOC-E2E-65 but must defer production YAML edits until G0/G1 are accepted. Independent authorized QA alone performs Gate B on `stash-test`.
