@@ -5,6 +5,13 @@ run: with no ``sceneByFragment`` declaration, Stash has no direct-fragment
 route that could expand an empty ``{title}`` into ``clips/%7Btitle%7D``.
 Gate B (independent QA on stash-test) remains the live check and is NOT_RUN
 until it is actually performed.
+
+Corrective fix 2026-11-03 (Gate B DEF-01/02): Duration and Details
+assertions check selector *properties* (label, spacer guard, container
+scope, digit guard, Clip anchor), not an exact XPath string, so a
+reasonable selector revision is not blocked by a hardcoded string test.
+The exact corrected selectors are verified end-to-end by the fixture
+manifest (mappedExpect) instead.
 """
 
 from pathlib import Path
@@ -56,6 +63,48 @@ def test_clip_selectors_are_not_dvd_selectors():
     # stay absent rather than being fabricated.
     assert "Date" not in clip
     assert "Studio" not in clip
+
+
+def test_duration_selector_is_spacer_and_label_proof():
+    # DEF-01: the old exact-equality + immediate-adjacency selector
+    # ("//h2[normalize-space()='作品TIME']/preceding::h2[1]") must not
+    # return. The corrected selector must: match the label even with a
+    # leading U+200B, skip empty/U+200B candidates, require a digit
+    # start (so a currency price is not taken), and anchor the candidate
+    # after the "Clip" label (so the filtered set is a singleton and the
+    # result does not depend on reverse-axis ordering semantics).
+    # The literal U+200B character must be present by codepoint, not
+    # merely claimed in a comment.
+    data = load()
+    selector = data["xPathScrapers"]["clipSceneScraper"]["scene"]["Duration"]["selector"]
+    assert selector != "//h2[normalize-space()='作品TIME']/preceding::h2[1]"
+    assert "作品TIME" in selector
+    assert "translate" in selector
+    assert "\u200b" in selector
+    assert "0123456789" in selector
+    assert "Clip" in selector
+    assert "preceding::h2" in selector
+
+
+def test_details_selector_is_container_scoped_rich_text():
+    # DEF-02: Details must come from the product description container,
+    # not from the first h2 after the h1 (spacer) and not from a global
+    # rich-text span (nav/promo). $desc must be the baseline container.
+    data = load()
+    scraper = data["xPathScrapers"]["clipSceneScraper"]
+    assert scraper["common"]["$desc"] == "//div[@id='comp-kbfkf17h']"
+    selector = scraper["scene"]["Details"]["selector"]
+    assert selector.startswith("$desc")
+    assert not selector.startswith("//span")
+    assert "wixui-rich-text__text" in selector
+    assert "translate" in selector
+    assert "\u200b" in selector
+    assert selector != "//h1[1]/following::h2[1]"
+    # Post-processing must strip U+200B at the edges; a plain \s trim
+    # cannot, so the JS form (with a \u200b escape) is required.
+    steps = scraper["scene"]["Details"]["postProcess"]
+    js = " ".join(str(s.get("javascript", "")) for s in steps if isinstance(s, dict))
+    assert "200b" in js
 
 
 def test_clip_image_is_poster_only():
@@ -111,7 +160,42 @@ def test_clips_manifest_is_isolated():
     assert "BRAVO clip missing title" in names
     assert "BRAVO clip no verified cover" in names
     assert "BRAVO clip 284 with extra headings" in names
+    assert "BRAVO clip rich-text mixed" in names
+    assert "BRAVO clip duration with price heading" in names
     assert not any("dvd" in n.lower() for n in names)
+
+
+def test_manifest_descriptions_are_distinct_and_clean():
+    # DEF-02 anti-contamination: 284 and 282 descriptions must differ,
+    # so returning one page's description for the other fails. No
+    # expected description may contain a zero-width space or be empty
+    # for a completed clip page, and the missing-title case must not
+    # invent a description.
+    import yaml as yaml_lib
+
+    manifest = yaml_lib.safe_load(
+        (ROOT / "tests" / "fixtures" / "bravo" / "bravo-clips-fixtures.yml").read_text()
+    )
+    by_name = {c["name"]: c for c in manifest["cases"]}
+    details = {}
+    for name in ("BRAVO clip 284", "BRAVO clip 282"):
+        mapped = {m["field"]: m["values"] for m in by_name[name]["mappedExpect"]}
+        values = mapped["Details"]
+        assert len(values) == 1 and values[0]
+        assert "\u200b" not in values[0]
+        details[name] = values[0]
+    assert details["BRAVO clip 284"] != details["BRAVO clip 282"]
+    mapped_missing = {
+        m["field"]: m["values"] for m in by_name["BRAVO clip missing title"]["mappedExpect"]
+    }
+    assert mapped_missing["Details"] == []
+    # The price-heading case proves the conversion is not hardcoded to
+    # 1800: 45 minutes must map to 2700 seconds.
+    mapped_price = {
+        m["field"]: m["values"]
+        for m in by_name["BRAVO clip duration with price heading"]["mappedExpect"]
+    }
+    assert mapped_price["Duration"] == ["2700"]
 
 
 def test_title_less_limitation_is_documented():

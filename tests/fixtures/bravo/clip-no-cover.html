@@ -1,9 +1,17 @@
-<!-- NEGATIVE fixture: no verified product cover.
-     Contains a shared GIF logo AND an unrelated non-GIF Wix site image,
-     but no <video> element and therefore no product poster.
-     Expected Image: [] — neither the logo nor the unrelated artwork may
-     be returned as a cover. All other values below are fixture-local
-     placeholders for this negative case, NOT a live page claim. -->
+<!-- Sanitized live-faithful reconstruction for BRAVO clips/283 (corrected 2026-11-03).
+     Heading order, clip number, duration and the myfans logo GIF follow the
+     live rendered DOM inspected 2026-11-01. The description below is a
+     fixture-local placeholder, NOT live copy, and is deliberately DIFFERENT
+     per clip so a cross-page description leak fails the test.
+     Live-faithful details added 2026-11-03 to reproduce Gate B DEF-01/02:
+     a spacer h2 (&#8203;, single U+200B) after the h1, a spacer h2 between
+     minutes and the 作品TIME label, and a leading &#8203; on that label;
+     the old selectors return the spacer / nothing on this page, the
+     corrected selectors return minutes and the container description.
+     Nav/promo rich text outside the description container proves a global
+     span.wixui-rich-text__text selector would return the wrong text.
+     The video poster URL is a CONTROLLED fixture URL (example.invalid),
+     NOT a real website cover. SOURCE_IMAGE_UNVERIFIED for live. -->
 <html lang="ja">
 <head>
 <link rel="canonical" href="https://www.bravo-japan.com/clips/283">
@@ -14,13 +22,22 @@
 <main>
 <h2>BRAVO-JAPAN</h2>
 <h2>GO to BRAVO-CLIPS</h2>
+<div class="nav"><span class="wixui-rich-text__text">BRAVO-JAPAN</span></div>
+<div class="promo"><span class="wixui-rich-text__text">キャンペーンのお知らせ</span></div>
 <h1>フィクスチャ用のタイトル</h1>
-<h2>フィクスチャ用の説明文です。</h2>
+<h2>&#8203;</h2>
+<div id="comp-kbfkf17h">
+  <p class="font_8"><span class="wixui-rich-text__text">フィクスチャ用 283 の説明文です。</span></p>
+  <p><span class="wixui-rich-text__text">&#8203;</span></p>
+</div>
 <h2>283</h2>
 <h2>Clip</h2>
+<div id="comp-kbfmf948">
 <h2>30</h2>
-<h2>作品TIME</h2>
+<h2>&#8203;</h2>
+<h2>&#8203;作品TIME</h2>
 <h2>min</h2>
+</div>
 <img alt="myfans_logo_big.gif" src="https://static.wixstatic.com/media/3b5bfe_c76c7456b9804c83ab7a3dd62921e9c6~mv2.gif">
 <img alt="fixture unrelated site artwork" src="https://static.wixstatic.com/media/fixture-unrelated-site-artwork.jpg">
 </main>

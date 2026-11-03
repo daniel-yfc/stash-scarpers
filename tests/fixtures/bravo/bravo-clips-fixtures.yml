@@ -5,6 +5,16 @@
 # Poster URLs and description/keywords in these fixtures are CONTROLLED
 # fixture-local values, NOT real website covers or live copy.
 # Live Image value: SOURCE_IMAGE_UNVERIFIED, pending Gate B.
+# CORRECTED 2026-11-03 (Gate B DEF-01/02): fixtures are now live-faithful
+# for the failure modes: a spacer h2 (U+200B) after the h1, a spacer h2
+# between minutes and the 作品TIME label, a leading U+200B on that label,
+# and description inside div[@id='comp-kbfkf17h'] as rich-text spans
+# (with nav/promo rich text outside the container). The old selectors
+# return the spacer / nothing on these pages; the corrected selectors
+# return minutes and the container description. Descriptions are
+# deliberately DIFFERENT per clip (284 vs 282 vs 283/285/286) so a
+# cross-page description leak fails the test instead of hiding behind
+# an identical placeholder.
 scraper: scrapers/BRAVO.yml
 cases:
   - name: "BRAVO clip 284"
@@ -24,7 +34,7 @@ cases:
         routeThrough: sceneByURL
         values: ["https://www.bravo-japan.com/clips/284"]
       - field: Details
-        values: ["フィクスチャ用の説明文です。"]
+        values: ["フィクスチャ用 284 の説明文です。"]
       - field: Tags.Name
         values: ["テスト,フィクスチャ"]
       - field: Image
@@ -42,6 +52,14 @@ cases:
         min: 1
         max: 1
         values: ["https://www.bravo-japan.com/clips/284"]
+      - xpath: "//div[@id='comp-kbfmf948']//h2[1]"
+        min: 1
+        max: 1
+        values: ["30"]
+      - xpath: "//div[@id='comp-kbfkf17h']//span[contains(@class,'wixui-rich-text__text')][1]"
+        min: 1
+        max: 1
+        values: ["フィクスチャ用 284 の説明文です。"]
     optionalField:
       xpath: "//h2[normalize-space()='品番']"
       expectedCount: 0
@@ -62,7 +80,7 @@ cases:
         routeThrough: sceneByURL
         values: ["https://www.bravo-japan.com/clips/282"]
       - field: Details
-        values: ["フィクスチャ用の説明文です。"]
+        values: ["フィクスチャ用 282 の説明文です。"]
       - field: Tags.Name
         values: ["テスト,フィクスチャ"]
       - field: Image
@@ -80,6 +98,14 @@ cases:
         min: 1
         max: 1
         values: ["https://www.bravo-japan.com/clips/282"]
+      - xpath: "//div[@id='comp-kbfmf948']//h2[1]"
+        min: 1
+        max: 1
+        values: ["30"]
+      - xpath: "//div[@id='comp-kbfkf17h']//span[contains(@class,'wixui-rich-text__text')][1]"
+        min: 1
+        max: 1
+        values: ["フィクスチャ用 282 の説明文です。"]
     optionalField:
       xpath: "//h2[normalize-space()='品番']"
       expectedCount: 0
@@ -99,6 +125,8 @@ cases:
       - field: URLs
         routeThrough: sceneByURL
         values: ["https://www.bravo-japan.com/clips/999"]
+      - field: Details
+        values: []
       - field: Image
         values: []
     expect:
@@ -130,7 +158,7 @@ cases:
         routeThrough: sceneByURL
         values: ["https://www.bravo-japan.com/clips/283"]
       - field: Details
-        values: ["フィクスチャ用の説明文です。"]
+        values: ["フィクスチャ用 283 の説明文です。"]
       - field: Tags.Name
         values: ["テスト,フィクスチャ"]
       - field: Image
@@ -140,9 +168,25 @@ cases:
         min: 1
         max: 1
         values: ["フィクスチャ用のタイトル"]
+      - xpath: "//h2[normalize-space()='Clip']/preceding::h2[1]"
+        min: 1
+        max: 1
+        values: ["283"]
+      - xpath: "//link[@rel='canonical']/@href"
+        min: 1
+        max: 1
+        values: ["https://www.bravo-japan.com/clips/283"]
       - xpath: "//img[contains(@src,'fixture-unrelated-site-artwork')]"
         min: 1
         max: 1
+      - xpath: "//div[@id='comp-kbfmf948']//h2[1]"
+        min: 1
+        max: 1
+        values: ["30"]
+      - xpath: "//div[@id='comp-kbfkf17h']//span[contains(@class,'wixui-rich-text__text')][1]"
+        min: 1
+        max: 1
+        values: ["フィクスチャ用 283 の説明文です。"]
     optionalField:
       xpath: "//video"
       expectedCount: 0
@@ -163,7 +207,7 @@ cases:
         routeThrough: sceneByURL
         values: ["https://www.bravo-japan.com/clips/284"]
       - field: Details
-        values: ["フィクスチャ用の説明文です。"]
+        values: ["フィクスチャ用 284 の説明文です。"]
       - field: Tags.Name
         values: ["テスト,フィクスチャ"]
       - field: Image
@@ -177,10 +221,106 @@ cases:
         min: 1
         max: 1
         values: ["284"]
-      - xpath: "//h2[normalize-space()='作品TIME']/preceding::h2[1]"
+      - xpath: "//link[@rel='canonical']/@href"
+        min: 1
+        max: 1
+        values: ["https://www.bravo-japan.com/clips/284"]
+      - xpath: "//div[@id='comp-kbfmf948']//h2[1]"
         min: 1
         max: 1
         values: ["30"]
+      - xpath: "//div[@id='comp-kbfkf17h']//span[contains(@class,'wixui-rich-text__text')][1]"
+        min: 1
+        max: 1
+        values: ["フィクスチャ用 284 の説明文です。"]
+    optionalField:
+      xpath: "//h2[normalize-space()='品番']"
+      expectedCount: 0
+  - name: "BRAVO clip rich-text mixed"
+    classification: completed
+    html: "clip-richtext-mixed.html"
+    locale:
+      lang: "ja"
+      text: "286"
+    mappedExpect:
+      - field: Title
+        values: ["フィクスチャ用 286 のタイトル"]
+      - field: Code
+        values: ["286"]
+      - field: Duration
+        values: ["1800"]
+      - field: URLs
+        routeThrough: sceneByURL
+        values: ["https://www.bravo-japan.com/clips/286"]
+      - field: Details
+        values: ["フィクスチャ用 286 の説明文です。混合 rich-text 負例。"]
+      - field: Tags.Name
+        values: ["テスト,フィクスチャ"]
+      - field: Image
+        values: ["https://example.invalid/clip-286-poster.jpg"]
+    expect:
+      - xpath: "//h1"
+        min: 1
+        max: 1
+        values: ["フィクスチャ用 286 のタイトル"]
+      - xpath: "//h2[normalize-space()='Clip']/preceding::h2[1]"
+        min: 1
+        max: 1
+        values: ["286"]
+      - xpath: "//link[@rel='canonical']/@href"
+        min: 1
+        max: 1
+        values: ["https://www.bravo-japan.com/clips/286"]
+      - xpath: "//div[@id='comp-kbfmf948']//h2[1]"
+        min: 1
+        max: 1
+        values: ["30"]
+    optionalField:
+      xpath: "//h2[normalize-space()='品番']"
+      expectedCount: 0
+  - name: "BRAVO clip duration with price heading"
+    classification: completed
+    html: "clip-duration-price.html"
+    locale:
+      lang: "ja"
+      text: "285"
+    mappedExpect:
+      - field: Title
+        values: ["フィクスチャ用 285 のタイトル"]
+      - field: Code
+        values: ["285"]
+      - field: Duration
+        values: ["2700"]
+      - field: URLs
+        routeThrough: sceneByURL
+        values: ["https://www.bravo-japan.com/clips/285"]
+      - field: Details
+        values: ["フィクスチャ用 285 の説明文です。価格見出し負例。"]
+      - field: Tags.Name
+        values: ["テスト,フィクスチャ"]
+      - field: Image
+        values: ["https://example.invalid/clip-285-poster.jpg"]
+    expect:
+      - xpath: "//h1"
+        min: 1
+        max: 1
+        values: ["フィクスチャ用 285 のタイトル"]
+      - xpath: "//h2[normalize-space()='Clip']/preceding::h2[1]"
+        min: 1
+        max: 1
+        values: ["285"]
+      - xpath: "//link[@rel='canonical']/@href"
+        min: 1
+        max: 1
+        values: ["https://www.bravo-japan.com/clips/285"]
+      - xpath: "//div[@id='comp-kbfmf948']//h2[1]"
+        min: 1
+        max: 1
+        values: ["45"]
+      - xpath: "//div[@id='comp-kbfkf17h']//span[contains(@class,'wixui-rich-text__text')][1]"
+        min: 1
+        max: 1
+        values: ["フィクスチャ用 285 の説明文です。価格見出し負例。"]
     optionalField:
       xpath: "//h2[normalize-space()='品番']"
       expectedCount: 0
