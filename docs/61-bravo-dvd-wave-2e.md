@@ -28,6 +28,23 @@ routing:
 **Upstream issue:** [STASH-E2E-02 / WS-D local issue #97](https://github.com/daniel-yfc/stash-scarpers/issues/97); see [separate upstream-preparation document](62-stash-panic-upstream-report.md).  
 **Status (2026-11-02):** `PLANNED / DVD_NOT_IMPLEMENTED / G0_BLOCKED_LIVE_QA / G1_INDEPENDENT_REVIEW_CHANGES_REQUESTED`. Agent A and D handoffs are now committed; their separate author/reviewer verdicts must be preserved. PR #93 and #98 remain Draft. **Do not merge, edit runtime YAML, or deploy without controller/maintainer authorization and the specified gates.**
 
+## 2026-11-03 Controller design decision and assignment v2 (current)
+
+**QueryFragment decision:** [`DOC-E2E-66 / WS-2E-QF-001`](66-wave2e-queryfragment-decision.md) selects **`REMOVE_ORPHAN_QUERY_FRAGMENT_IN_WAVE2E`** (design selected; **not yet implemented**). This specifically supersedes the earlier instruction to preserve BRAVO's `sceneByQueryFragment` in the **future Wave 2E** candidate. The orphan `sceneByQueryFragment` references `clipSceneScraper` but BRAVO has no `sceneByName`. Agent B reproduced **offline** that DVD pages can yield plausible canonical/Tags with empty core fields; the existing QF does not reselect `sceneByURL`. Removal requires a direct-caller compatibility audit and independent Stash QF-negative evidence; an unhandled panic or partial metadata is not a PASS.
+
+**Latest execution contract:** [`DOC-E2E-67 / Agent F Assignment v2`](67-wave2e-agent-f-assignment-v2.md), `WAVE2E-F-DVD-INTEGRATION-20261103`. It **supersedes** contradictory QF passages in the original plan and [v1 addendum](65-wave2e-agent-f-assignment-addendum.md); all other single-writer, Clips regression, source-evidence, CI and approval requirements remain in force.
+
+**Gate checkpoint:** G0 is **BLOCKED_LIVE_QA** (PR #93 still Draft / not merged); G1 has an expanded [Agent A machine-readable per-page XPath result](https://github.com/daniel-yfc/stash-scarpers/blob/research/e2e-bravo-dvd-dom/docs/research/wave2e/xpath-evaluation-results.json), but independent replay/acceptance is **not confirmed**. Agent F may design and review, but **must not begin official `BRAVO.yml` edits or claim release readiness** until G0/G1. Policy is clarified narrowly in [Quality Gate Rule 4](21-quality-gate-rules.md) without modifying other scrapers.
+
+| Decision/assignment | Status | Immediate responsible action |
+| --- | --- | --- |
+| `WS-2E-QF-001` | `DESIGN_SELECTED_IMPLEMENTATION_PENDING` | Audit direct callers, migrate or escalate indispensable QF usage |
+| Agent F v2 | `ASSIGNED / BLOCKED_G0_OR_G1` | Prepare tests and integration plan; no runtime YAML edit |
+| QF Gate B | `NOT_RUN` | Independent authorized QA validates QF-05/06/07 safe unsupported plus Clips URL regression |
+| Merge/deployment | `NOT_AUTHORIZED` | Maintainer decision after exact-head Gate A/B/C |
+
+---
+
 ## 2026-11-02 assignment addenda and evidence checkpoint
 
 **Published assignment amendments (workstream owners must read these alongside their initial assignments):**
@@ -36,7 +53,7 @@ routing:
 | --- | --- | --- |
 | **B** | [DOC-E2E-63 — Routing Assignment Addendum](63-wave2e-agent-b-assignment-addendum.md) | Effective URL handler vs content validity; 404 canonical is not proof of product; QueryFragment |
 | **C** | [DOC-E2E-64 — Fixture Assignment Addendum](64-wave2e-agent-c-assignment-addendum.md) | Nine source-reported DVD DOM samples, two 404 negatives, 084 empty Details/sold-out image, CDP, evidence provenance |
-| **F** | [DOC-E2E-65 — Integration Assignment Addendum](65-wave2e-agent-f-assignment-addendum.md) | Candidate selectors, single-writer rules, pending mapping decisions, G0/G1 gates |
+| **F (historical)** | [DOC-E2E-65 — v1 Integration Addendum](65-wave2e-agent-f-assignment-addendum.md) | Historical scope; superseded on QF by WS-2E-QF-001 |
 
 **Agent A evidence state:** [Raw-DOM author addendum (commit 16224b4)](https://github.com/daniel-yfc/stash-scarpers/blob/16224b4039e05b3acc675a219066cfd88172db80/docs/research/wave2e/RAW-DOM-VERIFICATION-ADDENDUM.md) reports 9/9 lxml XPath field checks on nine DVD products plus two 404 examples; **author handoff is READY**. A later [independent review (commit 0160f6)](https://github.com/daniel-yfc/stash-scarpers/blob/0160f664888dd69e4fe33d6de2f632282d8af3c3/docs/research/wave2e/RAW-DOM-HANDOFF-QA-REVIEW.md) is **CHANGES_REQUESTED** for independent evidence replay (raw DOM and per-page evaluator results unavailable to the reviewer). These are **different verdicts**. Treat G1 as provisional until evidence can be independently checked or a Controller signs an explicitly scoped risk decision. Source-reported 9/9 is not independently replayed by editing this plan.
 
@@ -88,7 +105,7 @@ xPathScrapers:
 
 **Runtime-specific warning:** For the tested upstream Stash build, `ByURLDefinition.matchesURL` uses `strings.Contains`, **not** strict host/path matching or regex. The overlapping substring patterns and route order require deterministic positive **and negative** tests; the YAML patterns alone cannot guarantee host authenticity. Test the effective Stash route, not just the presence of substrings in YAML.
 
-**QueryFragment warning:** The Wave 1B `sceneByQueryFragment` references `clipSceneScraper` via `queryURL: "{url}"`. Adding DVD `sceneByURL` does **not** prove that DVD QueryFragment selects `dvdSceneScraper`. Preserve the existing Clips contract by default; test DVD QueryFragment explicitly. Any plausible but incorrect DVD metadata from the Clips XPath is a release blocker until independently addressed or explicitly re-scoped by the controller.
+**QueryFragment decision (superseding the 2026-11-02 preservation default):** Wave 1B has an orphan `sceneByQueryFragment` referencing Clips XPath via `queryURL: "{url}"`. Adding DVD `sceneByURL` does **not** re-route QueryFragment. Under [WS-2E-QF-001](66-wave2e-queryfragment-decision.md), the selected future **Wave 2E candidate removes the orphan QF handler after compatibility preflight and G0/G1**, preserves URL-based Clips and DVD handlers, and requires independent safe-unsupported QF Gate B tests. **Do not change PR #93 retroactively; this is not implementation or runtime proof.**
 
 ## 2. Workstreams and parallel assignment
 
@@ -159,7 +176,7 @@ Branch names are **proposed**; do not create duplicate branches or a PR unless t
 2. **Single writer for existing Clips tests:** F owns any modification to `tools/tests/test_bravo_clips.py`, after importing B's new tests. Its current `len(sceneByURL) == 1` assertion must become an exact two-family routing contract, **not** be deleted.
 3. **Evidence immutability:** Preserve `tests/fixtures/bravo/bravo-fixtures.yml` byte-for-byte. Its recorded historical SHA-256 is `be1885d2097683e8c4ae5f2440120e8bd7945ac16f62c1910ac87e5d009d39b2`, pinned by archived evidence. Do not update the archived evidence record or digest to obtain a PASS.
 4. **No simultaneous shared-instance access:** QA, CDP setup, installed-package changes and reproduction tests require an exclusive `stash-test` lease, M0 preflight, written permission and rollback plan. Production remains out of scope.
-5. **No unreviewed cross-mode changes:** A proposed QueryFragment fix belongs in a separately justified subdecision, with Clips regression tests. Do not invent a second unsupported query-fragment route or silently remove the current one.
+5. **Explicitly reviewed cross-mode change:** [WS-2E-QF-001](66-wave2e-queryfragment-decision.md) selects removal of BRAVO's orphan QueryFragment **only in the future Wave 2E candidate**, following direct-caller compatibility audit, G0/G1 and independent live negative tests. Do not invent a second unsupported QueryFragment handler, silently alter other scrapers, or retroactively change PR #93.
 6. **Evidence-based fields only:** A provides expected values with source proof; C/F must reject fixture-local placeholders as live metadata and must not infer Date/Studio/Image/Code.
 7. **Immutable accepted baseline:** Work must cite a `BASE_SHA`, and integration must record imported commit IDs. If PR #93 changes, F rechecks dependencies and reruns affected tests; do not assume older SHA/package evidence remains valid.
 8. **No hidden scope creep:** Changes to `validator/`, `tools/verify-scraper-mappings.mjs` or general CI workflows require a separate explicit reviewer decision; no broad test-runner change to force green.
@@ -246,7 +263,7 @@ HANDOFF_STATUS: READY | BLOCKED | CHANGES_REQUESTED
 | 30-02 | Add DVD `sceneByURL` route → `dvdSceneScraper` without modifying existing Clips field mapping | Schema-valid second handler |
 | 30-03 | Implement verified DVD Title/URLs and source-supported Code, Details, Image, and optional fields | Exact expected/actual field comparison on at least two DVD cases |
 | 30-04 | Avoid fragile globally-scoped heading and image selectors; guard false metadata | Bad-page, wrong canonical, wrong image regressions |
-| 30-05 | Keep `sceneByFragment` absent and protect existing Clips `sceneByQueryFragment` contract | No fabricated URL or unapproved multi-handler design |
+| 30-05 | Keep `sceneByFragment` absent; implement [WS-2E-QF-001](66-wave2e-queryfragment-decision.md): remove orphan `sceneByQueryFragment` on authorized Wave 2E candidate after caller audit | URL-mode Clips preserved; independent QF unsupported/negative evidence; do not modify PR #93 |
 | 30-06 | Integrate sidecar, new DVD fixtures, route tests and Clips-test updates | All affected tests run after integration |
 
 **Stop:** missing title, wrong product canonical, image logo, misleading QueryFragment extraction or Clips regression. **Exit:** `DVD_CANDIDATE_INTEGRATED` (not live-verified).
@@ -365,7 +382,7 @@ Rebases or changes to `BRAVO.yml`, fixture manifests or candidate package **inva
 - [ ] DVD 234 and 084 independently live-verified with correct Title + canonical URL and source-supported Code.
 - [ ] Representative historical DVD cases reviewed or explicitly classified as unavailable.
 - [ ] No known wrong Title/Code/URL/Image or challenge-page false positive.
-- [ ] QueryFragment DVD negative case cannot silently return plausible wrong metadata.
+- [ ] Future Wave 2E candidate omits orphan `sceneByQueryFragment` per [WS-2E-QF-001](66-wave2e-queryfragment-decision.md), after direct-caller compatibility audit; independent Stash QF negatives return **safe unsupported** (no false metadata or unhandled panic).
 - [ ] Dedicated DVD fixtures and true effective-route tests pass; Clips regression tests are preserved and updated.
 - [ ] Archived `bravo-fixtures.yml` and evidence digest remain unchanged.
 - [ ] Gate A, independent Gate B and exact-head Gate C evidence are complete.
