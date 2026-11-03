@@ -1,7 +1,8 @@
 # GVDB live-test fixtures (verified 2026-11-03 against user-supplied rendered
 # HTML for all thirteen URLs below: every XPath executed with lxml, every
 # javascript postProcess executed in node on the extracted values, all fields
-# match the expectations below exactly — 117/117 field checks)
+# match the expectations below exactly — 143/143 field checks, including
+# the Image and Tags expectations listed further below)
 # 159685: Name=颯汰, Aliases="Sota, 結城晴翔, Haruto Yuki", PenisLength=16,
 #   Height=176, Weight=70, Gender=MALE, Country=JP, Ethnicity=Asian,
 #   URLs=[https://md.gvdb.org/159685/] (no Subscription Channel section)
@@ -44,6 +45,26 @@
 #   keyword sits only in a work title inside an <li>: under the graded
 #   Country rule, work titles are not Country evidence (they never reach
 #   the Aliases lines either, which read <p> text only).
+# Image + Tags expectations for the same thirteen pages (verified
+# 2026-11-03 by executing the shipped selectors + javascript against the
+# rendered HTML; Tags additionally logic-checked on the other 43 verified
+# performer pages — 56 pages, 15 distinct footer tags, closed allowlist
+# of 8 JP-only names, user ruling 2026-11-03). Image value is the full
+# uploads URL ending in the filename shown; Tags are in page order:
+# 159685: Image=.../159685_30.jpg, Tags=[]
+# 54676: Image=.../54676.webp, Tags=[日焼/色黒]
+# 161913: Image=.../161913_41.jpg, Tags=[刺青]
+# 22153: Image=.../22153-1.jpg.webp, Tags=[]
+# 6180: Image=.../6180_39.jpg, Tags=[]
+# 161064: Image=.../161064_09.jpg, Tags=[]
+# 161611: Image=.../161611_02.jpg, Tags=[刺青]
+# 53003: Image=.../53003.webp, Tags=[]
+# 117270: Image=.../117270.jpg, Tags=[]
+# 72533: Image=.../72533.jpg, Tags=[]
+# 6142: Image=.../6142_47.jpg, Tags=[刺青, 髭]
+# 6155: Image=.../32848.jpg.webp (cover-style crop, plain first-img rule
+#   accepted by user ruling 2026-11-03), Tags=[日焼/色黒, 髭]
+# 6194: Image=.../6194_49.jpg, Tags=[日焼/色黒, 髭]
 # No probes: the scraper is performerByURL only, no search modes exist.
 urls:
   - https://md.gvdb.org/159685/
