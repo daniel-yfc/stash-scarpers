@@ -21,6 +21,15 @@ documents:
   - stash-api
   - api-reference
   - identify
+- doc_id: DOC-E2E-82
+  title: Authorized Stash Runtime E2E Runbook
+  path: docs/82-stash-e2e-runbook.md
+  layer: repository
+  status: active
+  intents:
+  - stash-e2e
+  - runtime-verification
+  - graphql
 - doc_id: DOC-ROOT-00
   title: Project README
   path: README.md
