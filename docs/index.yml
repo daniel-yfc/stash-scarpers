@@ -45,6 +45,25 @@ documents:
   - wave-2e
   - implementation
   - agent-f
+- doc_id: DOC-E2E-66
+  title: Wave 2E Controller Decision WS-2E-QF-001 — BRAVO QueryFragment
+  path: docs/66-wave2e-queryfragment-decision.md
+  layer: repository
+  status: draft
+  intents:
+  - wave-2e
+  - query-fragment
+  - controller-decision
+- doc_id: DOC-E2E-67
+  title: Wave 2E Agent F Implementation and Integration Assignment v2
+  path: docs/67-wave2e-agent-f-assignment-v2.md
+  layer: repository
+  status: draft
+  intents:
+  - wave-2e
+  - agent-f
+  - dvd-integration
+  - query-fragment
 - doc_id: DOC-INTEGRATION-80
   title: Metadata Feed Integration
   path: docs/80-metadata-feed-integration.md
