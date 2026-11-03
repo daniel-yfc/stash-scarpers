@@ -1,14 +1,17 @@
-# Wave 2E (WS-2E-40) - BRAVO DVD fixture manifest, v2.1 (updated spec).
+# Wave 2E (WS-2E-40) - BRAVO DVD fixture manifest, v2.2 (updated spec).
 # Isolated from:
 #   - the archived historical manifest (bravo-fixtures.yml, evidence digest
 #     be1885d2097683e8c4ae5f2440120e8bd7945ac16f62c1910ac87e5d009d39b2,
 #     preserved byte-for-byte; its old Wix comp-ID / h1 selectors are
 #     OBSOLETE for the current site but the file itself must never be edited),
 #   - the Wave 1B Clips manifest (bravo-clips-fixtures.yml).
-#   Every case name and fixture html filename in THIS manifest is unique
+#   Every case name AND fixture html filename in THIS manifest is unique
 #   across all three manifests (C-FIX-1): positive cases carry the
-#   "(synthetic regression)" suffix and the failure control is renamed
-#   "BRAVO dvd Cloudflare challenge (dvd manifest control)".
+#   "(synthetic regression)" suffix, the failure control is renamed
+#   "BRAVO dvd Cloudflare challenge (dvd manifest control)", and the
+#   failure control uses a DVD-owned synthetic Cloudflare model
+#   (dvd-synthetic-cloudflare-challenge.html) instead of the shared
+#   archived failure-cloudflare.html (C-FIX-1 follow-up).
 #
 # Evidence basis (Agent A, WS-2E-10):
 #   docs/research/wave2e/RAW-DOM-VERIFICATION-ADDENDUM.md
@@ -682,9 +685,13 @@ cases:
     optionalField:
       xpath: "//img[@alt!='' and contains(@src,'wixstatic')]/@src"
       expectedCount: 0
-  # C-N case - real archived Cloudflare challenge page (failure).
+  # C-N case - DVD-owned SYNTHETIC Cloudflare challenge model (failure).
   # Renamed (C-FIX-1) so it cannot collide with the historical manifest's
-  # "BRAVO Cloudflare challenge" case name.
+  # "BRAVO Cloudflare challenge" case name. Uses its own synthetic fixture
+  # (C-FIX-1 follow-up): the shared archived failure-cloudflare.html stays
+  # referenced ONLY by the historical and Clips manifests and is NOT
+  # modified. This synthetic model carries no product selectors, so a
+  # scraper must fail (no product metadata) here.
   - name: "BRAVO dvd Cloudflare challenge (dvd manifest control)"
     classification: failure
-    html: "failure-cloudflare.html"
+    html: "dvd-synthetic-cloudflare-challenge.html"

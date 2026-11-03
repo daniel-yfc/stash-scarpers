@@ -1,4 +1,4 @@
-"""Wave 2E WS-2E-40 - BRAVO DVD fixture engineering regression (Agent C, v2.1).
+"""Wave 2E WS-2E-40 - BRAVO DVD fixture engineering regression (Agent C, v2.2).
 
 Evidence basis
 --------------
@@ -23,17 +23,20 @@ What these tests enforce
 * Conditional guards (active once dvdSceneScraper exists): no stale //h1
   or comp-kbfkf16x selectors, no site-generic keywords as Tags.
 
-Revision v2.1 (review fixes)
-----------------------------
-* C-FIX-1: DVD case names renamed so none collide with the archived
-  historical manifest ("BRAVO dvd 046"/"BRAVO dvd 281" now carry a
-  "(synthetic regression)" suffix; the failure control is renamed
-  "BRAVO dvd Cloudflare challenge (dvd manifest control)"). The isolation
-  test now also asserts html-filename isolation.
-* C-FIX-2: test_dvd_manifest_does_not_reuse_stale_h1_selectors guards the
-  failure case (which has no expect block) via case.get("expect", []).
-* C-FIX-3: the report handoff now references the real deliverables commit
-  SHA (no placeholder).
+Revision history
+----------------
+* v2.1 (C-FIX-1/2/3): DVD case names renamed so none collide with the
+  archived historical manifest; the failure control was renamed
+  "BRAVO dvd Cloudflare challenge (dvd manifest control)"; isolation test
+  asserts html-filename isolation; stale-h1 test guards the failure case
+  via case.get("expect", []); report HEAD_SHA is a real commit SHA.
+* v2.2 (C-FIX-1 follow-up): the failure control previously SHARED the
+  archived real capture failure-cloudflare.html with the historical and
+  Clips manifests, which still violated html-filename isolation. It now
+  uses a DVD-owned synthetic model, dvd-synthetic-cloudflare-challenge.html
+  (SYNTHETIC_REGRESSION). Every fixture referenced by the DVD manifest is
+  DVD-owned and synthetic-marked; the archived file is not modified and
+  remains referenced only by the historical and Clips manifests.
 
 These tests do NOT claim live/runtime verification (Gate B) and do not
 modify the shared runner, scrapers/BRAVO.yml, tools/tests/test_bravo_clips.py
@@ -62,7 +65,9 @@ RUNNER = ["node", "tools/verify-scraper-fixtures.mjs"]
 HISTORICAL_DIGEST = (
     "be1885d2097683e8c4ae5f2440120e8bd7945ac16f62c1910ac87e5d009d39b2"
 )
-REAL_ARCHIVED_HTML = {"failure-cloudflare.html"}
+# The archived real capture stays shared by the historical and Clips
+# manifests; the DVD manifest must NEVER reference it (v2.2).
+SHARED_ARCHIVED_FAILURE_HTML = "failure-cloudflare.html"
 WAVE_1B_CLIPS_CASE_NAMES = {
     "BRAVO clip 284",
     "BRAVO clip 282",
@@ -314,6 +319,25 @@ def test_dvd_manifest_is_isolated_from_historical_and_clips():
         assert not case["html"].startswith("clip-"), case["name"]
 
 
+def test_failure_case_uses_dvd_owned_synthetic_fixture():
+    # v2.2: the DVD failure control must own its fixture. The archived real
+    # capture stays referenced only by the historical and Clips manifests.
+    failures = [c for c in dvd_cases() if c["classification"] == "failure"]
+    assert len(failures) == 1
+    case = failures[0]
+    assert case["name"] == "BRAVO dvd Cloudflare challenge (dvd manifest control)"
+    assert case["html"] != SHARED_ARCHIVED_FAILURE_HTML
+    assert case["html"].startswith("dvd-synthetic-")
+    fixture = FIXTURE_DIR / case["html"]
+    assert fixture.is_file()
+    content = fixture.read_text(encoding="utf-8")
+    assert "SYNTHETIC_REGRESSION" in content
+    # The synthetic model carries a failure marker and no product content,
+    # so a scraper must fail (no product metadata) on it.
+    assert any(marker in content for marker in ("cf-challenge", "Just a moment"))
+    assert "品番" not in content
+
+
 def test_dvd_manifest_does_not_reuse_stale_h1_selectors():
     # The current DOM has h1 = 0 on all verified pages; the historical
     # h1/comp-ID selectors are obsolete and must not reappear here.
@@ -325,9 +349,11 @@ def test_dvd_manifest_does_not_reuse_stale_h1_selectors():
 
 
 def test_synthetic_fixtures_are_marked():
+    # v2.2: EVERY fixture referenced by the DVD manifest is DVD-owned and
+    # must carry the SYNTHETIC_REGRESSION marker - no exceptions, no shared
+    # archived captures.
     for case in dvd_cases():
-        if case["html"] in REAL_ARCHIVED_HTML:
-            continue
+        assert case["html"].startswith("dvd-synthetic-"), case["name"]
         content = (FIXTURE_DIR / case["html"]).read_text(encoding="utf-8")
         assert "SYNTHETIC_REGRESSION" in content, case["html"]
     harness = HARNESS_HTML.read_text(encoding="utf-8")
@@ -411,6 +437,11 @@ def harness_manifest() -> dict:
                 },
             },
             {
+                # Staged manifest (not the DVD manifest): the archived real
+                # capture is reused here only as a generic failure input for
+                # mutation staging, mirroring the Clips manifest. Isolation
+                # rules apply to the DVD manifest itself, not to this
+                # tmp-staged runner input.
                 "name": "BRAVO Cloudflare challenge",
                 "classification": "failure",
                 "html": "failure-cloudflare.html",
