@@ -21,6 +21,9 @@ routing:
 
 # Wave 2E — Agent F Assignment Addendum (sole integration owner)
 
+> **SUPERSEDED FOR QUERYFRAGMENT (2026-11-03):** This v1 addendum is retained for historical context and non-conflicting constraints. [`DOC-E2E-66 / Controller decision WS-2E-QF-001`](66-wave2e-queryfragment-decision.md) selects **removal of the orphaned BRAVO `sceneByQueryFragment`** in the authorized future Wave 2E candidate. [`DOC-E2E-67 / Agent F Assignment v2`](67-wave2e-agent-f-assignment-v2.md) is the current binding implementation assignment. Statements below that say preserve the old Clips QueryFragment or await a QF design decision are **superseded**. Existing G0/G1/independent Gate B and merge authorization restrictions remain in force. **No YAML was modified** by this documentation change.
+
+
 **Assignment:** `WAVE2E-F-DVD-INTEGRATION-20261102` / `WS-2E-30/50/70`.  
 **Proposed branch:** `feat/e2e-bravo-dvds`; **sole ownership** of production `scrapers/BRAVO.yml` and coordinated existing Clips-test edits.  
 **Base:** [Wave 2E detailed plan](61-bravo-dvd-wave-2e.md). This addendum supersedes only outdated Agent F assumptions about missing DVD DOM/Title/Image; all authorization, dependency and quality gates continue to apply. **No YAML implementation or merger is authorized by publication of this document.**
