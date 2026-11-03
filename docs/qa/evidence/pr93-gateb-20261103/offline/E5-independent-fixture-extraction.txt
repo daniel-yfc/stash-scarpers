@@ -1,0 +1,13 @@
+[PASS] BRAVO clip 284
+    Title: want=['デカマラ同士 目隠し交尾'] got=['デカマラ同士 目隠し交尾'] OK; Code: want=['284'] got=['284'] OK; Duration: want=['1800'] got=['1800'] OK; URLs: want=['https://www.bravo-japan.com/clips/284'] got=['https://www.bravo-japan.com/clips/284'] OK; Details: want=['フィクスチャ用の説明文です。'] got=['フィクスチャ用の説明文です。'] OK; Tags.Name: want=['テスト,フィクスチャ'] got=['テスト,フィクスチャ'] OK; Image: want=['https://example.invalid/clip-284-poster.jpg'] got=['https://example.invalid/clip-284-poster.jpg'] OK
+[PASS] BRAVO clip 282
+    Title: want=['初撮影ヤマト５Ｐ'] got=['初撮影ヤマト５Ｐ'] OK; Code: want=['282'] got=['282'] OK; Duration: want=['1800'] got=['1800'] OK; URLs: want=['https://www.bravo-japan.com/clips/282'] got=['https://www.bravo-japan.com/clips/282'] OK; Details: want=['フィクスチャ用の説明文です。'] got=['フィクスチャ用の説明文です。'] OK; Tags.Name: want=['テスト,フィクスチャ'] got=['テスト,フィクスチャ'] OK; Image: want=['https://example.invalid/clip-282-poster.jpg'] got=['https://example.invalid/clip-282-poster.jpg'] OK
+[PASS] BRAVO clip missing title
+    Title: want=[] got=[] OK; Code: want=['999'] got=['999'] OK; Duration: want=['1800'] got=['1800'] OK; URLs: want=['https://www.bravo-japan.com/clips/999'] got=['https://www.bravo-japan.com/clips/999'] OK; Image: want=[] got=[] OK
+[PASS] BRAVO clip no verified cover
+    Title: want=['フィクスチャ用のタイトル'] got=['フィクスチャ用のタイトル'] OK; Code: want=['283'] got=['283'] OK; Duration: want=['1800'] got=['1800'] OK; URLs: want=['https://www.bravo-japan.com/clips/283'] got=['https://www.bravo-japan.com/clips/283'] OK; Details: want=['フィクスチャ用の説明文です。'] got=['フィクスチャ用の説明文です。'] OK; Tags.Name: want=['テスト,フィクスチャ'] got=['テスト,フィクスチャ'] OK; Image: want=[] got=[] OK
+[PASS] BRAVO clip 284 with extra headings
+    Title: want=['デカマラ同士 目隠し交尾'] got=['デカマラ同士 目隠し交尾'] OK; Code: want=['284'] got=['284'] OK; Duration: want=['1800'] got=['1800'] OK; URLs: want=['https://www.bravo-japan.com/clips/284'] got=['https://www.bravo-japan.com/clips/284'] OK; Details: want=['フィクスチャ用の説明文です。'] got=['フィクスチャ用の説明文です。'] OK; Tags.Name: want=['テスト,フィクスチャ'] got=['テスト,フィクスチャ'] OK; Image: want=['https://example.invalid/clip-284-poster.jpg'] got=['https://example.invalid/clip-284-poster.jpg'] OK
+[SKIP-failure-class] BRAVO Cloudflare challenge
+
+TOTAL: 5 pass, 0 fail, 1 skipped(failure-class)

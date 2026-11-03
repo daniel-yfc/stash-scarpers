@@ -1,0 +1,63 @@
+assignment: STASH-M0-OPS-PREFLIGHT-20261101
+environment: stash-test
+execution_date: "2026-11-01 (Asia/Taipei)"
+
+authorization:
+  readonly_access: CONFIRMED_BY_EXECUTION
+  maintenance_operations: NOT_GRANTED
+  security_changes: NOT_GRANTED
+  restoration_drill: NOT_GRANTED
+
+m0:
+  baseline: PASS
+  cdp_baseline: PASS
+  stash_restart: BLOCKED_AUTHORIZATION
+  chrome_restart: BLOCKED_AUTHORIZATION
+  dual_restart: BLOCKED_AUTHORIZATION
+  cdp_acl: FAIL
+  graphql_access_control: FAIL
+  backup_artifact: NOT_RUN
+  restoration_feasibility: NOT_RUN
+  package_rollback_readiness: NOT_RUN
+  qa_lease_protocol: NOT_RUN
+
+e2e_01: PARTIALLY_FIXED
+m0_verdict: M0_BLOCKED
+
+environment_modified: false
+environment_restored: null
+production_modified: false
+
+wave1a_gate_b: NOT_RUN
+wave1b_gate_b: NOT_RUN
+wave1c_gate_b: NOT_RUN
+
+qa_lease_granted: false
+merge_authorized: false
+
+pr_heads_verified_20261101:
+  pr_93: 86e34a24642dad2e64ae984e7e9182605e98cbcf
+  pr_94: 6a75e8c5c4bbb4b40574c238590f233a7edbef1a
+  pr_96: 5ad285c8f594d2c5f4ce80ecd530a9eab85234ae
+
+evidence_index:
+  - evidence/baseline.json
+  - evidence/installed-packages-before.json
+  - evidence/cdp-baseline.json
+  - evidence/cdp-acl-review.json
+  - evidence/graphql-access-review.json
+  - evidence/backup-artifact-verification.json
+  - evidence/authorization-record.json
+  - docs/access-control-review.md
+  - docs/backup-and-restore-verification.md
+  - docs/candidate-installation-and-rollback-runbook.md
+  - docs/qa-lease-protocol.md
+  - docs/issues-and-risks.md
+  - report/M0-OPS-ACCEPTANCE-REPORT.md
+remaining_blockers:
+  - "R1/R2/R3 restart recovery not authorized / restart mechanism unknown"
+  - "CDP ACL FAIL: unauthenticated reachability from non-Stash tailnet client; negative test identity not provided"
+  - "GraphQL access FAIL: no app auth, restrictive ACL not demonstrated"
+  - "Backup artifact unverified; restoration drill not authorized"
+  - "Rollback runbook / lease protocol pending owner review and activation"
+controller_decision_required: true

@@ -1,0 +1,22 @@
+Rebuilt with repo tool tools/build_scraper_source.py at exact HEAD 86e34a24642dad2e64ae984e7e9182605e98cbcf (local clone, QA-side)
+a4d24b1f94b2f6343e2379555e95c3d3bba29afa1b71ef3ea4e1a14057aa1390  pkgbuild/BRAVO.zip
+expected (PR body): a4d24b1f94b2f6343e2379555e95c3d3bba29afa1b71ef3ea4e1a14057aa1390
+Archive:  pkgbuild/BRAVO.zip
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+     6532  1980-01-01 00:00   BRAVO.yml
+---------                     -------
+     6532                     1 file
+inner BRAVO.yml sha256:
+5eb954050bf37e017eb2fee2114ce80265d067de17fdc705c3dca53daa35a11b
+repo scrapers/BRAVO.yml sha256:
+5eb954050bf37e017eb2fee2114ce80265d067de17fdc705c3dca53daa35a11b  repo/scrapers/BRAVO.yml
+index.yml BRAVO entry:
+- id: BRAVO
+  name: Bravo-Japan
+  version: 86e34a2
+  date: '2026-11-01 03:47:42'
+  path: BRAVO.zip
+  sha256: a4d24b1f94b2f6343e2379555e95c3d3bba29afa1b71ef3ea4e1a14057aa1390
+historical manifest sha256:
+be1885d2097683e8c4ae5f2440120e8bd7945ac16f62c1910ac87e5d009d39b2  repo/tests/fixtures/bravo/bravo-fixtures.yml

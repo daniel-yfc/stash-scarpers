@@ -1,0 +1,62 @@
+[
+ {
+  "case": "QF-URL-284",
+  "secs": 3.88,
+  "result": [
+   {
+    "title": "デカマラ同士 目隠し交尾",
+    "code": "284",
+    "details": "デカマラノンケ ハルキ、目隠しプレイで発情！デカマラ野郎の変態アナルを激ピストン！もう止まらない！デカマラ同士の熱情交尾！",
+    "urls": [
+     "https://www.bravo-japan.com/clips/284"
+    ],
+    "date": null,
+    "image": null,
+    "duration": null
+   }
+  ],
+  "errors": null
+ },
+ {
+  "case": "FRAGMENT-TITLE",
+  "secs": 1.07,
+  "result": null,
+  "errors": [
+   {
+    "message": "error while fragment scraping with scraper BRAVO: failed to load URL \"{url}\": Cannot navigate to invalid URL (-32000)",
+    "path": [
+     "scrapeSingleScene"
+    ]
+   }
+  ]
+ },
+ {
+  "case": "NEG-999999",
+  "secs": 3.74,
+  "result": {
+   "title": null,
+   "code": null,
+   "details": null,
+   "urls": [
+    "https://www.bravo-japan.com/clips/999999"
+   ],
+   "date": null,
+   "image": null,
+   "duration": null
+  },
+  "errors": null
+ },
+ {
+  "case": "NEG-DVDS-284",
+  "secs": 0.56,
+  "result": null,
+  "errors": [
+   {
+    "message": "Internal system error. Error <runtime error: index out of range [0] with length 0>",
+    "path": [
+     "scrapeSceneURL"
+    ]
+   }
+  ]
+ }
+]

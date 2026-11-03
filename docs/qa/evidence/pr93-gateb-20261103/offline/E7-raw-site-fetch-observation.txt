@@ -1,0 +1,8 @@
+Supplementary QA-side raw HTTP fetch (NOT Stash, NOT rendered DOM, NOT Gate B evidence):
+2026-11-03 run: GET https://www.bravo-japan.com/clips/284 -> HTTP 200, 880884 bytes, <title>284</title>
+GET https://www.bravo-japan.com/clips/282 -> HTTP 200, 881407 bytes, <title>282</title>
+Raw markup: two <video> elements per page, neither carries a poster attribute inline;
+the word "poster" in raw HTML appears only in CSS class names (bgVideoposter / PlayableCover__poster)
+and a JS playableConfig object. A rendered DOM (via authorized CDP on stash-test) may still set
+video/@poster at runtime; therefore live Image remains SOURCE_IMAGE_UNVERIFIED.
+Raw HTML files were deleted after inspection; only this summary is retained.

@@ -1,0 +1,15 @@
+[
+ {
+  "id": "BRAVO",
+  "name": "Bravo-Japan",
+  "scene": {
+   "supported_scrapes": [
+    "URL"
+   ],
+   "urls": [
+    "bravo-japan.com/clips/",
+    "www.bravo-japan.com/clips/"
+   ]
+  }
+ }
+]

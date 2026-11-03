@@ -1,0 +1,9 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.2.0, pluggy-1.7.0
+rootdir: /home/hatch/workspace/qa-pr93-gateb-20261103/repo
+configfile: pytest.ini
+collected 8 items
+
+tools/tests/test_bravo_clips.py ........                                 [100%]
+
+============================== 8 passed in 0.14s ===============================

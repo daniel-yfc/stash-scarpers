@@ -1,0 +1,7 @@
+sceneByFragment present: False
+sceneByQueryFragment: {'action': 'scrapeXPath', 'queryURL': '{url}', 'scraper': 'clipSceneScraper'}
+sceneByURL routes: [('clipSceneScraper', ['bravo-japan.com/clips/', 'www.bravo-japan.com/clips/'])]
+fields: ['Code', 'Details', 'Duration', 'Image', 'Tags', 'Title', 'URLs']
+Image selector: //video/@poster
+dvdSceneScraper present: False
+driver.useCDP: True

@@ -1,0 +1,84 @@
+{
+  "retrieved_at_utc": "2026-11-03T11:34Z (approx, during QA run)",
+  "pr": 93,
+  "state": "open",
+  "draft": true,
+  "merged": false,
+  "title": "fix(e2e-bravo-clips): split Clips selectors from DVD selectors (STASH-E2E-03)",
+  "head_ref": "fix/e2e-bravo-clips",
+  "head_sha": "86e34a24642dad2e64ae984e7e9182605e98cbcf",
+  "base_ref": "main",
+  "base_sha": "4bbafca9cf7b5d67117ac41136e74a303c28e4f4",
+  "mergeable_state": "clean",
+  "changed_files": 9,
+  "commits": 2,
+  "check_runs_total": 11,
+  "check_runs": [
+    {
+      "name": "Deploy installable source to GitHub Pages",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "86e34a24642dad2e64ae984e7e9182605e98cbcf"
+    },
+    {
+      "name": "CodeQL",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "86e34a24642dad2e64ae984e7e9182605e98cbcf"
+    },
+    {
+      "name": "github-advanced-security",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "86e34a24642dad2e64ae984e7e9182605e98cbcf"
+    },
+    {
+      "name": "pr-check",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "86e34a24642dad2e64ae984e7e9182605e98cbcf"
+    },
+    {
+      "name": "Build installable scraper source",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "86e34a24642dad2e64ae984e7e9182605e98cbcf"
+    },
+    {
+      "name": "Full Test & Validation Suite",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "86e34a24642dad2e64ae984e7e9182605e98cbcf"
+    },
+    {
+      "name": "fixture-manifests",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "86e34a24642dad2e64ae984e7e9182605e98cbcf"
+    },
+    {
+      "name": "evidence",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "86e34a24642dad2e64ae984e7e9182605e98cbcf"
+    },
+    {
+      "name": "Analyze (actions)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "86e34a24642dad2e64ae984e7e9182605e98cbcf"
+    },
+    {
+      "name": "Analyze (javascript-typescript)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "86e34a24642dad2e64ae984e7e9182605e98cbcf"
+    },
+    {
+      "name": "Analyze (python)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "86e34a24642dad2e64ae984e7e9182605e98cbcf"
+    }
+  ]
+}

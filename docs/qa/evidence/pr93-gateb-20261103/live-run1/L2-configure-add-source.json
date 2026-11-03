@@ -1,0 +1,23 @@
+{
+ "data": {
+  "configureGeneral": {
+   "scraperPackageSources": [
+    {
+     "name": "Community (stable)",
+     "url": "https://stashapp.github.io/CommunityScrapers/stable/index.yml",
+     "local_path": "community"
+    },
+    {
+     "name": "yfc",
+     "url": "https://daniel-yfc.github.io/stash-scarpers/main/index.yml",
+     "local_path": ""
+    },
+    {
+     "name": "gateb-pr93",
+     "url": "<isolated-source-url-expired>",
+     "local_path": "gateb-pr93"
+    }
+   ]
+  }
+ }
+}
