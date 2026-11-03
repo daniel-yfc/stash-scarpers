@@ -47,6 +47,8 @@ This directory contains repository-level workflow, architecture, testing, and ma
 | [`63-wave2e-agent-b-assignment-addendum.md`](63-wave2e-agent-b-assignment-addendum.md) | Agent B routing, 404 validity and QueryFragment tests |
 | [`64-wave2e-agent-c-assignment-addendum.md`](64-wave2e-agent-c-assignment-addendum.md) | Agent C DVD fixtures, negative cases and data provenance |
 | [`65-wave2e-agent-f-assignment-addendum.md`](65-wave2e-agent-f-assignment-addendum.md) | Agent F single-writer integration, metadata policy and gates |
+| [`66-wave2e-queryfragment-decision.md`](66-wave2e-queryfragment-decision.md) | Controller decision WS-2E-QF-001: remove orphaned BRAVO QueryFragment after gate and compatibility audit |
+| [`67-wave2e-agent-f-assignment-v2.md`](67-wave2e-agent-f-assignment-v2.md) | Current Agent F v2 integration assignment and QueryFragment negative QA |
 | [`60-live-test-status.md`](60-live-test-status.md)                         | Live-site verification status                             |
 | [`70-template-workflow.md`](70-template-workflow.md)                       | Template-to-scraper workflow                              |
 | [`71-test-report-template.md`](71-test-report-template.md)                 | Full-suite test report format                             |
