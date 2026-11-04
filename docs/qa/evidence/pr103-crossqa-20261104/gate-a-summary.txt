@@ -1,0 +1,26 @@
+Independent Gate A revalidation — PR #103 @ afe861ff2a1406139f3a67953528b8665d0dcbcb
+Isolated checkout: ~/workspace/review/stash-bravo-e2e-20261101/pr103 (detached HEAD, verified)
+Runtime: node v24.22.1 (repo .nvmrc: 24.15.0), python 3.12.3
+Commands (all run in the candidate tree, exit 0 unless noted):
+- npm run validate => PASS ("Validation passed!")
+- npm run validate-sort => PASS
+- bash tools/validate-all.sh => 24 [PASS], "All scrapers passed the quality gate."
+- python3 -m pytest tools/tests/ -q => 417 passed, 2 skipped, 3 xfailed (33.14s)
+- python3 tools/run_fixture_manifests.py => 20 manifests, all PASS
+  (bravo-dvds 10 cases verified, bravo-clips 11, bravo historical 3)
+- python3 tools/check_evidence_contract.py => 17 records, 0 failures
+- python3 tools/check_docs_index.py => 51 documents OK
+- python3 tools/check_scraper_semantics.py => PASS
+- python3 tools/scan_session_material.py => 371 files, PASS
+- python3 -m pytest tools/tests/test_scraper_source.py -q => 12 passed
+- CI-only steps, all PASS: node --test tools/tests/*.test.mjs;
+  parse_committed_yaml.py; verify-scraper-fixtures.mjs --self-test;
+  check_evidence_labels.py; check_live_cdp_status.py; self_evaluate.py;
+  check_scraper_docs.py; check_resource_placement.py; check_docs_official.py;
+  check_metadata_feed.py
+- npm run format:check => 24 files warned, ZERO overlap with PR #103 changed files
+  (pre-existing baseline warnings, same 24 as main baseline behaviour)
+- python3 tools/build_scraper_source.py --output /tmp/pr103-site => 22 packages
+- python3 tools/build_scraper_source.py --output /tmp/pr103-site --verify-only => OK
+- BRAVO.zip SHA-256 (rebuilt): 815f49928a9ee4d4445983c810c664ecffca5f7cd3adb2d992f09dd69e7bd283
+  (matches PR #103 reported SHA exactly; index version 71cd377 = implementation commit)

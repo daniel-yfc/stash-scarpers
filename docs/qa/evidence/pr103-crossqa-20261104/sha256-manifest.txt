@@ -1,0 +1,7 @@
+PR #103 candidate HEAD: afe861ff2a1406139f3a67953528b8665d0dcbcb
+Baseline main: ff236c9e91e27321e93f59d2bf12488db714dfc7
+Rebuilt BRAVO.zip (from candidate HEAD BRAVO.yml bytes, deterministic 1980-timestamp zip):
+815f49928a9ee4d4445983c810c664ecffca5f7cd3adb2d992f09dd69e7bd283
+PR #103 reported BRAVO.zip SHA-256:
+815f49928a9ee4d4445983c810c664ecffca5f7cd3adb2d992f09dd69e7bd283
+MATCH: exact
