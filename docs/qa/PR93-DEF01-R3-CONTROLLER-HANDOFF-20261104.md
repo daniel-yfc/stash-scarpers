@@ -1,7 +1,7 @@
 ---
 doc_id: HANDOFF-PR93-DEF01-R3-20261104
 title: PR #93 DEF-01 R3 — Controller Decision and Execution Handoff
-status: active
+status: superseded
 layer: qa
 owner: controller
 audience:
@@ -16,6 +16,9 @@ authority: assignment
 ---
 
 # Controller Handoff — PR #93 DEF-01 R3 / Wave 2E dependencies
+
+> **SUPERSEDED FOR IMMEDIATE ACTION (2026-11-04):** Controller has explicitly authorized **temporarily omitting Clips Scene.Duration from the *next* PR #93 candidate**, pausing A2/Core repair while preserving the source extraction XPath, seconds recipe and full history for later re-enable. **Current decision:** [WS-2E-DEF01-DEFER-20261104](PR93-DEF01-DURATION-DEFER-DECISION-20261104.md). **Current binding assignment:** [Duration Defer Handoff](PR93-DEF01-DURATION-DEFER-HANDOFF-20261104.md). This R3 document, including A2-priority and DURATION_WAIVER_APPROVED=false, describes the **earlier historical state**; it must not be read as the current execution directive. v1–v4 QA verdicts remain unchanged (v4 FAIL); G0 and Agent F remain blocked pending a new exact-head Gate B under the revised scope.
+
 
 **Assignment ID:** `WAVE2E-CONTROLLER-PR93-DEF01-R3-HANDOFF-20261104`  
 **Date:** 2026-11-04 (Asia/Taipei)  
