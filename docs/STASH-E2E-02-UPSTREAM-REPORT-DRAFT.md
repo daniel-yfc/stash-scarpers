@@ -11,7 +11,8 @@
 ## Environment
 
 - **Stash version:** `v0.31.1-182-g9e9ad972` (commit [`9e9ad972`](https://github.com/stashapp/stash/commit/9e9ad972643320e737c711884f10e4285f0f3a88), built 2026-10-27)
-- **Source verification:** as of 2026-11-02, `pkg/scraper/cache.go` and `internal/api/scraped_content.go` on `develop` HEAD are byte-identical (same git blob) to the tested build, so the code path below also applies to current `develop`.
+- **Source verification:** as of 2026-11-04, `pkg/scraper/cache.go` (blob `83a590b3ec6c2ad5dfeb05e553b98dfcfe8fed60`) and `internal/api/scraped_content.go` (blob `f7d40c95dcb1c1f91d8e06f72bf249f6fcc3ee20`) are byte-identical across the tested build commit `9e9ad972`, current `develop` HEAD, and the released **v0.32.0** tag (published 2026-11-02). The code path below therefore applies to the current stable release at source level.
+- **v0.32.0 runtime reproduction:** `NOT_RUN` — the runtime evidence in this report comes from the `v0.31.1-182-g9e9ad972` development build; no runtime claim is made for the v0.32.0 release build.
 - **Setup:** standard GraphQL API usage against a local server with community scrapers installed; no plugins or exotic configuration involved.
 
 ## Minimal reproduction
@@ -89,8 +90,8 @@ Additionally, `Cache.ScrapeURL` returns a nil result with no error when no scrap
 
 ## Related issues
 
-- #7275 — describes this exact marshalling path (typed-nil and empty-slice indexing in the single-object helpers). It was closed as **not planned** on 2026-10-12 with no linked PR and no fix landing; the affected files are unchanged on `develop` as of 2026-11-02. This report provides an independent, template-compliant reproduction with runtime evidence.
-- #7315 / #6921 / PR #6857 — a **different** panic (nil pointer dereference in `mappedScraper.processSceneRelationships`, `pkg/scraper/mapped.go:89`), fixed by PR #6857. Not the root cause here.
+- #7275 — describes this exact marshalling path (typed-nil and empty-slice indexing in the single-object helpers). It was closed as **not planned** on 2026-10-12 with no linked PR and no fix landing; the affected files are unchanged on `develop` and in the released v0.32.0 as of 2026-11-04. This report provides an independent, template-compliant reproduction with runtime evidence.
+- #7315 / #6921 / PR #6857 — a **different** panic (nil pointer dereference in `mappedScraper.processSceneRelationships`, `pkg/scraper/mapped.go:89`), fixed by PR #6857 and included in v0.32.0. Not the root cause here.
 - #4415 — queryURL/fragment placeholder behavior; unrelated mechanism.
 
 ## Security / privacy review
