@@ -5,6 +5,7 @@
 - 交付物：`tools/tests/test_bravo_dvd_routes.py`（新檔）+ 本報告
 - 結論先行：路由測試套件已建立並可執行；QueryFragment 跨模式誤擷取風險經離線證據確認存在，標記 `RELEASE_BLOCKER=QUERY_FRAGMENT_FALSE_METADATA`，`HANDOFF_STATUS=CHANGES_REQUESTED`。本結論不是對 production YAML 的修改要求由 B 執行，而是要求 Controller 在 Agent F 整合前先做決策（見 §7）。
 - **Addendum 回應（`docs/63-wave2e-agent-b-assignment-addendum.md`，PR #98 @ `989e05e`）：見 §11（2026-11-03 補充）。**
+- **Readiness 更新（Assignment `WAVE2E-B-ROUTING-QF-READINESS-20261104`，Reference HEAD `16bf5a1`）：見 §12（2026-11-04 補充）——狀態 `ROUTING_AND_QF_TEST_HANDOFF_READY`。**
 
 ## 1. Baseline
 
@@ -237,3 +238,66 @@ def test_no_direct_scene_by_fragment():
 - `HANDOFF_STATUS` 維持 `CHANGES_REQUESTED`（理由不變：QueryFragment blocker 待 Controller 決策；本 addendum 工作本身已完成）。
 - 新增交付：B-08 雙軸矩陣（11.1）、B-09 機制評估與建議（11.2）、`TestRouteVersusProductValidity` 11 項測試（含 `product_validity` 參考實作，供 F/Gate B 採用）。
 - 給 F 的新增輸入：整合 `dvdSceneScraper` 時，URLs/Tags 欄位是否採 (i) 逐欄位自守護，須先以 fixture 驗證 `antchfx` 對全域節點集 predicate 的支援；Gate B 案例表新增 `/dvds/00`、`/dvds/999999` 兩個 404 負例（期望：validity gate 拒絕，而非「有回傳物件」）。
+
+## 12. Readiness 更新 — WAVE2E-B-ROUTING-QF-READINESS-20261104（2026-11-04）
+
+Assignment：`WAVE2E-B-ROUTING-QF-READINESS-20261104`（P1）；Reference HEAD：`16bf5a1f8602f1d47edd9e19690f3d5479819962`（本 branch v2，已核對為本節工作的起點）。
+Exit 狀態：**`ROUTING_AND_QF_TEST_HANDOFF_READY`**（僅就 B 的測試準備範圍；見 12.4 的邊界聲明）。
+
+### 12.1 決策前提（已核對原文）
+
+Controller 裁決 `WS-2E-QF-001`（`docs/66-wave2e-queryfragment-decision.md`，PR #98 HEAD `1eda3fada04d3c042234a9aef2edec53520271a0`，2026-11-03）：選定 `REMOVE_ORPHAN_QUERY_FRAGMENT_IN_WAVE2E`——Wave 2E 候選版移除整個 `sceneByQueryFragment`、`sceneByFragment` 保持不存在；狀態 `DESIGN_SELECTED / IMPLEMENTATION_NOT_STARTED / LIVE_UNVERIFIED`；實作 owner 為 Agent F；不適用於 PR #93（不得回溯修改）。此裁決取代本報告 §7 的選項 (a) 與 §9 中「QF 決策為移除時才改寫測試」的條件句：方向已定，B 本節即依裁決預備測試契約。docs/66 §3.4 明文要求：「Update Agent B's isolated QF tests to assert the new contract without hiding the original risk reproduction. Retire strict EXPECTED_RED only when the DVD feature is present; keep independent KNOWN_UPSTREAM_LIMITATION cases.」本節工作即此項的執行。
+
+### 12.2 任務對照表（Assignment Tasks → 測試覆蓋）
+
+| Assignment 任務 | 覆蓋位置 | 狀態 |
+|---|---|---|
+| Preserve URL matching and effective handler-selection tests | `TestCandidatePositiveRouting`、`TestCandidateNegativeAndCollision`、`TestRouteOrderDependence`、`TestProductionRoutingContract`（§2–§5） | 保留，未動 |
+| Preserve product-validity checks independently of URL matching | `TestRouteVersusProductValidity` 雙軸設計（§11.1） | 保留，未動 |
+| Maintain 404 canonical false-positive tests | 404 雙案（`/dvds/00`、`/dvds/999999`）× DVD/Clips 兩組 selector + canonical 已填入危害 pin（§11.1） | 保留，未動 |
+| Keep historical QueryFragment false-metadata reproduction | `TestQueryFragmentOfflineExtraction`（四份歷史 DVD fixture × production Clips selector：核心欄位空、canonical 已填、Tags 四頁相同）——不依賴 QF 設定是否存在，F 移除 QF 後仍持續複現危害 | 保留，未動 |
+| Prepare tests for removal of orphaned QueryFragment in Wave 2E | 新增 `TestWave2EQFRemovalReadiness`（5 項，見 12.3） | **本節新增** |
+| Retain Clips URL regression coverage | `TestClipsRegressionContract` + production Clips 選路斷言 + 既有 `test_bravo_clips.py`（§8） | 保留，未動 |
+| Ensure invalid DVD pages cannot be accepted as valid products solely because canonical URLs exist | `product_validity` gate（§11.1）+ 新增專項 `test_canonical_alone_is_never_sufficient`：即使是真實產品 URL（/dvds/234），擷取結果若只有 canonical 有值仍被拒絕並列明三項理由（marker/Title/Code） | **本節新增專項** |
+
+### 12.3 QF 移除就緒測試（`TestWave2EQFRemovalReadiness`）
+
+設計原則：synthetic 層現在就綠、production 層以 `EXPECTED_RED` 等待 F 落地、歷史事實層以條件式保存而不說謊。
+
+1. `test_synthetic_wave2e_candidate_has_no_fragment_entries`（通過）：記憶體內的 Wave 2E 目標候選（雙路由 + 依 WS-2E-QF-001 移除 QF）中 `sceneByQueryFragment` 與 `sceneByFragment` 皆不存在。
+2. `test_synthetic_wave2e_candidate_routing_survives_qf_removal`（通過）：移除 QF 不改變 URL 選路——clips 284/282 → Clips、dvds 234/084/046 → DVD（對應 docs/66 的「URL scraping does not depend on the QueryFragment setting」與 Gate B QF-01–QF-04 的離線前置）。
+3. `test_synthetic_wave2e_candidate_has_no_fragment_handler`（通過，config 層）：候選設定下 fragment 入口無 handler 可用。**明示邊界**：這只證明設定層無 handler；移除後直接呼叫 fragment 的實際 runtime 結果（乾淨的 unsupported 或 upstream panic）只能由獨立 Gate B 的 QF-05/06/07 判定，panic 屬 `FAIL/UPSTREAM_BLOCKED` 而非可接受的 unsupported——本套件不斷言 runtime 已安全。
+4. `test_production_candidate_has_query_fragment_removed`（`EXPECTED_RED`，strict xfail）：production 候選的目標契約。在 PR #93 基線（QF 仍在）上預期失敗；F 於 `feat/e2e-bravo-dvds` 落地移除後必須依 docs/66 §3.4 退役此標記（連同 §3 的 6 項 DVD 路由 `EXPECTED_RED`）；`KNOWN_UPSTREAM_LIMITATION` 3 項依裁決保留不動。
+5. `test_production_scene_by_fragment_stays_absent`（通過）：`sceneByFragment` 基線上已不存在且移除後須保持不存在（QF-08 的離線前置）。
+
+同時改造既有 `TestQueryFragmentContract` 兩項基線事實測試為**條件式**：QF 存在時（PR #93 基線）照原斷言執行；QF 被移除後以明示理由 skip 並指向本節就緒契約——避免 F 整合後基線事實測試以假失敗污染套件，也避免靜默刪除歷史紀錄。`TestQueryFragmentOfflineExtraction` 不加條件：危害複現與設定存廢無關，永久保留。
+
+### 12.4 給 Agent F 的遷移清單（更新版，取代 §9 的 QF 相關指示）
+
+1. 於 `feat/e2e-bravo-dvds` 移除整個 `sceneByQueryFragment`；`sceneByFragment` 保持不存在；Clips XPath 不得被順手改寫（docs/66 §3.3）。
+2. `tools/tests/test_bravo_clips.py::test_query_fragment_preserves_url` 依 docs/66 §3.4 改為 QF-absent 斷言，建議實作：
+
+```python
+def test_query_fragment_removed_in_wave2e():
+    # WS-2E-QF-001 (docs/66): the orphaned sceneByQueryFragment is
+    # removed in the Wave 2E candidate; sceneByFragment stays absent.
+    data = load()
+    assert "sceneByQueryFragment" not in data
+    assert "sceneByFragment" not in data
+```
+
+3. 退役本套件全部 7 項 `EXPECTED_RED`（6 項 DVD 路由 + 1 項 QF 移除）；保留 3 項 `KNOWN_UPSTREAM_LIMITATION`；`TestQueryFragmentContract` 的 skip 分支屆時自然生效，不需再改。
+4. 執行 docs/66 §3.1 的 caller preflight（repo workflows/tests/GraphQL 整合與已知實例用法）並記錄範圍；若發現不可或缺的直接 QF caller，觸發 `DECISION_EXCEPTION=REQUIRED_QUERY_FRAGMENT_CONSUMER_FOUND` 停下回報 Controller，不得靜默恢復原 handler。此為 F 的整合前置，不屬 B 的測試範圍。
+5. Gate B 依 docs/66 矩陣執行 QF-01–QF-08（exact-head、已安裝候選）；QF-05/06/07 必須回報實際 GraphQL 操作、回應與錯誤，panic 不得記為 PASS。
+
+### 12.5 邊界聲明（依 Assignment Boundaries）
+
+- 未編輯正式 `scrapers/BRAVO.yml`；未對 PR #93 移除 QueryFragment（本 branch 的 production 斷言維持以 PR #93 基線為對象）。
+- 本節交付的是**測試就緒**，不是緩解已實作：QF 移除由 F 執行、runtime 安全由獨立 QA 驗證，二者完成前 `RELEASE_BLOCKER=QUERY_FRAGMENT_FALSE_METADATA` 的實質風險狀態不變。
+- 本 branch 其餘交付（§1–§11）不變；`HANDOFF_STATUS=CHANGES_REQUESTED` 的原始理由（QF 待決策）已由 WS-2E-QF-001 回應，本 assignment 的 Exit 以 `ROUTING_AND_QF_TEST_HANDOFF_READY` 申報，二者不互相取代：前者是 Wave 2E 發布閘門狀態，後者是 B 的測試準備完成狀態。
+
+### 12.6 更新後測試結果
+
+| 指令 | 結果 |
+|---|---|
+| `python -m pytest tools/tests/test_bravo_dvd_routes.py tools/tests/test_bravo_clips.py -q -rxX` | 74 passed, 10 xfailed（新增：就緒測試 4 通過 + 1 EXPECTED_RED、canonical-only 專項 1 通過；xfail 組成 = 7 EXPECTED_RED + 3 KNOWN_UPSTREAM_LIMITATION） |

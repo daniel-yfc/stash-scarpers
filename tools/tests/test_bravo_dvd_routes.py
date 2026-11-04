@@ -85,6 +85,14 @@ pins the fail-closed validity gate (product marker + Title + string Code
 identical to the canonical's last segment): ``/dvds/00`` and
 ``/dvds/999999`` route to ``dvdSceneScraper`` by URL shape yet are NOT
 valid products, even though their canonical link is populated.
+
+Readiness (WAVE2E-B-ROUTING-QF-READINESS-20261104; Controller decision
+WS-2E-QF-001, docs/66): ``TestWave2EQFRemovalReadiness`` prepares the
+contract for Agent F's removal of the orphaned ``sceneByQueryFragment``
+in the Wave 2E candidate — synthetic-candidate assertions pass now, the
+production assertion is EXPECTED_RED until F lands the removal, and the
+historical hazard reproduction above stays in place regardless.  Nothing
+in this file claims the mitigation is implemented or runtime-verified.
 """
 
 import copy
@@ -189,6 +197,20 @@ def candidate_config():
 
 def candidate_routes():
     return candidate_config()["sceneByURL"]
+
+
+def wave2e_candidate_config():
+    """The Wave 2E target candidate per Controller decision WS-2E-QF-001
+    (docs/66): candidate dual-route config with the orphaned
+    ``sceneByQueryFragment`` removed entirely and ``sceneByFragment``
+    absent.  Built in memory only; Agent F implements it in the real
+    YAML, and independent QA must still verify the runtime behaviour —
+    a config-level absence is not proof of a safe unsupported response.
+    """
+    data = candidate_config()
+    data.pop("sceneByQueryFragment", None)
+    data.pop("sceneByFragment", None)
+    return data
 
 
 # --------------------------------------------------------------------------
@@ -412,8 +434,19 @@ class TestProductionRoutingContract:
 # --------------------------------------------------------------------------
 
 class TestQueryFragmentContract:
+    """Baseline (Wave 1B / PR #93) QueryFragment facts.  These describe the
+    pre-Wave-2E configuration that creates the hazard; once Agent F applies
+    WS-2E-QF-001 and the entry is removed, they skip explicitly and the
+    readiness contract in TestWave2EQFRemovalReadiness takes over.  The
+    hazard reproduction itself lives in
+    TestQueryFragmentOfflineExtraction and does not depend on the entry
+    still being configured."""
+
     def test_query_fragment_is_a_single_clip_bound_definition(self):
-        qf = load_production()["sceneByQueryFragment"]
+        data = load_production()
+        if "sceneByQueryFragment" not in data:
+            pytest.skip("superseded by WS-2E-QF-001 removal; see TestWave2EQFRemovalReadiness")
+        qf = data["sceneByQueryFragment"]
         # A single mapping (not a list): there is exactly one QueryFragment
         # handler slot, and Wave 1B binds it to the Clips scraper.
         assert isinstance(qf, dict)
@@ -426,10 +459,64 @@ class TestQueryFragmentContract:
         # URL therefore reaches clipSceneScraper, never dvdSceneScraper,
         # regardless of any future sceneByURL DVD route.
         data = candidate_config()
+        if "sceneByQueryFragment" not in data:
+            pytest.skip("superseded by WS-2E-QF-001 removal; see TestWave2EQFRemovalReadiness")
         qf_handler = data["sceneByQueryFragment"]["scraper"]
         assert qf_handler == "clipSceneScraper"
         assert select_handler(data["sceneByURL"], DVD_URL_234) == "dvdSceneScraper"
         assert qf_handler != select_handler(data["sceneByURL"], DVD_URL_234)
+
+
+# --------------------------------------------------------------------------
+# Readiness for WS-2E-QF-001 (docs/66): removal of the orphaned
+# QueryFragment in the Wave 2E candidate.  Agent B only PREPARES these
+# tests: the production assertions are EXPECTED_RED until Agent F removes
+# the entry on feat/e2e-bravo-dvds, and the runtime outcome of a direct
+# fragment call after removal (clean unsupported vs upstream panic) can
+# only be settled by independent Gate B cases QF-05/06/07 — never by a
+# config assertion in this file.
+# --------------------------------------------------------------------------
+
+class TestWave2EQFRemovalReadiness:
+    def test_synthetic_wave2e_candidate_has_no_fragment_entries(self):
+        data = wave2e_candidate_config()
+        assert "sceneByQueryFragment" not in data
+        assert "sceneByFragment" not in data
+
+    def test_synthetic_wave2e_candidate_routing_survives_qf_removal(self):
+        # URL mode does not depend on the QueryFragment entry (docs/66
+        # rationale): removing it must not change handler selection.
+        routes = wave2e_candidate_config()["sceneByURL"]
+        assert select_handler(routes, CLIP_URL_284) == "clipSceneScraper"
+        assert select_handler(routes, CLIP_URL_282) == "clipSceneScraper"
+        assert select_handler(routes, DVD_URL_234) == "dvdSceneScraper"
+        assert select_handler(routes, DVD_URL_084) == "dvdSceneScraper"
+        assert select_handler(routes, DVD_URL_046) == "dvdSceneScraper"
+
+    def test_synthetic_wave2e_candidate_has_no_fragment_handler(self):
+        # Model of defined_scraper.go viaFragment with no Scene fragment
+        # definition configured: the Scene branch finds no fragment
+        # scraper (the Performer URL fallback does not apply to Scene
+        # input), so the config-level outcome is "no handler".  Whether
+        # the real runtime surfaces that as a clean unsupported error or
+        # as the upstream panic is Gate B QF-05/06/07 evidence, NOT
+        # asserted here.
+        data = wave2e_candidate_config()
+        assert data.get("sceneByQueryFragment") is None
+        assert data.get("sceneByFragment") is None
+
+    @EXPECTED_RED
+    def test_production_candidate_has_query_fragment_removed(self):
+        # WS-2E-QF-001 target contract for Agent F's candidate.  On the
+        # PR #93 baseline the entry is still present, hence EXPECTED_RED;
+        # F retires this marker when the removal lands (docs/66 section
+        # 3.4: retire strict EXPECTED_RED only when the feature state is
+        # present; KNOWN_UPSTREAM_LIMITATION cases stay).
+        assert "sceneByQueryFragment" not in load_production()
+
+    def test_production_scene_by_fragment_stays_absent(self):
+        # Already true on the baseline and binding after removal (QF-08).
+        assert "sceneByFragment" not in load_production()
 
 
 # --------------------------------------------------------------------------
@@ -781,6 +868,23 @@ class TestRouteVersusProductValidity:
         # B-08 control case; the resulting Stash behaviour is upstream
         # issue #97, tracked separately and not asserted here.
         assert select_handler(candidate_routes(), "https://example.com/dvds/234") is None
+
+    def test_canonical_alone_is_never_sufficient(self):
+        # Even for a REAL product URL, an extraction whose only populated
+        # field is the canonical URL must be rejected: canonical presence
+        # is not product validity (docs/63 risk line, docs/66 section 1).
+        extract = {
+            "Marker": [],
+            "Title": [],
+            "Code": [],
+            "URLs": [DVD_URL_234],
+            "Image": [],
+        }
+        valid, reasons = product_validity(extract, DVD_URL_234)
+        assert not valid
+        assert any("marker" in r for r in reasons)
+        assert any("Title" in r for r in reasons)
+        assert any("Code" in r for r in reasons)
 
 
 # --------------------------------------------------------------------------
