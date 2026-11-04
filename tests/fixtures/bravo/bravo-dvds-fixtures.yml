@@ -1,4 +1,4 @@
-# Wave 2E (WS-2E-40) - BRAVO DVD fixture manifest, v2.2 (updated spec).
+# Wave 2E (WS-2E-40) - BRAVO DVD fixture manifest, v2.3 (updated spec).
 # Isolated from:
 #   - the archived historical manifest (bravo-fixtures.yml, evidence digest
 #     be1885d2097683e8c4ae5f2440120e8bd7945ac16f62c1910ac87e5d009d39b2,
@@ -6,12 +6,8 @@
 #     OBSOLETE for the current site but the file itself must never be edited),
 #   - the Wave 1B Clips manifest (bravo-clips-fixtures.yml).
 #   Every case name AND fixture html filename in THIS manifest is unique
-#   across all three manifests (C-FIX-1): positive cases carry the
-#   "(synthetic regression)" suffix, the failure control is renamed
-#   "BRAVO dvd Cloudflare challenge (dvd manifest control)", and the
-#   failure control uses a DVD-owned synthetic Cloudflare model
-#   (dvd-synthetic-cloudflare-challenge.html) instead of the shared
-#   archived failure-cloudflare.html (C-FIX-1 follow-up).
+#   across all three manifests (C-FIX-1 + follow-up), and every fixture is
+#   DVD-owned and SYNTHETIC_REGRESSION-marked.
 #
 # Evidence basis (Agent A, WS-2E-10):
 #   docs/research/wave2e/RAW-DOM-VERIFICATION-ADDENDUM.md
@@ -34,32 +30,44 @@
 #   * CDP (driver.useCDP: true) is REQUIRED: unrendered SSR HTML contains
 #     no product fields (Agent A evidence).
 #
-# mappedExpect policy:
-#   * Every entry names scraper: dvdSceneScraper (multi-route sceneByURL is
-#     otherwise ambiguous to the fixture helper). Naming the scraper does
-#     NOT prove Stash selects that handler at runtime; effective routing is
-#     Agent B's tests and Gate B.
-#   * Image has NO mappedExpect: exact sanitized cover URLs are not
-#     published evidence, and 084's cover (BR-084soldout.jpg) is a soldout
-#     placeholder whose adoption is an explicit Agent F/controller decision.
-#     Image cardinality is pinned by expect assertions instead.
-#   * Date has NO mappedExpect: the verified values use Japanese date
-#     formats and the offline runner only supports parseDate 2006.01.02;
-#     Date cardinality/value is pinned by expect assertions instead.
-#   * Tags has NO mappedExpect: meta keywords are site-generic (identical
-#     on all pages including 404) and must not become product Tags (C-07).
+# mappedExpect policy (v2.3 - Controller metadata policy alignment):
+#   * SOURCE-vs-PRODUCTION separation: `expect` blocks verify SOURCE XPath
+#     extraction (what the page provably contains); `mappedExpect` declares
+#     PRODUCTION field mappings (what Stash may store). A source XPath hit
+#     NEVER implies a production mapping.
+#   * Production-mapped fields: Title, Code, URLs (sceneByURL routeThrough),
+#     Details. Every entry names scraper: dvdSceneScraper (multi-route
+#     sceneByURL is otherwise ambiguous to the fixture helper). Naming the
+#     scraper does NOT prove Stash selects that handler at runtime;
+#     effective routing is Agent B's tests and Gate B.
+#   * Duration: OMITTED from mappedExpect. The source value is the whole
+#     DVD total (minutes, provenance kept in expect); a full-length DVD is
+#     not automatically one Stash Scene. Mapping stays omitted until the
+#     Controller approves the whole-DVD-equals-single-Scene model.
+#   * Studio (source Label レーベル): OMITTED from mappedExpect. The source
+#     Label is verified via expect (provenance), but no published Controller
+#     decision adopts Label -> Studio (checked 2026-11-04: only an
+#     UNAPPROVED D-084-IMAGE-01 draft exists). Mapping stays omitted.
+#   * Image: NO mappedExpect - exact sanitized cover URLs are not published
+#     evidence, and 084's cover (BR-084soldout.jpg) is a sold-out
+#     placeholder, not a real cover. Cardinality pinned by expect.
+#   * Date: NO mappedExpect - Japanese date formats; the offline runner
+#     only supports parseDate 2006.01.02. Source value pinned by expect.
+#   * Tags: NO mappedExpect - meta keywords are site-generic (identical on
+#     all pages including 404) and must not become product Tags (C-07).
 #
 # EXPECTED_RED_PENDING_IMPLEMENTATION: scrapers/BRAVO.yml on the base branch
 # has no /dvds/ sceneByURL route and no dvdSceneScraper. Until Agent F
 # implements them (feat/e2e-bravo-dvds), the runner fails on this manifest
 # with "Ambiguous entrypoint; specify scraper for sceneByURL". Do NOT merge
 # this manifest into the accepted green baseline ahead of that
-# implementation, and do NOT weaken expectations to force a pass.
+# implementation, and do NOT weaken or remove expectations to force a pass.
 scraper: scrapers/BRAVO.yml
 cases:
   # C-P case - positive, sanitized reconstruction of the CDP rendered DOM
   # verified by Agent A (RAW-DOM-VERIFICATION-ADDENDUM.md). Title / Code /
-  # URLs / Date / Studio / Duration values are Agent A verified.
+  # URLs / Date / Studio(source Label) / Duration(source minutes) values
+  # are Agent A verified.
   # Case name carries the (synthetic regression) suffix so it can never
   # collide with the archived historical manifest's case names (C-FIX-1).
   - name: "BRAVO dvd 234 (synthetic regression)"
@@ -69,6 +77,9 @@ cases:
       lang: "ja"
       text: "234"
     mappedExpect:
+      # Production mapping (Controller policy, v2.3): ONLY Title / Code /
+      # URLs / Details are mapped. Duration and Studio(source Label) are
+      # deliberately NOT mapped here - see header mappedExpect policy.
       - field: Title
         scraper: dvdSceneScraper
         values: ["勃起する白き花よ"]
@@ -82,12 +93,6 @@ cases:
       - field: Details
         scraper: dvdSceneScraper
         values: ["フィクスチャ用の説明文です。"]
-      - field: Duration
-        scraper: dvdSceneScraper
-        values: ["6600"]
-      - field: Studio
-        scraper: dvdSceneScraper
-        values: ["GAYSIAN"]
     expect:
       # Cardinality matrix (C-04): every verified field must match exactly 1.
       - xpath: "//h2[contains(.,'品番')]/preceding::h2[2]"
@@ -106,10 +111,17 @@ cases:
         min: 1
         max: 1
         values: ["2018年8月29日"]
+      # Source Label (レーベル) verification ONLY - provenance, NOT a
+      # production Studio mapping (v2.3 policy: mapping omitted pending a
+      # Controller Label->Studio decision; none exists in published evidence).
       - xpath: "//h2[contains(.,'レーベル')]/preceding::h2[1]"
         min: 1
         max: 1
         values: ["GAYSIAN"]
+      # Source total-duration verification ONLY - minutes as displayed on
+      # the product page (source: 収録時間 h2). A full-length DVD total is
+      # NOT a Stash Scene Duration; production mapping stays omitted until
+      # the Controller approves the whole-DVD-equals-single-Scene model.
       - xpath: "//h2[contains(.,'収録時間')]/following::h2[1]"
         min: 1
         max: 1
@@ -132,13 +144,15 @@ cases:
     optionalField:
       # Image mappedExpect is intentionally absent: the exact sanitized
       # cover URL is not published evidence, and 084's cover is a soldout
-      # placeholder whose adoption is an explicit Agent F/controller
-      # decision. Cardinality is pinned by the Image expect above.
+      # placeholder (not a real cover) whose adoption is an explicit
+      # Agent F/controller decision. Cardinality is pinned by the Image
+      # expect above.
       xpath: "//img[@alt='']"
       expectedCount: 0
   # C-P case - positive, sanitized reconstruction of the CDP rendered DOM
   # verified by Agent A (RAW-DOM-VERIFICATION-ADDENDUM.md). Title / Code /
-  # URLs / Date / Studio / Duration values are Agent A verified.
+  # URLs / Date / Studio(source Label) / Duration(source minutes) values
+  # are Agent A verified.
   # Case name carries the (synthetic regression) suffix so it can never
   # collide with the archived historical manifest's case names (C-FIX-1).
   - name: "BRAVO dvd 084 (synthetic regression)"
@@ -148,6 +162,9 @@ cases:
       lang: "ja"
       text: "084"
     mappedExpect:
+      # Production mapping (Controller policy, v2.3): ONLY Title / Code /
+      # URLs / Details are mapped. Duration and Studio(source Label) are
+      # deliberately NOT mapped here - see header mappedExpect policy.
       - field: Title
         scraper: dvdSceneScraper
         values: ["少年集団強姦"]
@@ -161,12 +178,6 @@ cases:
       - field: Details
         scraper: dvdSceneScraper
         values: [""]
-      - field: Duration
-        scraper: dvdSceneScraper
-        values: ["8400"]
-      - field: Studio
-        scraper: dvdSceneScraper
-        values: ["Lucifer"]
     expect:
       # Cardinality matrix (C-04): every verified field must match exactly 1.
       - xpath: "//h2[contains(.,'品番')]/preceding::h2[2]"
@@ -185,10 +196,17 @@ cases:
         min: 1
         max: 1
         values: ["2012年11月17日"]
+      # Source Label (レーベル) verification ONLY - provenance, NOT a
+      # production Studio mapping (v2.3 policy: mapping omitted pending a
+      # Controller Label->Studio decision; none exists in published evidence).
       - xpath: "//h2[contains(.,'レーベル')]/preceding::h2[1]"
         min: 1
         max: 1
         values: ["Lucifer"]
+      # Source total-duration verification ONLY - minutes as displayed on
+      # the product page (source: 収録時間 h2). A full-length DVD total is
+      # NOT a Stash Scene Duration; production mapping stays omitted until
+      # the Controller approves the whole-DVD-equals-single-Scene model.
       - xpath: "//h2[contains(.,'収録時間')]/following::h2[1]"
         min: 1
         max: 1
@@ -211,13 +229,15 @@ cases:
     optionalField:
       # Image mappedExpect is intentionally absent: the exact sanitized
       # cover URL is not published evidence, and 084's cover is a soldout
-      # placeholder whose adoption is an explicit Agent F/controller
-      # decision. Cardinality is pinned by the Image expect above.
+      # placeholder (not a real cover) whose adoption is an explicit
+      # Agent F/controller decision. Cardinality is pinned by the Image
+      # expect above.
       xpath: "//img[@alt='']"
       expectedCount: 0
   # C-P case - positive, sanitized reconstruction of the CDP rendered DOM
   # verified by Agent A (RAW-DOM-VERIFICATION-ADDENDUM.md). Title / Code /
-  # URLs / Date / Studio / Duration values are Agent A verified.
+  # URLs / Date / Studio(source Label) / Duration(source minutes) values
+  # are Agent A verified.
   # Case name carries the (synthetic regression) suffix so it can never
   # collide with the archived historical manifest's case names (C-FIX-1).
   - name: "BRAVO dvd 281 (synthetic regression)"
@@ -227,6 +247,9 @@ cases:
       lang: "ja"
       text: "281"
     mappedExpect:
+      # Production mapping (Controller policy, v2.3): ONLY Title / Code /
+      # URLs / Details are mapped. Duration and Studio(source Label) are
+      # deliberately NOT mapped here - see header mappedExpect policy.
       - field: Title
         scraper: dvdSceneScraper
         values: ["熊ケツ4"]
@@ -240,12 +263,6 @@ cases:
       - field: Details
         scraper: dvdSceneScraper
         values: ["フィクスチャ用の説明文です。"]
-      - field: Duration
-        scraper: dvdSceneScraper
-        values: ["7200"]
-      - field: Studio
-        scraper: dvdSceneScraper
-        values: ["ooooPS!!"]
     expect:
       # Cardinality matrix (C-04): every verified field must match exactly 1.
       - xpath: "//h2[contains(.,'品番')]/preceding::h2[2]"
@@ -264,10 +281,17 @@ cases:
         min: 1
         max: 1
         values: ["2020年7月31日"]
+      # Source Label (レーベル) verification ONLY - provenance, NOT a
+      # production Studio mapping (v2.3 policy: mapping omitted pending a
+      # Controller Label->Studio decision; none exists in published evidence).
       - xpath: "//h2[contains(.,'レーベル')]/preceding::h2[1]"
         min: 1
         max: 1
         values: ["ooooPS!!"]
+      # Source total-duration verification ONLY - minutes as displayed on
+      # the product page (source: 収録時間 h2). A full-length DVD total is
+      # NOT a Stash Scene Duration; production mapping stays omitted until
+      # the Controller approves the whole-DVD-equals-single-Scene model.
       - xpath: "//h2[contains(.,'収録時間')]/following::h2[1]"
         min: 1
         max: 1
@@ -290,13 +314,15 @@ cases:
     optionalField:
       # Image mappedExpect is intentionally absent: the exact sanitized
       # cover URL is not published evidence, and 084's cover is a soldout
-      # placeholder whose adoption is an explicit Agent F/controller
-      # decision. Cardinality is pinned by the Image expect above.
+      # placeholder (not a real cover) whose adoption is an explicit
+      # Agent F/controller decision. Cardinality is pinned by the Image
+      # expect above.
       xpath: "//img[@alt='']"
       expectedCount: 0
   # C-P case - positive, sanitized reconstruction of the CDP rendered DOM
   # verified by Agent A (RAW-DOM-VERIFICATION-ADDENDUM.md). Title / Code /
-  # URLs / Date / Studio / Duration values are Agent A verified.
+  # URLs / Date / Studio(source Label) / Duration(source minutes) values
+  # are Agent A verified.
   # Case name carries the (synthetic regression) suffix so it can never
   # collide with the archived historical manifest's case names (C-FIX-1).
   - name: "BRAVO dvd 046 (synthetic regression)"
@@ -306,6 +332,9 @@ cases:
       lang: "ja"
       text: "046"
     mappedExpect:
+      # Production mapping (Controller policy, v2.3): ONLY Title / Code /
+      # URLs / Details are mapped. Duration and Studio(source Label) are
+      # deliberately NOT mapped here - see header mappedExpect policy.
       - field: Title
         scraper: dvdSceneScraper
         values: ["ゆるゆる雄太のデブ竿ぽちゃ穴食べ放題!"]
@@ -319,12 +348,6 @@ cases:
       - field: Details
         scraper: dvdSceneScraper
         values: ["フィクスチャ用の説明文です。"]
-      - field: Duration
-        scraper: dvdSceneScraper
-        values: ["15600"]
-      - field: Studio
-        scraper: dvdSceneScraper
-        values: ["ooooPS!!"]
     expect:
       # Cardinality matrix (C-04): every verified field must match exactly 1.
       - xpath: "//h2[contains(.,'品番')]/preceding::h2[2]"
@@ -343,10 +366,17 @@ cases:
         min: 1
         max: 1
         values: ["2010年09月30日"]
+      # Source Label (レーベル) verification ONLY - provenance, NOT a
+      # production Studio mapping (v2.3 policy: mapping omitted pending a
+      # Controller Label->Studio decision; none exists in published evidence).
       - xpath: "//h2[contains(.,'レーベル')]/preceding::h2[1]"
         min: 1
         max: 1
         values: ["ooooPS!!"]
+      # Source total-duration verification ONLY - minutes as displayed on
+      # the product page (source: 収録時間 h2). A full-length DVD total is
+      # NOT a Stash Scene Duration; production mapping stays omitted until
+      # the Controller approves the whole-DVD-equals-single-Scene model.
       - xpath: "//h2[contains(.,'収録時間')]/following::h2[1]"
         min: 1
         max: 1
@@ -369,13 +399,15 @@ cases:
     optionalField:
       # Image mappedExpect is intentionally absent: the exact sanitized
       # cover URL is not published evidence, and 084's cover is a soldout
-      # placeholder whose adoption is an explicit Agent F/controller
-      # decision. Cardinality is pinned by the Image expect above.
+      # placeholder (not a real cover) whose adoption is an explicit
+      # Agent F/controller decision. Cardinality is pinned by the Image
+      # expect above.
       xpath: "//img[@alt='']"
       expectedCount: 0
   # C-P case - positive, sanitized reconstruction of the CDP rendered DOM
   # verified by Agent A (RAW-DOM-VERIFICATION-ADDENDUM.md). Title / Code /
-  # URLs / Date / Studio / Duration values are Agent A verified.
+  # URLs / Date / Studio(source Label) / Duration(source minutes) values
+  # are Agent A verified.
   # Case name carries the (synthetic regression) suffix so it can never
   # collide with the archived historical manifest's case names (C-FIX-1).
   - name: "BRAVO dvd 377 (synthetic regression)"
@@ -385,6 +417,9 @@ cases:
       lang: "ja"
       text: "377"
     mappedExpect:
+      # Production mapping (Controller policy, v2.3): ONLY Title / Code /
+      # URLs / Details are mapped. Duration and Studio(source Label) are
+      # deliberately NOT mapped here - see header mappedExpect policy.
       - field: Title
         scraper: dvdSceneScraper
         values: ["騒乱みだれ穴５"]
@@ -398,12 +433,6 @@ cases:
       - field: Details
         scraper: dvdSceneScraper
         values: ["フィクスチャ用の説明文です。"]
-      - field: Duration
-        scraper: dvdSceneScraper
-        values: ["6600"]
-      - field: Studio
-        scraper: dvdSceneScraper
-        values: ["BRAVO!"]
     expect:
       # Cardinality matrix (C-04): every verified field must match exactly 1.
       - xpath: "//h2[contains(.,'品番')]/preceding::h2[2]"
@@ -422,10 +451,17 @@ cases:
         min: 1
         max: 1
         values: ["2026年5月31日"]
+      # Source Label (レーベル) verification ONLY - provenance, NOT a
+      # production Studio mapping (v2.3 policy: mapping omitted pending a
+      # Controller Label->Studio decision; none exists in published evidence).
       - xpath: "//h2[contains(.,'レーベル')]/preceding::h2[1]"
         min: 1
         max: 1
         values: ["BRAVO!"]
+      # Source total-duration verification ONLY - minutes as displayed on
+      # the product page (source: 収録時間 h2). A full-length DVD total is
+      # NOT a Stash Scene Duration; production mapping stays omitted until
+      # the Controller approves the whole-DVD-equals-single-Scene model.
       - xpath: "//h2[contains(.,'収録時間')]/following::h2[1]"
         min: 1
         max: 1
@@ -448,13 +484,15 @@ cases:
     optionalField:
       # Image mappedExpect is intentionally absent: the exact sanitized
       # cover URL is not published evidence, and 084's cover is a soldout
-      # placeholder whose adoption is an explicit Agent F/controller
-      # decision. Cardinality is pinned by the Image expect above.
+      # placeholder (not a real cover) whose adoption is an explicit
+      # Agent F/controller decision. Cardinality is pinned by the Image
+      # expect above.
       xpath: "//img[@alt='']"
       expectedCount: 0
   # C-P case - positive, sanitized reconstruction of the CDP rendered DOM
   # verified by Agent A (RAW-DOM-VERIFICATION-ADDENDUM.md). Title / Code /
-  # URLs / Date / Studio / Duration values are Agent A verified.
+  # URLs / Date / Studio(source Label) / Duration(source minutes) values
+  # are Agent A verified.
   # Case name carries the (synthetic regression) suffix so it can never
   # collide with the archived historical manifest's case names (C-FIX-1).
   - name: "BRAVO dvd 384 (synthetic regression)"
@@ -464,6 +502,9 @@ cases:
       lang: "ja"
       text: "384"
     mappedExpect:
+      # Production mapping (Controller policy, v2.3): ONLY Title / Code /
+      # URLs / Details are mapped. Duration and Studio(source Label) are
+      # deliberately NOT mapped here - see header mappedExpect policy.
       - field: Title
         scraper: dvdSceneScraper
         values: ["ナマ狂い種壺待機５"]
@@ -477,12 +518,6 @@ cases:
       - field: Details
         scraper: dvdSceneScraper
         values: ["フィクスチャ用の説明文です。"]
-      - field: Duration
-        scraper: dvdSceneScraper
-        values: ["6000"]
-      - field: Studio
-        scraper: dvdSceneScraper
-        values: ["BRAVO-RAW"]
     expect:
       # Cardinality matrix (C-04): every verified field must match exactly 1.
       - xpath: "//h2[contains(.,'品番')]/preceding::h2[2]"
@@ -501,10 +536,17 @@ cases:
         min: 1
         max: 1
         values: ["2026年10月22日"]
+      # Source Label (レーベル) verification ONLY - provenance, NOT a
+      # production Studio mapping (v2.3 policy: mapping omitted pending a
+      # Controller Label->Studio decision; none exists in published evidence).
       - xpath: "//h2[contains(.,'レーベル')]/preceding::h2[1]"
         min: 1
         max: 1
         values: ["BRAVO-RAW"]
+      # Source total-duration verification ONLY - minutes as displayed on
+      # the product page (source: 収録時間 h2). A full-length DVD total is
+      # NOT a Stash Scene Duration; production mapping stays omitted until
+      # the Controller approves the whole-DVD-equals-single-Scene model.
       - xpath: "//h2[contains(.,'収録時間')]/following::h2[1]"
         min: 1
         max: 1
@@ -527,8 +569,9 @@ cases:
     optionalField:
       # Image mappedExpect is intentionally absent: the exact sanitized
       # cover URL is not published evidence, and 084's cover is a soldout
-      # placeholder whose adoption is an explicit Agent F/controller
-      # decision. Cardinality is pinned by the Image expect above.
+      # placeholder (not a real cover) whose adoption is an explicit
+      # Agent F/controller decision. Cardinality is pinned by the Image
+      # expect above.
       xpath: "//img[@alt='']"
       expectedCount: 0
   # C-N case - realistic 404 page (Agent A CDP capture): title/og:title are
@@ -652,12 +695,6 @@ cases:
       - field: Details
         scraper: dvdSceneScraper
         values: ["フィクスチャ用の説明文です。"]
-      - field: Duration
-        scraper: dvdSceneScraper
-        values: ["7200"]
-      - field: Studio
-        scraper: dvdSceneScraper
-        values: ["ooooPS!!"]
       - field: Image
         scraper: dvdSceneScraper
         values: []

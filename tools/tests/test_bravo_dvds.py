@@ -1,4 +1,4 @@
-"""Wave 2E WS-2E-40 - BRAVO DVD fixture engineering regression (Agent C, v2.2).
+"""Wave 2E WS-2E-40 - BRAVO DVD fixture engineering regression (Agent C, v2.3).
 
 Evidence basis
 --------------
@@ -14,8 +14,9 @@ What these tests enforce
 * Green here and now: manifest structure, Agent A verified-value matrix,
   404 fail-closed behaviour, isolation from the archived historical
   manifest and the Wave 1B Clips manifest (case names AND html filenames),
-  historical digest preservation, and mutation tests proving the shared
-  fixture runner rejects wrong expectations.
+  historical digest preservation, metadata source-vs-production policy
+  (v2.3), and mutation tests proving the shared fixture runner rejects
+  wrong expectations.
 * Deliberately red on the scaffold branch (and asserted as such): running
   the full DVD manifest must fail with "Ambiguous entrypoint; specify
   scraper for sceneByURL" until Agent F implements the /dvds/ route and
@@ -23,20 +24,29 @@ What these tests enforce
 * Conditional guards (active once dvdSceneScraper exists): no stale //h1
   or comp-kbfkf16x selectors, no site-generic keywords as Tags.
 
+Metadata policy (v2.3, Controller alignment)
+---------------------------------------------
+expect blocks verify SOURCE XPath extraction; mappedExpect declares
+PRODUCTION field mappings. A source XPath hit never implies a production
+mapping. Production-mapped fields are Title / Code / URLs / Details only.
+Duration (whole-DVD total) and Studio (source Label) are source-verified
+via expect but deliberately OMITTED from mappedExpect: Duration mapping
+awaits a Controller whole-DVD-equals-single-Scene approval; Studio mapping
+awaits a Controller Label->Studio decision (none exists in published
+evidence - checked 2026-11-04; the only draft, D-084-IMAGE-01, was not
+approved). 084's sold-out image is not a real cover; site-generic keywords
+are never product Tags.
+
 Revision history
 ----------------
-* v2.1 (C-FIX-1/2/3): DVD case names renamed so none collide with the
-  archived historical manifest; the failure control was renamed
-  "BRAVO dvd Cloudflare challenge (dvd manifest control)"; isolation test
-  asserts html-filename isolation; stale-h1 test guards the failure case
-  via case.get("expect", []); report HEAD_SHA is a real commit SHA.
-* v2.2 (C-FIX-1 follow-up): the failure control previously SHARED the
-  archived real capture failure-cloudflare.html with the historical and
-  Clips manifests, which still violated html-filename isolation. It now
-  uses a DVD-owned synthetic model, dvd-synthetic-cloudflare-challenge.html
-  (SYNTHETIC_REGRESSION). Every fixture referenced by the DVD manifest is
-  DVD-owned and synthetic-marked; the archived file is not modified and
-  remains referenced only by the historical and Clips manifests.
+* v2.1 (C-FIX-1/2/3): case-name isolation, stale-h1 guard, real HEAD_SHA.
+* v2.2 (C-FIX-1 follow-up): DVD-owned synthetic Cloudflare fixture;
+  exceptionless synthetic marking; html isolation green.
+* v2.3 (P1 C-02/C-03): Duration and Studio removed from mappedExpect
+  (source XPath verification retained in expect with values and
+  provenance); new source-vs-production policy test; handoff matrix in
+  the report distinguishes source-verified / production-mapped /
+  omitted-by-policy / pending-Controller-decision.
 
 These tests do NOT claim live/runtime verification (Gate B) and do not
 modify the shared runner, scrapers/BRAVO.yml, tools/tests/test_bravo_clips.py
@@ -80,23 +90,28 @@ FAILURE_MARKERS = (
     "cf-challenge", "Just a moment", "Attention Required",
     "Application error", "404 Not Found",
 )
+# v2.3: fields a DVD case may map into production. Duration / Studio /
+# Tags / Date are source-verified only and must never appear here.
+PRODUCTION_MAPPABLE_FIELDS = {"Title", "Code", "URLs", "Details", "Image"}
+SOURCE_ONLY_FIELDS = {"Duration", "Studio", "Tags", "Date"}
 
 # Agent A verified matrix (RAW-DOM-VERIFICATION-ADDENDUM.md section 2).
-# Duration is the full-feature total in minutes, converted to seconds.
+# Duration is the whole-DVD total in MINUTES as displayed on the page
+# (source provenance only - NOT a Stash Scene Duration).
 AGENT_A_VERIFIED = {
     "234": {"title": "勃起する白き花よ", "code": "234", "studio": "GAYSIAN",
-             "duration_seconds": "6600", "date": "2018年8月29日"},
+             "duration_minutes": "110", "date": "2018年8月29日"},
     "084": {"title": "少年集団強姦", "code": "084", "studio": "Lucifer",
-             "duration_seconds": "8400", "date": "2012年11月17日"},
+             "duration_minutes": "140", "date": "2012年11月17日"},
     "281": {"title": "熊ケツ4", "code": "281", "studio": "ooooPS!!",
-             "duration_seconds": "7200", "date": "2020年7月31日"},
+             "duration_minutes": "120", "date": "2020年7月31日"},
     "046": {"title": "ゆるゆる雄太のデブ竿ぽちゃ穴食べ放題!", "code": "046",
-             "studio": "ooooPS!!", "duration_seconds": "15600",
+             "studio": "ooooPS!!", "duration_minutes": "260",
              "date": "2010年09月30日"},
     "377": {"title": "騒乱みだれ穴５", "code": "377", "studio": "BRAVO!",
-             "duration_seconds": "6600", "date": "2026年5月31日"},
+             "duration_minutes": "110", "date": "2026年5月31日"},
     "384": {"title": "ナマ狂い種壺待機５", "code": "384", "studio": "BRAVO-RAW",
-             "duration_seconds": "6000", "date": "2026年10月22日"},
+             "duration_minutes": "100", "date": "2026年10月22日"},
 }
 POSITIVE_CODES = ("234", "084", "281", "046", "377", "384")
 NOT_FOUND_CODES = ("00", "999999")
@@ -116,6 +131,10 @@ def case_by_html(html: str) -> dict:
 
 def mapped(case: dict, field: str) -> dict:
     return next(a for a in case["mappedExpect"] if a["field"] == field)
+
+
+def mapped_fields(case: dict) -> set:
+    return {a["field"] for a in case.get("mappedExpect", [])}
 
 
 def run_runner(manifest_path: Path) -> subprocess.CompletedProcess:
@@ -158,13 +177,13 @@ def test_positive_cases_cover_agent_a_matrix():
     for code in POSITIVE_CODES:
         case = cases[f"dvd-synthetic-{code}.html"]
         expected = AGENT_A_VERIFIED[code]
+        # Production mapping: Title / Code / URLs / Details ONLY (v2.3).
+        assert mapped_fields(case) == {"Title", "Code", "URLs", "Details"}
         assert mapped(case, "Title")["values"] == [expected["title"]]
         assert mapped(case, "Code")["values"] == [expected["code"]]
         assert mapped(case, "URLs")["values"] == [
             f"https://www.bravo-japan.com/dvds/{code}"
         ]
-        assert mapped(case, "Duration")["values"] == [expected["duration_seconds"]]
-        assert mapped(case, "Studio")["values"] == [expected["studio"]]
         # C-04 cardinality: every verified field is pinned to exactly 1 hit.
         for field, xpath in (
             ("Title", "//h2[contains(.,'品番')]/preceding::h2[2]"),
@@ -175,10 +194,18 @@ def test_positive_cases_cover_agent_a_matrix():
         ):
             assertion = next(a for a in case["expect"] if a["xpath"] == xpath)
             assert assertion["min"] == 1 and assertion["max"] == 1, (code, field)
-        date_assertion = next(
-            a for a in case["expect"] if "発売日" in a["xpath"]
-        )
-        assert date_assertion["values"] == [expected["date"]]
+        # Source values stay verified via expect (provenance), even for
+        # fields whose production mapping is omitted by policy (v2.3).
+        expect_by_xpath = {a["xpath"]: a for a in case["expect"]}
+        assert expect_by_xpath[
+            "//h2[contains(.,'発売日')]/following::h2[1]"
+        ]["values"] == [expected["date"]]
+        assert expect_by_xpath[
+            "//h2[contains(.,'レーベル')]/preceding::h2[1]"
+        ]["values"] == [expected["studio"]]
+        assert expect_by_xpath[
+            "//h2[contains(.,'収録時間')]/following::h2[1]"
+        ]["values"] == [expected["duration_minutes"]]
 
 
 def test_046_leading_zero_is_preserved():
@@ -190,6 +217,37 @@ def test_046_leading_zero_is_preserved():
     assert code_assertion["values"] == ["046"]
     assert isinstance(code_assertion["values"][0], str)
     assert len(code_assertion["values"][0]) == 3
+
+
+# --------------------------------------------------------------------------
+# Metadata policy (v2.3) - source vs production separation
+# --------------------------------------------------------------------------
+
+def test_metadata_policy_duration_and_studio_not_mapped():
+    # No DVD case may map source-only fields into production.
+    for case in dvd_cases():
+        fields = mapped_fields(case)
+        assert fields <= PRODUCTION_MAPPABLE_FIELDS, (case["name"], fields)
+        assert not (fields & SOURCE_ONLY_FIELDS), (case["name"], fields)
+    # Positive cases must still source-verify Duration minutes and the
+    # Studio Label via expect (values + cardinality) - the assertions are
+    # provenance and must NOT be deleted to chase green.
+    for code in POSITIVE_CODES:
+        case = case_by_html(f"dvd-synthetic-{code}.html")
+        duration_assertion = next(
+            a for a in case["expect"] if "収録時間" in a["xpath"]
+        )
+        assert duration_assertion["min"] == 1
+        assert duration_assertion["max"] == 1
+        assert duration_assertion["values"] == [
+            AGENT_A_VERIFIED[code]["duration_minutes"]
+        ]
+        studio_assertion = next(
+            a for a in case["expect"] if "レーベル" in a["xpath"]
+        )
+        assert studio_assertion["min"] == 1
+        assert studio_assertion["max"] == 1
+        assert studio_assertion["values"] == [AGENT_A_VERIFIED[code]["studio"]]
 
 
 # --------------------------------------------------------------------------
@@ -219,8 +277,10 @@ def test_084_soldout_image_is_flagged():
     )
     # The soldout cover exists on the page (cardinality 1)...
     assert image_assertion["min"] == 1 and image_assertion["max"] == 1
-    # ...but Image is not silently blessed as scene metadata: either it is
-    # not mapped at all, or the production YAML documents the decision.
+    # ...but Image is not silently blessed as scene metadata: it is not a
+    # real cover, it is never mapped on positive cases, and if any case
+    # ever maps Image the production YAML must document the decision.
+    assert "Image" not in mapped_fields(case)
     bravo_text = BRAVO.read_text(encoding="utf-8")
     if any(a["field"] == "Image" for a in case["mappedExpect"]):
         assert "soldout" in bravo_text
