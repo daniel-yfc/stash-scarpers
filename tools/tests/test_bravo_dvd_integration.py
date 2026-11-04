@@ -56,6 +56,18 @@ DATE_CASES = {
     "2022年6月26日": "2022-06-26",
     "": "",
     "not a date": "",
+    # WAVE2E-F-PR104-HARDENING-20261104-R4 (A-01, PR104-CROSSQA-P1-3):
+    # calendar validation — executed from the production YAML JS.
+    "2024年2月29日": "2024-02-29",  # leap year, valid
+    "2000年2月29日": "2000-02-29",  # divisible by 400, leap
+    "2023年2月29日": "",  # non-leap February
+    "1900年2月29日": "",  # divisible by 100 but not 400, not leap
+    "2019年2月30日": "",
+    "2026年4月31日": "",
+    "2018年13月1日": "",
+    "2018年00月10日": "",
+    "2018年1月32日": "",
+    "2018年8月00日": "",
 }
 
 IMAGE_CASES = {
@@ -113,6 +125,32 @@ def eval_xpath(html_file: str, selector: str) -> list:
     return json.loads(result.stdout)
 
 
+def eval_html(html: str, selector: str) -> list:
+    """Evaluate a production selector against raw inline HTML (jsdom).
+
+    Same evaluator as eval_xpath, but the document comes from a string
+    so adversarial page shapes can be pinned without new fixture files.
+    Returns attribute values for attribute nodes, text for elements.
+    """
+    program = (
+        "const {JSDOM}=require(%s);"
+        "const doc=new JSDOM(process.env.HTML,'utf-8').window.document;"
+        "const r=doc.evaluate(process.env.SEL,doc,null,"
+        "doc.defaultView.XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,null);"
+        "const out=[];"
+        "for(let i=0;i<r.snapshotLength;i++){const n=r.snapshotItem(i);"
+        "out.push(n.nodeValue!==null?n.nodeValue:n.textContent);}"
+        "console.log(JSON.stringify(out));"
+    ) % json.dumps(str(JSDOM))
+    env = {**os.environ, "SEL": selector, "HTML": html}
+    result = subprocess.run(
+        ["node", "-e", program],
+        capture_output=True, text=True, cwd=ROOT, env=env,
+    )
+    assert result.returncode == 0, result.stderr
+    return json.loads(result.stdout)
+
+
 def test_dvd_scraper_field_set_is_exactly_the_authorized_set():
     assert set(dvd_scene()) == {"Title", "Code", "URLs", "Details", "Date", "Image"}
 
@@ -124,8 +162,16 @@ def test_dvd_selectors_match_g1_verified_values():
 
 
 def test_dvd_urls_selector_is_gated_on_the_product_marker():
+    # R4 hardening: marker + non-blank marker-anchored Title/Code.
+    # The two extra predicates close missing-Title, missing-Code and
+    # marker-without-structure shapes; they do NOT close Code
+    # misalignment or canonical mismatch (see adversarial matrix below).
     selector = dvd_scene()["URLs"]["selector"]
-    assert selector == "//link[@rel='canonical'][//h2[contains(.,'品番')]]/@href"
+    assert selector == (
+        "//link[@rel='canonical'][//h2[contains(.,'品番')]]"
+        "[normalize-space(//h2[contains(.,'品番')]/preceding::h2[2])!='']"
+        "[normalize-space(//h2[contains(.,'品番')]/following::h2[1])!='']/@href"
+    )
 
 
 def test_dvd_routing_contract():
@@ -171,3 +217,92 @@ def test_image_js_filters_soldout_and_normalizes_urls(source, expected):
 )
 def test_production_urls_selector_is_fail_closed_on_404(html, expected):
     assert eval_xpath(html, dvd_scene()["URLs"]["selector"]) == expected
+
+
+def _adv_page(canonical, h2s):
+    """Minimal BRAVO-shaped page: optional canonical + a run of h2s."""
+    head = f'<link rel="canonical" href="{canonical}">' if canonical else ""
+    body = "".join(f"<h2>{h}</h2>" for h in h2s)
+    return f"<!DOCTYPE html><html><head>{head}</head><body>{body}</body></html>"
+
+
+# WAVE2E-F-PR104-HARDENING-20261104-R4 (A-02, PR104-CROSSQA-P1-1).
+# Statuses: VALID = genuine product shape, URLs emitted. SUPPRESSED =
+# production YAML yields no URLs (gate closed). RESIDUAL = production YAML
+# still emits URLs; the case is PINNED here and classified in
+# PRODUCT_IDENTITY_RESIDUAL_RISK — it is NOT silently accepted, and the
+# expectation is the actual emitted value, not a wished-for [].
+ADVERSARIAL_IDENTITY_CASES = [
+    # Valid product shape: full template run (nav pair + Title +
+    # subtitle + marker + Code + date label + date). Title selector
+    # preceding::h2[2] needs two h2s before the marker pair position.
+    ("valid-product",
+     _adv_page("https://www.bravo-japan.com/dvds/234",
+               ["BRAVO-JAPAN", "GO to BRAVO-CLIPS", "勃起する白き花よ",
+                "Mr.Lily 編", "品番", "234", "発売日", "2018年8月29日"]),
+     ["https://www.bravo-japan.com/dvds/234"], "VALID"),
+    # Canonical only, no marker at all (404 shape).
+    ("canonical-only-404",
+     _adv_page("https://www.bravo-japan.com/dvds/555", []),
+     [], "SUPPRESSED"),
+    # Stray marker with no Code h2 after it (Cross-QA A fake-marker-777).
+    ("fake-marker-no-code",
+     _adv_page("https://www.bravo-japan.com/dvds/777",
+               ["BRAVO-JAPAN", "GO to BRAVO-CLIPS", "品番"]),
+     [], "SUPPRESSED"),
+    # Marker present but no Title h2 pair before it.
+    ("missing-title",
+     _adv_page("https://www.bravo-japan.com/dvds/501", ["品番", "501"]),
+     [], "SUPPRESSED"),
+    # Title pair present, but no Code h2 after the marker at all.
+    ("missing-code",
+     _adv_page("https://www.bravo-japan.com/dvds/500",
+               ["BRAVO-JAPAN", "GO to BRAVO-CLIPS", "Real Title",
+                "sub", "品番"]),
+     [], "SUPPRESSED"),
+    # Code h2 exists but is the wrong node: the label h2 is picked up
+    # as Code (Cross-QA A code-missing shape). Non-blank check cannot
+    # tell a label from a code.
+    ("code-misaligned-as-label",
+     _adv_page("https://www.bravo-japan.com/dvds/234",
+               ["BRAVO-JAPAN", "GO to BRAVO-CLIPS", "勃起する白き花よ",
+                "Mr.Lily 編", "品番", "発売日", "2018年8月29日"]),
+     ["https://www.bravo-japan.com/dvds/234"], "RESIDUAL"),
+    # Full product structure, but the canonical points elsewhere.
+    ("canonical-mismatch",
+     _adv_page("https://www.bravo-japan.com/dvds/999",
+               ["BRAVO-JAPAN", "GO to BRAVO-CLIPS", "勃起する白き花よ",
+                "Mr.Lily 編", "品番", "234", "発売日", "2018年8月29日"]),
+     ["https://www.bravo-japan.com/dvds/999"], "RESIDUAL"),
+    # Stray marker embedded between unrelated h2s: Title and Code
+    # checks both pass on unrelated text. Structural genuineness is
+    # not expressible in pure XPath without template constraints.
+    ("marker-outside-product-structure",
+     _adv_page("https://www.bravo-japan.com/dvds/888",
+               ["BRAVO-JAPAN", "GO to BRAVO-CLIPS", "品番",
+                "サイト案内", "お問い合わせ"]),
+     ["https://www.bravo-japan.com/dvds/888"], "RESIDUAL"),
+    # Incomplete hydration: canonical present, no product h2s at all.
+    ("incomplete-hydration",
+     _adv_page("https://www.bravo-japan.com/dvds/234", []),
+     [], "SUPPRESSED"),
+    # Challenge page: no canonical, no marker.
+    ("challenge-page",
+     _adv_page(None, []),
+     [], "SUPPRESSED"),
+]
+
+
+@pytest.mark.parametrize(
+    "case,html,expected,status",
+    [(c, h, e, s) for c, h, e, s in ADVERSARIAL_IDENTITY_CASES],
+    ids=[c for c, _, _, _ in ADVERSARIAL_IDENTITY_CASES],
+)
+def test_production_urls_selector_adversarial_identity_matrix(
+    case, html, expected, status
+):
+    selector = dvd_scene()["URLs"]["selector"]
+    assert eval_html(html, selector) == expected, case
+    # RESIDUAL expectations are the actual emitted values: the test
+    # pins the hole for Controller/Gate B, it does not hide it.
+    assert status in ("VALID", "SUPPRESSED", "RESIDUAL"), case

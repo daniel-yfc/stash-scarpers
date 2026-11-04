@@ -78,7 +78,8 @@
 #     CDP-rendered product pages, 2010-2026 releases): Title =
 #     品番-preceding h2[2], Code = 品番-following h2[1] (leading zeros
 #     preserved, never derived from the URL), URLs = canonical GATED
-#     on the 品番 marker (see below), Details = p.font_8 (084 is
+#     on the 品番 marker plus non-blank marker-anchored Title/Code
+#     (see below), Details = p.font_8 (084 is
 #     empty and stays empty), Date = 発売日-following h2[1] normalized
 #     to YYYY-MM-DD by JS (both 2018年8月29日 and 2010年09月30日
 #     forms), Image = alt-nonempty wixstatic img with a soldout
@@ -107,7 +108,8 @@
 # Last Updated: 2026-11-04 (Wave 2E DVD implementation: /dvds/ routing,
 # dvdSceneScraper, QueryFragment removal per WS-2E-QF-001; Clips
 # Title, Code, URLs, Details, Tags, Image, routing unchanged; Clips
-# Duration remains omitted per WS-2E-DEF01-DEFER-20261104)
+# Duration remains omitted per WS-2E-DEF01-DEFER-20261104; R4 hardening:
+# Date calendar validation, strengthened URLs identity gate)
 
 name: Bravo-Japan
 
@@ -219,13 +221,24 @@ xPathScrapers:
                 with: ""
 
       URLs:
-        # Canonical, GATED on the 品番 marker: the predicate is an
-        # absolute path, true only when the page carries a product
-        # marker. On 404 pages (/dvds/00, /dvds/999999) the canonical
+        # Canonical, GATED on product identity: the predicates are
+        # absolute paths. The canonical is emitted only when the page
+        # carries a 品番 marker AND the marker-anchored Title h2
+        # (preceding::h2[2]) and Code h2 (following::h2[1]) are both
+        # non-blank. On 404 pages (/dvds/00, /dvds/999999) the canonical
         # exists but the marker does not, so URLs is empty — a 404
-        # scrape yields no fields at all. Without the predicate the
-        # canonical alone would produce a URLs-only partial result.
-        selector: "//link[@rel='canonical'][//h2[contains(.,'品番')]]/@href"
+        # scrape yields no fields at all. Pages with a marker but a
+        # missing Title or Code h2 are likewise suppressed.
+        # What this gate does NOT prove (PRODUCT_IDENTITY_RESIDUAL_RISK,
+        # WAVE2E-F-PR104-HARDENING-20261104-R4): a WRONG Code h2 picked
+        # up by adjacency (e.g. a label h2), Code != canonical segment,
+        # canonical != requested URL (not available inside XPath), or
+        # a stray marker embedded between unrelated h2s. Those shapes
+        # still emit URLs and are pinned by adversarial regression
+        # tests, not silently accepted. Predicate functions used
+        # (contains, normalize-space, axes) are XPath 1.0 core;
+        # antchfx equivalence is a Gate B verification item (DVD-XPATH).
+        selector: "//link[@rel='canonical'][//h2[contains(.,'品番')]][normalize-space(//h2[contains(.,'品番')]/preceding::h2[2])!=''][normalize-space(//h2[contains(.,'品番')]/following::h2[1])!='']/@href"
 
       Details:
         # DVD rendered DOM: the single p.font_8 description paragraph.
@@ -241,14 +254,26 @@ xPathScrapers:
       Date:
         # DVD rendered DOM: 発売日-following h2[1]. Source forms mix
         # zero-padded and unpadded months/days (2010年09月30日 vs
-        # 2018年8月29日); JS normalizes to Stash YYYY-MM-DD.
-        # Unparseable input maps to empty, never a guessed date.
+        # 2018年8月29日); JS normalizes to Stash YYYY-MM-DD and
+        # validates the real calendar date (month 1-12, day within the
+        # month, leap-year February). Impossible dates (month 13, day 32,
+        # Feb 30, Feb 29 on a non-leap year) and unparseable input map
+        # to empty, never a guessed date. Validation is manual table
+        # lookup only: no Date object, so no overflow normalization
+        # and no timezone dependence.
         selector: "//h2[contains(.,'発売日')]/following::h2[1]"
         postProcess:
           - javascript: |
               var v = value || "";
               var m = v.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
               if (!m) return "";
+              var y = parseInt(m[1], 10);
+              var mo = parseInt(m[2], 10);
+              var dy = parseInt(m[3], 10);
+              if (mo < 1 || mo > 12) return "";
+              var leap = (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0;
+              var dim = [31, leap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][mo - 1];
+              if (dy < 1 || dy > dim) return "";
               var mm = m[2].length === 1 ? "0" + m[2] : m[2];
               var dd = m[3].length === 1 ? "0" + m[3] : m[3];
               return m[1] + "-" + mm + "-" + dd;
