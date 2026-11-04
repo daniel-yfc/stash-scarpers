@@ -1,0 +1,11 @@
+WAVE2E-F-PR104-HARDENING-20261104-R4 Gate A summary (working tree at HEAD 3f3b4559349e501fdb57bc053f1efb90400540a4, 2026-11-04)
+- pytest tools/tests/: 462 passed, 2 skipped, 3 xfailed
+- validate-all: 24/24 PASS
+- fixture manifests: 20/20 PASS
+- evidence contract: 17 records, 0 failures
+- session-material scan: 370 files PASS
+- docs index: 51 OK
+- format:check: 24 warnings, all pre-existing files, 0 on changed files
+- scraper-source build + verify-only: PASS; BRAVO.zip version 3f3b455
+- BRAVO.zip SHA-256: 5bc3b2b7656d9c988f3552aaae271883e9a0e303f2c5a9e4c46494b232670ddb
+- exact-head CI (2026-11-04 17:31 CST): 9 success, 1 skipped (Deploy to Pages, Draft), 0 failed
