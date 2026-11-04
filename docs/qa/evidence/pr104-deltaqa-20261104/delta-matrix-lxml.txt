@@ -1,0 +1,53 @@
+DVD fields: ['Code', 'Date', 'Details', 'Image', 'Title', 'URLs']
+URLs selector: //link[@rel='canonical'][//h2[contains(.,'品番')]][normalize-space(//h2[contains(.,'品番')]/preceding::h2[2])!=''][normalize-space(//h2[contains(.,'品番')]/following::h2[1])!='']/@href
+QF present: False | Fragment present: False
+Routes: [(['bravo-japan.com/clips/', 'www.bravo-japan.com/clips/'], 'clipSceneScraper'), (['bravo-japan.com/dvds/', 'www.bravo-japan.com/dvds/'], 'dvdSceneScraper')]
+Date postProcess steps: [['javascript']]
+
+== DATE MATRIX (production JS via node) ==
+OK  '2018年8月29日'                       -> '2018-08-29'   expected '2018-08-29'
+OK  '2010年09月30日'                      -> '2010-09-30'   expected '2010-09-30'
+OK  '2020年2月29日'                       -> '2020-02-29'   expected '2020-02-29'
+OK  '2019年2月29日'                       -> ''             expected ''
+OK  '2000年2月29日'                       -> '2000-02-29'   expected '2000-02-29'
+OK  '1900年2月29日'                       -> ''             expected ''
+OK  '2100年2月29日'                       -> ''             expected ''
+OK  '2400年2月29日'                       -> '2400-02-29'   expected '2400-02-29'
+OK  '2026年4月31日'                       -> ''             expected ''
+OK  '2018年13月1日'                       -> ''             expected ''
+OK  '2018年00月10日'                      -> ''             expected ''
+OK  '2018年1月32日'                       -> ''             expected ''
+OK  '2018年8月00日'                       -> ''             expected ''
+OK  '2019年2月30日'                       -> ''             expected ''
+OK  ''                                 -> ''             expected ''
+OK  'not a date'                       -> ''             expected ''
+OK  '発売日は2018年8月29日です'                 -> '2018-08-29'   expected '2018-08-29'
+OK  '0000年1月1日'                        -> '0000-01-01'   expected '0000-01-01'
+OK  '0000年2月29日'                       -> '0000-02-29'   expected '0000-02-29'
+OK  '2018年2月29日'                       -> ''             expected ''
+OK  '2024年12月31日'                      -> '2024-12-31'   expected '2024-12-31'
+OK  '2024年1月31日'                       -> '2024-01-31'   expected '2024-01-31'
+date mismatches vs my expectation: 0
+
+== ADVERSARIAL PAGES (lxml, all production field selectors, raw before postProcess) ==
+-- orig-fake-marker-777: URLs=[] Title=[] Code=[] Date=[]
+-- upgraded-fake-777: URLs=['https://www.bravo-japan.com/dvds/777'] Title=['キャンペーン情報'] Code=['お問い合わせ'] Date=[]
+-- code-is-label: URLs=['https://www.bravo-japan.com/dvds/234'] Title=['勃起する白き花よ'] Code=['発売日'] Date=['2018年8月29日']
+-- title-blank: URLs=[] Title=[''] Code=['234'] Date=['2018年8月29日']
+-- code-blank: URLs=[] Title=['勃起する白き花よ'] Code=[''] Date=['2018年8月29日']
+-- mismatch-234-vs-999: URLs=['https://www.bravo-japan.com/dvds/999'] Title=['勃起する白き花よ'] Code=['234'] Date=['2018年8月29日']
+-- multi-marker-real-first: URLs=['https://www.bravo-japan.com/dvds/234'] Title=['勃起する白き花よ', '発売日'] Code=['234', '999'] Date=['2018年8月29日']
+-- multi-marker-stray-first: URLs=['https://www.bravo-japan.com/dvds/234'] Title=['勃起する白き花よ'] Code=['問合せ', '234'] Date=['2018年8月29日']
+-- canonical-only: URLs=[] Title=[] Code=[] Date=[]
+
+== FIXTURES (lxml) ==
+dvd-synthetic-046.html: URLs=['https://www.bravo-japan.com/dvds/046'] Title=['ゆるゆる雄太のデブ竿ぽちゃ穴食べ放題!'] Code=['046']
+dvd-synthetic-084.html: URLs=['https://www.bravo-japan.com/dvds/084'] Title=['少年集団強姦'] Code=['084']
+dvd-synthetic-234.html: URLs=['https://www.bravo-japan.com/dvds/234'] Title=['勃起する白き花よ'] Code=['234']
+dvd-synthetic-281.html: URLs=['https://www.bravo-japan.com/dvds/281'] Title=['熊ケツ4'] Code=['281']
+dvd-synthetic-377.html: URLs=['https://www.bravo-japan.com/dvds/377'] Title=['騒乱みだれ穴５'] Code=['377']
+dvd-synthetic-384.html: URLs=['https://www.bravo-japan.com/dvds/384'] Title=['ナマ狂い種壺待機５'] Code=['384']
+dvd-synthetic-404-00.html: URLs=[] Title=[] Code=[]
+dvd-synthetic-404-999999.html: URLs=[] Title=[] Code=[]
+dvd-synthetic-cloudflare-challenge.html: URLs=[] Title=[] Code=[]
+dvd-synthetic-logo-empty-alt.html: URLs=['https://www.bravo-japan.com/dvds/281'] Title=['熊ケツ4'] Code=['281']

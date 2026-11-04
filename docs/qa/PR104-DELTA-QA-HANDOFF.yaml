@@ -1,0 +1,39 @@
+ASSIGNMENT_ID: WAVE2E-F-PR104-HARDENING-20261104-R4-PARTB
+ROLE: Independent Delta QA Reviewer (Muse Account 1, PR #103 author; PR #103 not used as oracle)
+TARGET_PR: 104
+TARGET_HEAD: 3f3b4559349e501fdb57bc053f1efb90400540a4
+BASELINE_HEAD: 86ce058a49f9d762b193f91c80cc8be867d1c341
+DELTA_COMMITS:
+  - 3f3b4559349e501fdb57bc053f1efb90400540a4
+DELTA_FILES:
+  - scrapers/BRAVO.yml
+  - tools/tests/test_bravo_dvd_integration.py
+CANDIDATE_MODIFIED: false
+
+FINDING_DISPOSITIONS:
+  P1-1_PRODUCT_IDENTITY: PARTIALLY_FIXED  # nonblocking P1; release ruling reserved to Controller/Gate B
+  P1-2_ANTCHFX_RUNTIME: NOT_RUN_GATE_B_REQUIRED  # construct surface increased vs 86ce058
+  P1-3_DATE_VALIDITY: FIXED_VERIFIED
+  P2-1_RUNNER_DIAGNOSTIC: NONBLOCKING
+  P2-2_IMAGE_SOLDOUT_FILTER: NONBLOCKING
+
+TEST_RESULTS:
+  PYTEST_FULL: "462 passed, 2 skipped, 3 xfailed (exit 0); baseline 442 -> +20 matches author-claimed new cases"
+  FIXTURE_MANIFESTS: "20 discovered, exit 0"
+  VALIDATORS: "validator/validate-sort/semantics/scan/evidence-contract all exit 0"
+  DATE_MATRIX: "22/22 independent cases via production JS (node); leap 400/100/4 branches all verified"
+  URLS_MATRIX: "19 pages, lxml + jsdom cell-identical; real pages pass, 404s suppressed, original fake-marker shape CLOSED, upgraded fake page still emits full-shaped fake metadata (residual)"
+PACKAGE_VERSION: 3f3b455
+PACKAGE_SHA256: 5bc3b2b7656d9c988f3552aaae271883e9a0e303f2c5a9e4c46494b232670ddb
+
+AUTHOR_CLAIMS_VERIFIED:
+  TEN_DATE_CASES: TRUE
+  TEN_ADVERSARIAL_CASES: TRUE  # note: author matrix asserts URLs only; Title/Code extraction on upgraded fake page verified by this QA
+  G1_DATES_UNCHANGED: TRUE
+  FOUR04_PROTECTION_UNCHANGED: TRUE
+
+GATE_B: NOT_RUN
+RELEASE_READINESS: NOT_READY
+MERGE_AUTHORIZED: false
+VERDICT: DELTA_QA_PASS_WITH_NONBLOCKING_FINDINGS
+VERDICT_SCOPE: exact HEAD 3f3b455 only

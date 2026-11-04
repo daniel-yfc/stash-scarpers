@@ -1,0 +1,63 @@
+Could not parse CSS stylesheet
+Could not parse CSS stylesheet
+tests/fixtures/acceed/acceed-fixtures.yml: 3 cases verified
+tests/fixtures/bravo/bravo-clips-fixtures.yml: 11 cases verified
+tests/fixtures/bravo/bravo-dvds-fixtures.yml: 10 cases verified
+Could not parse CSS stylesheet
+Could not parse CSS stylesheet
+tests/fixtures/bravo/bravo-fixtures.yml: 3 cases verified
+tests/fixtures/ckdownload/ckdownload-fixtures.yml: 4 cases verified
+Could not parse CSS stylesheet
+Could not parse CSS stylesheet
+Could not parse CSS stylesheet
+Could not parse CSS stylesheet
+Could not parse CSS stylesheet
+Could not parse CSS stylesheet
+Could not parse CSS stylesheet
+Could not parse CSS stylesheet
+tests/fixtures/clubck/clubck-fixtures.yml: 3 cases verified
+Could not parse CSS stylesheet
+Could not parse CSS stylesheet
+tests/fixtures/fc2/fc2-fixtures.yml: 3 cases verified
+tests/fixtures/games/games-fixtures.yml: 2 cases verified
+tests/fixtures/getfilm/getfilm-fixtures.yml: 3 cases verified
+tests/fixtures/gvwiki/gvwiki-fixtures.yml: 5 cases verified
+tests/fixtures/hunkch/hunkch-fixtures.yml: 2 cases verified
+tests/fixtures/jgvdata/jgvdata-fixtures.yml: 3 cases verified
+Could not parse CSS stylesheet
+Could not parse CSS stylesheet
+tests/fixtures/justice01/justice01-fixtures.yml: 3 cases verified
+tests/fixtures/koshop/koshop-fixtures.yml: 3 cases verified
+tests/fixtures/kotube/kotube-fixtures.yml: 3 cases verified
+tests/fixtures/kovideo/kovideo-fixtures.yml: 2 cases verified
+tests/fixtures/mensrushtv/mensrushtv-fixtures.yml: 3 cases verified
+tests/fixtures/pubu/pubu-fixtures.yml: 3 cases verified
+tests/fixtures/rgbee/rgbee-fixtures.yml: 2 cases verified
+tests/fixtures/trance/trance-fixtures.yml: 4 cases verified
+tests/fixtures/acceed/acceed-fixtures.yml: PASS
+tests/fixtures/bravo/bravo-clips-fixtures.yml: PASS
+tests/fixtures/bravo/bravo-dvds-fixtures.yml: PASS
+tests/fixtures/bravo/bravo-fixtures.yml: PASS
+tests/fixtures/ckdownload/ckdownload-fixtures.yml: PASS
+tests/fixtures/clubck/clubck-fixtures.yml: PASS
+tests/fixtures/fc2/fc2-fixtures.yml: PASS
+tests/fixtures/games/games-fixtures.yml: PASS
+tests/fixtures/getfilm/getfilm-fixtures.yml: PASS
+tests/fixtures/gvwiki/gvwiki-fixtures.yml: PASS
+tests/fixtures/hunkch/hunkch-fixtures.yml: PASS
+tests/fixtures/jgvdata/jgvdata-fixtures.yml: PASS
+tests/fixtures/justice01/justice01-fixtures.yml: PASS
+tests/fixtures/koshop/koshop-fixtures.yml: PASS
+tests/fixtures/kotube/kotube-fixtures.yml: PASS
+tests/fixtures/kovideo/kovideo-fixtures.yml: PASS
+tests/fixtures/mensrushtv/mensrushtv-fixtures.yml: PASS
+tests/fixtures/pubu/pubu-fixtures.yml: PASS
+tests/fixtures/rgbee/rgbee-fixtures.yml: PASS
+tests/fixtures/trance/trance-fixtures.yml: PASS
+Fixture manifests discovered: 20
+manifests exit 0
+validator exit 0
+validate-sort exit 0
+semantics exit 0
+scan exit 0
+evidence exit 0

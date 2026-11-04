@@ -1,0 +1,7 @@
+HEAD: 3f3b4559349e501fdb57bc053f1efb90400540a4
+node: v24.22.1  python: Python 3.12.3
+pytest tools/tests/ -q -> 462 passed, 2 skipped, 3 xfailed (exit 0) [86ce058 baseline: 442 passed -> +20 = author-claimed 10 Date + 10 adversarial]
+run_fixture_manifests.py -> 20 discovered, exit 0
+validator -a --ci / validate-sort / semantics / scan / evidence-contract -> all exit 0
+build_scraper_source.py + --verify-only -> exit 0; BRAVO.zip sha256 5bc3b2b7656d9c988f3552aaae271883e9a0e303f2c5a9e4c46494b232670ddb; index version 3f3b455
+candidate git status after all runs: 0 modified files (clean)
