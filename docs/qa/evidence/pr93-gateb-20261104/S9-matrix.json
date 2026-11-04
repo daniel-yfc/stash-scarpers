@@ -1,0 +1,93 @@
+[
+ {
+  "test": "B1-t1",
+  "page": 284,
+  "duration_expected": 1800,
+  "duration_actual": null,
+  "title_ok": true,
+  "code_ok": true,
+  "details_ok": true,
+  "urls": [
+   "https://www.bravo-japan.com/clips/284"
+  ],
+  "image": null,
+  "errors": null
+ },
+ {
+  "test": "B2-t1",
+  "page": 282,
+  "duration_expected": 1800,
+  "duration_actual": null,
+  "title_ok": true,
+  "code_ok": true,
+  "details_ok": true,
+  "urls": [
+   "https://www.bravo-japan.com/clips/282"
+  ],
+  "image": null,
+  "errors": null
+ },
+ {
+  "test": "B2a-t1",
+  "page": 283,
+  "duration_expected": 1800,
+  "duration_actual": null,
+  "title_ok": true,
+  "code_ok": true,
+  "details_ok": true,
+  "urls": [
+   "https://www.bravo-japan.com/clips/283"
+  ],
+  "image": null,
+  "errors": null
+ },
+ {
+  "test": "B1-t2",
+  "page": 284,
+  "duration_expected": 1800,
+  "duration_actual": null,
+  "title_ok": true,
+  "code_ok": true,
+  "details_ok": true,
+  "urls": [
+   "https://www.bravo-japan.com/clips/284"
+  ],
+  "image": null,
+  "errors": null
+ },
+ {
+  "test": "B2-t2",
+  "page": 282,
+  "duration_expected": 1800,
+  "duration_actual": null,
+  "title_ok": true,
+  "code_ok": true,
+  "details_ok": true,
+  "urls": [
+   "https://www.bravo-japan.com/clips/282"
+  ],
+  "image": null,
+  "errors": null
+ },
+ {
+  "test": "B2a-t2",
+  "page": 283,
+  "duration_expected": 1800,
+  "duration_actual": null,
+  "title_ok": true,
+  "code_ok": true,
+  "details_ok": true,
+  "urls": [
+   "https://www.bravo-japan.com/clips/283"
+  ],
+  "image": null,
+  "errors": null
+ },
+ {
+  "test": "B2b-QF",
+  "duration_expected": 1800,
+  "duration_actual": null,
+  "title_ok": true,
+  "details_ok": true
+ }
+]

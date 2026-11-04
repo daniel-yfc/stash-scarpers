@@ -1,0 +1,11 @@
+{
+ "errors": [
+  {
+   "message": "error while fragment scraping with scraper BRAVO: failed to load URL \"{url}\": Cannot navigate to invalid URL (-32000)",
+   "path": [
+    "scrapeSingleScene"
+   ]
+  }
+ ],
+ "data": null
+}

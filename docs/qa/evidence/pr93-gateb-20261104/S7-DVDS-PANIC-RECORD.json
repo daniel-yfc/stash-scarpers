@@ -1,0 +1,13 @@
+{
+ "errors": [
+  {
+   "message": "Internal system error. Error <runtime error: index out of range [0] with length 0>",
+   "path": [
+    "scrapeSceneURL"
+   ]
+  }
+ ],
+ "data": {
+  "scrapeSceneURL": null
+ }
+}
