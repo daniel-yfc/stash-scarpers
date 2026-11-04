@@ -9,17 +9,22 @@
 #   - Title source: the single h1. Code source: the h2 immediately before
 #     the "Clip" label (284 / 282), which agrees with the document title and
 #     the canonical URL's last segment.
-#   - Duration source (CORRECTED 2026-11-04, Gate B DEF-01 R2): the
-#     first digit-starting, non-empty h2 AFTER the "Clip" label
-#     (forward axis; 30 on both pages, hence 1800 seconds); see the
-#     Duration comment below. CORRECTION to 2026-11-03: the R1 premise
-#     (spacer between minutes and the label, U+200B on the label) was
-#     falsified by Gate B v3 rendered-DOM evidence (L9): live order is
-#     Clip, 30, clean 作品TIME, min, with no spacer in that interval.
-#     Both reverse-axis Duration selectors (simple v2, composite v3)
-#     returned null live in Stash while passing lxml/Chrome offline,
-#     so R2 removes the reverse axis and the Japanese label anchor
-#     entirely instead of patching the predicate again.
+#   - Duration (DEFERRED 2026-11-04, Controller decision
+#     WS-2E-DEF01-DEFER-20261104, R3 H4): the production Scene.Duration
+#     mapping is REMOVED from this file. Source extraction itself is
+#     correct (first digit-starting, non-empty h2 AFTER the "Clip"
+#     label, forward axis; 30 on 284/282/283, hence 1800 seconds;
+#     live order Clip, 30, clean 作品TIME, min per Gate B v3 L9), but
+#     the Stash mapped runtime cannot return a typed int for scene
+#     Duration (string "1800" fails the IntPtr int assertion, hence
+#     GraphQL null), so no YAML mapping can make it work. The full
+#     source-only specification, verbatim selector and conversion,
+#     expected values, false positives, required runtime capability
+#     and restoration steps live in
+#     docs/qa/PR93-DURATION-DEFERRED-SPEC.md, and the source
+#     extraction stays covered by source-only tests in
+#     tools/tests/test_bravo_clips.py. Do NOT restore the mapping
+#     here until the runtime capability in the spec is deployed.
 #   - Details source (CORRECTED 2026-11-03, Gate B DEF-02): first
 #     non-empty span.wixui-rich-text__text inside the product description
 #     container div[@id='comp-kbfkf17h'] (baseline $desc); the 2026-11-01
@@ -43,9 +48,9 @@
 #     fixture poster URLs as real website covers.
 #   - Title-less limitation: declarative scrapeXPath fields are
 #     independent, so this YAML has no cross-field guard that suppresses
-#     Code/Duration/URLs when Title is empty. On a Title-less page those
-#     three values are still page-derived (Clip label pair, duration
-#     label, canonical URL), not invented — but a Title-less result is
+#     Code/URLs when Title is empty. On a Title-less page those
+#     two values are still page-derived (Clip label pair,
+#     canonical URL), not invented — but a Title-less result is
 #     incomplete and must NOT be accepted as a successful scrape in
 #     Gate B. That runtime acceptance question is recorded for Gate B,
 #     not papered over here.
@@ -62,13 +67,15 @@
 # Selector risk: Wix layout is template-stable but a site redesign breaks
 # these label-adjacency selectors; re-verify against a fresh page first.
 #   - XPath U+200B note: the translate() second argument in the
-#     Duration and Details selectors below is a literal single U+200B
+#     Details selector below (and in the deferred Duration selector,
+#     see docs/qa/PR93-DURATION-DEFERRED-SPEC.md) is a literal single U+200B
 #     character (UTF-8 E2 80 8B). It is invisible in a diff, so it is
 #     documented here and asserted by codepoint in
 #     tools/tests/test_bravo_clips.py. Do not "clean" it away.
-# Last Updated: 2026-11-04 (Wave 2E-G R2 corrective fix for Gate B DEF-01:
-# forward-axis Duration from the Clip label; Details, Title, Code,
-# URLs, Tags, Image, routing, QueryFragment and DVD exclusion unchanged)
+# Last Updated: 2026-11-04 (Wave 2E-G Duration omission per
+# WS-2E-DEF01-DEFER-20261104: Scene.Duration removed; Title, Code,
+# URLs, Details, Tags, Image, routing, QueryFragment and DVD exclusion
+# unchanged; Duration source spec deferred to docs/qa/)
 
 name: Bravo-Japan
 
@@ -112,40 +119,6 @@ xPathScrapers:
 
       URLs:
         selector: "//link[@rel='canonical']/@href"
-
-      Duration:
-        # Clips rendered DOM (Gate B v3, L9, 2026-11-03): heading order
-        # is ... Code, "Clip", minutes, 作品TIME, min, ... on 284/282
-        # (and 283 spot-check). The minutes node is therefore the first
-        # digit-starting, non-empty h2 AFTER the "Clip" label, found
-        # with a FORWARD axis. Why forward: both reverse-axis forms
-        # failed live in Stash (simple preceding:: at v2, composite
-        # preceding:: with a nested preceding:: predicate at v3) while
-        # passing lxml and Chrome offline, and reverse-axis positional
-        # / filtered semantics differ between engines (lxml vs jsdom
-        # disagree on a filtered preceding:: candidate). This selector
-        # uses only live-proven primitives: the ASCII "Clip" anchor
-        # (Code's anchor, live-verified), the forward axis (document
-        # order = axis order in every engine), the translate() U+200B
-        # guard (Details' guard, live-verified), and a digit-start
-        # guard. Guards are each mandated by a regression case, not
-        # stacked for offline green: without the non-empty guard a
-        # U+200B spacer after Clip is taken (empty); without the
-        # digit guard a ¥ price heading after Clip is taken as 60 s.
-        # When no digit heading follows Clip, the selector matches
-        # nothing and postProcess fail-closes to "" (no guessing, and
-        # it cannot fall back to the Code number: Code precedes Clip).
-        # A plain-digit price directly after Clip before the minutes
-        # heading would still be ambiguous; no such heading exists on
-        # any live page (see report Known limitations). Converted to
-        # seconds as before (first digit group x 60).
-        selector: "//h2[normalize-space()='Clip']/following::h2[normalize-space(translate(., '​', '')) != '' and translate(substring(normalize-space(translate(., '​', '')), 1, 1), '0123456789', '') = ''][1]"
-        postProcess:
-          - javascript: |
-              var v = value || "";
-              var m = v.match(/(\d+)/);
-              if (!m) return "";
-              return String(parseInt(m[1], 10) * 60);
 
       Tags:
         Name:

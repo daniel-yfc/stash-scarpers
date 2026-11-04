@@ -20,6 +20,13 @@
 # forward-axis selector from the Clip label. New R2 cases: price
 # heading after Clip (287, must skip to 30), spacer after Clip (288,
 # must skip to 30), missing minutes (289, Duration must be empty).
+# OMISSION 2026-11-04 (Controller decision WS-2E-DEF01-DEFER-20261104,
+# R3 H4): production mappedExpect.Duration assertions are REMOVED for
+# every case below. The Stash mapped runtime cannot return a typed int
+# for scene Duration, so no production assertion can pass; the source
+# minutes-to-seconds expectations are retained in source-only tests
+# (tools/tests/test_bravo_clips.py) and in the deferred specification
+# (docs/qa/PR93-DURATION-DEFERRED-SPEC.md). Fixture HTMLs are unchanged.
 scraper: scrapers/BRAVO.yml
 cases:
   - name: "BRAVO clip 284"
@@ -33,8 +40,6 @@ cases:
         values: ["デカマラ同士 目隠し交尾"]
       - field: Code
         values: ["284"]
-      - field: Duration
-        values: ["1800"]
       - field: URLs
         routeThrough: sceneByURL
         values: ["https://www.bravo-japan.com/clips/284"]
@@ -79,8 +84,6 @@ cases:
         values: ["初撮影ヤマト５Ｐ"]
       - field: Code
         values: ["282"]
-      - field: Duration
-        values: ["1800"]
       - field: URLs
         routeThrough: sceneByURL
         values: ["https://www.bravo-japan.com/clips/282"]
@@ -125,8 +128,6 @@ cases:
         values: []
       - field: Code
         values: ["999"]
-      - field: Duration
-        values: ["1800"]
       - field: URLs
         routeThrough: sceneByURL
         values: ["https://www.bravo-japan.com/clips/999"]
@@ -157,8 +158,6 @@ cases:
         values: ["フィクスチャ用のタイトル"]
       - field: Code
         values: ["283"]
-      - field: Duration
-        values: ["1800"]
       - field: URLs
         routeThrough: sceneByURL
         values: ["https://www.bravo-japan.com/clips/283"]
@@ -206,8 +205,6 @@ cases:
         values: ["デカマラ同士 目隠し交尾"]
       - field: Code
         values: ["284"]
-      - field: Duration
-        values: ["1800"]
       - field: URLs
         routeThrough: sceneByURL
         values: ["https://www.bravo-japan.com/clips/284"]
@@ -252,8 +249,6 @@ cases:
         values: ["フィクスチャ用 286 のタイトル"]
       - field: Code
         values: ["286"]
-      - field: Duration
-        values: ["1800"]
       - field: URLs
         routeThrough: sceneByURL
         values: ["https://www.bravo-japan.com/clips/286"]
@@ -294,8 +289,6 @@ cases:
         values: ["フィクスチャ用 285 のタイトル"]
       - field: Code
         values: ["285"]
-      - field: Duration
-        values: ["2700"]
       - field: URLs
         routeThrough: sceneByURL
         values: ["https://www.bravo-japan.com/clips/285"]
@@ -340,8 +333,6 @@ cases:
         values: ["フィクスチャ用 287 のタイトル"]
       - field: Code
         values: ["287"]
-      - field: Duration
-        values: ["1800"]
       - field: URLs
         routeThrough: sceneByURL
         values: ["https://www.bravo-japan.com/clips/287"]
@@ -378,8 +369,6 @@ cases:
         values: ["フィクスチャ用 288 のタイトル"]
       - field: Code
         values: ["288"]
-      - field: Duration
-        values: ["1800"]
       - field: URLs
         routeThrough: sceneByURL
         values: ["https://www.bravo-japan.com/clips/288"]
@@ -416,8 +405,6 @@ cases:
         values: ["フィクスチャ用 289 のタイトル"]
       - field: Code
         values: ["289"]
-      - field: Duration
-        values: []
       - field: URLs
         routeThrough: sceneByURL
         values: ["https://www.bravo-japan.com/clips/289"]

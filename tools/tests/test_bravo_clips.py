@@ -6,18 +6,18 @@ route that could expand an empty ``{title}`` into ``clips/%7Btitle%7D``.
 Gate B (independent QA on stash-test) remains the live check and is NOT_RUN
 until it is actually performed.
 
-Corrective fix 2026-11-03 (Gate B DEF-01/02) and 2026-11-04 R2
-(Gate B DEF-01, Gate B v3): Duration and Details assertions check
-selector *properties* (anchor, axis, spacer guard, container scope,
-digit guard), not an exact XPath string, so a reasonable selector
-revision is not blocked by a hardcoded string test. The exact
-selectors are verified end-to-end by the fixture manifest
-(mappedExpect) instead. R2 correction: the 2026-11-03 Duration premise
-(spacer between minutes and the label, U+200B on the label) was
-falsified by Gate B v3 rendered-DOM evidence (L9); both reverse-axis
-Duration selectors passed offline yet returned null live in Stash, so
-the R2 selector must be forward-axis from the Clip label and must
-not reference the 作品TIME label or any preceding:: axis.
+Duration omission 2026-11-04 (Controller decision
+WS-2E-DEF01-DEFER-20261104, R3 H4): production Scene.Duration is
+REMOVED from BRAVO.yml because the Stash mapped runtime cannot
+return a typed int for scene Duration (R3 end-to-end reproduction:
+every mapped value is a string, IntPtr accepts only int). Duration
+assertions in this file are therefore source-only: they evaluate
+the deferred selector from docs/qa/PR93-DURATION-DEFERRED-SPEC.md
+against the fixture HTMLs and check the minutes-to-seconds
+conversion, without reading any Duration mapping from BRAVO.yml.
+Details assertions still check the live Details selector
+properties. Gate B (independent QA on stash-test, revised scope)
+remains the live check and is NOT_RUN until it is performed.
 """
 
 from pathlib import Path
@@ -59,54 +59,97 @@ def test_query_fragment_preserves_url():
 def test_clip_selectors_are_not_dvd_selectors():
     data = load()
     clip = data["xPathScrapers"]["clipSceneScraper"]["scene"]
-    for field in ("Title", "Code", "Duration", "Details"):
+    for field in ("Title", "Code", "Details"):
         selector = clip[field]["selector"]
         assert "品番" not in selector, field
     assert clip["Title"]["selector"] == "//h1[1]"
     assert "Clip" in clip["Code"]["selector"]
-    # R2: Duration must NOT anchor on the 作品TIME label at all (both
-    # reverse-axis forms anchored on it failed live); it anchors on
-    # the Clip label with a forward axis instead.
-    assert "作品TIME" not in clip["Duration"]["selector"]
+    # Omission (WS-2E-DEF01-DEFER-20261104): production Duration must
+    # be absent, not merely pointed elsewhere. Its source extraction
+    # is covered by the deferred source-only tests below instead.
+    assert "Duration" not in clip
     # No Date/Studio: the Clips source provides neither, so the fields must
     # stay absent rather than being fabricated.
     assert "Date" not in clip
     assert "Studio" not in clip
 
 
-def test_duration_selector_is_forward_from_clip():
-    # DEF-01 R2: both reverse-axis Duration selectors must not return:
-    # the simple v2 form and the composite v3 form both passed lxml /
-    # Chrome offline yet returned null live in Stash (Gate B v2/v3),
-    # and reverse-axis filtered semantics differ between engines
-    # (lxml vs jsdom disagree on a filtered preceding:: candidate).
-    # The R2 selector must therefore: anchor on the ASCII "Clip" label
-    # (Code's anchor, live-verified), use a FORWARD axis only
-    # (document order = axis order in every engine), skip empty /
-    # U+200B candidates via the translate() guard (Details' guard,
-    # live-verified), and require a digit start (so a ¥ price heading
-    # after Clip is not taken as minutes). Each guard is mandated by
-    # a manifest negative case (spacer after Clip, price after Clip);
-    # a bare following::h2[1] fails both. The literal U+200B
-    # character must be present by codepoint, not merely claimed in a
-    # comment. Duration post-processing (first digit group x 60,
-    # fail-closed to "") is unchanged.
-    data = load()
-    scene = data["xPathScrapers"]["clipSceneScraper"]["scene"]
-    selector = scene["Duration"]["selector"]
-    assert selector != "//h2[normalize-space()='作品TIME']/preceding::h2[1]"
-    assert "preceding::" not in selector
-    assert "作品TIME" not in selector
-    assert selector.startswith("//h2[normalize-space()='Clip']/following::h2[")
-    assert "translate" in selector
-    assert "\u200b" in selector
-    assert "0123456789" in selector
-    js = " ".join(
-        str(s.get("javascript", ""))
-        for s in scene["Duration"]["postProcess"]
-        if isinstance(s, dict)
-    )
-    assert "parseInt" in js and "* 60" in js
+# Deferred Duration source (WS-2E-DEF01-DEFER-20261104, R3 H4).
+# The selector below is the d6d6fbf production selector, verbatim,
+# preserved here as a source-only regression test. It is NOT read
+# from BRAVO.yml (production Duration is omitted) and it is NOT a
+# new XPath iteration: it must equal the selector in
+# docs/qa/PR93-DURATION-DEFERRED-SPEC.md (checked by
+# test_deferred_duration_spec_matches_source_tests). The U+200B
+# characters are written as escapes so they stay visible in diffs;
+# at runtime they are the literal single U+200B codepoints. The
+# selector must anchor on the ASCII "Clip" label, use a FORWARD axis
+# only, skip empty / U+200B candidates via translate(), and require
+# a digit start (so a price heading after Clip is not taken as
+# minutes); it must not reference the 作品TIME label or any
+# preceding:: axis (both reverse-axis forms failed live, and the H4
+# finding makes the axis question moot for production until the
+# runtime is fixed).
+DEFERRED_DURATION_SELECTOR = (
+    "//h2[normalize-space()='Clip']/following::h2[normalize-space(translate(., '\u200b', '')) != '' "
+    "and translate(substring(normalize-space(translate(., '\u200b', '')), 1, 1), '0123456789', '') = ''][1]"
+)
+
+# (fixture html, expected future Duration seconds or None for absent).
+# The conversion mirrors the deferred JS exactly: first digit group
+# x 60, fail-closed to absent. Fixture HTMLs are read as UTF-8 text
+# (they carry no charset meta; byte parsing would misread Japanese).
+DEFERRED_DURATION_CASES = [
+    ("clip-284.html", 1800),
+    ("clip-282.html", 1800),
+    ("clip-no-cover.html", 1800),  # 283
+    ("clip-duration-price.html", 2700),  # 285, 45 minutes: not hardcoded
+    ("clip-price-after-clip.html", 1800),  # 287: price heading skipped
+    ("clip-spacer-after-clip.html", 1800),  # 288: spacer skipped
+    ("clip-missing-duration.html", None),  # 289: no minutes, no guessing
+]
+
+
+def _deferred_duration_seconds(html_name):
+    import re
+
+    from lxml import html as lxml_html
+
+    fixture = ROOT / "tests" / "fixtures" / "bravo" / html_name
+    tree = lxml_html.fromstring(fixture.read_bytes().decode("utf-8"))
+    found = tree.xpath(DEFERRED_DURATION_SELECTOR)
+    if not found:
+        return None
+    text = found[0].text_content().strip()
+    match = re.search(r"(\d+)", text)
+    if not match:
+        return None
+    return int(match.group(1)) * 60
+
+
+def test_deferred_duration_selector_shape():
+    assert DEFERRED_DURATION_SELECTOR != "//h2[normalize-space()='作品TIME']/preceding::h2[1]"
+    assert "preceding::" not in DEFERRED_DURATION_SELECTOR
+    assert "作品TIME" not in DEFERRED_DURATION_SELECTOR
+    assert DEFERRED_DURATION_SELECTOR.startswith("//h2[normalize-space()='Clip']/following::h2[")
+    assert "translate" in DEFERRED_DURATION_SELECTOR
+    assert "\u200b" in DEFERRED_DURATION_SELECTOR
+    assert "0123456789" in DEFERRED_DURATION_SELECTOR
+
+
+def test_deferred_duration_source_cases():
+    for html_name, want in DEFERRED_DURATION_CASES:
+        assert _deferred_duration_seconds(html_name) == want, html_name
+
+
+def test_deferred_duration_spec_matches_source_tests():
+    spec = ROOT / "docs" / "qa" / "PR93-DURATION-DEFERRED-SPEC.md"
+    text = spec.read_text(encoding="utf-8")
+    assert "WS-2E-DEF01-DEFER-20261104" in text
+    assert "## 7. Restoration" in text
+    # The spec's xpath code block must carry the exact deferred selector.
+    block = text.split("```xpath", 1)[1].split("```", 1)[0].strip()
+    assert block == DEFERRED_DURATION_SELECTOR
 
 
 def test_details_selector_is_container_scoped_rich_text():
@@ -216,28 +259,14 @@ def test_manifest_descriptions_are_distinct_and_clean():
         m["field"]: m["values"] for m in by_name["BRAVO clip missing title"]["mappedExpect"]
     }
     assert mapped_missing["Details"] == []
-    # The price-heading case proves the conversion is not hardcoded to
-    # 1800: 45 minutes must map to 2700 seconds.
-    mapped_price = {
-        m["field"]: m["values"]
-        for m in by_name["BRAVO clip duration with price heading"]["mappedExpect"]
-    }
-    assert mapped_price["Duration"] == ["2700"]
-    # R2 negatives: a ¥ price heading after Clip must be skipped to
-    # 30 min (not 60 s from its first digit group), a U+200B spacer
-    # after Clip must be skipped to 30 min (not empty), and a page
-    # with no minutes heading must yield an empty Duration (not the
-    # Code number: Code precedes Clip, so a forward selector cannot
-    # fall back to it, unlike a reverse selector from "min").
-    for name, want in (
-        ("BRAVO clip price after Clip", ["1800"]),
-        ("BRAVO clip spacer after Clip", ["1800"]),
-        ("BRAVO clip missing duration", []),
-    ):
-        mapped = {
-            m["field"]: m["values"] for m in by_name[name]["mappedExpect"]
-        }
-        assert mapped["Duration"] == want, name
+    # Omission: production mappedExpect.Duration assertions are gone
+    # (WS-2E-DEF01-DEFER-20261104). The conversion expectations they
+    # used to carry (45 min -> 2700 s; price/spacer traps -> 1800 s;
+    # missing minutes -> absent) now live in the source-only tests
+    # (DEFERRED_DURATION_CASES) instead of the production manifest.
+    for case in by_name.values():
+        fields = [m["field"] for m in case.get("mappedExpect", [])]
+        assert "Duration" not in fields
 
 
 def test_title_less_limitation_is_documented():
