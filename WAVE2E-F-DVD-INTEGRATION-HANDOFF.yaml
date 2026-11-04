@@ -176,6 +176,15 @@ STASH_TEST_AUTHORIZATION: NOT_GRANTED
 PRODUCTION_DEPLOYMENT: NOT_AUTHORIZED
 MERGE_AUTHORIZATION: NOT_GRANTED
 
-PR_STATUS: NOT_CREATED
-PUSH_STATUS: NOT_PUSHED_LOCAL_ONLY
+PR_STATUS: DRAFT_OPEN
+PR_NUMBER: 103
+PR_URL: https://github.com/daniel-yfc/stash-scarpers/pull/103
+PUSH_STATUS: PUSHED_AS_SINGLE_SNAPSHOT
+SNAPSHOT_HEAD_SHA: 71cd3773a119ae29df2afe5e51e92a60ce3bc633
+SNAPSHOT_TREE_VERIFIED: >-
+  Remote snapshot tree 23e680d4c3582d2eceae781121cb418c50fc93ac is
+  identical to the locally verified tree (local HEAD 8875fc6, tested
+  candidate 84f7a2c plus docs commit). This handoff update is a
+  docs-only follow-up commit on top of the snapshot head.
+REMOTE_CI_STATUS: NOT_VERIFIED_BY_CONNECTOR (no checks read tool; see PR page)
 HANDOFF_STATUS: IMPLEMENTATION_COMPLETE_OFFLINE__GATE_B_NOT_RUN

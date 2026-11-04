@@ -242,3 +242,13 @@ BRAVO 三套測試合計：113 passed、2 skipped（QF 舊契約測試於移除�
 `tests/fixtures/bravo/dvd-synthetic-*.html`（10，C）、`tests/fixtures/bravo/dvd-mutation-harness.html`（C）。
 文件：本報告 ＋ `WAVE2E-F-DVD-INTEGRATION-HANDOFF.yaml`。
 未動：歷史 manifest、Clips fixture HTML、任何其他 scraper、Stash 實例。
+
+## 12. 交付紀錄（主代理推送後補記）
+
+- 推送：單一 snapshot commit `71cd3773a119ae29df2afe5e51e92a60ce3bc633`
+  （parent = main `ff236c9`），遠端 tree `23e680d4…` 與本地已驗證 tree 逐一相同。
+- Draft PR：[#103](https://github.com/daniel-yfc/stash-scarpers/pull/103)（Draft，未合併）。
+- Exact-head CI/CodeQL：connector 無 checks 讀取工具，記為 NOT_VERIFIED（以 PR 頁面為準），
+  不以離線 Gate A 結果替代。
+- 本節與 handoff 的 PR 欄位更新為 docs-only 後續 commit，不含程式變更；受測候選
+  HEAD 維持 `84f7a2c`。
