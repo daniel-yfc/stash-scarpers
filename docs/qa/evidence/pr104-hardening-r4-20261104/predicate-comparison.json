@@ -1,0 +1,243 @@
+[
+  {
+    "case": "fixture:dvd-synthetic-234.html",
+    "title": [
+      "勃起する白き花よ"
+    ],
+    "code": [
+      "234"
+    ],
+    "current": [
+      "https://www.bravo-japan.com/dvds/234"
+    ],
+    "strong": [
+      "https://www.bravo-japan.com/dvds/234"
+    ]
+  },
+  {
+    "case": "fixture:dvd-synthetic-084.html",
+    "title": [
+      "少年集団強姦"
+    ],
+    "code": [
+      "084"
+    ],
+    "current": [
+      "https://www.bravo-japan.com/dvds/084"
+    ],
+    "strong": [
+      "https://www.bravo-japan.com/dvds/084"
+    ]
+  },
+  {
+    "case": "fixture:dvd-synthetic-046.html",
+    "title": [
+      "ゆるゆる雄太のデブ竿ぽちゃ穴食べ放題!"
+    ],
+    "code": [
+      "046"
+    ],
+    "current": [
+      "https://www.bravo-japan.com/dvds/046"
+    ],
+    "strong": [
+      "https://www.bravo-japan.com/dvds/046"
+    ]
+  },
+  {
+    "case": "fixture:dvd-synthetic-281.html",
+    "title": [
+      "熊ケツ4"
+    ],
+    "code": [
+      "281"
+    ],
+    "current": [
+      "https://www.bravo-japan.com/dvds/281"
+    ],
+    "strong": [
+      "https://www.bravo-japan.com/dvds/281"
+    ]
+  },
+  {
+    "case": "fixture:dvd-synthetic-377.html",
+    "title": [
+      "騒乱みだれ穴５"
+    ],
+    "code": [
+      "377"
+    ],
+    "current": [
+      "https://www.bravo-japan.com/dvds/377"
+    ],
+    "strong": [
+      "https://www.bravo-japan.com/dvds/377"
+    ]
+  },
+  {
+    "case": "fixture:dvd-synthetic-384.html",
+    "title": [
+      "ナマ狂い種壺待機５"
+    ],
+    "code": [
+      "384"
+    ],
+    "current": [
+      "https://www.bravo-japan.com/dvds/384"
+    ],
+    "strong": [
+      "https://www.bravo-japan.com/dvds/384"
+    ]
+  },
+  {
+    "case": "fixture:dvd-synthetic-404-00.html",
+    "title": [],
+    "code": [],
+    "current": [],
+    "strong": []
+  },
+  {
+    "case": "fixture:dvd-synthetic-404-999999.html",
+    "title": [],
+    "code": [],
+    "current": [],
+    "strong": []
+  },
+  {
+    "case": "fixture:dvd-synthetic-cloudflare-challenge.html",
+    "title": [],
+    "code": [],
+    "current": [],
+    "strong": []
+  },
+  {
+    "case": "fixture:dvd-synthetic-logo-empty-alt.html",
+    "title": [
+      "熊ケツ4"
+    ],
+    "code": [
+      "281"
+    ],
+    "current": [
+      "https://www.bravo-japan.com/dvds/281"
+    ],
+    "strong": [
+      "https://www.bravo-japan.com/dvds/281"
+    ]
+  },
+  {
+    "case": "qa-a-adv:adversarial-canonical-mismatch.html",
+    "title": [
+      "勃起する白き花よ"
+    ],
+    "code": [
+      "234"
+    ],
+    "current": [
+      "https://www.bravo-japan.com/dvds/999"
+    ],
+    "strong": [
+      "https://www.bravo-japan.com/dvds/999"
+    ]
+  },
+  {
+    "case": "qa-a-adv:adversarial-canonical-only-404.html",
+    "title": [],
+    "code": [],
+    "current": [],
+    "strong": []
+  },
+  {
+    "case": "qa-a-adv:adversarial-code-missing.html",
+    "title": [
+      "勃起する白き花よ"
+    ],
+    "code": [
+      "発売日"
+    ],
+    "current": [
+      "https://www.bravo-japan.com/dvds/234"
+    ],
+    "strong": [
+      "https://www.bravo-japan.com/dvds/234"
+    ]
+  },
+  {
+    "case": "qa-a-adv:adversarial-fake-marker-777.html",
+    "title": [
+      "BRAVO-JAPAN"
+    ],
+    "code": [],
+    "current": [
+      "https://www.bravo-japan.com/dvds/777"
+    ],
+    "strong": []
+  },
+  {
+    "case": "qa-a-adv:adversarial-marker-after-canonical-position.html",
+    "title": [],
+    "code": [],
+    "current": [
+      "https://www.bravo-japan.com/dvds/234"
+    ],
+    "strong": []
+  },
+  {
+    "case": "qa-a-adv:adversarial-marker-in-p.html",
+    "title": [],
+    "code": [],
+    "current": [],
+    "strong": []
+  },
+  {
+    "case": "edge:missing-code.html",
+    "title": [
+      "GO to BRAVO-CLIPS"
+    ],
+    "code": [],
+    "current": [
+      "https://www.bravo-japan.com/dvds/500"
+    ],
+    "strong": []
+  },
+  {
+    "case": "edge:missing-title.html",
+    "title": [],
+    "code": [
+      "501"
+    ],
+    "current": [
+      "https://www.bravo-japan.com/dvds/501"
+    ],
+    "strong": []
+  },
+  {
+    "case": "edge:wrong-canonical.html",
+    "title": [
+      "Real Title"
+    ],
+    "code": [
+      "502"
+    ],
+    "current": [
+      "https://www.bravo-japan.com/dvds/999"
+    ],
+    "strong": [
+      "https://www.bravo-japan.com/dvds/999"
+    ]
+  },
+  {
+    "case": "edge:sitewide-only.html",
+    "title": [],
+    "code": [],
+    "current": [],
+    "strong": []
+  },
+  {
+    "case": "edge:ssr-unhydrated.html",
+    "title": [],
+    "code": [],
+    "current": [],
+    "strong": []
+  }
+]
