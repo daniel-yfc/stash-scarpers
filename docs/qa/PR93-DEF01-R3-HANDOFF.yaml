@@ -1,0 +1,51 @@
+ASSIGNMENT_ID: "WAVE2E-G-PR93-DEF01-TYPE-ISOLATION-20261104"
+WORKSTREAM: "WS-2E-00 / Wave 1B Clips Stabilization"
+ROLE: "Agent G — Independent Root-Cause Investigation & Corrective Proposal"
+PR: 93
+REFERENCE_HEAD: "d6d6fbf44a4d6ecbd9f9368a07af19c41194c2d6"
+STASH_TESTED_COMMIT: "9e9ad972643320e737c711884f10e4285f0f3a88"
+STASH_TESTED_BUILD: "v0.31.1-182-g9e9ad972"
+UPSTREAM_DEVELOP_CHECKED: "944dd69436b7a944cd59e15871d31032fb3fa58a"
+ISOLATED_COPY: "~/workspace/review/stash-r3-isolation/stash"
+ISOLATED_TEST_FILE: "pkg/scraper/r3_def01_type_isolation_test.go (untracked in isolated copy only, never pushed)"
+
+HYPOTHESIS:
+  ID: "GATEB-DEF01-H4-TYPE-MISMATCH"
+  CLASSIFICATION: "END_TO_END_REPRODUCED (upgraded from CODE_PATH_CONFIRMED / END_TO_END_CAUSALITY_PENDING)"
+  ROOT_CAUSE: "Mapped pipeline has no string-to-int conversion; scene Duration is read via IntPtr which only accepts Go int, so every mapped scene Duration becomes nil."
+  FAULT_LAYERS:
+    XPATH_EXTRACTION: "WORKS (Test B: three selectors all yield mapped \"1800\")"
+    JS_POSTPROCESSING: "WORKS_AND_IRRELEVANT (Test C: no-JS, JS, fixed all nil)"
+    GO_CONVERSION: "MISSING — sole fault point (IntPtr type assertion, mapped_result.go:71)"
+    GRAPHQL_SERIALIZATION: "FAITHFUL (nil *int serializes as null; no independent fault)"
+
+REPRODUCTION:
+  TEST_A_MAPPED_RESULT_TYPE: "PASS (int 1800 survives; string \"1800\"/\"30\" -> nil)"
+  TEST_B_FULL_PIPELINE: "PASS (R2 forward, v2 preceding, literal: mapped \"1800\" string, Title/Code survive, Duration nil)"
+  TEST_C_POSTPROCESS_INDEPENDENCE: "PASS (no-JS literal 1800, JS-converted 1800, fixed 1800: all nil)"
+  TEST_D_VERSION_COMPARISON: "NO_FIX_UPSTREAM (944dd69 is one commit ahead; pkg/scraper identical; IntPtr unchanged)"
+  FULL_PACKAGE_REGRESSION: "PASS (go test ./pkg/scraper/ -count=1 -> ok)"
+  METHOD_NOTE: "First run failed on 512M /tmp tmpfs exhaustion (build, unrelated to tests); rerun with TMPDIR under home passed."
+
+CORRECTIVE_OPTIONS:
+  RECOMMENDED: "A — upstream correction, conditional on Duration being mandatory AND a corrected Stash build actually being deployed"
+  OPTION_A_BOUNDARY: "A1 strict parsing inside IntPtr (sole caller is scene Duration today) OR A2 dedicated Duration helper in scrapedScene keeping IntPtr strict; upstream PR decides"
+  OPTION_B: "Scoped Duration limitation — REQUIRES explicit Controller risk acceptance + revised acceptance contract; v4 GATE_B_FAIL preserved as history"
+  OPTION_C: "Alternative backend — ONLY if A infeasible AND Duration mandatory; never merely to bypass the bug"
+
+BOUNDARIES_OBSERVED:
+  BRAVO_YML_CHANGED: false
+  QUERYFRAGMENT_CHANGED: false
+  DVD_CHANGED: false
+  DURATION_EXPECTATIONS_WEAKENED: false
+  STASH_CORE_CHANGED_IN_PR93: false
+  NEW_LIVE_LEASE_REQUESTED: false
+  STASH_TEST_ACCESSED: false
+  PR93_BODY_OR_COMMENTS_CHANGED: false
+
+GATE_B_VERDICT: "NOT_RUN_ON_R3 (no live verification performed or claimed)"
+MERGE_STATUS: "NOT_AUTHORIZED"
+NEXT_DECISIONS:
+  CONTROLLER: "Choose A (upstream workstream per report §6 outline, never inside PR #93) or B (revised contract first)"
+  AGENT_D: "Independently review this reproduction and baseline revision; future live verification only after a fix is deployed or a B contract takes effect, under a new M0 + exclusive lease"
+  AGENT_G_DONE: true
