@@ -1,0 +1,84 @@
+# Independent G1 source-evidence review — verified 2026-11-04 (Asia/Taipei)
+# This handoff describes a completed *repository evidence consistency audit*.
+# It is NOT an independent replay of the private source DOM and not a Stash runtime Gate B.
+ASSIGNMENT_ID: "WAVE2E-G1-INDEPENDENT-EVIDENCE-QA-20261104"
+WORKSTREAM_ID: "WS-2E-10 / G1 Source Evidence"
+AGENT_ROLE: "Independent Repository Evidence QA / Controller Reviewer"
+REPO: "daniel-yfc/stash-scarpers"
+REPORT: "docs/qa/WAVE2E-G1-INDEPENDENT-EVIDENCE-QA-20261104.md"
+AUDIT_DATE: "2026-11-04"
+EXECUTION_MODE: "GitHub connector read-only audit; deterministic JSON, SHA-256 and source-summary crosschecks"
+SOURCE_AGENT: "Agent A"
+SOURCE_BRANCH: "research/e2e-bravo-dvd-dom"
+SOURCE_HEAD_SHA: "9b4ab10deccedbae8af810bdebaff943497567f4"
+G0_ACCEPTED_MAIN_SHA: "ff236c9e91e27321e93f59d2bf12488db714dfc7"
+AUTHOR_HANDOFF: "READY"
+PRIOR_INDEPENDENT_REVIEW: "CHANGES_REQUESTED"
+G1_VERDICT: "CHANGES_REQUESTED"
+G1_STATUS: "PROVISIONAL_NOT_INDEPENDENTLY_ACCEPTED"
+G1_SOURCE_STRUCTURE_SUMMARY: "PASS_AUTHOR_ARTIFACT_CROSSCHECK_ONLY"
+INDEPENDENT_RAW_DOM_XPATH_REPLAY: "NOT_RUN_PRIVATE_INPUT_UNAVAILABLE"
+LIVE_SITE_INDEPENDENT_READ: "BLOCKED_BY_TOOL_ACCESS"
+CDP_NETWORK_PROVENANCE: "NOT_CAPTURED_IN_AUTHOR_EVIDENCE"
+HTTP_STATUS_404: "NOT_INDEPENDENTLY_VERIFIED"
+STASH_DVD_GATE_B: "NOT_RUN"
+PERMITTED_AGENT_F_WORK: "DESIGN_AND_REVIEW_ONLY"
+OFFICIAL_DVD_YAML_IMPLEMENTATION_AUTHORIZED: false
+STASH_TEST_OPERATION_AUTHORIZED: false
+PRODUCTION_STASH_OPERATION_AUTHORIZED: false
+MERGE_AUTHORIZED: false
+
+EVIDENCE:
+  - "11 author XPath records: 9 unique completed_product IDs + 2 unique content-404 negative IDs"
+  - "5 privacy-reviewed structural excerpts: 234, 084, 046, 00, 999999"
+  - "11 input SHA-256 values consistently linked between author's table and machine records, raw inputs not independently hashed"
+  - "Excerpts and matrix agree on all 5 source digests, capture timestamps, URL, Title/Code where present, 084 empty Details and media URL"
+  - "Source 084 selected Image and og:image have same media ID but are sold-out graphic; omitted by mapping policy"
+  - "Generic meta keywords identical across all 11 reports including 404-like negatives"
+  - "Historical first-pass sanitized evidence/SHA256SUMS.txt: 6 of 6 independently rehashed PASS"
+  - "G1 excerpt expected SHA256 055aff9236... is the 7899-byte no-final-LF variant; committed 7900-byte final-LF variant hashes f8c3da0a..."
+  - "Live BRAVO direct URLs 234/084/999999 inaccessible from reviewer tool; no HTTP status inferred"
+
+TEST_RESULTS:
+  G1_CONS_01_11_UNIQUE_RECORDS: "PASS"
+  G1_CONS_02_11_DIGEST_TABLE_LINKAGE: "PASS_AUTHOR_REPORTED_ONLY"
+  G1_CONS_03_9_PRODUCT_FIELD_COUNTS: "PASS_AUTHOR_REPORTED_ONLY"
+  G1_CONS_04_2_CONTENT_404_NEGATIVES: "PASS_AUTHOR_REPORTED_ONLY"
+  G1_CONS_05_5_EXCERPT_CROSSCHECKS: "PASS"
+  G1_CONS_06_084_EMPTY_DETAILS_AND_CODE_LEADING_ZERO: "PASS_AUTHOR_REPORTED_ONLY"
+  G1_CONS_07_SITE_GENERIC_TAGS: "PASS_AUTHOR_REPORTED_ONLY"
+  G1_INT_01_HISTORICAL_SANITIZED_MANIFEST: "PASS_6_OF_6"
+  G1_INT_02_G1_EXCERPT_SHA: "RECONCILED_FINAL_LF_BYTE_CONVENTION"
+  G1_REPLAY_01_INDEPENDENT_RAW_DOM: "NOT_RUN"
+  G1_NAV_01_HTTP_REDIRECT_CDP: "NOT_CAPTURED"
+  G1_LIVE_01_PUBLIC_URL_REVISIT: "BLOCKED_BY_TOOL_ACCESS"
+
+BLOCKERS:
+  - ID: "G1-BLOCK-01"
+    PRIORITY: "P0"
+    SUMMARY: "Independently accessible exact rendered DOM or independently fresh private capture with sufficient full XPath node context"
+  - ID: "G1-BLOCK-02"
+    PRIORITY: "P0"
+    SUMMARY: "HTTP/final URL/redirect/CDP hydration provenance or explicit versioned accepted exception with independent evidence"
+  - ID: "G1-BLOCK-03"
+    PRIORITY: "P0"
+    SUMMARY: "Independent lxml evaluation of 234,084,046,00,999999, sealed input digests and signed reviewer handoff"
+
+NONBLOCKING_DOC_CORRECTION:
+  - "G1 source JSON hash convention: original 055aff9236... without final LF; committed f8c3da0a... with final LF"
+
+DOWNSTREAM_POLICIES:
+  DVD_DURATION_TO_SCENE: "OMIT_PRESERVE_WHOLE_DVD_SOURCE_MINUTES"
+  DVD_LABEL_TO_STUDIO: "OMIT_PRESERVE_SOURCE_LABEL"
+  DVD_084_SOLDOUT_AS_COVER: "OMIT"
+  DVD_GENERIC_KEYWORDS_AS_TAGS: "OMIT"
+  DVD_084_EMPTY_DETAILS: "PRESERVE_ABSENT_NO_FALLBACK"
+  DVD_VALIDITY: "CANNOT_USE_CANONICAL_ONLY_REQUIRE_PRODUCT_SIGNALS"
+  CLIPS_DURATION: "G0_DEFERRED_UNMAPPED_RESTORATION_PRESERVED"
+
+NEXT_ASSIGNMENT_ID: "WAVE2E-D-G1-DVD-DOM-INDEPENDENT-REPLAY-20261104"
+NEXT_REVIEWER_ROLE: "Independent Agent D or another authorized non-source reviewer"
+NEXT_TARGET_IDS: ["234", "084", "046", "00", "999999"]
+HANDOFF_STATUS: "DELIVERED_CHANGES_REQUESTED"
+AGENT_A_STATUS: "READY_AUTHOR_DELIVERABLE"
+AGENT_F_STATUS: "BLOCKED_UNTIL_G1_ACCEPTED_AND_CONTROLLER_AUTHORIZES"
