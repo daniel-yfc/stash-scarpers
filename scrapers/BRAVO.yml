@@ -1,6 +1,7 @@
 # BRAVO-JAPAN (bravo-japan.com) — Wix dynamic-pages site (配信作品紹介).
 # Public CDP version: driver.useCDP: true; no driver.cookies.
-# Clips-only scraper (Wave 1B, STASH-E2E-03 / BRAVO part of STASH-E2E-04).
+# Clips + DVD scraper (Wave 1B Clips, STASH-E2E-03 / BRAVO part of
+# STASH-E2E-04; Wave 2E DVD, feat/e2e-bravo-dvds).
 # Verification status (2026-11-01, live rendered DOM for /clips/284 and
 # /clips/282, plus the raw-text fetch of the same pages):
 #   - Rendered heading order is identical on both pages: h2 BRAVO-JAPAN,
@@ -58,12 +59,43 @@
 #     per-clip studio; both fields stay absent rather than fabricated.
 #   - sceneByFragment removed: with an empty scene Title it expanded to
 #     clips/{title} and produced clips/%7Btitle%7D false metadata
-#     (STASH-E2E-04, BRAVO part). sceneByQueryFragment with queryURL
-#     "{url}" is retained, as required by local quality policy.
-#   - DVD support is NOT added here. /dvds/ routing belongs to Wave 2E
-#     (feat/e2e-bravo-dvds) after this PR merges, with its own
-#     dvdSceneScraper and DVD DOM evidence. The old DVD selectors are
-#     therefore not kept as a dead second scraper in this file.
+#     (STASH-E2E-04, BRAVO part).
+#   - sceneByQueryFragment REMOVED (Wave 2E, Controller decision
+#     WS-2E-QF-001, docs/66): the single QueryFragment handler was bound
+#     to clipSceneScraper, so a direct fragment call with a DVD URL
+#     applied Clips mappings to DVD pages (canonical + site-generic
+#     Tags, empty core fields). No direct QueryFragment consumer was
+#     found in repo workflows, tests, docs or scripts (audit in the
+#     Wave 2E F report), so no DECISION_EXCEPTION applies. URL mode
+#     does not depend on this entry. sceneByFragment stays absent.
+#     Live negative behavior (clean unsupported vs upstream panic) is
+#     Gate B QF-05/06/07 evidence, not asserted here.
+#   - DVD support (Wave 2E, G1-accepted source evidence
+#     docs/qa-wave2e-g1-independent-20261104, Agent A
+#     research/e2e-bravo-dvd-dom@b2f41e1, independent replay
+#     docs/qa-pr93-gateb-20261103@37ea851): /dvds/ routes to
+#     dvdSceneScraper. Verified selectors (cardinality 1 on all 9
+#     CDP-rendered product pages, 2010-2026 releases): Title =
+#     品番-preceding h2[2], Code = 品番-following h2[1] (leading zeros
+#     preserved, never derived from the URL), URLs = canonical GATED
+#     on the 品番 marker (see below), Details = p.font_8 (084 is
+#     empty and stays empty), Date = 発売日-following h2[1] normalized
+#     to YYYY-MM-DD by JS (both 2018年8月29日 and 2010年09月30日
+#     forms), Image = alt-nonempty wixstatic img with a soldout
+#     filter (084's BR-084soldout.jpg is NOT a cover and maps to
+#     empty). NOT mapped by policy: Scene.Duration (whole-DVD total
+#     minutes, not one Scene; source kept in expect only), Scene.Studio
+#     (source Label レーベル, no Controller Label->Studio decision),
+#     site-generic meta keywords Tags, Performers (absent from source).
+#   - DVD 404 fail-closed: on /dvds/00 and /dvds/999999 the page has
+#     no 品番 marker, so Title/Code/Details/Image are naturally empty
+#     and the URLs selector's marker predicate suppresses the
+#     canonical too — a 404 scrape yields NO fields, not a URLs-only
+#     partial result. The full identity contract (Code == canonical
+#     last segment, canonical == requested URL) is a consuming-layer
+#     / Gate B check, not expressible in YAML; template drift (品番
+#     present but Title structure changed) remains a fixture-
+#     regression risk, not a 404 risk.
 # Selector risk: Wix layout is template-stable but a site redesign breaks
 # these label-adjacency selectors; re-verify against a fresh page first.
 #   - XPath U+200B note: the translate() second argument in the
@@ -72,10 +104,10 @@
 #     character (UTF-8 E2 80 8B). It is invisible in a diff, so it is
 #     documented here and asserted by codepoint in
 #     tools/tests/test_bravo_clips.py. Do not "clean" it away.
-# Last Updated: 2026-11-04 (Wave 2E-G Duration omission per
-# WS-2E-DEF01-DEFER-20261104: Scene.Duration removed; Title, Code,
-# URLs, Details, Tags, Image, routing, QueryFragment and DVD exclusion
-# unchanged; Duration source spec deferred to docs/qa/)
+# Last Updated: 2026-11-04 (Wave 2E DVD implementation: /dvds/ routing,
+# dvdSceneScraper, QueryFragment removal per WS-2E-QF-001; Clips
+# Title, Code, URLs, Details, Tags, Image, routing unchanged; Clips
+# Duration remains omitted per WS-2E-DEF01-DEFER-20261104)
 
 name: Bravo-Japan
 
@@ -85,11 +117,11 @@ sceneByURL:
       - "bravo-japan.com/clips/"
       - "www.bravo-japan.com/clips/"
     scraper: clipSceneScraper
-
-sceneByQueryFragment:
-  action: scrapeXPath
-  queryURL: "{url}"
-  scraper: clipSceneScraper
+  - action: scrapeXPath
+    url:
+      - "bravo-japan.com/dvds/"
+      - "www.bravo-japan.com/dvds/"
+    scraper: dvdSceneScraper
 
 xPathScrapers:
   clipSceneScraper:
@@ -160,6 +192,97 @@ xPathScrapers:
               v = v.replace(/^\.\/+/, "");
               if (v.charAt(0) === "/") return "https://www.bravo-japan.com" + v;
               return "https://www.bravo-japan.com/" + v;
+
+  dvdSceneScraper:
+    scene:
+      Title:
+        # DVD rendered DOM (G1-accepted, 9/9 product pages): the title
+        # line is the h2 two positions before the 品番 label. The
+        # template has exactly 4 h2s before 品番 (BRAVO-JAPAN, GO to
+        # BRAVO-CLIPS, title line 1, title line 2); preceding::h2[2]
+        # is title line 1. Never derive Title from the URL.
+        selector: "//h2[contains(.,'品番')]/preceding::h2[2]"
+        postProcess:
+          - javascript: |
+              var v = value || "";
+              v = v.replace(/^[\s\u200b]+|[\s\u200b]+$/g, "");
+              return v;
+
+      Code:
+        # DVD rendered DOM: the code is the h2 immediately after the
+        # 品番 label; leading zeros are preserved as a string
+        # (046, 084). Never derive Code from the URL segment.
+        selector: "//h2[contains(.,'品番')]/following::h2[1]"
+        postProcess:
+          - replace:
+              - regex: "^\\s+|\\s+$"
+                with: ""
+
+      URLs:
+        # Canonical, GATED on the 品番 marker: the predicate is an
+        # absolute path, true only when the page carries a product
+        # marker. On 404 pages (/dvds/00, /dvds/999999) the canonical
+        # exists but the marker does not, so URLs is empty — a 404
+        # scrape yields no fields at all. Without the predicate the
+        # canonical alone would produce a URLs-only partial result.
+        selector: "//link[@rel='canonical'][//h2[contains(.,'品番')]]/@href"
+
+      Details:
+        # DVD rendered DOM: the single p.font_8 description paragraph.
+        # 084 has an empty p.font_8: Details stays empty, never
+        # backfilled from 備考 or any neighboring text.
+        selector: "//p[contains(@class,'font_8')]"
+        postProcess:
+          - javascript: |
+              var v = value || "";
+              v = v.replace(/^[\s\u200b]+|[\s\u200b]+$/g, "");
+              return v;
+
+      Date:
+        # DVD rendered DOM: 発売日-following h2[1]. Source forms mix
+        # zero-padded and unpadded months/days (2010年09月30日 vs
+        # 2018年8月29日); JS normalizes to Stash YYYY-MM-DD.
+        # Unparseable input maps to empty, never a guessed date.
+        selector: "//h2[contains(.,'発売日')]/following::h2[1]"
+        postProcess:
+          - javascript: |
+              var v = value || "";
+              var m = v.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
+              if (!m) return "";
+              var mm = m[2].length === 1 ? "0" + m[2] : m[2];
+              var dd = m[3].length === 1 ? "0" + m[3] : m[3];
+              return m[1] + "-" + mm + "-" + dd;
+
+      Image:
+        # Product cover ONLY: the single alt-nonempty wixstatic img
+        # (alt == title line 1). 404 pages match 0 (fail-closed) and
+        # alt-empty site assets are excluded by the selector itself.
+        # Soldout filter: 084's cover is BR-084soldout.jpg, a
+        # sold-out placeholder, NOT a real cover (G1 policy) — it
+        # maps to empty. No <img> fallback beyond this selector.
+        selector: "//img[@alt!='' and contains(@src,'wixstatic')]/@src"
+        postProcess:
+          - javascript: |
+              var v = value || "";
+              if (!v) return "";
+              if (/soldout/i.test(v)) return "";
+              v = v.replace(/\?.*$/, "");
+              v = v.replace(/^\/\//, "https://");
+              v = v.replace(/^http:\/\//i, "https://");
+              if (/^https?:/i.test(v)) return v;
+              v = v.replace(/^\.\/+/, "");
+              if (v.charAt(0) === "/") return "https://www.bravo-japan.com" + v;
+              return "https://www.bravo-japan.com/" + v;
+
+      # Deliberately NOT mapped (Wave 2E policy, G1 acceptance):
+      # - Duration: source 収録時間 is the WHOLE-DVD total minutes
+      #   (multi-disc totals included), not one Stash Scene length.
+      #   Source provenance stays in fixture expect only.
+      # - Studio: source Label レーベル has no Controller
+      #   Label->Studio adoption decision.
+      # - Tags: meta keywords are site-generic (identical on all
+      #   pages including 404s), never product Tags.
+      # - Performers: no structured performer field in the source.
 
 driver:
   useCDP: true
