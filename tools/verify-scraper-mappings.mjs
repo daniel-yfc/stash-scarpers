@@ -110,7 +110,18 @@ export function assertMappedCase(item, document, scraper) {
       if (!Array.isArray(routes) || !routes.length) {
         fail(item.name + ": expected an array of " + assertion.routeThrough + " routes");
       }
-      const patterns = routes.flatMap((route) => Array.isArray(route.url) ? route.url : [route.url])
+      // Bind to the asserted scraper's own routes. A URL from another
+      // route family must not satisfy routeThrough merely because some
+      // route in the same file matches it: with dual-route BRAVO
+      // (clips + dvds), the old any-pattern check passed a dvds/ URL
+      // asserted via clipSceneScraper. Cross-family URLs are rejected.
+      const ownRoutes = assertion.scraper
+        ? routes.filter((route) => route.scraper === assertion.scraper)
+        : routes;
+      const patterns = ownRoutes
+        .flatMap((route) =>
+          Array.isArray(route.url) ? route.url : [route.url],
+        )
         .filter((pattern) => typeof pattern === "string" && pattern.length);
       for (const actualURL of actual) {
         let candidate;

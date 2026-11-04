@@ -15,7 +15,7 @@
 # (モデルタイプ / キーワード) against live DOM.
 # Last Updated: 2026-10-06
 
-name: KO Shop
+name: KO SHOP
 
 sceneByURL:
   - action: scrapeXPath

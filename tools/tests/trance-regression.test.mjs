@@ -6,7 +6,7 @@ import { JSDOM } from "jsdom";
 import { parse } from "yaml";
 
 const root = path.resolve(".");
-const scraper = parse(fs.readFileSync(path.join(root, "scrapers/Trance.yml"), "utf8"));
+const scraper = parse(fs.readFileSync(path.join(root, "scrapers/TRANCE_VIDEO.yml"), "utf8"));
 const scene = scraper.xPathScrapers.sceneScraper;
 const normalize = (script, value) => new Function("value", script)(value);
 

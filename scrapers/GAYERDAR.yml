@@ -10,7 +10,7 @@
 # 2026-10-06: Tags gained plain-text li fallback (some pages render tags
 # without links) against live DOM.
 # Last Updated: 2026-10-06
-name: Gayerdar
+name: GAYERDAR
 
 sceneByURL:
   - action: scrapeXPath

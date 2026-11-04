@@ -1,4 +1,4 @@
-scraper: scrapers/fc2.yml
+scraper: scrapers/FC2.yml
 cases:
   - name: "fc2 article 4817460"
     classification: completed

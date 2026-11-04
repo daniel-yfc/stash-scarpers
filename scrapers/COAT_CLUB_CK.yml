@@ -35,7 +35,7 @@
 # Search does not paginate. Stash only sees the first result page.
 # Last Updated: 2026-10-10
 
-name: ClubCK COAT
+name: COAT CLUB CK
 
 sceneByURL:
   - action: scrapeXPath

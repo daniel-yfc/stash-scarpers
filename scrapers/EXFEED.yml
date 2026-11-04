@@ -26,7 +26,7 @@
 # Expected fields: Title, Code, Date, Image, URL, Details, Studio, Tags, Duration
 # Last Updated: 2026-10-11
 
-name: Exfeed
+name: EXFEED
 
 sceneByURL:
   - action: scrapeXPath

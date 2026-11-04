@@ -29,7 +29,7 @@
 # some pages), verified against live DOM.
 # Last Updated: 2026-10-10
 
-name: Justice01
+name: JUSTICE
 
 sceneByURL:
   - action: scrapeXPath

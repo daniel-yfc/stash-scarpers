@@ -1,0 +1,18 @@
+# BRAVO live-test fixtures (browser verified 2026-10-06)
+# NOTE: site has no search box; custom keyword probes N/A.
+# 2026-11-04 (Wave 2E): DVD URLs re-added with dvdSceneScraper.
+# Only DVD pages with current DOM evidence are listed: 234/084/046
+# (G1 priority) plus 281/377/384 (Agent A CDP-verified). The
+# historical 186/231/276/372 URLs have no current DOM evidence and
+# stay out.
+urls:
+  - https://www.bravo-japan.com/clips/284
+  - https://www.bravo-japan.com/clips/282
+  - https://www.bravo-japan.com/clips/283
+  - https://www.bravo-japan.com/dvds/234
+  - https://www.bravo-japan.com/dvds/084
+  - https://www.bravo-japan.com/dvds/046
+  - https://www.bravo-japan.com/dvds/281
+  - https://www.bravo-japan.com/dvds/377
+  - https://www.bravo-japan.com/dvds/384
+multi: true

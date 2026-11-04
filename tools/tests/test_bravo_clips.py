@@ -8,13 +8,13 @@ until it is actually performed.
 
 Duration omission 2026-11-04 (Controller decision
 WS-2E-DEF01-DEFER-20261104, R3 H4): production Scene.Duration is
-REMOVED from BRAVO.yml because the Stash mapped runtime cannot
+REMOVED from BRAVO_JAPAN.yml because the Stash mapped runtime cannot
 return a typed int for scene Duration (R3 end-to-end reproduction:
 every mapped value is a string, IntPtr accepts only int). Duration
 assertions in this file are therefore source-only: they evaluate
 the deferred selector from docs/qa/PR93-DURATION-DEFERRED-SPEC.md
 against the fixture HTMLs and check the minutes-to-seconds
-conversion, without reading any Duration mapping from BRAVO.yml.
+conversion, without reading any Duration mapping from BRAVO_JAPAN.yml.
 Details assertions still check the live Details selector
 properties. Gate B (independent QA on stash-test, revised scope)
 remains the live check and is NOT_RUN until it is performed.
@@ -25,23 +25,31 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).resolve().parents[2]
-BRAVO = ROOT / "scrapers" / "BRAVO.yml"
+BRAVO = ROOT / "scrapers" / "BRAVO_JAPAN.yml"
 
 
 def load():
     return yaml.safe_load(BRAVO.read_text())
 
 
-def test_clips_route_uses_clip_scraper_only():
+def test_clips_route_unchanged_and_dvd_route_added():
+    # Wave 2E: sceneByURL now carries exactly two routes — the
+    # unchanged Clips route plus the new DVD route. Clips assertions
+    # are preserved verbatim from the Wave 1B baseline.
     data = load()
     routes = data["sceneByURL"]
-    assert len(routes) == 1
+    assert len(routes) == 2
     assert routes[0]["scraper"] == "clipSceneScraper"
     patterns = routes[0]["url"]
     assert patterns == sorted(patterns)
     assert all("/clips/" in p for p in patterns)
     assert not any("/dvds/" in p for p in patterns)
     assert "clipSceneScraper" in data["xPathScrapers"]
+    assert routes[1]["scraper"] == "dvdSceneScraper"
+    dvd_patterns = routes[1]["url"]
+    assert dvd_patterns == sorted(dvd_patterns)
+    assert all("/dvds/" in p for p in dvd_patterns)
+    assert "dvdSceneScraper" in data["xPathScrapers"]
 
 
 def test_no_direct_scene_by_fragment():
@@ -49,11 +57,14 @@ def test_no_direct_scene_by_fragment():
     assert "sceneByFragment" not in data
 
 
-def test_query_fragment_preserves_url():
+def test_query_fragment_removed():
+    # WS-2E-QF-001 (docs/66): the orphaned sceneByQueryFragment entry
+    # is removed in Wave 2E. URL mode does not depend on it, and no
+    # direct QueryFragment consumer was found in the compatibility
+    # audit (see the Wave 2E F report). Live negative behavior is
+    # Gate B QF-05/06/07 evidence, not asserted here.
     data = load()
-    qf = data["sceneByQueryFragment"]
-    assert qf["queryURL"] == "{url}"
-    assert qf["scraper"] == "clipSceneScraper"
+    assert "sceneByQueryFragment" not in data
 
 
 def test_clip_selectors_are_not_dvd_selectors():
@@ -77,7 +88,7 @@ def test_clip_selectors_are_not_dvd_selectors():
 # Deferred Duration source (WS-2E-DEF01-DEFER-20261104, R3 H4).
 # The selector below is the d6d6fbf production selector, verbatim,
 # preserved here as a source-only regression test. It is NOT read
-# from BRAVO.yml (production Duration is omitted) and it is NOT a
+# from BRAVO_JAPAN.yml (production Duration is omitted) and it is NOT a
 # new XPath iteration: it must equal the selector in
 # docs/qa/PR93-DURATION-DEFERRED-SPEC.md (checked by
 # test_deferred_duration_spec_matches_source_tests). The U+200B
@@ -272,7 +283,7 @@ def test_clips_manifest_is_isolated():
     manifest = yaml_lib.safe_load(
         (ROOT / "tests" / "fixtures" / "bravo" / "bravo-clips-fixtures.yml").read_text()
     )
-    assert manifest["scraper"] == "scrapers/BRAVO.yml"
+    assert manifest["scraper"] == "scrapers/BRAVO_JAPAN.yml"
     names = [c["name"] for c in manifest["cases"]]
     assert "BRAVO clip 284" in names
     assert "BRAVO clip 282" in names

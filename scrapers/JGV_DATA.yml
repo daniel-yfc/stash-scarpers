@@ -8,7 +8,7 @@
 #   - {query} -> {} (Stash sceneByName only substitutes the {} placeholder)
 #   - replaced invalid `trim` postProcess with replace-regex trim
 
-name: JGVData
+name: JGV DATA
 
 sceneByURL:
   - action: scrapeXPath

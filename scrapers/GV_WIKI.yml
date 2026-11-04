@@ -11,7 +11,7 @@
 #   - replaced invalid `trim` postProcess with replace-regex trim
 #   - inlined $main into $info (recursive common fragments are not supported)
 
-name: GVWiki
+name: GV WIKI
 
 driver:
   useCDP: true

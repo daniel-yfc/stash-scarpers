@@ -16,7 +16,7 @@
 # and <img class="no-save" src>); Date documented as page-dependent.
 # Last Updated: 2026-10-10
 
-name: Men's Rush TV
+name: MENS RUSH TV
 
 sceneByURL:
   - action: scrapeXPath
