@@ -1,0 +1,41 @@
+# G1 independent DOM replay — machine-readable handoff (Agent D)
+ASSIGNMENT_ID: "WAVE2E-D-G1-DVD-DOM-INDEPENDENT-REPLAY-20261104"
+QA_ROLE: "Agent D / Independent QA"
+SUBJECT: "Agent A WAVE2E-A DVD DOM evidence (WS-2E-10)"
+SUBJECT_BRANCH: "research/e2e-bravo-dvd-dom"
+SUBJECT_HEAD: "9b4ab10deccedbae8af810bdebaff943497567f4"
+REFERENCE_ARTIFACT: "docs/research/wave2e/xpath-evaluation-results.json @4963523 (selectors + expected values taken verbatim)"
+SCOPE: "DVD 234, 084, 046, 00, 999999 only; Agent C Duration/Studio policy NOT redone; merged Clips G0 NOT retested"
+G1_VERDICT: "G1_PASS (five-page replay scope)"
+CAPTURE:
+  METHOD: "Independent re-capture in isolated VM via CDP (environment headless Chrome), anonymous read-only browsing; no Stash scraping or state change"
+  COMPLETION_CONDITIONS: "products: hinban h2 present; negatives: page title contains 404; cap 40s + 3s settle"
+  PAGES:
+    - {dvd: "234", http_status: 200, redirects: 0, completion: "hinban_h2_present", dom_sha256: "16c327c5c52b3655 (see manifest for full)"}
+    - {dvd: "084", http_status: 200, redirects: 0, completion: "hinban_h2_present", dom_sha256: "4c9c02f0209bedc1 (see manifest for full)"}
+    - {dvd: "046", http_status: 200, redirects: 0, completion: "hinban_h2_present", dom_sha256: "ef360e9a9ae5fa44 (see manifest for full)"}
+    - {dvd: "00", http_status: 404, redirects: 0, completion: "page_title_404", dom_sha256: "73696b5d80600a1d (see manifest for full)"}
+    - {dvd: "999999", http_status: 404, redirects: 0, completion: "page_title_404", dom_sha256: "5fd72ed7698653c2 (see manifest for full)"}
+  NOTE: "Fills Agent A's admitted gap (addendum section 3: HTTP status/redirect NOT_CAPTURED). Raw DOMs retained in restricted local storage per project norm; digests recorded."
+REPLAY:
+  EVALUATOR: "lxml xpath-1.0 (Agent D venv), selectors verbatim from A's evaluation JSON"
+  RESULT: "5/5 pages, all 17 fields per page: node_counts and values reproduce A"
+  KEY_CHECKS:
+    - "234 Title/Code/subtitle exact; h2_total 22"
+    - "084 Details node count 1 with normalized text length 0 (blank Details confirmed); Code '084' leading zero preserved"
+    - "046 Title exact; Code '046' leading zero preserved"
+    - "00/999999: hinban gate 0 nodes; all product fields empty; og/page title '404 | bravo-works'; h2_total 2"
+  NORMALIZATION_NOTES:
+    - "Details on 234/046 differ from A's values only in whitespace at inline-element boundaries; whitespace-stripped strings identical"
+    - "h2_total: A stores only first 3 h2 values (format truncation); counts and prefixes match"
+FINDINGS:
+  - ID: "F-G1-01"
+    SEVERITY: "minor (documentation integrity; non-blocking)"
+    DETAIL: "A's G1-CLOSURE-ADDENDUM.md section 5 states g1-priority-dom-excerpts.json SHA-256 055aff9236f236694cacb6504380a54376249d81275ff81644df6bd0f6089d59; the committed blob at 9b4ab10 hashes to f8c3da0a2c8c33753d55c4ca80122e567eb5c73eace1214d1f0ee3dba141d8dc. File content cross-checks consistently against the evaluation JSON (084 text_len 0, 046 482, 234 367), so this reads as a stale/mistyped stated digest, not a content problem. Correction by A requested. This verdict does not rely on that digest."
+EXCLUSIONS:
+  - "Agent A's remaining product pages outside the five named were not replayed"
+  - "Controller policy items (084 soldout image, Tags omission, Label->Studio, whole-DVD Duration) not evaluated"
+  - "SSR-vs-rendered CDP-necessity claim not retested"
+AUTHORIZATION_NOTE: "G1_PASS does not authorize Agent F integration or any merge"
+EVIDENCE: "~/workspace/g1-dvd-replay/ (report, capture-provenance.json, replay-results.json, capture_cdp.py, replay.py, MANIFEST.sha256); raw DOMs local-restricted, digests recorded"
+REPO_DELIVERY: "Pending owner instruction (same shape as Gate B postings)"

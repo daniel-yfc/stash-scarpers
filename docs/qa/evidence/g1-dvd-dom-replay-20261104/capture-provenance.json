@@ -1,0 +1,97 @@
+[
+ {
+  "dvd": "234",
+  "requested_url": "https://www.bravo-japan.com/dvds/234",
+  "captured_at_utc": "2026-11-04T06:01:19.336926+00:00",
+  "capture_engine": "stash-test headless Chrome via CDP (Page/Network/Runtime)",
+  "completion_condition": "hinban_h2_present",
+  "final_url": "https://www.bravo-japan.com/dvds/234",
+  "page_title": "234",
+  "navigation_chain": [
+   {
+    "url": "https://www.bravo-japan.com/dvds/234",
+    "status": 200
+   }
+  ],
+  "http_status_final_document": 200,
+  "dom_file": "dvd-234.rendered.html",
+  "dom_bytes": 1074165,
+  "dom_sha256": "16c327c5c52b365591529d329755af6694f4af1e09a3ce1f18dfd4e15d0de348"
+ },
+ {
+  "dvd": "084",
+  "requested_url": "https://www.bravo-japan.com/dvds/084",
+  "captured_at_utc": "2026-11-04T06:01:37.152426+00:00",
+  "capture_engine": "stash-test headless Chrome via CDP (Page/Network/Runtime)",
+  "completion_condition": "hinban_h2_present",
+  "final_url": "https://www.bravo-japan.com/dvds/084",
+  "page_title": "084",
+  "navigation_chain": [
+   {
+    "url": "https://www.bravo-japan.com/dvds/084",
+    "status": 200
+   }
+  ],
+  "http_status_final_document": 200,
+  "dom_file": "dvd-084.rendered.html",
+  "dom_bytes": 1064608,
+  "dom_sha256": "4c9c02f0209bedc18af72dac30e6571d546bef6a3b0447766ed21e4a85085640"
+ },
+ {
+  "dvd": "046",
+  "requested_url": "https://www.bravo-japan.com/dvds/046",
+  "captured_at_utc": "2026-11-04T06:01:54.409351+00:00",
+  "capture_engine": "stash-test headless Chrome via CDP (Page/Network/Runtime)",
+  "completion_condition": "hinban_h2_present",
+  "final_url": "https://www.bravo-japan.com/dvds/046",
+  "page_title": "046",
+  "navigation_chain": [
+   {
+    "url": "https://www.bravo-japan.com/dvds/046",
+    "status": 200
+   }
+  ],
+  "http_status_final_document": 200,
+  "dom_file": "dvd-046.rendered.html",
+  "dom_bytes": 1072083,
+  "dom_sha256": "ef360e9a9ae5fa4470392cd225111d6090fe6d9b5e135ea75575a7ea588862c3"
+ },
+ {
+  "dvd": "00",
+  "requested_url": "https://www.bravo-japan.com/dvds/00",
+  "captured_at_utc": "2026-11-04T06:02:10.819026+00:00",
+  "capture_engine": "stash-test headless Chrome via CDP (Page/Network/Runtime)",
+  "completion_condition": "page_title_404",
+  "final_url": "https://www.bravo-japan.com/dvds/00",
+  "page_title": "404 | bravo-works",
+  "navigation_chain": [
+   {
+    "url": "https://www.bravo-japan.com/dvds/00",
+    "status": 404
+   }
+  ],
+  "http_status_final_document": 404,
+  "dom_file": "dvd-00.rendered.html",
+  "dom_bytes": 763374,
+  "dom_sha256": "73696b5d80600a1de1aa49c1825a67d852bc5830566f49c7db5c890c66d73a96"
+ },
+ {
+  "dvd": "999999",
+  "requested_url": "https://www.bravo-japan.com/dvds/999999",
+  "captured_at_utc": "2026-11-04T06:02:26.064311+00:00",
+  "capture_engine": "stash-test headless Chrome via CDP (Page/Network/Runtime)",
+  "completion_condition": "page_title_404",
+  "final_url": "https://www.bravo-japan.com/dvds/999999",
+  "page_title": "404 | bravo-works",
+  "navigation_chain": [
+   {
+    "url": "https://www.bravo-japan.com/dvds/999999",
+    "status": 404
+   }
+  ],
+  "http_status_final_document": 404,
+  "dom_file": "dvd-999999.rendered.html",
+  "dom_bytes": 763387,
+  "dom_sha256": "5fd72ed7698653c27ba1b1a851f670401d72d2bcb6ea42ef5e29d215c31e6236"
+ }
+]

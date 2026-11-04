@@ -1,0 +1,588 @@
+{
+  "meta": {
+    "assignment_id": "WAVE2E-D-G1-DVD-DOM-INDEPENDENT-REPLAY-20261104",
+    "reviewer": "Agent D (independent DOM replay)",
+    "reviewer_platform": "Perplexity (Perplexity AI assistant)",
+    "llm_model": "not exposed to agent (no model identifier provided by platform; recorded for audit honesty)",
+    "environment": "agent connector runtime with attached CDP capture files (read-only); no local CDP/browser process",
+    "reviewed_at": "2026-11-04T14:13:00+08:00",
+    "author_reference": "xpath-evaluation-results.json @ 4963523 + G1-CLOSURE-ADDENDUM.md @ b2f41e1 (SHA-256 correction for g1-priority-dom-excerpts.json: f8c3da0a…)",
+    "source_files_privacy": "raw rendered HTML read-only access in agent environment; no HTML exported",
+    "scope": "5 priority pages (234, 084, 046, 00, 999999)",
+    "verdict": "G1_pass"
+  },
+  "pages": {
+    "234": {
+      "input_sha256_local": "7bafdda8fd1d587b83e9ab28fcb95c9171cb473517afc2f6b4bda9985ed75918",
+      "input_sha256_author": "7bafdda8fd1d587b83e9ab28fcb95c9171cb473517afc2f6b4bda9985ed75918",
+      "sha_match": true,
+      "classification": "completed_product",
+      "fields": {
+        "Title": {
+          "node_count": 1,
+          "values": [
+            "勃起する白き花よ"
+          ]
+        },
+        "Title_subtitle_optional": {
+          "node_count": 1,
+          "values": [
+            "Mr.Lily 編"
+          ]
+        },
+        "Code": {
+          "node_count": 1,
+          "values": [
+            "234"
+          ]
+        },
+        "URLs": {
+          "node_count": 1,
+          "values": [
+            "https://www.bravo-japan.com/dvds/234"
+          ]
+        },
+        "Details": {
+          "node_count": 1,
+          "values": [
+            "君の名前はLILY。大量射精ばかりする卑猥な白き花。 BRAVOが挑むアジアポルノレーベルGAYSIAN第二弾！ 淫乱なデカちんぽが繰り広げる発情エロ3編を目撃せよ！★Part.01鏡に映る自分にキスをし、昼下がりのホテルで発情するLILY。ようやく現れた兄貴のチンポにむしゃぶりつき、肛門が熱くなる！掘られるほど勃起するエロ体から発射される白い種汁！兄貴からの顔射に恍惚になる！ボトボトと汚される花。★Part.02変態コスプレ目隠しでラブホ待機！ローションまみれになりながらのアナル調教！電動器具に悶絶しながらバクバクと脈打つちんぽ！★Part.03タチ兄貴3人を並べて味比べフェラするLILY。いろんな体位で掘られ、ブランコで奥まで当てられる！ザーメンでぐちょぐちょになり変態覚醒！ついに迎えるフィナーレ！白き花はドロドロ満開！"
+          ]
+        },
+        "Image": {
+          "node_count": 1,
+          "values": [
+            "https://static.wixstatic.com/media/3b5bfe_bfaae9571e424b3cb884f27c61efcbfd~mv2.jpg/v1/fill/w_751,h_476,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/br281jk_998_635.jpg"
+          ]
+        },
+        "Date": {
+          "node_count": 1,
+          "values": [
+            "2018年8月29日"
+          ]
+        },
+        "Studio_label": {
+          "node_count": 1,
+          "values": [
+            "GAYSIAN"
+          ]
+        },
+        "Duration_min": {
+          "node_count": 1,
+          "values": [
+            "110"
+          ]
+        },
+        "Price_unmapped": {
+          "node_count": 1,
+          "values": [
+            "8,500円"
+          ]
+        },
+        "Discs_unmapped": {
+          "node_count": 1,
+          "values": [
+            "1"
+          ]
+        },
+        "Tags_meta_keywords": {
+          "node_count": 1,
+          "values": [
+            "BL, ぽっちゃり, アナル, ガチムチ, グローリーホール, バイセクシャル, ホモ, 潮噴き, 肉便器"
+          ]
+        },
+        "og_title": {
+          "node_count": 1,
+          "values": [
+            "234"
+          ]
+        },
+        "og_image": {
+          "node_count": 1,
+          "values": [
+            "https://static.wixstatic.com/media/3b5bfe_bfaae9571e424b3cb884f27c61efcbfd~mv2.jpg/v1/fill/w_998,h_635,al_c,q_85/BR234.jpg"
+          ]
+        },
+        "page_title": {
+          "node_count": 1,
+          "values": [
+            "234"
+          ]
+        },
+        "validity_gate_hinban": {
+          "node_count": 1,
+          "values": [
+            "品番"
+          ]
+        },
+        "h2_total": {
+          "node_count": 22,
+          "values": [
+            "BRAVO-JAPAN",
+            "GO to BRAVO-CLIPS",
+            "勃起する白き花よ"
+          ]
+        }
+      },
+      "checks": {
+        "title_match": true,
+        "code_match": true,
+        "url_match": true,
+        "image_match": true,
+        "og_title_match": true,
+        "page_title_match": true,
+        "gate_count": true,
+        "h2_total": true,
+        "details_len_match": true
+      },
+      "all_pass": true
+    },
+    "046": {
+      "input_sha256_local": "4b020e0b1f0c60633db7985b5edf5a8852d2f39284a866057b3c92dca5a8d43f",
+      "input_sha256_author": "4b020e0b1f0c60633db7985b5edf5a8852d2f39284a866057b3c92dca5a8d43f",
+      "sha_match": true,
+      "classification": "completed_product",
+      "fields": {
+        "Title": {
+          "node_count": 1,
+          "values": [
+            "ゆるゆる雄太のデブ竿ぽちゃ穴食べ放題!"
+          ]
+        },
+        "Title_subtitle_optional": {
+          "node_count": 1,
+          "values": [
+            ""
+          ]
+        },
+        "Code": {
+          "node_count": 1,
+          "values": [
+            "046"
+          ]
+        },
+        "URLs": {
+          "node_count": 1,
+          "values": [
+            "https://www.bravo-japan.com/dvds/046"
+          ]
+        },
+        "Details": {
+          "node_count": 1,
+          "values": [
+            "デブ専ゆるぽ専は、これで決まりっ！！堂々260分収録のデブ淫乱超大作2枚組の登場です！！リバーシブルジャケット仕様です！！★ゆるゆる雄太とガチ太丼ツヨシ、友達同士の禁断交尾！！照れ戯れ合いもエロスイッチが入ればもう止まらない！★灼熱のハッテン日焼け！ムラムラ開放オナニーに兄貴が加わり汗だく汁だく野外プレイ！★超有名ゲイビーチにゆるゆる潜入レポ！露出プレイに大興奮！！★ぽちゃ坊主テツジが緊張のエロビ初出演！タチ兄貴のガン堀り倒し＆亀頭攻めに悶絶絶叫！「気持ちいい！もっとシゴいて…！！」★19歳純情ノンケの尻穴処女喪失！肛門が暴走発熱「ヤバイヤバイヤバイ！」タチ役の雄太を押し倒し、男のケツマンコで初昇天！★深夜の公衆便所にカメラ持ち込みセルフ撮影！息を殺してセンズリぶっこき！！★某有名ハッテン公園で 見せつけ全裸オナニー！呼び寄せた兄貴から濃厚ザーメンのシャワーを浴びせられる！★雄太の全裸公園徘徊から恥じらいのシャワ浣まで恥辱シーンオンパレード！★ぽちゃ坊主テツジに雄太が襲いかかる！強制イマラチオにチンポはビンビン！！掘られながら白濁汁を噴射しまくる！！"
+          ]
+        },
+        "Image": {
+          "node_count": 1,
+          "values": [
+            "https://static.wixstatic.com/media/3b5bfe_eeaa516f67aa4222a2ea339b5f3a98b7~mv2.jpg/v1/fill/w_751,h_476,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/br281jk_998_635.jpg"
+          ]
+        },
+        "Date": {
+          "node_count": 1,
+          "values": [
+            "2010年09月30日"
+          ]
+        },
+        "Studio_label": {
+          "node_count": 1,
+          "values": [
+            "ooooPS!!"
+          ]
+        },
+        "Duration_min": {
+          "node_count": 1,
+          "values": [
+            "260"
+          ]
+        },
+        "Price_unmapped": {
+          "node_count": 1,
+          "values": [
+            "10,500円"
+          ]
+        },
+        "Discs_unmapped": {
+          "node_count": 1,
+          "values": [
+            "2"
+          ]
+        },
+        "Tags_meta_keywords": {
+          "node_count": 1,
+          "values": [
+            "BL, ぽっちゃり, アナル, ガチムチ, グローリーホール, バイセクシャル, ホモ, 潮噴き, 肉便器"
+          ]
+        },
+        "og_title": {
+          "node_count": 1,
+          "values": [
+            "046"
+          ]
+        },
+        "og_image": {
+          "node_count": 1,
+          "values": [
+            "https://static.wixstatic.com/media/3b5bfe_eeaa516f67aa4222a2ea339b5f3a98b7~mv2.jpg/v1/fill/w_998,h_635,al_c,q_85/BR046-1.jpg"
+          ]
+        },
+        "page_title": {
+          "node_count": 1,
+          "values": [
+            "046"
+          ]
+        },
+        "validity_gate_hinban": {
+          "node_count": 1,
+          "values": [
+            "品番"
+          ]
+        },
+        "h2_total": {
+          "node_count": 22,
+          "values": [
+            "BRAVO-JAPAN",
+            "GO to BRAVO-CLIPS",
+            "ゆるゆる雄太のデブ竿ぽちゃ穴食べ放題!"
+          ]
+        }
+      },
+      "checks": {
+        "title_match": true,
+        "code_match": true,
+        "url_match": true,
+        "image_match": true,
+        "og_title_match": true,
+        "page_title_match": true,
+        "gate_count": true,
+        "h2_total": true,
+        "details_len_match": true
+      },
+      "all_pass": true
+    },
+    "084": {
+      "input_sha256_local": "ade2a7f7a4b5892463790986928524a660d932fb8f58bbb2ebefe45db6e98415",
+      "input_sha256_author": "ade2a7f7a4b5892463790986928524a660d932fb8f58bbb2ebefe45db6e98415",
+      "sha_match": true,
+      "classification": "completed_product",
+      "fields": {
+        "Title": {
+          "node_count": 1,
+          "values": [
+            "少年集団強姦"
+          ]
+        },
+        "Title_subtitle_optional": {
+          "node_count": 1,
+          "values": [
+            ""
+          ]
+        },
+        "Code": {
+          "node_count": 1,
+          "values": [
+            "084"
+          ]
+        },
+        "URLs": {
+          "node_count": 1,
+          "values": [
+            "https://www.bravo-japan.com/dvds/084"
+          ]
+        },
+        "Details": {
+          "node_count": 1,
+          "values": [
+            ""
+          ]
+        },
+        "Image": {
+          "node_count": 1,
+          "values": [
+            "https://static.wixstatic.com/media/3b5bfe_8f010d56aefb409a811cd80516dba9b5~mv2.jpg/v1/fill/w_751,h_476,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/br281jk_998_635.jpg"
+          ]
+        },
+        "Date": {
+          "node_count": 1,
+          "values": [
+            "2012年11月17日"
+          ]
+        },
+        "Studio_label": {
+          "node_count": 1,
+          "values": [
+            "Lucifer"
+          ]
+        },
+        "Duration_min": {
+          "node_count": 1,
+          "values": [
+            "140"
+          ]
+        },
+        "Price_unmapped": {
+          "node_count": 1,
+          "values": [
+            "8,800円"
+          ]
+        },
+        "Discs_unmapped": {
+          "node_count": 1,
+          "values": [
+            "1"
+          ]
+        },
+        "Tags_meta_keywords": {
+          "node_count": 1,
+          "values": [
+            "BL, ぽっちゃり, アナル, ガチムチ, グローリーホール, バイセクシャル, ホモ, 潮噴き, 肉便器"
+          ]
+        },
+        "og_title": {
+          "node_count": 1,
+          "values": [
+            "084"
+          ]
+        },
+        "og_image": {
+          "node_count": 1,
+          "values": [
+            "https://static.wixstatic.com/media/3b5bfe_8f010d56aefb409a811cd80516dba9b5~mv2.jpg/v1/fill/w_958,h_643,al_c,q_85/BR-084soldout.jpg"
+          ]
+        },
+        "page_title": {
+          "node_count": 1,
+          "values": [
+            "084"
+          ]
+        },
+        "validity_gate_hinban": {
+          "node_count": 1,
+          "values": [
+            "品番"
+          ]
+        },
+        "h2_total": {
+          "node_count": 22,
+          "values": [
+            "BRAVO-JAPAN",
+            "GO to BRAVO-CLIPS",
+            "少年集団強姦"
+          ]
+        }
+      },
+      "checks": {
+        "title_match": true,
+        "code_match": true,
+        "url_match": true,
+        "image_match": true,
+        "og_title_match": true,
+        "page_title_match": true,
+        "gate_count": true,
+        "h2_total": true,
+        "details_len_match": true
+      },
+      "all_pass": true
+    },
+    "999999": {
+      "input_sha256_local": "82bf6fd4aadd94c210bad15c9dd80e8a7650ab56ddaa76535ed2044a021311bb",
+      "input_sha256_author": "82bf6fd4aadd94c210bad15c9dd80e8a7650ab56ddaa76535ed2044a021311bb",
+      "sha_match": true,
+      "classification": "404",
+      "fields": {
+        "Title": {
+          "node_count": 0,
+          "values": []
+        },
+        "Title_subtitle_optional": {
+          "node_count": 0,
+          "values": []
+        },
+        "Code": {
+          "node_count": 0,
+          "values": []
+        },
+        "URLs": {
+          "node_count": 1,
+          "values": [
+            "https://www.bravo-japan.com/dvds/999999"
+          ]
+        },
+        "Details": {
+          "node_count": 0,
+          "values": []
+        },
+        "Image": {
+          "node_count": 0,
+          "values": []
+        },
+        "Date": {
+          "node_count": 0,
+          "values": []
+        },
+        "Studio_label": {
+          "node_count": 0,
+          "values": []
+        },
+        "Duration_min": {
+          "node_count": 0,
+          "values": []
+        },
+        "Price_unmapped": {
+          "node_count": 0,
+          "values": []
+        },
+        "Discs_unmapped": {
+          "node_count": 0,
+          "values": []
+        },
+        "Tags_meta_keywords": {
+          "node_count": 1,
+          "values": [
+            "BL, ぽっちゃり, アナル, ガチムチ, グローリーホール, バイセクシャル, ホモ, 潮噴き, 肉便器"
+          ]
+        },
+        "og_title": {
+          "node_count": 1,
+          "values": [
+            "404 | bravo-works"
+          ]
+        },
+        "og_image": {
+          "node_count": 1,
+          "values": [
+            "https://static.wixstatic.com/media/3b5bfe_a27c7b16ecd44eac84dada9f0308262d.jpg/v1/fit/w_2500,h_1330,al_c/3b5bfe_a27c7b16ecd44eac84dada9f0308262d.jpg"
+          ]
+        },
+        "page_title": {
+          "node_count": 1,
+          "values": [
+            "404 | bravo-works"
+          ]
+        },
+        "validity_gate_hinban": {
+          "node_count": 0,
+          "values": []
+        },
+        "h2_total": {
+          "node_count": 2,
+          "values": [
+            "BRAVO-JAPAN",
+            "GO to BRAVO-CLIPS"
+          ]
+        }
+      },
+      "checks": {
+        "title_match": true,
+        "code_match": true,
+        "url_match": true,
+        "image_match": true,
+        "og_title_match": true,
+        "page_title_match": true,
+        "gate_count": true,
+        "h2_total": true
+      },
+      "all_pass": true
+    },
+    "00": {
+      "input_sha256_local": "b3c6ff89f016e36b0d1d298a3d1718a8d4d41561ac10538649c06b6ec9fd2107",
+      "input_sha256_author": "b3c6ff89f016e36b0d1d298a3d1718a8d4d41561ac10538649c06b6ec9fd2107",
+      "sha_match": true,
+      "classification": "404",
+      "fields": {
+        "Title": {
+          "node_count": 0,
+          "values": []
+        },
+        "Title_subtitle_optional": {
+          "node_count": 0,
+          "values": []
+        },
+        "Code": {
+          "node_count": 0,
+          "values": []
+        },
+        "URLs": {
+          "node_count": 1,
+          "values": [
+            "https://www.bravo-japan.com/dvds/00"
+          ]
+        },
+        "Details": {
+          "node_count": 0,
+          "values": []
+        },
+        "Image": {
+          "node_count": 0,
+          "values": []
+        },
+        "Date": {
+          "node_count": 0,
+          "values": []
+        },
+        "Studio_label": {
+          "node_count": 0,
+          "values": []
+        },
+        "Duration_min": {
+          "node_count": 0,
+          "values": []
+        },
+        "Price_unmapped": {
+          "node_count": 0,
+          "values": []
+        },
+        "Discs_unmapped": {
+          "node_count": 0,
+          "values": []
+        },
+        "Tags_meta_keywords": {
+          "node_count": 1,
+          "values": [
+            "BL, ぽっちゃり, アナル, ガチムチ, グローリーホール, バイセクシャル, ホモ, 潮噴き, 肉便器"
+          ]
+        },
+        "og_title": {
+          "node_count": 1,
+          "values": [
+            "404 | bravo-works"
+          ]
+        },
+        "og_image": {
+          "node_count": 1,
+          "values": [
+            "https://static.wixstatic.com/media/3b5bfe_a27c7b16ecd44eac84dada9f0308262d.jpg/v1/fit/w_2500,h_1330,al_c/3b5bfe_a27c7b16ecd44eac84dada9f0308262d.jpg"
+          ]
+        },
+        "page_title": {
+          "node_count": 1,
+          "values": [
+            "404 | bravo-works"
+          ]
+        },
+        "validity_gate_hinban": {
+          "node_count": 0,
+          "values": []
+        },
+        "h2_total": {
+          "node_count": 2,
+          "values": [
+            "BRAVO-JAPAN",
+            "GO to BRAVO-CLIPS"
+          ]
+        }
+      },
+      "checks": {
+        "title_match": true,
+        "code_match": true,
+        "url_match": true,
+        "image_match": true,
+        "og_title_match": true,
+        "page_title_match": true,
+        "gate_count": true,
+        "h2_total": true
+      },
+      "all_pass": true
+    }
+  }
+}

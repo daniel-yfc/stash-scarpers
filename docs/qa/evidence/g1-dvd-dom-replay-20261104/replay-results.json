@@ -1,0 +1,1199 @@
+{
+ "assignment": "WAVE2E-D-G1-DVD-DOM-INDEPENDENT-REPLAY-20261104",
+ "evaluator": "lxml (Agent D venv) xpath-1.0",
+ "a_reference": "research/e2e-bravo-dvd-dom @9b4ab10, xpath-evaluation-results.json",
+ "pages": [
+  {
+   "dvd": "00",
+   "a_input_sha256": "b3c6ff89f016e36b0d1d298a3d1718a8d4d41561ac10538649c06b6ec9fd2107",
+   "d_capture": {
+    "dvd": "00",
+    "requested_url": "https://www.bravo-japan.com/dvds/00",
+    "captured_at_utc": "2026-11-04T06:02:10.819026+00:00",
+    "capture_engine": "stash-test headless Chrome via CDP (Page/Network/Runtime)",
+    "completion_condition": "page_title_404",
+    "final_url": "https://www.bravo-japan.com/dvds/00",
+    "page_title": "404 | bravo-works",
+    "navigation_chain": [
+     {
+      "url": "https://www.bravo-japan.com/dvds/00",
+      "status": 404
+     }
+    ],
+    "http_status_final_document": 404,
+    "dom_file": "dvd-00.rendered.html",
+    "dom_bytes": 763374,
+    "dom_sha256": "73696b5d80600a1de1aa49c1825a67d852bc5830566f49c7db5c890c66d73a96"
+   },
+   "fields": [
+    {
+     "field": "Title",
+     "xpath": "//h2[contains(.,'品番')]/preceding::h2[2]",
+     "expected_nodes": 0,
+     "actual_nodes": 0,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": []
+    },
+    {
+     "field": "Title_subtitle_optional",
+     "xpath": "//h2[contains(.,'品番')]/preceding::h2[1]",
+     "expected_nodes": 0,
+     "actual_nodes": 0,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": []
+    },
+    {
+     "field": "Code",
+     "xpath": "//h2[contains(.,'品番')]/following::h2[1]",
+     "expected_nodes": 0,
+     "actual_nodes": 0,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": []
+    },
+    {
+     "field": "URLs",
+     "xpath": "//link[@rel='canonical']/@href",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "https://www.bravo-japan.com/dvds/00"
+     ]
+    },
+    {
+     "field": "Details",
+     "xpath": "//p[contains(@class,'font_8')]",
+     "expected_nodes": 0,
+     "actual_nodes": 0,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": []
+    },
+    {
+     "field": "Image",
+     "xpath": "//img[@alt!='' and contains(@src,'wixstatic')]/@src",
+     "expected_nodes": 0,
+     "actual_nodes": 0,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": []
+    },
+    {
+     "field": "Date",
+     "xpath": "//h2[contains(.,'発売日')]/following::h2[1]",
+     "expected_nodes": 0,
+     "actual_nodes": 0,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": []
+    },
+    {
+     "field": "Studio_label",
+     "xpath": "//h2[contains(.,'レーベル')]/preceding::h2[1]",
+     "expected_nodes": 0,
+     "actual_nodes": 0,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": []
+    },
+    {
+     "field": "Duration_min",
+     "xpath": "//h2[contains(.,'収録時間')]/following::h2[1]",
+     "expected_nodes": 0,
+     "actual_nodes": 0,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": []
+    },
+    {
+     "field": "Price_unmapped",
+     "xpath": "//h2[contains(.,'定価')]/following::h2[1]",
+     "expected_nodes": 0,
+     "actual_nodes": 0,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": []
+    },
+    {
+     "field": "Discs_unmapped",
+     "xpath": "//h2[contains(.,'枚組')]/preceding::h2[1]",
+     "expected_nodes": 0,
+     "actual_nodes": 0,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": []
+    },
+    {
+     "field": "Tags_meta_keywords",
+     "xpath": "//meta[@name='keywords']/@content",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "BL, ぽっちゃり, アナル, ガチムチ, グローリーホール, バイセクシャル, ホモ, 潮噴き, 肉便器"
+     ]
+    },
+    {
+     "field": "og_title",
+     "xpath": "//meta[@property='og:title']/@content",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "404 | bravo-works"
+     ]
+    },
+    {
+     "field": "og_image",
+     "xpath": "//meta[@property='og:image']/@content",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "https://static.wixstatic.com/media/3b5bfe_a27c7b16ecd44eac84dada9f0308262d.jpg/v1/fit/w_2500,h_1330,al_c/3b5bfe_a27c7b16ecd44eac84dada9f0308262d.jpg"
+     ]
+    },
+    {
+     "field": "page_title",
+     "xpath": "//title/text()",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "404 | bravo-works"
+     ]
+    },
+    {
+     "field": "validity_gate_hinban",
+     "xpath": "//h2[contains(.,'品番')]",
+     "expected_nodes": 0,
+     "actual_nodes": 0,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": []
+    },
+    {
+     "field": "h2_total",
+     "xpath": "//h2",
+     "expected_nodes": 2,
+     "actual_nodes": 2,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "BRAVO-JAPAN"
+     ]
+    }
+   ],
+   "page_ok": true
+  },
+  {
+   "dvd": "046",
+   "a_input_sha256": "4b020e0b1f0c60633db7985b5edf5a8852d2f39284a866057b3c92dca5a8d43f",
+   "d_capture": {
+    "dvd": "046",
+    "requested_url": "https://www.bravo-japan.com/dvds/046",
+    "captured_at_utc": "2026-11-04T06:01:54.409351+00:00",
+    "capture_engine": "stash-test headless Chrome via CDP (Page/Network/Runtime)",
+    "completion_condition": "hinban_h2_present",
+    "final_url": "https://www.bravo-japan.com/dvds/046",
+    "page_title": "046",
+    "navigation_chain": [
+     {
+      "url": "https://www.bravo-japan.com/dvds/046",
+      "status": 200
+     }
+    ],
+    "http_status_final_document": 200,
+    "dom_file": "dvd-046.rendered.html",
+    "dom_bytes": 1072083,
+    "dom_sha256": "ef360e9a9ae5fa4470392cd225111d6090fe6d9b5e135ea75575a7ea588862c3"
+   },
+   "fields": [
+    {
+     "field": "Title",
+     "xpath": "//h2[contains(.,'品番')]/preceding::h2[2]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "ゆるゆる雄太のデブ竿ぽちゃ穴食べ放題!"
+     ]
+    },
+    {
+     "field": "Title_subtitle_optional",
+     "xpath": "//h2[contains(.,'品番')]/preceding::h2[1]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      ""
+     ]
+    },
+    {
+     "field": "Code",
+     "xpath": "//h2[contains(.,'品番')]/following::h2[1]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "046"
+     ]
+    },
+    {
+     "field": "URLs",
+     "xpath": "//link[@rel='canonical']/@href",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "https://www.bravo-japan.com/dvds/046"
+     ]
+    },
+    {
+     "field": "Details",
+     "xpath": "//p[contains(@class,'font_8')]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "whitespace_boundary_only (inline-element joins; content identical)",
+     "expected_values": "== actual",
+     "actual_values": [
+      "デブ専ゆるぽ専は、これで決まりっ！！堂々260分収録のデブ淫乱超大作2枚組の登場です！！リバーシブルジャケット仕様です！！ ★ゆるゆる雄太とガチ太丼ツヨシ、友達同士の禁断交尾！！照れ戯れ合いもエロスイッチが入ればもう止まらない！ ★灼熱のハッテン日焼け！ムラムラ開放オナニーに兄貴が加わり汗だく汁だく野外プレイ！ ★超有名ゲイビーチにゆるゆる潜入レポ！露出プレイに大興奮！！ ★ぽちゃ坊主テツジが緊張のエロビ初出演！タチ兄貴のガン堀り倒し＆亀頭攻めに悶絶絶叫！「気持ちいい！もっとシゴいて…！！」 ★19歳純情ノンケの尻穴処女喪失！肛門が暴走発熱「ヤバイヤバイヤバイ！」タチ役の雄太を押し倒し、男のケツマンコで初昇天！ ★深夜の公衆便所にカメラ持ち込みセルフ撮影！息を殺してセンズリぶっこき！！ ★某有名ハッテン公園で 見せつけ全裸オナニー！呼び寄せた兄貴から濃厚ザーメンのシャワーを浴びせられる！ ★雄太の全裸公園徘徊から恥じらいのシャワ浣まで恥辱シーンオンパレード！ ★ぽちゃ坊主テツジに雄太が襲いかかる！強制イマラチオにチンポはビンビン！！掘られながら白濁汁を噴射しまくる！！"
+     ]
+    },
+    {
+     "field": "Image",
+     "xpath": "//img[@alt!='' and contains(@src,'wixstatic')]/@src",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "https://static.wixstatic.com/media/3b5bfe_eeaa516f67aa4222a2ea339b5f3a98b7~mv2.jpg/v1/fill/w_751,h_476,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/br281jk_998_635.jpg"
+     ]
+    },
+    {
+     "field": "Date",
+     "xpath": "//h2[contains(.,'発売日')]/following::h2[1]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "2010年09月30日"
+     ]
+    },
+    {
+     "field": "Studio_label",
+     "xpath": "//h2[contains(.,'レーベル')]/preceding::h2[1]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "ooooPS!!"
+     ]
+    },
+    {
+     "field": "Duration_min",
+     "xpath": "//h2[contains(.,'収録時間')]/following::h2[1]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "260"
+     ]
+    },
+    {
+     "field": "Price_unmapped",
+     "xpath": "//h2[contains(.,'定価')]/following::h2[1]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "10,500円"
+     ]
+    },
+    {
+     "field": "Discs_unmapped",
+     "xpath": "//h2[contains(.,'枚組')]/preceding::h2[1]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "2"
+     ]
+    },
+    {
+     "field": "Tags_meta_keywords",
+     "xpath": "//meta[@name='keywords']/@content",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "BL, ぽっちゃり, アナル, ガチムチ, グローリーホール, バイセクシャル, ホモ, 潮噴き, 肉便器"
+     ]
+    },
+    {
+     "field": "og_title",
+     "xpath": "//meta[@property='og:title']/@content",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "046"
+     ]
+    },
+    {
+     "field": "og_image",
+     "xpath": "//meta[@property='og:image']/@content",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "https://static.wixstatic.com/media/3b5bfe_eeaa516f67aa4222a2ea339b5f3a98b7~mv2.jpg/v1/fill/w_998,h_635,al_c,q_85/BR046-1.jpg"
+     ]
+    },
+    {
+     "field": "page_title",
+     "xpath": "//title/text()",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "046"
+     ]
+    },
+    {
+     "field": "validity_gate_hinban",
+     "xpath": "//h2[contains(.,'品番')]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "品番"
+     ]
+    },
+    {
+     "field": "h2_total",
+     "xpath": "//h2",
+     "expected_nodes": 22,
+     "actual_nodes": 22,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "stored_prefix (A truncates h2 values to 3)",
+     "expected_values": "== actual",
+     "actual_values": [
+      "BRAVO-JAPAN"
+     ]
+    }
+   ],
+   "page_ok": true
+  },
+  {
+   "dvd": "084",
+   "a_input_sha256": "ade2a7f7a4b5892463790986928524a660d932fb8f58bbb2ebefe45db6e98415",
+   "d_capture": {
+    "dvd": "084",
+    "requested_url": "https://www.bravo-japan.com/dvds/084",
+    "captured_at_utc": "2026-11-04T06:01:37.152426+00:00",
+    "capture_engine": "stash-test headless Chrome via CDP (Page/Network/Runtime)",
+    "completion_condition": "hinban_h2_present",
+    "final_url": "https://www.bravo-japan.com/dvds/084",
+    "page_title": "084",
+    "navigation_chain": [
+     {
+      "url": "https://www.bravo-japan.com/dvds/084",
+      "status": 200
+     }
+    ],
+    "http_status_final_document": 200,
+    "dom_file": "dvd-084.rendered.html",
+    "dom_bytes": 1064608,
+    "dom_sha256": "4c9c02f0209bedc18af72dac30e6571d546bef6a3b0447766ed21e4a85085640"
+   },
+   "fields": [
+    {
+     "field": "Title",
+     "xpath": "//h2[contains(.,'品番')]/preceding::h2[2]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "少年集団強姦"
+     ]
+    },
+    {
+     "field": "Title_subtitle_optional",
+     "xpath": "//h2[contains(.,'品番')]/preceding::h2[1]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      ""
+     ]
+    },
+    {
+     "field": "Code",
+     "xpath": "//h2[contains(.,'品番')]/following::h2[1]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "084"
+     ]
+    },
+    {
+     "field": "URLs",
+     "xpath": "//link[@rel='canonical']/@href",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "https://www.bravo-japan.com/dvds/084"
+     ]
+    },
+    {
+     "field": "Details",
+     "xpath": "//p[contains(@class,'font_8')]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      ""
+     ]
+    },
+    {
+     "field": "Image",
+     "xpath": "//img[@alt!='' and contains(@src,'wixstatic')]/@src",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "https://static.wixstatic.com/media/3b5bfe_8f010d56aefb409a811cd80516dba9b5~mv2.jpg/v1/fill/w_751,h_476,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/br281jk_998_635.jpg"
+     ]
+    },
+    {
+     "field": "Date",
+     "xpath": "//h2[contains(.,'発売日')]/following::h2[1]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "2012年11月17日"
+     ]
+    },
+    {
+     "field": "Studio_label",
+     "xpath": "//h2[contains(.,'レーベル')]/preceding::h2[1]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "Lucifer"
+     ]
+    },
+    {
+     "field": "Duration_min",
+     "xpath": "//h2[contains(.,'収録時間')]/following::h2[1]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "140"
+     ]
+    },
+    {
+     "field": "Price_unmapped",
+     "xpath": "//h2[contains(.,'定価')]/following::h2[1]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "8,800円"
+     ]
+    },
+    {
+     "field": "Discs_unmapped",
+     "xpath": "//h2[contains(.,'枚組')]/preceding::h2[1]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "1"
+     ]
+    },
+    {
+     "field": "Tags_meta_keywords",
+     "xpath": "//meta[@name='keywords']/@content",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "BL, ぽっちゃり, アナル, ガチムチ, グローリーホール, バイセクシャル, ホモ, 潮噴き, 肉便器"
+     ]
+    },
+    {
+     "field": "og_title",
+     "xpath": "//meta[@property='og:title']/@content",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "084"
+     ]
+    },
+    {
+     "field": "og_image",
+     "xpath": "//meta[@property='og:image']/@content",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "https://static.wixstatic.com/media/3b5bfe_8f010d56aefb409a811cd80516dba9b5~mv2.jpg/v1/fill/w_958,h_643,al_c,q_85/BR-084soldout.jpg"
+     ]
+    },
+    {
+     "field": "page_title",
+     "xpath": "//title/text()",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "084"
+     ]
+    },
+    {
+     "field": "validity_gate_hinban",
+     "xpath": "//h2[contains(.,'品番')]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "品番"
+     ]
+    },
+    {
+     "field": "h2_total",
+     "xpath": "//h2",
+     "expected_nodes": 22,
+     "actual_nodes": 22,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "stored_prefix (A truncates h2 values to 3)",
+     "expected_values": "== actual",
+     "actual_values": [
+      "BRAVO-JAPAN"
+     ]
+    }
+   ],
+   "page_ok": true
+  },
+  {
+   "dvd": "234",
+   "a_input_sha256": "7bafdda8fd1d587b83e9ab28fcb95c9171cb473517afc2f6b4bda9985ed75918",
+   "d_capture": {
+    "dvd": "234",
+    "requested_url": "https://www.bravo-japan.com/dvds/234",
+    "captured_at_utc": "2026-11-04T06:01:19.336926+00:00",
+    "capture_engine": "stash-test headless Chrome via CDP (Page/Network/Runtime)",
+    "completion_condition": "hinban_h2_present",
+    "final_url": "https://www.bravo-japan.com/dvds/234",
+    "page_title": "234",
+    "navigation_chain": [
+     {
+      "url": "https://www.bravo-japan.com/dvds/234",
+      "status": 200
+     }
+    ],
+    "http_status_final_document": 200,
+    "dom_file": "dvd-234.rendered.html",
+    "dom_bytes": 1074165,
+    "dom_sha256": "16c327c5c52b365591529d329755af6694f4af1e09a3ce1f18dfd4e15d0de348"
+   },
+   "fields": [
+    {
+     "field": "Title",
+     "xpath": "//h2[contains(.,'品番')]/preceding::h2[2]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "勃起する白き花よ"
+     ]
+    },
+    {
+     "field": "Title_subtitle_optional",
+     "xpath": "//h2[contains(.,'品番')]/preceding::h2[1]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "Mr.Lily 編"
+     ]
+    },
+    {
+     "field": "Code",
+     "xpath": "//h2[contains(.,'品番')]/following::h2[1]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "234"
+     ]
+    },
+    {
+     "field": "URLs",
+     "xpath": "//link[@rel='canonical']/@href",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "https://www.bravo-japan.com/dvds/234"
+     ]
+    },
+    {
+     "field": "Details",
+     "xpath": "//p[contains(@class,'font_8')]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "whitespace_boundary_only (inline-element joins; content identical)",
+     "expected_values": "== actual",
+     "actual_values": [
+      "君の名前はLILY。大量射精ばかりする卑猥な白き花。 BRAVOが挑むアジアポルノレーベルGAYSIAN第二弾！ 淫乱なデカちんぽが繰り広げる発情エロ3編を目撃せよ！ ★Part.01 鏡に映る自分にキスをし、昼下がりのホテルで発情するLILY。ようやく現れた兄貴のチンポにむしゃぶりつき、肛門が熱くなる！掘られるほど勃起するエロ体から発射される白い種汁！兄貴からの顔射に恍惚になる！ボトボトと汚される花。 ★Part.02 変態コスプレ目隠しでラブホ待機！ローションまみれになりながらのアナル調教！電動器具に悶絶しながらバクバクと脈打つちんぽ！ ★Part.03 タチ兄貴3人を並べて味比べフェラするLILY。いろんな体位で掘られ、ブランコで奥まで当てられる！ザーメンでぐちょぐちょになり変態覚醒！ついに迎えるフィナーレ！白き花はドロドロ満開！"
+     ]
+    },
+    {
+     "field": "Image",
+     "xpath": "//img[@alt!='' and contains(@src,'wixstatic')]/@src",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "https://static.wixstatic.com/media/3b5bfe_bfaae9571e424b3cb884f27c61efcbfd~mv2.jpg/v1/fill/w_751,h_476,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/br281jk_998_635.jpg"
+     ]
+    },
+    {
+     "field": "Date",
+     "xpath": "//h2[contains(.,'発売日')]/following::h2[1]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "2018年8月29日"
+     ]
+    },
+    {
+     "field": "Studio_label",
+     "xpath": "//h2[contains(.,'レーベル')]/preceding::h2[1]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "GAYSIAN"
+     ]
+    },
+    {
+     "field": "Duration_min",
+     "xpath": "//h2[contains(.,'収録時間')]/following::h2[1]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "110"
+     ]
+    },
+    {
+     "field": "Price_unmapped",
+     "xpath": "//h2[contains(.,'定価')]/following::h2[1]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "8,500円"
+     ]
+    },
+    {
+     "field": "Discs_unmapped",
+     "xpath": "//h2[contains(.,'枚組')]/preceding::h2[1]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "1"
+     ]
+    },
+    {
+     "field": "Tags_meta_keywords",
+     "xpath": "//meta[@name='keywords']/@content",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "BL, ぽっちゃり, アナル, ガチムチ, グローリーホール, バイセクシャル, ホモ, 潮噴き, 肉便器"
+     ]
+    },
+    {
+     "field": "og_title",
+     "xpath": "//meta[@property='og:title']/@content",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "234"
+     ]
+    },
+    {
+     "field": "og_image",
+     "xpath": "//meta[@property='og:image']/@content",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "https://static.wixstatic.com/media/3b5bfe_bfaae9571e424b3cb884f27c61efcbfd~mv2.jpg/v1/fill/w_998,h_635,al_c,q_85/BR234.jpg"
+     ]
+    },
+    {
+     "field": "page_title",
+     "xpath": "//title/text()",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "234"
+     ]
+    },
+    {
+     "field": "validity_gate_hinban",
+     "xpath": "//h2[contains(.,'品番')]",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "品番"
+     ]
+    },
+    {
+     "field": "h2_total",
+     "xpath": "//h2",
+     "expected_nodes": 22,
+     "actual_nodes": 22,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "stored_prefix (A truncates h2 values to 3)",
+     "expected_values": "== actual",
+     "actual_values": [
+      "BRAVO-JAPAN"
+     ]
+    }
+   ],
+   "page_ok": true
+  },
+  {
+   "dvd": "999999",
+   "a_input_sha256": "82bf6fd4aadd94c210bad15c9dd80e8a7650ab56ddaa76535ed2044a021311bb",
+   "d_capture": {
+    "dvd": "999999",
+    "requested_url": "https://www.bravo-japan.com/dvds/999999",
+    "captured_at_utc": "2026-11-04T06:02:26.064311+00:00",
+    "capture_engine": "stash-test headless Chrome via CDP (Page/Network/Runtime)",
+    "completion_condition": "page_title_404",
+    "final_url": "https://www.bravo-japan.com/dvds/999999",
+    "page_title": "404 | bravo-works",
+    "navigation_chain": [
+     {
+      "url": "https://www.bravo-japan.com/dvds/999999",
+      "status": 404
+     }
+    ],
+    "http_status_final_document": 404,
+    "dom_file": "dvd-999999.rendered.html",
+    "dom_bytes": 763387,
+    "dom_sha256": "5fd72ed7698653c27ba1b1a851f670401d72d2bcb6ea42ef5e29d215c31e6236"
+   },
+   "fields": [
+    {
+     "field": "Title",
+     "xpath": "//h2[contains(.,'品番')]/preceding::h2[2]",
+     "expected_nodes": 0,
+     "actual_nodes": 0,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": []
+    },
+    {
+     "field": "Title_subtitle_optional",
+     "xpath": "//h2[contains(.,'品番')]/preceding::h2[1]",
+     "expected_nodes": 0,
+     "actual_nodes": 0,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": []
+    },
+    {
+     "field": "Code",
+     "xpath": "//h2[contains(.,'品番')]/following::h2[1]",
+     "expected_nodes": 0,
+     "actual_nodes": 0,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": []
+    },
+    {
+     "field": "URLs",
+     "xpath": "//link[@rel='canonical']/@href",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "https://www.bravo-japan.com/dvds/999999"
+     ]
+    },
+    {
+     "field": "Details",
+     "xpath": "//p[contains(@class,'font_8')]",
+     "expected_nodes": 0,
+     "actual_nodes": 0,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": []
+    },
+    {
+     "field": "Image",
+     "xpath": "//img[@alt!='' and contains(@src,'wixstatic')]/@src",
+     "expected_nodes": 0,
+     "actual_nodes": 0,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": []
+    },
+    {
+     "field": "Date",
+     "xpath": "//h2[contains(.,'発売日')]/following::h2[1]",
+     "expected_nodes": 0,
+     "actual_nodes": 0,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": []
+    },
+    {
+     "field": "Studio_label",
+     "xpath": "//h2[contains(.,'レーベル')]/preceding::h2[1]",
+     "expected_nodes": 0,
+     "actual_nodes": 0,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": []
+    },
+    {
+     "field": "Duration_min",
+     "xpath": "//h2[contains(.,'収録時間')]/following::h2[1]",
+     "expected_nodes": 0,
+     "actual_nodes": 0,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": []
+    },
+    {
+     "field": "Price_unmapped",
+     "xpath": "//h2[contains(.,'定価')]/following::h2[1]",
+     "expected_nodes": 0,
+     "actual_nodes": 0,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": []
+    },
+    {
+     "field": "Discs_unmapped",
+     "xpath": "//h2[contains(.,'枚組')]/preceding::h2[1]",
+     "expected_nodes": 0,
+     "actual_nodes": 0,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": []
+    },
+    {
+     "field": "Tags_meta_keywords",
+     "xpath": "//meta[@name='keywords']/@content",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "BL, ぽっちゃり, アナル, ガチムチ, グローリーホール, バイセクシャル, ホモ, 潮噴き, 肉便器"
+     ]
+    },
+    {
+     "field": "og_title",
+     "xpath": "//meta[@property='og:title']/@content",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "404 | bravo-works"
+     ]
+    },
+    {
+     "field": "og_image",
+     "xpath": "//meta[@property='og:image']/@content",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "https://static.wixstatic.com/media/3b5bfe_a27c7b16ecd44eac84dada9f0308262d.jpg/v1/fit/w_2500,h_1330,al_c/3b5bfe_a27c7b16ecd44eac84dada9f0308262d.jpg"
+     ]
+    },
+    {
+     "field": "page_title",
+     "xpath": "//title/text()",
+     "expected_nodes": 1,
+     "actual_nodes": 1,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "404 | bravo-works"
+     ]
+    },
+    {
+     "field": "validity_gate_hinban",
+     "xpath": "//h2[contains(.,'品番')]",
+     "expected_nodes": 0,
+     "actual_nodes": 0,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": []
+    },
+    {
+     "field": "h2_total",
+     "xpath": "//h2",
+     "expected_nodes": 2,
+     "actual_nodes": 2,
+     "nodes_match": true,
+     "values_match": true,
+     "match_mode": "exact",
+     "expected_values": "== actual",
+     "actual_values": [
+      "BRAVO-JAPAN"
+     ]
+    }
+   ],
+   "page_ok": true
+  }
+ ],
+ "all_pages_ok": true
+}
