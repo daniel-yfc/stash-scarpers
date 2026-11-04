@@ -15,7 +15,7 @@
 # a fresh page before trusting.
 # Last Updated: 2026-10-18
 
-name: BoyStudio
+name: BOY STUDIO
 
 sceneByURL:
   - action: scrapeXPath

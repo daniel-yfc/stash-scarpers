@@ -8,7 +8,7 @@
 #   Search endpoint: /search/?q= (2026-10-15, user-confirmed; US IPs blocked).
 # Last Updated: 2026-10-15
 
-name: fc2
+name: FC2
 
 sceneByURL:
   - action: scrapeXPath

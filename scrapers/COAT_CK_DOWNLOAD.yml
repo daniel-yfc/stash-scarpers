@@ -6,7 +6,7 @@
 # 2026-10-06: Image gained div.set_photo branch (set pages) against live DOM.
 # Last Updated: 2026-10-10
 
-name: CK-Download
+name: COAT CK DOWNLOAD
 
 sceneByURL:
   - action: scrapeXPath

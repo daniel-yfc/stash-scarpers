@@ -53,15 +53,15 @@ These catch normalisation bugs in `replace`, `concat`, and post-processing rules
 
 **Load when:** you want to see a pattern applied in a real scraper before writing your own. Prefer copying these shapes over inventing new ones.
 
-| Example  | Source                                                                                               | Pattern demonstrated                                          |
-| -------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| KOVideo  | [KOVideo](https://github.com/daniel-yfc/stash-scarpers/blob/main/scrapers/KOVideo.yml)               | XPath union fallbacks; slider-clone exclusion                 |
-| ACCEED   | [ACCEED](https://github.com/daniel-yfc/stash-scarpers/blob/main/scrapers/ACCEED.yml)                 | CDP + commented login-cookie template                         |
-| HunkCh   | [HunkCh](https://github.com/daniel-yfc/stash-scarpers/blob/main/scrapers/HunkCh.yml)                 | FlexSlider clone exclusion; parenthesized union               |
-| Andomark | [upstream](https://github.com/stashapp/CommunityScrapers/blob/master/scrapers/Andomark/Andomark.yml) | Multi-site network: URL groups → named scrapers; studio `map` |
-| AyloAPI  | [upstream](https://github.com/stashapp/CommunityScrapers/tree/master/scrapers/AyloAPI)               | Script action + Python dependency package                     |
+| Example       | Source                                                                                               | Pattern demonstrated                                          |
+| ------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| KO VIDEO      | [KO VIDEO](https://github.com/daniel-yfc/stash-scarpers/blob/main/scrapers/KO_VIDEO.yml)             | XPath union fallbacks; slider-clone exclusion                 |
+| ACCEED        | [ACCEED](https://github.com/daniel-yfc/stash-scarpers/blob/main/scrapers/ACCEED.yml)                 | CDP + commented login-cookie template                         |
+| HUNKS CHANNEL | [HUNKS CHANNEL](https://github.com/daniel-yfc/stash-scarpers/blob/main/scrapers/HUNKS_CHANNEL.yml)   | FlexSlider clone exclusion; parenthesized union               |
+| Andomark      | [upstream](https://github.com/stashapp/CommunityScrapers/blob/master/scrapers/Andomark/Andomark.yml) | Multi-site network: URL groups → named scrapers; studio `map` |
+| AyloAPI       | [upstream](https://github.com/stashapp/CommunityScrapers/tree/master/scrapers/AyloAPI)               | Script action + Python dependency package                     |
 
-### KOVideo — union fallback with clone exclusion (local)
+### KO VIDEO — union fallback with clone exclusion (local)
 
 ```yaml
 Image:
@@ -85,7 +85,7 @@ driver:
 #          Path: "/"
 ```
 
-### HunkCh — parenthesized union (local)
+### HUNKS CHANNEL — parenthesized union (local)
 
 ```yaml
 # FlexSlider injects li.clone nodes in live DOM — exclude them.

@@ -42,7 +42,7 @@
 #   list" note was based on WIG-387 only.
 # Last Updated: 2026-10-10
 
-name: Games-Video
+name: GAMES VIDEO
 
 sceneByURL:
   - action: scrapeXPath

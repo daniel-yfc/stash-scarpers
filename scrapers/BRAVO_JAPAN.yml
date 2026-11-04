@@ -77,7 +77,7 @@
 # URLs, Details, Tags, Image, routing, QueryFragment and DVD exclusion
 # unchanged; Duration source spec deferred to docs/qa/)
 
-name: Bravo-Japan
+name: BRAVO JAPAN
 
 sceneByURL:
   - action: scrapeXPath

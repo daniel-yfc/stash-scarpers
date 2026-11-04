@@ -33,11 +33,11 @@ python tools/check_scraper_docs.py
 | `scrutiny.js` | Raw-response inspection of `sceneScraper` and `searchScraper` with probe terms and field coverage reporting |
 
 ```bash
-node tools/scrutiny.js scrapers/CK-Download.yml
-node tools/scrutiny.js scrapers/CK-Download.yml --search
-node tools/scrutiny.js scrapers/CK-Download.yml --paginate --multi
-node tools/scrutiny.js scrapers/CK-Download.yml --probe=DVD,2026
-node tools/scrutiny.js scrapers/CK-Download.yml --url="https://www.ck-download.com/product/detail/27573"
+node tools/scrutiny.js scrapers/COAT_CK_DOWNLOAD.yml
+node tools/scrutiny.js scrapers/COAT_CK_DOWNLOAD.yml --search
+node tools/scrutiny.js scrapers/COAT_CK_DOWNLOAD.yml --paginate --multi
+node tools/scrutiny.js scrapers/COAT_CK_DOWNLOAD.yml --probe=DVD,2026
+node tools/scrutiny.js scrapers/COAT_CK_DOWNLOAD.yml --url="https://www.ck-download.com/product/detail/27573"
 ```
 
 ## Safeguard controls

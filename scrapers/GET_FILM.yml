@@ -19,7 +19,7 @@
 # Note: GET-film DVDs discontinued, now released via Men's Rush.TV.
 # Last Updated: 2026-10-13
 
-name: GetFilm
+name: GET FILM
 
 sceneByURL:
   - action: scrapeXPath

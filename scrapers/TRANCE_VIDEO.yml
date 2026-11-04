@@ -22,7 +22,7 @@
 # 95 prefixes mapped: TR-01..50, TM-01..14, TO-01..23, TC-01..05, TP-01, DF-02/03.
 # Last Updated: 2026-10-13
 
-name: Trance
+name: TRANCE VIDEO
 
 sceneByURL:
   - action: scrapeXPath

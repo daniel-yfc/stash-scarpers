@@ -5,7 +5,7 @@ import { parse } from "yaml";
 import { extractSceneURLs, classifyScrapedFields } from "../tools/scrutiny-analysis.mjs";
 
 test("recognizes a singular search scene.URL field from a real scraper YAML", () => {
-  const trance = parse(fs.readFileSync("scrapers/Trance.yml", "utf8"));
+  const trance = parse(fs.readFileSync("scrapers/TRANCE_VIDEO.yml", "utf8"));
   const html = '<html><a href="/product/detail/40625">Scene</a></html>';
   const urls = extractSceneURLs(html, trance, "https://www.trance-video.com/product/search?keyword=test", "test", null);
   assert.deepEqual(urls.map((x) => x.url), ["https://www.trance-video.com/product/detail/40625"]);

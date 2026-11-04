@@ -1,4 +1,4 @@
-scraper: scrapers/Trance.yml
+scraper: scrapers/TRANCE_VIDEO.yml
 cases:
   - name: "Trance detail 40625"
     classification: completed

@@ -1,4 +1,4 @@
-name: KO-Tube
+name: KO TUBE
 # 2026-10-14: added ko-tube.com/extra/package/ (特典パッケージ, bonus packages)
 # to sceneByURL + groupByURL — verified against 5 extra pages
 # (26646, 26422, 26592, 26726, 26887): same DOM as /package/index/

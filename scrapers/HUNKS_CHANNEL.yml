@@ -13,7 +13,7 @@
 # fixed-value nodeSelector allows only 'fixed'). Uses canonical/og:url selector,
 # same pattern as the existing Aliases field.
 
-name: Hunk's Channel
+name: HUNKS CHANNEL
 
 groupByURL:
   - action: scrapeXPath

@@ -17,7 +17,7 @@ string, while `scrapedScene()` reads Duration through `IntPtr`, which
 only accepts a Go `int` (string `"1800"` fails the assertion and
 becomes `nil`, hence GraphQL `duration: null`). No YAML mapping can
 fix that; the production `Scene.Duration` mapping was therefore
-removed from `scrapers/BRAVO.yml` until the runtime capability in
+removed from `scrapers/BRAVO_JAPAN.yml` until the runtime capability in
 section 6 is deployed. The extraction below is preserved verbatim so
 restoration is a copy, not a redesign.
 
@@ -97,7 +97,7 @@ undeployed upstream fix does not satisfy this section.
 1. Confirm the section 6 capability is deployed on stash-test and
    record the exact Stash build.
 2. Restore the section 2 selector and post-processing verbatim
-   into `clipSceneScraper.scene.Duration` in `scrapers/BRAVO.yml`.
+   into `clipSceneScraper.scene.Duration` in `scrapers/BRAVO_JAPAN.yml`.
    Do not invent a new selector: no new XPath iteration without
    fresh evidence.
 3. Restore `mappedExpect.Duration` assertions in

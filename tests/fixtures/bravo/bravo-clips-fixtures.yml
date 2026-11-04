@@ -27,7 +27,7 @@
 # minutes-to-seconds expectations are retained in source-only tests
 # (tools/tests/test_bravo_clips.py) and in the deferred specification
 # (docs/qa/PR93-DURATION-DEFERRED-SPEC.md). Fixture HTMLs are unchanged.
-scraper: scrapers/BRAVO.yml
+scraper: scrapers/BRAVO_JAPAN.yml
 cases:
   - name: "BRAVO clip 284"
     classification: completed

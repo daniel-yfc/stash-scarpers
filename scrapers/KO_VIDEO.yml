@@ -10,7 +10,7 @@
 # div.detail_main_col, not a descendant) against live DOM.
 # Last Updated: 2026-10-10
 
-name: KO Video
+name: KO VIDEO
 sceneByURL:
   - action: scrapeXPath
     url:

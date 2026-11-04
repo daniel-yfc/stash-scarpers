@@ -8,13 +8,13 @@ until it is actually performed.
 
 Duration omission 2026-11-04 (Controller decision
 WS-2E-DEF01-DEFER-20261104, R3 H4): production Scene.Duration is
-REMOVED from BRAVO.yml because the Stash mapped runtime cannot
+REMOVED from BRAVO_JAPAN.yml because the Stash mapped runtime cannot
 return a typed int for scene Duration (R3 end-to-end reproduction:
 every mapped value is a string, IntPtr accepts only int). Duration
 assertions in this file are therefore source-only: they evaluate
 the deferred selector from docs/qa/PR93-DURATION-DEFERRED-SPEC.md
 against the fixture HTMLs and check the minutes-to-seconds
-conversion, without reading any Duration mapping from BRAVO.yml.
+conversion, without reading any Duration mapping from BRAVO_JAPAN.yml.
 Details assertions still check the live Details selector
 properties. Gate B (independent QA on stash-test, revised scope)
 remains the live check and is NOT_RUN until it is performed.
@@ -25,7 +25,7 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).resolve().parents[2]
-BRAVO = ROOT / "scrapers" / "BRAVO.yml"
+BRAVO = ROOT / "scrapers" / "BRAVO_JAPAN.yml"
 
 
 def load():
@@ -77,7 +77,7 @@ def test_clip_selectors_are_not_dvd_selectors():
 # Deferred Duration source (WS-2E-DEF01-DEFER-20261104, R3 H4).
 # The selector below is the d6d6fbf production selector, verbatim,
 # preserved here as a source-only regression test. It is NOT read
-# from BRAVO.yml (production Duration is omitted) and it is NOT a
+# from BRAVO_JAPAN.yml (production Duration is omitted) and it is NOT a
 # new XPath iteration: it must equal the selector in
 # docs/qa/PR93-DURATION-DEFERRED-SPEC.md (checked by
 # test_deferred_duration_spec_matches_source_tests). The U+200B
@@ -272,7 +272,7 @@ def test_clips_manifest_is_isolated():
     manifest = yaml_lib.safe_load(
         (ROOT / "tests" / "fixtures" / "bravo" / "bravo-clips-fixtures.yml").read_text()
     )
-    assert manifest["scraper"] == "scrapers/BRAVO.yml"
+    assert manifest["scraper"] == "scrapers/BRAVO_JAPAN.yml"
     names = [c["name"] for c in manifest["cases"]]
     assert "BRAVO clip 284" in names
     assert "BRAVO clip 282" in names

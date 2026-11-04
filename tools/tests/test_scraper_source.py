@@ -29,15 +29,15 @@ def source_repo(tmp_path):
     git(repo, "init", "-q")
     git(repo, "config", "user.name", "Stash Source Test")
     git(repo, "config", "user.email", "stash-source@example.invalid")
-    (scrapers / "Trance.yml").write_text(
+    (scrapers / "TRANCE_VIDEO.yml").write_text(
         "name: Trance\nsceneByURL:\n  - action: scrapeXPath\n    url: [example.org/product/]\n    scraper: detail\n",
         encoding="utf-8",
     )
-    (scrapers / "GetFilm.yml").write_text(
+    (scrapers / "GET_FILM.yml").write_text(
         "name: Get Film\nsceneByURL:\n  - action: scrapeXPath\n    url: [example.net/scene/]\n    scraper: detail\n",
         encoding="utf-8",
     )
-    (scrapers / "Trance.test.yaml").write_text("url: https://example.org/", encoding="utf-8")
+    (scrapers / "TRANCE_VIDEO.test.yaml").write_text("url: https://example.org/", encoding="utf-8")
     nested = scrapers / "private"
     nested.mkdir()
     (nested / "Hidden.yml").write_text("name: Hidden\n", encoding="utf-8")
@@ -49,11 +49,11 @@ def source_repo(tmp_path):
 def test_index_has_official_fields_and_real_checksums(source_repo, tmp_path):
     output = tmp_path / "site" / "main"
     entries = build(source_repo, output)
-    assert [row["id"] for row in entries] == ["GetFilm", "Trance"]
+    assert [row["id"] for row in entries] == ["GET_FILM", "TRANCE_VIDEO"]
     assert all(row["version"] and row["date"] and len(row["sha256"]) == 64 for row in entries)
     assert not any("private" in str(row).lower() for row in entries)
     assert yaml.safe_load((output / "index.yml").read_text()) == entries
-    assert sorted(p.name for p in output.iterdir()) == ["GetFilm.zip", "Trance.zip", "index.yml"]
+    assert sorted(p.name for p in output.iterdir()) == ["GET_FILM.zip", "TRANCE_VIDEO.zip", "index.yml"]
     for row in entries:
         package = output / row["path"]
         assert sha256(package.read_bytes()).hexdigest() == row["sha256"]
@@ -70,7 +70,7 @@ def test_index_has_official_fields_and_real_checksums(source_repo, tmp_path):
 def test_tampered_package_and_manifest_fail(source_repo, tmp_path):
     output = tmp_path / "site"
     build(source_repo, output)
-    with (output / "Trance.zip").open("ab") as out:
+    with (output / "TRANCE_VIDEO.zip").open("ab") as out:
         out.write(b"tampering")
     with pytest.raises(SourceError, match="checksum"):
         verify(output)
@@ -85,16 +85,16 @@ def test_tampered_package_and_manifest_fail(source_repo, tmp_path):
 def test_new_committed_version_changes_only_affected_package(source_repo, tmp_path):
     output = tmp_path / "site"
     before = build(source_repo, output)
-    filename = source_repo / "scrapers" / "Trance.yml"
+    filename = source_repo / "scrapers" / "TRANCE_VIDEO.yml"
     filename.write_text(filename.read_text() + "\n# documented update\n", encoding="utf-8")
-    git(source_repo, "add", "scrapers/Trance.yml")
+    git(source_repo, "add", "scrapers/TRANCE_VIDEO.yml")
     git(source_repo, "commit", "-qm", "update Trance")
     after = build(source_repo, output)
     old = {r["id"]: r for r in before}
     new = {r["id"]: r for r in after}
-    assert old["Trance"]["sha256"] != new["Trance"]["sha256"]
-    assert old["Trance"]["version"] != new["Trance"]["version"]
-    assert old["GetFilm"] == new["GetFilm"]
+    assert old["TRANCE_VIDEO"]["sha256"] != new["TRANCE_VIDEO"]["sha256"]
+    assert old["TRANCE_VIDEO"]["version"] != new["TRANCE_VIDEO"]["version"]
+    assert old["GET_FILM"] == new["GET_FILM"]
 
 
 @pytest.mark.parametrize("bad_yaml,expected", [
@@ -108,7 +108,7 @@ def test_new_committed_version_changes_only_affected_package(source_repo, tmp_pa
     ("# requires: absent-package\nname: Unsafe\n", "unpublished package"),
 ])
 def test_unsafe_or_uninstallable_scrapers_fail_closed(source_repo, tmp_path, bad_yaml, expected):
-    (source_repo / "scrapers" / "Trance.yml").write_text(bad_yaml, encoding="utf-8")
+    (source_repo / "scrapers" / "TRANCE_VIDEO.yml").write_text(bad_yaml, encoding="utf-8")
     with pytest.raises(SourceError, match=expected):
         build(source_repo, tmp_path / "site")
 
