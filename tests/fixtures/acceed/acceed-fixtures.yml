@@ -1,3 +1,8 @@
+# ACCEED fixture manifest — extended 2026-11-01 for STASH-E2E-09.
+# The scraper key enables mappedExpect (production YAML field
+# assertions) so the product-page guard is enforced in CI via
+# tools/run_fixture_manifests.py / tools/verify-scraper-fixtures.mjs.
+scraper: scrapers/ACCEED.yml
 cases:
   - name: "ACCEED detail ACST270"
     classification: completed
@@ -12,6 +17,19 @@ cases:
         min: 1
         max: 1
         values: ["ACST270"]
+    mappedExpect:
+      # Positive control: guarded selectors still extract full metadata
+      # from a committed product fixture (guard must not suppress it).
+      - field: Title
+        values: ["拘束したノンケを喰う！"]
+      - field: Code
+        values: ["ACST270"]
+      - field: Image
+        values: ["https://acceed.jp/pic_base/product/ACST270/ACST270_l.jpg"]
+      - field: Studio.Name
+        values: ["ノンケ喰い"]
+      - field: URLs
+        values: ["{inputURL}"]
     optionalField:
       xpath: "//ul[contains(@class,'thongso')]//input[@name='nonexistent-marker-xyz']/@value"
       expectedCount: 0
@@ -28,6 +46,79 @@ cases:
         min: 1
         max: 1
         values: ["ACST397"]
+    mappedExpect:
+      - field: Title
+        values: ["美少年巨根伝説。～K-POPアイドルの卵の18歳少年の驚きの20センチ巨根を弄る！～"]
+      - field: Code
+        values: ["ACST397"]
+      # Series (Studio) is absent on this page — it must STAY absent
+      # (no fabricated value) instead of leaking a template string.
+      - field: Studio.Name
+        values: []
+  - name: "ACCEED detail ACST430"
+    classification: completed
+    html: "detail-ACST430.html"
+    locale:
+      text: "くすぐり地獄"
+    expect:
+      - xpath: "//div[@id='content4']//blockquote/h2/text()[normalize-space()][1]"
+        min: 1
+        max: 1
+      - xpath: "//ul[contains(@class,'thongso')]//input[@name='product_code']/@value"
+        min: 1
+        max: 1
+        values: ["ACST430"]
+    mappedExpect:
+      - field: Title
+        values: ["くすぐり地獄～20㎝超えのメガマラ男子・あおがくすぐりの餌食に！くすぐられ暴れまくってメガマラがブルンブルンと揺れまくる！！～"]
+      - field: Code
+        values: ["ACST430"]
+      - field: Studio.Name
+        values: ["くすぐり地獄"]
+  - name: "ACCEED anonymous login redirect (STASH-E2E-09 negative)"
+    # Sanitized offline model of the QA-v2-reported anonymous behavior:
+    # /detail.*.html redirects to the site login page, which reuses the
+    # site-wide heading template. The UNGUARDED XPath below (kept as the
+    # red premise) matches ログイン on this page; the production
+    # sceneScraper must extract NOTHING from it (all mappedExpect empty).
+    classification: completed
+    html: "auth-login-redirect.html"
+    locale:
+      lang: "ja"
+      text: "ログイン"
+    expect:
+      # Red premise: the site-template heading pattern does match on a
+      # login page — this is the leak the E2E-09 guard removes.
+      - xpath: "//div[@id='content4']//blockquote/h2/text()[normalize-space()][1]"
+        min: 1
+        max: 1
+        values: ["ログイン"]
+      # Product marker must be absent on the login page.
+      - xpath: "//ul[contains(@class,'thongso')]"
+        min: 0
+        max: 0
+    mappedExpect:
+      - field: Title
+        values: []
+      - field: Code
+        values: []
+      - field: Details
+        values: []
+      - field: Image
+        values: []
+      - field: Studio.Name
+        values: []
+      - field: Tags.Name
+        values: []
+      - field: Performers.Name
+        values: []
+      - field: Performers.URL
+        values: []
+      # Documented residual: URLs echoes the user-supplied input URL (it
+      # is not site-derived data); asserted explicitly so the limitation
+      # stays visible instead of silent.
+      - field: URLs
+        values: ["{inputURL}"]
   - name: "ACCEED Cloudflare challenge"
     classification: failure
     html: "failure-cloudflare.html"
