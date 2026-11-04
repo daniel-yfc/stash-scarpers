@@ -45,26 +45,26 @@
 #   keyword sits only in a work title inside an <li>: under the graded
 #   Country rule, work titles are not Country evidence (they never reach
 #   the Aliases lines either, which read <p> text only).
-# Image + Tags expectations for the same thirteen pages (verified
+# Images + Tags expectations for the same thirteen pages (verified
 # 2026-11-03 by executing the shipped selectors + javascript against the
 # rendered HTML; Tags additionally logic-checked on the other 43 verified
 # performer pages — 56 pages, 15 distinct footer tags, closed allowlist
-# of 8 JP-only names, user ruling 2026-11-03). Image value is the full
+# of 8 JP-only names, user ruling 2026-11-03). Images value is the full
 # uploads URL ending in the filename shown; Tags are in page order:
-# 159685: Image=.../159685_30.jpg, Tags=[]
-# 54676: Image=.../54676.webp, Tags=[日焼/色黒]
-# 161913: Image=.../161913_41.jpg, Tags=[刺青]
-# 22153: Image=.../22153-1.jpg.webp, Tags=[]
-# 6180: Image=.../6180_39.jpg, Tags=[]
-# 161064: Image=.../161064_09.jpg, Tags=[]
-# 161611: Image=.../161611_02.jpg, Tags=[刺青]
-# 53003: Image=.../53003.webp, Tags=[]
-# 117270: Image=.../117270.jpg, Tags=[]
-# 72533: Image=.../72533.jpg, Tags=[]
-# 6142: Image=.../6142_47.jpg, Tags=[刺青, 髭]
-# 6155: Image=.../32848.jpg.webp (cover-style crop, plain first-img rule
+# 159685: Images=.../159685_30.jpg, Tags=[]
+# 54676: Images=.../54676.webp, Tags=[日焼/色黒]
+# 161913: Images=.../161913_41.jpg, Tags=[刺青]
+# 22153: Images=.../22153-1.jpg.webp, Tags=[]
+# 6180: Images=.../6180_39.jpg, Tags=[]
+# 161064: Images=.../161064_09.jpg, Tags=[]
+# 161611: Images=.../161611_02.jpg, Tags=[刺青]
+# 53003: Images=.../53003.webp, Tags=[]
+# 117270: Images=.../117270.jpg, Tags=[]
+# 72533: Images=.../72533.jpg, Tags=[]
+# 6142: Images=.../6142_47.jpg, Tags=[刺青, 髭]
+# 6155: Images=.../32848.jpg.webp (cover-style crop, plain first-img rule
 #   accepted by user ruling 2026-11-03), Tags=[日焼/色黒, 髭]
-# 6194: Image=.../6194_49.jpg, Tags=[日焼/色黒, 髭]
+# 6194: Images=.../6194_49.jpg, Tags=[日焼/色黒, 髭]
 # No probes: the scraper is performerByURL only, no search modes exist.
 urls:
   - https://md.gvdb.org/159685/
