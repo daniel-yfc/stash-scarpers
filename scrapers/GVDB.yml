@@ -79,8 +79,10 @@
 # mapping was additionally checked at the logic level against the footer
 # tag lists of the other 43 verified performer pages (56 pages total, 15
 # distinct footer tags, 8 kept by the closed allowlist).
-# Stash runtime load test NOT yet done: validator pass is not runtime
-# evidence.
+# Stash runtime (production lxc:9999, 2026-11-03/04): all fields live
+# at 130/143 — every field correct except the performer image, whose
+# root cause is documented at the Images field below; the fix there is
+# pending its own runtime re-test.
 name: GVDB
 
 driver:
@@ -305,19 +307,25 @@ xPathScrapers:
         # The performer's GVDB page (canonical), then every link in the
         # "[ Subscription Channel ]" list when the section exists.
         selector: "//link[@rel='canonical']/@href | //div[contains(concat(' ', normalize-space(@class), ' '), ' entry-content ')]/p[contains(normalize-space(.),'Subscription Channel')]/following-sibling::ul[1]//a/@href"
-      Image:
+      Images:
         # Plain first-image rule (user ruling 2026-11-03): the first <img>
         # in .entry-content is the profile photo on all thirteen samples
         # (it precedes every "[ Studio ]" heading); later images are work
         # stills. 6155's first image is a cover-style crop — accepted.
-        # Selector form: simple predicate, NOT the parenthesized
-        # "($entry//img)[1]" — Stash's XPath engine (antchfx) silently
-        # returns empty for the parenthesized positional form (runtime
-        # evidence 2026-11-03: every other field incl. Tags live, Image
-        # null on 13/13). "//img[1]" matches every first-img-of-its-parent
-        # and Stash takes the document-order first, which is the same
-        # node; equivalence verified on all thirteen samples.
-        selector: "$entry//img[1]/@src"
+        # Field MUST be the plural "Images". The singular "Image" field
+        # is deprecated for performer scrapers: Stash downloads a
+        # singular Image URL server-side and replaces it with the fetched
+        # bytes (pkg/scraper/image.go, setPerformerImage), silently
+        # dropping it when the fetch fails. md.gvdb.org refuses
+        # non-browser fetches — the very reason this scraper needs CDP —
+        # so a singular Image always came back empty at runtime
+        # (production evidence 2026-11-03/04: 130/143 with Image null on
+        # 13/13, under two different selector shapes; the selector was
+        # never the problem). "Images" values pass through as URLs
+        # untouched. The selector is scoped to the first paragraph (the
+        # profile block, which holds the profile photo on all thirteen
+        # samples) so exactly one image matches.
+        selector: "$entry/p[1]//img[1]/@src"
       Tags:
         Name:
           # Closed allowlist (user ruling 2026-11-03) over the article
