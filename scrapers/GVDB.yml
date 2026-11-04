@@ -310,7 +310,14 @@ xPathScrapers:
         # in .entry-content is the profile photo on all thirteen samples
         # (it precedes every "[ Studio ]" heading); later images are work
         # stills. 6155's first image is a cover-style crop — accepted.
-        selector: "($entry//img)[1]/@src"
+        # Selector form: simple predicate, NOT the parenthesized
+        # "($entry//img)[1]" — Stash's XPath engine (antchfx) silently
+        # returns empty for the parenthesized positional form (runtime
+        # evidence 2026-11-03: every other field incl. Tags live, Image
+        # null on 13/13). "//img[1]" matches every first-img-of-its-parent
+        # and Stash takes the document-order first, which is the same
+        # node; equivalence verified on all thirteen samples.
+        selector: "$entry//img[1]/@src"
       Tags:
         Name:
           # Closed allowlist (user ruling 2026-11-03) over the article
