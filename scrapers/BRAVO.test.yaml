@@ -1,12 +1,15 @@
 # BRAVO live-test fixtures (browser verified 2026-10-06)
 # NOTE: site has no search box; custom keyword probes N/A.
 # 2026-11-01 (Wave 1B): Clips URLs only. The 7 dvds/ URLs added 2026-10-17
-# were never routed (sceneByURL is Clips-only) and are reserved for Wave 2E
-# (feat/e2e-bravo-dvds); listing them here implied DVD support that does
-# not exist in this branch. They are removed from this list, not deleted
-# from history, and Wave 2E will re-add them with a dvdSceneScraper.
+# were never routed (sceneByURL is Clips-only) and were reserved for
+# Wave 2E; listing them implied DVD support that did not exist then.
+# 2026-11-04 (Wave 2E, Agent F): dvdSceneScraper is implemented, so the
+# three G1-accepted DVD product URLs are listed again (234/084/046).
 urls:
   - https://www.bravo-japan.com/clips/284
   - https://www.bravo-japan.com/clips/282
   - https://www.bravo-japan.com/clips/283
+  - https://www.bravo-japan.com/dvds/234
+  - https://www.bravo-japan.com/dvds/084
+  - https://www.bravo-japan.com/dvds/046
 multi: true

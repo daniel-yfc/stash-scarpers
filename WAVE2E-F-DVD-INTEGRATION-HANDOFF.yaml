@@ -1,0 +1,181 @@
+ASSIGNMENT_ID: WAVE2E-F-DVD-INTEGRATION-20261104-R3
+ROLE: Agent F
+WORKSTREAMS:
+  - WS-2E-30
+  - WS-2E-50
+  - WS-2E-70
+
+REPOSITORY: daniel-yfc/stash-scarpers
+BRANCH: feat/e2e-bravo-dvds
+
+BASE_SHA: ff236c9e91e27321e93f59d2bf12488db714dfc7
+HEAD_SHA: 84f7a2cda4f70938d6f4c2de54ff6763c3dbc535
+HEAD_SHA_SCOPE: >-
+  Tested candidate head (feat eaec398 + test integration 84f7a2c).
+  The report/handoff docs commit sits on top and changes no code.
+
+G0: ACCEPTED_CLOSED
+G1: ACCEPTED_CLOSED_FOR_SOURCE_EVIDENCE
+
+G1_QA_SHA: 37ea85192aa31da83e39c52d5c0649561523b77d
+G1_CONTROLLER_ACCEPTANCE_SHA: d7429e92dd0ccc7eea0ab361014ff49c8b18c4f2
+AGENT_A_SHA: b2f41e179984049940a1e3b1d0754d8c25b0b0da
+AGENT_B_SHA: 1f147f1059f0a183216a9d7c90f118f872690dbf
+AGENT_C_SHA: 8c9daf2ddfbdd06877c850608ee3f8b366b0e8f5
+
+CLIPS_DURATION_MAPPING: OMIT
+DVD_DURATION_MAPPING: OMIT
+DVD_STUDIO_MAPPING: OMIT
+DVD_TAGS_MAPPING: OMIT
+DVD_PERFORMERS_MAPPING: OMIT
+DURATION_RESTORATION_READINESS: PRESERVE
+DURATION_SOURCE_EVIDENCE: >-
+  Source XPath //h2[contains(.,'収録時間')]/following::h2[1] with whole-DVD
+  minutes preserved in bravo-dvds-fixtures.yml expect blocks and
+  AGENT_A_VERIFIED (234:110, 084:140, 281:120, 046:260, 377:110, 384:100;
+  seconds = minutes x 60). Not present in production YAML.
+
+QUERY_FRAGMENT_DECISION: REMOVE_ORPHAN_QUERY_FRAGMENT_IN_WAVE2E
+QUERY_FRAGMENT_CONSUMER_AUDIT: ORPHAN_CONFIRMED_NO_INDISPENSABLE_CONSUMER
+QUERY_FRAGMENT_AUDIT_SCOPE: >-
+  Full-repo grep on main for sceneByQueryFragment/QueryFragment across
+  py/yml/yaml/md/mjs/js/sh/json; .github/workflows; GraphQL tooling.
+  Only BRAVO itself, F-owned and generic when-present checks, the
+  docs/21 generic sceneByName-companion policy, and Agent B tests were
+  found. BRAVO has no sceneByName. External Stash usage records are
+  outside repo visibility (accepted by the docs/66 decision).
+QUERY_FRAGMENT_IMPLEMENTATION: REMOVED
+SCENE_BY_FRAGMENT: ABSENT
+
+DVD_SCRAPER_STATUS: IMPLEMENTED_OFFLINE_VERIFIED
+DVD_FIELDS_MAPPED:
+  - Title
+  - Code
+  - URLs
+  - Details
+  - Date
+  - Image
+DVD_VALIDITY_GATE: TEST_LEVEL_ENFORCED
+DVD_VALIDITY_RESIDUAL_RISK: BLOCKED_UNSAFE_PARTIAL_METADATA
+DVD_VALIDITY_NOTE: >-
+  Identity contract (hinban marker + non-empty Title + non-empty Code +
+  canonical match) is enforced at the offline test level only. Stash
+  populates XPath fields independently: on a 404 DVD page the URLs
+  (canonical) field still resolves, and the YAML layer has no
+  cross-field guard to suppress that partial result. Runtime
+  acceptance is a Controller/Gate B decision. See report section 5.
+ROUTING_TEST_STATUS: PASS_OFFLINE
+GATE_A: PASS_WITH_PREEXISTING_BASELINE_FORMAT_FAILURE_NOTED
+GATE_B: NOT_RUN
+GATE_C: NOT_RUN
+
+CHANGED_FILES:
+  - scrapers/BRAVO.yml
+  - scrapers/BRAVO.test.yaml
+  - tools/tests/test_bravo_clips.py
+  - tests/fixtures/bravo/bravo-clips-fixtures.yml
+  - tools/tests/test_bravo_dvd_routes.py
+  - tools/tests/test_bravo_dvds.py
+  - tests/fixtures/bravo/bravo-dvds-fixtures.yml
+  - tests/fixtures/bravo/dvd-mutation-harness.html
+  - tests/fixtures/bravo/dvd-synthetic-046.html
+  - tests/fixtures/bravo/dvd-synthetic-084.html
+  - tests/fixtures/bravo/dvd-synthetic-234.html
+  - tests/fixtures/bravo/dvd-synthetic-281.html
+  - tests/fixtures/bravo/dvd-synthetic-377.html
+  - tests/fixtures/bravo/dvd-synthetic-384.html
+  - tests/fixtures/bravo/dvd-synthetic-404-00.html
+  - tests/fixtures/bravo/dvd-synthetic-404-999999.html
+  - tests/fixtures/bravo/dvd-synthetic-cloudflare-challenge.html
+  - tests/fixtures/bravo/dvd-synthetic-logo-empty-alt.html
+  - WAVE2E-F-DVD-INTEGRATION-REPORT.md
+  - WAVE2E-F-DVD-INTEGRATION-HANDOFF.yaml
+
+IMPORTED_COMMITS:
+  - source: Agent B test/e2e-bravo-dvd-routing @ 1f147f1
+    method: selective checkout of tools/tests/test_bravo_dvd_routes.py only
+    adaptations: >-
+      Retired 5 EXPECTED_RED markers (implementation landed); candidate
+      builder made idempotent. KNOWN_UPSTREAM_LIMITATION xfails kept.
+  - source: Agent C test/e2e-bravo-dvd-fixtures @ 8c9daf2
+    method: selective checkout of DVD manifest, 11 fixture files, tools/tests/test_bravo_dvds.py
+    adaptations: >-
+      Three mutation-harness premises updated for the merged G0 baseline
+      (Clips Duration field removed and Details selector replaced by
+      PR #93; /dvds/ route now legitimate so the routeThrough mutation
+      uses a foreign-host canonical). No DVD manifest expectation changed.
+  - source: Agent A research/e2e-bravo-dvd-dom @ b2f41e1
+    method: read-only XPath evidence reference; no files imported
+  - source: Agent D / G1 acceptance @ 37ea851 / d7429e9
+    method: read-only QA evidence; no files imported
+
+DELIVERABLES:
+  - WAVE2E-F-DVD-INTEGRATION-REPORT.md
+  - WAVE2E-F-DVD-INTEGRATION-HANDOFF.yaml
+
+TEST_RESULTS:
+  - command: "npm ci"
+    exit_code: 0
+  - command: "node validator/index.mjs -a --ci"
+    exit_code: 0
+    result: Validation passed
+  - command: "npm run validate-sort"
+    exit_code: 0
+    result: Validation passed
+  - command: "bash tools/validate-all.sh"
+    exit_code: 0
+    result: "24/24 PASS including scrapers/BRAVO.yml"
+  - command: "python -m pytest tools/tests/ -v (counts via -q)"
+    exit_code: 0
+    result: "417 passed, 2 skipped, 3 xfailed"
+  - command: "python tools/run_fixture_manifests.py"
+    exit_code: 0
+    result: "20 manifests PASS; bravo clips 11 cases, dvds 10 cases, historical 3 cases"
+  - command: "python tools/check_evidence_contract.py"
+    exit_code: 0
+    result: "17 records, 0 failures"
+  - command: "python tools/check_docs_index.py"
+    exit_code: 0
+    result: "51 documents OK"
+  - command: "python tools/check_scraper_semantics.py"
+    exit_code: 0
+  - command: "python tools/scan_session_material.py"
+    exit_code: 0
+    result: "369 tracked files passed (pre-docs-commit count)"
+  - command: "npm run format:check"
+    exit_code: 1
+    result: >-
+      Pre-existing baseline failure: pristine main also exits 1 with 24
+      files; no file changed by this assignment is in the warning list.
+  - command: "python tools/build_scraper_source.py --output <dir> && --verify-only"
+    exit_code: 0
+    result: "22 public packages; integrity OK"
+
+EVIDENCE:
+  - "BRAVO.zip SHA-256: 815f49928a9ee4d4445983c810c664ecffca5f7cd3adb2d992f09dd69e7bd283 (index version eaec398)"
+  - "scrapers/BRAVO.yml SHA-256: 33f324b541fdacc59c8d7b4403aef0c4997f68683c56ac58784958c7540814be"
+  - "Historical manifest tests/fixtures/bravo/bravo-fixtures.yml SHA-256 unchanged: be1885d2097683e8c4ae5f2440120e8bd7945ac16f62c1910ac87e5d009d39b2"
+  - "Clips xPathScrapers block and driver parsed-identical to main (programmatic comparison)"
+  - "Date/Image/Title/Code postProcess offline proof: 9/9 cases PASS against Agent A verified values (runner-identical vm execution)"
+  - "PR #99 DVD manifest status change: red (missing dvdSceneScraper) -> green, 10 cases verified"
+
+KNOWN_LIMITATIONS:
+  - "BLOCKED_UNSAFE_PARTIAL_METADATA: 404 DVD pages still yield the URLs (canonical) field at YAML level; no cross-field suppression exists in Stash XPath semantics."
+  - "Stash strings.Contains URL matching: lookalike hosts and query-embedded foreign-family URLs can collide (3 strict-xfail evidence tests); not YAML-fixable."
+  - "Post-removal QueryFragment live behaviour (clean unsupported vs upstream panic, issue #97) is unverified offline; Gate B must classify QF-234/084/284."
+  - "084 soldout rejection is a filename-level guard based on Agent A's documented BR-084soldout.jpg; live 084 src form must be confirmed at Gate B."
+  - "Date parseDate error path for empty/non-matching values is unverified against the Stash runtime; all 9 verified pages match the Japanese format."
+  - "GitHub Actions and CodeQL not run (no push in this assignment); must be checked at the exact pushed HEAD."
+
+RISKS_AND_DECISIONS:
+  - "WS-2E-QF-001 removal applied after ORPHAN_CONFIRMED audit; no DECISION_EXCEPTION."
+  - "Date and Image are production-mapped per assignment section 6 (format-validated Date; genuine-image-only Image with soldout rejection); Agent C v2.3 manifest keeps them out of mappedExpect by its own offline-runner limits, and expect blocks retain source provenance. The manifest was not altered to claim them."
+  - "Residual partial-metadata risk requires a Controller decision before release; it is not silently accepted here."
+
+STASH_TEST_AUTHORIZATION: NOT_GRANTED
+PRODUCTION_DEPLOYMENT: NOT_AUTHORIZED
+MERGE_AUTHORIZATION: NOT_GRANTED
+
+PR_STATUS: NOT_CREATED
+PUSH_STATUS: NOT_PUSHED_LOCAL_ONLY
+HANDOFF_STATUS: IMPLEMENTATION_COMPLETE_OFFLINE__GATE_B_NOT_RUN

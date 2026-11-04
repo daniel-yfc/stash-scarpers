@@ -33,15 +33,66 @@ def load():
 
 
 def test_clips_route_uses_clip_scraper_only():
+    # Wave 2E (Agent F): the Clips route itself is unchanged and stays
+    # first; the DVD route is a separate second entry (see the DVD
+    # routing assertions below). "Clips-only" here means the Clips
+    # route's patterns and handler, not the whole sceneByURL list.
     data = load()
     routes = data["sceneByURL"]
-    assert len(routes) == 1
-    assert routes[0]["scraper"] == "clipSceneScraper"
-    patterns = routes[0]["url"]
+    clips = routes[0]
+    assert clips["scraper"] == "clipSceneScraper"
+    patterns = clips["url"]
     assert patterns == sorted(patterns)
     assert all("/clips/" in p for p in patterns)
     assert not any("/dvds/" in p for p in patterns)
     assert "clipSceneScraper" in data["xPathScrapers"]
+
+
+def test_dvd_route_uses_dvd_scraper():
+    data = load()
+    routes = data["sceneByURL"]
+    assert len(routes) == 2
+    dvds = routes[1]
+    assert dvds["scraper"] == "dvdSceneScraper"
+    patterns = dvds["url"]
+    assert patterns == sorted(patterns)
+    assert all("/dvds/" in p for p in patterns)
+    assert not any("/clips/" in p for p in patterns)
+    assert "dvdSceneScraper" in data["xPathScrapers"]
+
+
+def test_dvd_scraper_production_policy():
+    # Wave 2E production mapping policy (Controller / Agent C v2.3):
+    # Title / Code / URLs / Details / Date / Image only. Duration,
+    # Studio, Tags and Performers must stay unmapped, and every
+    # selector must be Agent A's G1-accepted verified XPath.
+    data = load()
+    dvd = data["xPathScrapers"]["dvdSceneScraper"]["scene"]
+    assert set(dvd) == {"Title", "Code", "URLs", "Details", "Date", "Image"}
+    assert "Duration" not in dvd
+    assert "Studio" not in dvd
+    assert "Tags" not in dvd
+    assert "Performers" not in dvd
+    assert dvd["Title"]["selector"] == "//h2[contains(.,'品番')]/preceding::h2[2]"
+    assert dvd["Code"]["selector"] == "//h2[contains(.,'品番')]/following::h2[1]"
+    assert dvd["URLs"]["selector"] == "//link[@rel='canonical']/@href"
+    assert dvd["Details"]["selector"] == "//p[contains(@class,'font_8')]"
+    assert dvd["Date"]["selector"] == "//h2[contains(.,'発売日')]/following::h2[1]"
+    assert dvd["Image"]["selector"] == "//img[@alt!='' and contains(@src,'wixstatic')]/@src"
+    # Date: Japanese format is validated + normalised by javascript,
+    # then parsed with the standard Go layout; nothing else is a
+    # production Date path.
+    date_steps = dvd["Date"]["postProcess"]
+    assert any("javascript" in s for s in date_steps)
+    assert date_steps[-1] == {"parseDate": "2006-01-02"}
+    # Image: the 084 sold-out artwork must never become a cover; the
+    # rejection lives in the Image postProcess, not in a comment only.
+    image_steps = dvd["Image"]["postProcess"]
+    image_js = " ".join(str(s.get("javascript", "")) for s in image_steps)
+    assert "soldout" in image_js
+    assert "soldout" in BRAVO.read_text(encoding="utf-8")
+    # No unsupported kill-switch style keys anywhere in the DVD block.
+    assert "enabled" not in str(data["xPathScrapers"]["dvdSceneScraper"])
 
 
 def test_no_direct_scene_by_fragment():
@@ -49,11 +100,18 @@ def test_no_direct_scene_by_fragment():
     assert "sceneByFragment" not in data
 
 
-def test_query_fragment_preserves_url():
+def test_query_fragment_removed_wave2e():
+    # WS-2E-QF-001 (REMOVE_ORPHAN_QUERY_FRAGMENT_IN_WAVE2E): BRAVO has
+    # no sceneByName, so sceneByQueryFragment was an orphan bound to
+    # clipSceneScraper that applied Clips mappings to DVD URLs (Agent B
+    # false-metadata reproduction). Wave 2E removes the entry entirely;
+    # sceneByFragment stays absent. The runtime outcome of a direct
+    # QueryFragment call after removal (clean unsupported vs upstream
+    # panic, issue #97) is a Gate B question, not asserted here.
     data = load()
-    qf = data["sceneByQueryFragment"]
-    assert qf["queryURL"] == "{url}"
-    assert qf["scraper"] == "clipSceneScraper"
+    assert "sceneByQueryFragment" not in data
+    assert "sceneByFragment" not in data
+    assert "sceneByName" not in data
 
 
 def test_clip_selectors_are_not_dvd_selectors():
