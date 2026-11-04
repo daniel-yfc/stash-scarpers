@@ -31,7 +31,7 @@ Base artifacts: RAW-DOM-VERIFICATION-ADDENDUM.md (16224b4), xpath-evaluation-res
 - **維持基線**：九個產品頁 record＋兩個 404 record 不受新揭開流程影響；不再追加一般網站調查。
 
 ## 5. 新設置交付物 SHA-256
-- `g1-priority-dom-excerpts.json`：055aff9236f236694cacb6504380a54376249d81275ff81644df6bd0f6089d59；404 頁 trim 只含全 2 h2＋canonical/og/title（剩欄位皆空列表）。
+- `g1-priority-dom-excerpts.json`：**f8c3da0a2c8c33753d55c4ca80122e567eb5c73eace1214d1f0ee3dba141d8dc**（content SHA-256，已於 2026-11-04 驗證與 committed blob `ab93917c8fe5562f6a614f54df709e9bb54c3158` 一致）。**更正**：原先本檔誤植為 `055aff9236f236694cacb6504380a54376249d81275ff81644df6bd0f6089d59`（為 excerpts 產生後之陳舊 digest，excerpts 曾於 trim 修訂後未同步更新此處陳述）。
 
 ## 6. Handoff
 ```yaml
@@ -47,7 +47,7 @@ CHANGED_FILES:
   - docs/research/wave2e/g1-priority-dom-excerpts.json
 DELIVERABLES:
   - "G1-CLOSURE-ADDENDUM.md (reconciliation item mapping + section 2 status claims)"
-  - "g1-priority-dom-excerpts.json sha256=055aff9236f236694cacb6504380a54376249d81275ff81644df6bd0f6089d59"
+  - "g1-priority-dom-excerpts.json sha256=f8c3da0a2c8c33753d55c4ca80122e567eb5c73eace1214d1f0ee3dba141d8dc"
 EVIDENCE: []
 TEST_RESULTS:
   - "excerpt generation + SHA-256 self-check: PASS"
