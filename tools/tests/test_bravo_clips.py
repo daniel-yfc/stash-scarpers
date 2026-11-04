@@ -111,20 +111,73 @@ DEFERRED_DURATION_CASES = [
 
 
 def _deferred_duration_seconds(html_name):
-    import re
+    """Mirror the deferred selector's semantics with the stdlib only.
 
-    from lxml import html as lxml_html
+    CI installs only requirements.txt (pytest / pyyaml / jsonschema),
+    so lxml is NOT available there (f4be5cf Full Test job failed on
+    ``ModuleNotFoundError: No module named 'lxml'``); no other test
+    in this file parses HTML, so no lxml dependency is introduced.
+    The mirror implements the selector exactly: anchor on the h2
+    whose normalized text is "Clip", then the first following h2
+    whose U+200B-stripped normalized text is non-empty and starts
+    with a digit; conversion is first digit group x 60, fail-closed.
+    """
+    import re
+    from html.parser import HTMLParser
+
+    class _H2Collector(HTMLParser):
+        def __init__(self):
+            super().__init__(convert_charrefs=True)
+            self.h2_texts = []
+            self._in_h2 = False
+            self._buf = []
+
+        def handle_starttag(self, tag, attrs):
+            if tag == "h2" and not self._in_h2:
+                self._in_h2 = True
+                self._buf = []
+
+        def handle_endtag(self, tag):
+            if tag == "h2" and self._in_h2:
+                self._in_h2 = False
+                self.h2_texts.append("".join(self._buf))
+                self._buf = []
+
+        def handle_data(self, data):
+            if self._in_h2:
+                self._buf.append(data)
+
+    def _norm(text):
+        return " ".join(text.replace("\u200b", "").split())
 
     fixture = ROOT / "tests" / "fixtures" / "bravo" / html_name
-    tree = lxml_html.fromstring(fixture.read_bytes().decode("utf-8"))
-    found = tree.xpath(DEFERRED_DURATION_SELECTOR)
-    if not found:
+    collector = _H2Collector()
+    # Fixture HTMLs carry no charset meta; decode explicitly as UTF-8
+    # (byte parsing would misread Japanese).
+    collector.feed(fixture.read_text(encoding="utf-8"))
+    texts = collector.h2_texts
+    try:
+        anchor = next(i for i, t in enumerate(texts) if _norm(t) == "Clip")
+    except StopIteration:
         return None
-    text = found[0].text_content().strip()
-    match = re.search(r"(\d+)", text)
-    if not match:
-        return None
-    return int(match.group(1)) * 60
+    for text in texts[anchor + 1 :]:
+        norm = _norm(text)
+        if norm and norm[0] in "0123456789":
+            match = re.search(r"(\d+)", norm)
+            if not match:
+                return None
+            return int(match.group(1)) * 60
+    return None
+
+
+def test_no_lxml_dependency():
+    # Regression guard for the f4be5cf CI failure: this file must run
+    # under CI's requirements.txt, which has no lxml. (The word may
+    # appear in comments explaining why; only an import is banned.)
+    import re
+
+    text = Path(__file__).read_text(encoding="utf-8")
+    assert re.search(r"^ *(from|import) lxml\b", text, re.M) is None
 
 
 def test_deferred_duration_selector_shape():
