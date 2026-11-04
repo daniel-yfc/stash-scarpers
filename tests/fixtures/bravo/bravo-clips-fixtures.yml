@@ -37,17 +37,23 @@ cases:
       text: "284"
     mappedExpect:
       - field: Title
+        scraper: clipSceneScraper
         values: ["デカマラ同士 目隠し交尾"]
       - field: Code
+        scraper: clipSceneScraper
         values: ["284"]
       - field: URLs
+        scraper: clipSceneScraper
         routeThrough: sceneByURL
         values: ["https://www.bravo-japan.com/clips/284"]
       - field: Details
+        scraper: clipSceneScraper
         values: ["フィクスチャ用 284 の説明文です。"]
       - field: Tags.Name
+        scraper: clipSceneScraper
         values: ["テスト,フィクスチャ"]
       - field: Image
+        scraper: clipSceneScraper
         values: ["https://example.invalid/clip-284-poster.jpg"]
     expect:
       - xpath: "//h1"
@@ -81,17 +87,23 @@ cases:
       text: "282"
     mappedExpect:
       - field: Title
+        scraper: clipSceneScraper
         values: ["初撮影ヤマト５Ｐ"]
       - field: Code
+        scraper: clipSceneScraper
         values: ["282"]
       - field: URLs
+        scraper: clipSceneScraper
         routeThrough: sceneByURL
         values: ["https://www.bravo-japan.com/clips/282"]
       - field: Details
+        scraper: clipSceneScraper
         values: ["フィクスチャ用 282 の説明文です。"]
       - field: Tags.Name
+        scraper: clipSceneScraper
         values: ["テスト,フィクスチャ"]
       - field: Image
+        scraper: clipSceneScraper
         values: ["https://example.invalid/clip-282-poster.jpg"]
     expect:
       - xpath: "//h1"
@@ -125,15 +137,20 @@ cases:
       text: "999"
     mappedExpect:
       - field: Title
+        scraper: clipSceneScraper
         values: []
       - field: Code
+        scraper: clipSceneScraper
         values: ["999"]
       - field: URLs
+        scraper: clipSceneScraper
         routeThrough: sceneByURL
         values: ["https://www.bravo-japan.com/clips/999"]
       - field: Details
+        scraper: clipSceneScraper
         values: []
       - field: Image
+        scraper: clipSceneScraper
         values: []
     expect:
       - xpath: "//h2[normalize-space()='Clip']/preceding::h2[1]"
@@ -155,17 +172,23 @@ cases:
       text: "283"
     mappedExpect:
       - field: Title
+        scraper: clipSceneScraper
         values: ["フィクスチャ用のタイトル"]
       - field: Code
+        scraper: clipSceneScraper
         values: ["283"]
       - field: URLs
+        scraper: clipSceneScraper
         routeThrough: sceneByURL
         values: ["https://www.bravo-japan.com/clips/283"]
       - field: Details
+        scraper: clipSceneScraper
         values: ["フィクスチャ用 283 の説明文です。"]
       - field: Tags.Name
+        scraper: clipSceneScraper
         values: ["テスト,フィクスチャ"]
       - field: Image
+        scraper: clipSceneScraper
         values: []
     expect:
       - xpath: "//h1"
@@ -202,17 +225,23 @@ cases:
       text: "284"
     mappedExpect:
       - field: Title
+        scraper: clipSceneScraper
         values: ["デカマラ同士 目隠し交尾"]
       - field: Code
+        scraper: clipSceneScraper
         values: ["284"]
       - field: URLs
+        scraper: clipSceneScraper
         routeThrough: sceneByURL
         values: ["https://www.bravo-japan.com/clips/284"]
       - field: Details
+        scraper: clipSceneScraper
         values: ["フィクスチャ用 284 の説明文です。"]
       - field: Tags.Name
+        scraper: clipSceneScraper
         values: ["テスト,フィクスチャ"]
       - field: Image
+        scraper: clipSceneScraper
         values: ["https://example.invalid/clip-284-poster.jpg"]
     expect:
       - xpath: "//h1"
@@ -246,17 +275,23 @@ cases:
       text: "286"
     mappedExpect:
       - field: Title
+        scraper: clipSceneScraper
         values: ["フィクスチャ用 286 のタイトル"]
       - field: Code
+        scraper: clipSceneScraper
         values: ["286"]
       - field: URLs
+        scraper: clipSceneScraper
         routeThrough: sceneByURL
         values: ["https://www.bravo-japan.com/clips/286"]
       - field: Details
+        scraper: clipSceneScraper
         values: ["フィクスチャ用 286 の説明文です。混合 rich-text 負例。"]
       - field: Tags.Name
+        scraper: clipSceneScraper
         values: ["テスト,フィクスチャ"]
       - field: Image
+        scraper: clipSceneScraper
         values: ["https://example.invalid/clip-286-poster.jpg"]
     expect:
       - xpath: "//h1"
@@ -286,17 +321,23 @@ cases:
       text: "285"
     mappedExpect:
       - field: Title
+        scraper: clipSceneScraper
         values: ["フィクスチャ用 285 のタイトル"]
       - field: Code
+        scraper: clipSceneScraper
         values: ["285"]
       - field: URLs
+        scraper: clipSceneScraper
         routeThrough: sceneByURL
         values: ["https://www.bravo-japan.com/clips/285"]
       - field: Details
+        scraper: clipSceneScraper
         values: ["フィクスチャ用 285 の説明文です。価格見出し負例。"]
       - field: Tags.Name
+        scraper: clipSceneScraper
         values: ["テスト,フィクスチャ"]
       - field: Image
+        scraper: clipSceneScraper
         values: ["https://example.invalid/clip-285-poster.jpg"]
     expect:
       - xpath: "//h1"
@@ -330,17 +371,23 @@ cases:
       text: "287"
     mappedExpect:
       - field: Title
+        scraper: clipSceneScraper
         values: ["フィクスチャ用 287 のタイトル"]
       - field: Code
+        scraper: clipSceneScraper
         values: ["287"]
       - field: URLs
+        scraper: clipSceneScraper
         routeThrough: sceneByURL
         values: ["https://www.bravo-japan.com/clips/287"]
       - field: Details
+        scraper: clipSceneScraper
         values: ["フィクスチャ用 287 の説明文です。Clip 後価格見出し負例。"]
       - field: Tags.Name
+        scraper: clipSceneScraper
         values: ["テスト,フィクスチャ"]
       - field: Image
+        scraper: clipSceneScraper
         values: ["https://example.invalid/clip-287-poster.jpg"]
     expect:
       - xpath: "//h1"
@@ -366,17 +413,23 @@ cases:
       text: "288"
     mappedExpect:
       - field: Title
+        scraper: clipSceneScraper
         values: ["フィクスチャ用 288 のタイトル"]
       - field: Code
+        scraper: clipSceneScraper
         values: ["288"]
       - field: URLs
+        scraper: clipSceneScraper
         routeThrough: sceneByURL
         values: ["https://www.bravo-japan.com/clips/288"]
       - field: Details
+        scraper: clipSceneScraper
         values: ["フィクスチャ用 288 の説明文です。Clip 後 spacer 負例。"]
       - field: Tags.Name
+        scraper: clipSceneScraper
         values: ["テスト,フィクスチャ"]
       - field: Image
+        scraper: clipSceneScraper
         values: ["https://example.invalid/clip-288-poster.jpg"]
     expect:
       - xpath: "//h1"
@@ -402,17 +455,23 @@ cases:
       text: "289"
     mappedExpect:
       - field: Title
+        scraper: clipSceneScraper
         values: ["フィクスチャ用 289 のタイトル"]
       - field: Code
+        scraper: clipSceneScraper
         values: ["289"]
       - field: URLs
+        scraper: clipSceneScraper
         routeThrough: sceneByURL
         values: ["https://www.bravo-japan.com/clips/289"]
       - field: Details
+        scraper: clipSceneScraper
         values: ["フィクスチャ用 289 の説明文です。Duration 缺席負例。"]
       - field: Tags.Name
+        scraper: clipSceneScraper
         values: ["テスト,フィクスチャ"]
       - field: Image
+        scraper: clipSceneScraper
         values: ["https://example.invalid/clip-289-poster.jpg"]
     expect:
       - xpath: "//h1"

@@ -32,16 +32,24 @@ def load():
     return yaml.safe_load(BRAVO.read_text())
 
 
-def test_clips_route_uses_clip_scraper_only():
+def test_clips_route_unchanged_and_dvd_route_added():
+    # Wave 2E: sceneByURL now carries exactly two routes — the
+    # unchanged Clips route plus the new DVD route. Clips assertions
+    # are preserved verbatim from the Wave 1B baseline.
     data = load()
     routes = data["sceneByURL"]
-    assert len(routes) == 1
+    assert len(routes) == 2
     assert routes[0]["scraper"] == "clipSceneScraper"
     patterns = routes[0]["url"]
     assert patterns == sorted(patterns)
     assert all("/clips/" in p for p in patterns)
     assert not any("/dvds/" in p for p in patterns)
     assert "clipSceneScraper" in data["xPathScrapers"]
+    assert routes[1]["scraper"] == "dvdSceneScraper"
+    dvd_patterns = routes[1]["url"]
+    assert dvd_patterns == sorted(dvd_patterns)
+    assert all("/dvds/" in p for p in dvd_patterns)
+    assert "dvdSceneScraper" in data["xPathScrapers"]
 
 
 def test_no_direct_scene_by_fragment():
@@ -49,11 +57,14 @@ def test_no_direct_scene_by_fragment():
     assert "sceneByFragment" not in data
 
 
-def test_query_fragment_preserves_url():
+def test_query_fragment_removed():
+    # WS-2E-QF-001 (docs/66): the orphaned sceneByQueryFragment entry
+    # is removed in Wave 2E. URL mode does not depend on it, and no
+    # direct QueryFragment consumer was found in the compatibility
+    # audit (see the Wave 2E F report). Live negative behavior is
+    # Gate B QF-05/06/07 evidence, not asserted here.
     data = load()
-    qf = data["sceneByQueryFragment"]
-    assert qf["queryURL"] == "{url}"
-    assert qf["scraper"] == "clipSceneScraper"
+    assert "sceneByQueryFragment" not in data
 
 
 def test_clip_selectors_are_not_dvd_selectors():
