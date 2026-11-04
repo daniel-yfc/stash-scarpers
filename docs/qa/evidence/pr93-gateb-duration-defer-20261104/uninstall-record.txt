@@ -1,0 +1,1 @@
+Candidate BRAVO (f4be5cf, isolated source gateb-pr93-r4) uninstalled via uninstallPackages; polled installedPackages until BRAVO absent (20 packages remained). Full log: rollback-log.json

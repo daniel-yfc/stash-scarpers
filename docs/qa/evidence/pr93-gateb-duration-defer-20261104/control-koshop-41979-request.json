@@ -1,0 +1,9 @@
+{
+ "timestamp_utc": "2026-11-04T04:45:41.920095+00:00",
+ "request": {
+  "query": "query($u: String!) { scrapeSceneURL(url: $u) { title code details duration image urls date studio { name } tags { name } } }",
+  "variables": {
+   "u": "https://www.ko-shop.com/products/detail.php?product_id=41979"
+  }
+ }
+}

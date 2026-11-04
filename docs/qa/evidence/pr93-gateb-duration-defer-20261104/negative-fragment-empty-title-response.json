@@ -1,0 +1,15 @@
+{
+ "timestamp_utc": "2026-11-04T04:45:33.072196+00:00",
+ "elapsed_s": 0.72,
+ "response": {
+  "errors": [
+   {
+    "message": "error while fragment scraping with scraper BRAVO: failed to load URL \"{url}\": Cannot navigate to invalid URL (-32000)",
+    "path": [
+     "scrapeSingleScene"
+    ]
+   }
+  ],
+  "data": null
+ }
+}
