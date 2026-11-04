@@ -23,6 +23,7 @@ Policy enforced here (G1 acceptance + Controller decisions):
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 from pathlib import Path
 
@@ -103,7 +104,7 @@ def eval_xpath(html_file: str, selector: str) -> list:
         "for(let i=0;i<r.snapshotLength;i++)out.push(r.snapshotItem(i).nodeValue);"
         "console.log(JSON.stringify(out));"
     )
-    env = {"SEL": selector, "PATH": "/usr/bin:/bin"}
+    env = {**os.environ, "SEL": selector}
     result = subprocess.run(
         ["node", "-e", program, str(FIXTURE_DIR / html_file)],
         capture_output=True, text=True, cwd=ROOT, env=env,
