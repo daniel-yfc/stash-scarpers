@@ -124,7 +124,7 @@ Wave 2E 整合後以下必須全數維持（本套件 `TestClipsRegressionContra
 
 - clips/284、clips/282 路由至 `clipSceneScraper`（含 www/non-www）。
 - `clipSceneScraper` XPath 契約不變：Title `//h1[1]`、Code 含 `Clip` 標籤相鄰、Duration 含 `作品TIME` 標籤相鄰、四個核心 selector 均不含 `品番`、無 Date/Studio 欄位。
-- Clips Title / Code / URLs / Duration 的 fixture 期望值（`bravo-clips-fixtures.yml`：284、282、missing-title、no-cover、extra-headings 共 5 個 completed + 1 failure）不變。
+- Clips Title / Code / URLs / Duration 的 fixture 期望值（`bravo-clips-fixtures.yml`：284、282、missing-title、no-cover、extra-headings 共 5 個 completed + 1 failure）不變。**（2026-11-04 更正：Duration 部分已被 PR #93 自身的暫緩政策 supersede——production mappedExpect.Duration 已由 PR #93 移除、改以來源層獨立保存；見 §13。本行其餘欄位不變。）**
 - Image 維持 poster-only（`//video/@poster`，無 `<img>` fallback）。
 - 缺 Title 案例行為不變（Title 為空、其餘頁面衍生值仍在——已知限制，不因 DVD 工作而改變宣稱）。
 - `sceneByFragment` 不得重新引入。
@@ -301,3 +301,27 @@ def test_query_fragment_removed_in_wave2e():
 | 指令 | 結果 |
 |---|---|
 | `python -m pytest tools/tests/test_bravo_dvd_routes.py tools/tests/test_bravo_clips.py -q -rxX` | 74 passed, 10 xfailed（新增：就緒測試 4 通過 + 1 EXPECTED_RED、canonical-only 專項 1 通過；xfail 組成 = 7 EXPECTED_RED + 3 KNOWN_UPSTREAM_LIMITATION） |
+
+## 13. 整合衝突修正 — Clips Duration 暫緩政策（2026-11-04）
+
+### 13.1 衝突內容（已重現）
+
+PR #93 基線已前進：`86e34a2` → `88d27a5764c30fec1ab8bb5a325382e72a2ef09e`。其中 Controller 裁決 `WS-2E-DEF01-DEFER-20261104`（commit `f4be5cf`）移除了 `clipSceneScraper` 的 production Duration 對映（根因 R3 H4：Stash `scrapedScene()` 的 `IntPtr` 只接受 Go int，XPath 對映產生的字串值必然被棄；還原規格於 `docs/qa/PR93-DURATION-DEFERRED-SPEC.md`），且 Agent D 已於修訂範圍下判 `GATE_B_PASS_UNDER_REVISED_DURATION_SCOPE`；v4 的 `GATE_B_FAIL` 裁決保留於紀錄、未被覆寫。
+
+本套件（以舊基線撰寫）與新基線有兩處不相容，先以新基線 tree 實跑重現（10 failed）後才修正：
+
+1. **Duration 契約衝突（本次指派事項）**：`TestClipsRegressionContract` 舊斷言要求 `作品TIME` 存在於 `clip["Duration"]["selector"]`，且迴圈把 Duration 列為 Clips 必須存在的欄位——新基線根本沒有該欄位（KeyError），且斷言方向與已核准的暫緩政策相反。
+2. **Details selector 漂移（同批基線前進的連帶項）**：DEF-02 修正（commit `ce7ef6c`）把 Details 改為 `$desc` 容器內的 rich-text span selector 並新增 `common: $desc`；本套件的離線擷取器既不解析 `$common` 變數、也不支援新 selector 形狀，QF 歷史複現測試因此失敗。此項不是政策衝突，而是基線事實更新，B 作為自己擷取器的維護者一併吸收。
+
+### 13.2 修正方式（依指派：驗證正式 Duration 不映射、來源測試獨立保留）
+
+- **正式契約改向**：`test_clip_selectors_unchanged` 移除 Duration 必存要求與迴圈中的 Duration；新增 `test_production_duration_is_not_mapped`——斷言 `"Duration" not in clipSceneScraper.scene`，並 pin 住 YAML 內文的裁決 ID `WS-2E-DEF01-DEFER-20261104` 作為 provenance。與 PR #93 自身測試（`test_bravo_clips.py` 的 `"Duration" not in clip`）方向一致、不重複其實作細節。
+- **來源層獨立保留**：新增 `test_duration_source_evidence_preserved_independently`——斷言 (i) 還原規格文件 `docs/qa/PR93-DURATION-DEFERRED-SPEC.md` 存在且含裁決 ID；(ii) 來源案例 fixture `clip-missing-duration.html` 存在；(iii) production fixture manifest 的所有 `mappedExpect` 均不含 Duration 欄位（production 層已移除、來源層另存的結構證據）。延遲 selector 的實際求值屬 PR #93 自身的 `DEFERRED_DURATION_CASES` 測試，B 只做 provenance 層引用，不複製其實作，避免兩份來源測試日後漂移。
+- **QF 擷取語義對齊**：`test_dvd_dom_yields_no_core_fields` 的 Duration 斷言改為 `out.get("Duration", []) == []`——暫緩後「未對映」與「擷取為空」在此同義；歷史危害的形狀結論（核心欄位空、canonical/Tags 有值）不變，且已以新 Details selector 在四份 DVD fixture 上重跑確認 Details 仍為空（新 selector 於 DVD DOM 無命中，與 lxml 預檢一致）。
+- **擷取器升級**：`clip_extract_on` 新增 `$common` 變數解析（與 fixture runner 的 `resolveSelector` 同語義：字面 replaceAll、長 key 優先）；evaluator 新增 DEF-02 新 Details selector 形狀的支援（容器內第一個去 U+200B 後非空的 rich-text span）。
+
+### 13.3 基線移動與驗證
+
+- 本 branch 已 rebase 至 PR #93 最新 HEAD `88d27a5`（B 的 3 個 commit 乾淨重放，無衝突；commit SHA 因此更新，內容譜系不變）。此後 B 的 production 斷言對象即為已核准的新基線；§1 的 BASE_SHA 記錄為原始交付當時值，本節為準。
+- 驗證（rebase 後、修正後）：`pytest tools/tests/test_bravo_dvd_routes.py tools/tests/test_bravo_clips.py` = 82 passed, 10 xfailed；全套件 = 386 passed, 10 xfailed, 0 failed；fixture manifests：clips 11 cases、historical 3 cases verified。
+- 對 F 的影響：整合時 production 契約以本節為準——Clips 回歸不得再要求 Duration 對映存在；Wave 2E 的 `dvdSceneScraper` 本來就依 C-FIX-4 不含 Duration（Controller 2026-11-02 裁決 Duration 為 GROUP-only），與本次暫緩方向一致。§12 的 Exit（`ROUTING_AND_QF_TEST_HANDOFF_READY`）不受影響；`EXPECTED_RED` 數量不變（7）。

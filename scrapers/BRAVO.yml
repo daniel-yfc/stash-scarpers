@@ -8,11 +8,29 @@
 #     h2 "Clip", h2 duration minutes, h2 作品TIME, h2 min.
 #   - Title source: the single h1. Code source: the h2 immediately before
 #     the "Clip" label (284 / 282), which agrees with the document title and
-#     the canonical URL's last segment. Duration source: the h2 immediately
-#     before the 作品TIME label (30 on both pages, hence 1800 seconds).
-#   - Details source: the first h2 following the h1 (rendered description
-#     hangs under an h2, not a <p>). Tags: meta[name=keywords], preserved
-#     from the previous scraper (E2E observed Tags present on clips/284).
+#     the canonical URL's last segment.
+#   - Duration (DEFERRED 2026-11-04, Controller decision
+#     WS-2E-DEF01-DEFER-20261104, R3 H4): the production Scene.Duration
+#     mapping is REMOVED from this file. Source extraction itself is
+#     correct (first digit-starting, non-empty h2 AFTER the "Clip"
+#     label, forward axis; 30 on 284/282/283, hence 1800 seconds;
+#     live order Clip, 30, clean 作品TIME, min per Gate B v3 L9), but
+#     the Stash mapped runtime cannot return a typed int for scene
+#     Duration (string "1800" fails the IntPtr int assertion, hence
+#     GraphQL null), so no YAML mapping can make it work. The full
+#     source-only specification, verbatim selector and conversion,
+#     expected values, false positives, required runtime capability
+#     and restoration steps live in
+#     docs/qa/PR93-DURATION-DEFERRED-SPEC.md, and the source
+#     extraction stays covered by source-only tests in
+#     tools/tests/test_bravo_clips.py. Do NOT restore the mapping
+#     here until the runtime capability in the spec is deployed.
+#   - Details source (CORRECTED 2026-11-03, Gate B DEF-02): first
+#     non-empty span.wixui-rich-text__text inside the product description
+#     container div[@id='comp-kbfkf17h'] (baseline $desc); the 2026-11-01
+#     //h1[1]/following::h2[1] selector returned a spacer h2 live.
+#     Tags: meta[name=keywords], preserved from the previous scraper
+#     (E2E observed Tags present on clips/284).
 #   - "品番" does NOT appear in the rendered Clips text at all, so the old
 #     DVD selectors (h2 around 品番) returned nothing for Title/Code here.
 #     That is the STASH-E2E-03 root cause, not a Stash runtime bug.
@@ -30,9 +48,9 @@
 #     fixture poster URLs as real website covers.
 #   - Title-less limitation: declarative scrapeXPath fields are
 #     independent, so this YAML has no cross-field guard that suppresses
-#     Code/Duration/URLs when Title is empty. On a Title-less page those
-#     three values are still page-derived (Clip label pair, duration
-#     label, canonical URL), not invented — but a Title-less result is
+#     Code/URLs when Title is empty. On a Title-less page those
+#     two values are still page-derived (Clip label pair,
+#     canonical URL), not invented — but a Title-less result is
 #     incomplete and must NOT be accepted as a successful scrape in
 #     Gate B. That runtime acceptance question is recorded for Gate B,
 #     not papered over here.
@@ -48,9 +66,16 @@
 #     therefore not kept as a dead second scraper in this file.
 # Selector risk: Wix layout is template-stable but a site redesign breaks
 # these label-adjacency selectors; re-verify against a fresh page first.
-# Last Updated: 2026-11-01 (stabilization: Image narrowed to poster-only,
-# historical fixture manifest restored; Clips cases isolated in
-# bravo-clips-fixtures.yml)
+#   - XPath U+200B note: the translate() second argument in the
+#     Details selector below (and in the deferred Duration selector,
+#     see docs/qa/PR93-DURATION-DEFERRED-SPEC.md) is a literal single U+200B
+#     character (UTF-8 E2 80 8B). It is invisible in a diff, so it is
+#     documented here and asserted by codepoint in
+#     tools/tests/test_bravo_clips.py. Do not "clean" it away.
+# Last Updated: 2026-11-04 (Wave 2E-G Duration omission per
+# WS-2E-DEF01-DEFER-20261104: Scene.Duration removed; Title, Code,
+# URLs, Details, Tags, Image, routing, QueryFragment and DVD exclusion
+# unchanged; Duration source spec deferred to docs/qa/)
 
 name: Bravo-Japan
 
@@ -68,6 +93,12 @@ sceneByQueryFragment:
 
 xPathScrapers:
   clipSceneScraper:
+    common:
+      # Baseline description container (2026-09-06, re-verified
+      # 2026-10-06, and the baseline selector that still returned the
+      # correct description in Gate B). Scoped, never global.
+      $desc: "//div[@id='comp-kbfkf17h']"
+
     scene:
       Title:
         # Clips rendered DOM: the single h1 is the work title.
@@ -89,17 +120,6 @@ xPathScrapers:
       URLs:
         selector: "//link[@rel='canonical']/@href"
 
-      Duration:
-        # Clips rendered DOM: minutes are the h2 immediately before
-        # the 作品TIME label; converted to seconds as before.
-        selector: "//h2[normalize-space()='作品TIME']/preceding::h2[1]"
-        postProcess:
-          - javascript: |
-              var v = value || "";
-              var m = v.match(/(\d+)/);
-              if (!m) return "";
-              return String(parseInt(m[1], 10) * 60);
-
       Tags:
         Name:
           selector: "//meta[@name='keywords']/@content"
@@ -110,12 +130,18 @@ xPathScrapers:
           split: ","
 
       Details:
-        # Clips rendered DOM: description is the first h2 after the h1.
-        selector: "//h1[1]/following::h2[1]"
+        # Clips rendered DOM (corrected): description is the first
+        # non-empty rich-text span inside the product description
+        # container $desc. Spacer spans (U+200B-only) inside the
+        # container are skipped; nav/promo rich text outside $desc
+        # is never selected. Post-processing strips leading/trailing
+        # whitespace and U+200B (a plain \\s trim cannot strip U+200B).
+        selector: "$desc//span[contains(@class, 'wixui-rich-text__text')][normalize-space(translate(., '​', '')) != ''][1]"
         postProcess:
-          - replace:
-              - regex: "^\\s+|\\s+$"
-                with: ""
+          - javascript: |
+              var v = value || "";
+              v = v.replace(/^[\s\u200b]+|[\s\u200b]+$/g, "");
+              return v;
 
       Image: # Product video poster ONLY. No <img> fallback: this removes
         # the previous broad non-GIF Wix fallback, whose union order was

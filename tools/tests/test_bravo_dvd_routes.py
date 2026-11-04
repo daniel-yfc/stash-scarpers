@@ -645,17 +645,47 @@ def eval_clip_selector(dom, selector):
             for n in dom.order
             if n.tag == "img" and n.attrs.get("alt") and "wixstatic" in n.attrs.get("src", "")
         ]
+    m = re.fullmatch(
+        r"//div\[@id='([^']+)'\]//span\[contains\(@class,\s*'([^']+)'\)\]\[normalize-space\(translate\(\.,\s*'[^']*',\s*''\)\)\s*!=\s*''\]\[1\]",
+        selector,
+    )
+    if m:
+        # DEF-02-corrected Details shape (PR #93 @ ce7ef6c): the first
+        # rich-text span inside the $desc container whose text is non-empty
+        # after removing zero-width spaces.
+        div_id, class_part = m.group(1), m.group(2)
+
+        def descendants(node):
+            for child in node.children:
+                yield child
+                yield from descendants(child)
+
+        for div in (n for n in dom.order if n.tag == "div" and n.attrs.get("id") == div_id):
+            for span in descendants(div):
+                if span.tag == "span" and class_part in span.attrs.get("class", ""):
+                    if _norm(span).replace("\u200b", "").strip():
+                        return [_text(span)]
+            return []
+        return []
     raise AssertionError(f"Unsupported selector shape in route test evaluator: {selector}")
 
 
 def clip_extract_on(fixture_name):
     data = load_production()
-    scene = data["xPathScrapers"]["clipSceneScraper"]["scene"]
+    scraper_def = data["xPathScrapers"]["clipSceneScraper"]
+    scene = scraper_def["scene"]
+    common = scraper_def.get("common", {})
     dom = _DOM()
     dom.feed((DVD_FIXTURE_DIR / fixture_name).read_text(encoding="utf-8", errors="replace"))
     out = {}
     for field, spec in scene.items():
         selector = spec["Name"]["selector"] if field == "Tags" else spec["selector"]
+        # Resolve $common variables the way the fixture runner does
+        # (verify-scraper-mappings.mjs resolveSelector: literal replaceAll,
+        # longest key first).
+        for key in sorted(common, key=len, reverse=True):
+            name = key if key.startswith("$") else "$" + key
+            selector = selector.replace(name, common[key])
         out[field] = [v.strip() for v in eval_clip_selector(dom, selector)]
     return out
 
@@ -674,7 +704,11 @@ class TestQueryFragmentOfflineExtraction:
         out = clip_extract_on(fixture)
         assert out["Title"] == []
         assert out["Code"] == []
-        assert out["Duration"] == []
+        # Duration: unmapped in production since WS-2E-DEF01-DEFER-20261104,
+        # so absence and empty are the same outcome here; when this suite
+        # ran against the pre-deferral baseline the mapped selector also
+        # extracted nothing from DVD DOM.
+        assert out.get("Duration", []) == []
         assert out["Details"] == []
         assert out["Image"] == []
 
@@ -897,11 +931,38 @@ class TestClipsRegressionContract:
         clip = load_production()["xPathScrapers"]["clipSceneScraper"]["scene"]
         assert clip["Title"]["selector"] == "//h1[1]"
         assert "Clip" in clip["Code"]["selector"]
-        assert "作品TIME" in clip["Duration"]["selector"]
         assert clip["URLs"]["selector"] == "//link[@rel='canonical']/@href"
-        for field in ("Title", "Code", "Duration", "Details"):
+        for field in ("Title", "Code", "Details"):
             assert "品番" not in clip[field]["selector"], field
         assert "Date" not in clip and "Studio" not in clip
+
+    def test_production_duration_is_not_mapped(self):
+        # Controller decision WS-2E-DEF01-DEFER-20261104 (PR #93 @ f4be5cf,
+        # Gate B PASS under the revised scope): production Scene.Duration
+        # is deliberately NOT mapped, because Stash's scrapedScene()
+        # IntPtr conversion rejects the string value every XPath mapping
+        # produces (R3 H4).  Asserting a Duration selector here would
+        # contradict the approved baseline; restoration follows the
+        # deferred spec, not this regression contract.
+        clip = load_production()["xPathScrapers"]["clipSceneScraper"]["scene"]
+        assert "Duration" not in clip
+        assert "WS-2E-DEF01-DEFER-20261104" in BRAVO.read_text()
+
+    def test_duration_source_evidence_preserved_independently(self):
+        # The deferral removes the PRODUCTION mapping, not the source
+        # evidence: the deferred spec and the source-level cases remain
+        # in the tree, owned by PR #93's own tests, and the production
+        # fixture manifest carries no Duration mappedExpect anymore.
+        spec = ROOT / "docs" / "qa" / "PR93-DURATION-DEFERRED-SPEC.md"
+        assert spec.exists()
+        assert "WS-2E-DEF01-DEFER-20261104" in spec.read_text()
+        assert (DVD_FIXTURE_DIR / "clip-missing-duration.html").exists()
+        manifest = yaml.safe_load(
+            (DVD_FIXTURE_DIR / "bravo-clips-fixtures.yml").read_text()
+        )
+        for case in manifest["cases"]:
+            for assertion in case.get("mappedExpect", []):
+                assert assertion["field"] != "Duration", case["name"]
 
     def test_clip_image_is_poster_only(self):
         clip = load_production()["xPathScrapers"]["clipSceneScraper"]["scene"]
