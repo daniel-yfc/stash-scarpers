@@ -1,0 +1,79 @@
+ASSIGNMENT_ID: WAVE2E-D-PR104-GATEB-20261104
+ROLE: INDEPENDENT_RUNTIME_QA
+REPOSITORY: daniel-yfc/stash-scarpers
+TARGET_PR: 104
+
+CANDIDATE_SHA: 3f3b4559349e501fdb57bc053f1efb90400540a4
+CANDIDATE_TREE: 82074dceebb1ccf61ebac041090d38e87e8dea5b
+PACKAGE_VERSION: 3f3b455
+EXPECTED_PACKAGE_SHA256: 5bc3b2b7656d9c988f3552aaae271883e9a0e303f2c5a9e4c46494b232670ddb
+REBUILT_PACKAGE_SHA256: 5bc3b2b7656d9c988f3552aaae271883e9a0e303f2c5a9e4c46494b232670ddb
+
+G0: ACCEPTED_CLOSED
+G1: ACCEPTED_CLOSED_FOR_SOURCE_EVIDENCE
+GATE_A: PASS
+DELTA_QA: PASS_WITH_NONBLOCKING_FINDINGS
+
+PHASE_A:
+  M0_STATUS: M0_PASS_READY_FOR_LIVE_AUTHORIZATION
+  CANDIDATE_VERIFICATION: PASS
+  ENVIRONMENT_INVENTORY: PASS
+  ROLLBACK_PLAN: PREPARED_NOT_EXECUTED
+  BASELINES_VERIFIED:
+    PR104_HEAD: 3f3b4559349e501fdb57bc053f1efb90400540a4
+    PR104_BASE: ff236c9e91e27321e93f59d2bf12488db714dfc7
+    G1_ACCEPTANCE: d7429e92dd0ccc7eea0ab361014ff49c8b18c4f2
+    G1_EVIDENCE: 37ea85192aa31da83e39c52d5c0649561523b77d
+    R4_DELTA_QA: fde65f9d7f51a4bfc677929a8ff6b258af8c9502
+    UPSTREAM_ISSUE_97: OPEN
+  CURRENT_MAIN_DRIFT: "main advanced to 2a00175ca77a010aeaa49dc3ef7e9572cd892559 via PR #105 merge after the accepted baseline; PR #104 head/base unchanged; merge/release sequencing against current main is a Controller decision (F-M0-01)"
+  ENVIRONMENT:
+    STASH_VERSION: v0.31.1-182-g9e9ad972
+    SYSTEM_STATUS: OK
+    JOB_QUEUE: EMPTY_AT_INVENTORY
+    BASELINE_COUNTS: { scenes: 15, performers: 1, studios: 1, tags: 7 }
+    INSTALLED_PACKAGES: 21
+    INSTALLED_BRAVO_VERSION: b92acdd
+    CDP: "Chrome/156.0.8078.12, Protocol 1.3, available; existing targets 2 (page 1, worker 1); fixed /json/version config form confirmed"
+  OFFLINE_SPOT_RERUN: "BRAVO clips/dvds/dvd_routes/dvd_integration tests: 158 passed, 2 skipped, 3 xfailed (reviewer's own run; full Gate A remains Delta QA record)"
+
+PHASE_B:
+  CONTROLLER_LIVE_AUTHORIZATION: NOT_GRANTED
+  EXCLUSIVE_STASH_TEST_LEASE: NOT_GRANTED
+  INSTALLED_PACKAGE_SHA256: NOT_VERIFIED
+  EFFECTIVE_HANDLER: NOT_VERIFIED
+
+TEST_RESULTS:
+  CLIPS_REGRESSION: NOT_RUN
+  DVD_POSITIVE: NOT_RUN
+  DVD_404: NOT_RUN
+  DVD_XPATH_RUNTIME: NOT_RUN
+  PRODUCT_IDENTITY_RUNTIME: NOT_RUN
+  DATE_RUNTIME: NOT_RUN
+  IMAGE_RUNTIME: NOT_RUN
+  QUERYFRAGMENT: NOT_RUN
+  UPSTREAM_PANIC: NOT_RUN
+
+PRODUCT_IDENTITY_RESIDUAL_RISK: OPEN_CONTROLLER_RELEASE_DECISION
+ANTCHFX_RUNTIME_COMPATIBILITY: NOT_VERIFIED
+QUERYFRAGMENT_UPSTREAM_LIMITATION: OPEN
+
+RESTORATION_STATUS: NOT_RUN
+M0_ENVIRONMENT_CHANGES: NONE
+GATE_B_VERDICT: NOT_RUN
+GATE_C: NOT_RUN
+
+CANDIDATE_MODIFIED: false
+MERGE_AUTHORIZATION: NOT_GRANTED
+PRODUCTION_DEPLOYMENT: NOT_AUTHORIZED
+
+EVIDENCE:
+  - docs/qa/evidence/pr104-gateb-20261104/baselines.json
+  - docs/qa/evidence/pr104-gateb-20261104/candidate-provenance.json
+  - docs/qa/evidence/pr104-gateb-20261104/environment-inventory.json
+  - docs/qa/evidence/pr104-gateb-20261104/MANIFEST.sha256
+BLOCKERS:
+  - "Phase B requires a separate Controller approval containing the lease items enumerated in PR104-GATEB-M0-20261104.md M0-03 (instance, designated identity, exclusive lease ID/window, exact commit, exact package SHA, allowed GraphQL operations, install/reload mechanism, CDP target permission, allowed state changes, backup/rollback method, evidence rules)."
+  - "Database backup restorability remains UNVERIFIED (standing M0 item, not waived 2026-11-01); Controller must rule isolated-source rollback sufficient for scrape-only Phase B or require a restore drill first."
+  - "F-M0-01: PR #105 merged to main after the accepted baseline; BRAVO vs BRAVO_JAPAN package identity for any post-Gate-B release is a Controller decision."
+HANDOFF_STATUS: M0_COMPLETE_PHASE_B_PENDING_CONTROLLER

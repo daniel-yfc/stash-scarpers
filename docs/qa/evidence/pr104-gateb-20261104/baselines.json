@@ -1,0 +1,33 @@
+{
+  "assignment_id": "WAVE2E-D-PR104-GATEB-20261104",
+  "verified_at": "2026-11-04 (Asia/Taipei), via GitHub read tools (list_pull_requests / list_commits / get_file_contents)",
+  "pr104": {
+    "state": "open",
+    "draft": true,
+    "merged": false,
+    "head_ref": "feat/e2e-bravo-dvds-para",
+    "head_sha": "3f3b4559349e501fdb57bc053f1efb90400540a4",
+    "base_ref": "main",
+    "base_sha": "ff236c9e91e27321e93f59d2bf12488db714dfc7",
+    "matches_assignment": true
+  },
+  "accepted_main_reference": "ff236c9e91e27321e93f59d2bf12488db714dfc7",
+  "current_main_head_at_verification": {
+    "sha": "2a00175ca77a010aeaa49dc3ef7e9572cd892559",
+    "note": "main advanced after the accepted baseline by the PR #105 merge (scraper name normalization, incl. BRAVO_JAPAN) at 2026-11-04T10:37:05Z. PR #104 head and base are unchanged; this drift does not alter the candidate, but release/merge sequencing against current main is a Controller decision (see finding F-M0-01)."
+  },
+  "g1_controller_acceptance_commit": "d7429e92dd0ccc7eea0ab361014ff49c8b18c4f2",
+  "g1_acceptance_doc": "docs/qa/WAVE2E-G1-CONTROLLER-ACCEPTANCE-20261104.md (exists at d7429e92; verdict G1_ACCEPTED_FIVE_PAGE_SCOPE / SOURCE_EVIDENCE_ONLY; file blob sha 4cf38d73d3dac4a3a4050e89e194294b580d4e66)",
+  "g1_independent_evidence_commit": "37ea85192aa31da83e39c52d5c0649561523b77d",
+  "r4_delta_qa": {
+    "branch": "qa/cross-review-pr104-delta-20261104",
+    "head": "fde65f9d7f51a4bfc677929a8ff6b258af8c9502",
+    "doc": "docs/qa/PR104-DELTA-QA-20261104.md (exists at fde65f9; verdict DELTA_QA_PASS_WITH_NONBLOCKING_FINDINGS)"
+  },
+  "queryfragment_decision": "WS-2E-QF-001 (cited in candidate scrapers/BRAVO.yml header comments, lines 63-65 and 109)",
+  "upstream_panic_issue": {
+    "number": 97,
+    "state": "OPEN",
+    "title": "[WS-D][STASH-E2E-02] Prepare upstream report for unmatched scrapeSceneURL panic"
+  }
+}
