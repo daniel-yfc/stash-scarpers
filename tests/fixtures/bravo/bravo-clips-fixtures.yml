@@ -5,16 +5,21 @@
 # Poster URLs and description/keywords in these fixtures are CONTROLLED
 # fixture-local values, NOT real website covers or live copy.
 # Live Image value: SOURCE_IMAGE_UNVERIFIED, pending Gate B.
-# CORRECTED 2026-11-03 (Gate B DEF-01/02): fixtures are now live-faithful
-# for the failure modes: a spacer h2 (U+200B) after the h1, a spacer h2
-# between minutes and the 作品TIME label, a leading U+200B on that label,
-# and description inside div[@id='comp-kbfkf17h'] as rich-text spans
-# (with nav/promo rich text outside the container). The old selectors
-# return the spacer / nothing on these pages; the corrected selectors
-# return minutes and the container description. Descriptions are
-# deliberately DIFFERENT per clip (284 vs 282 vs 283/285/286) so a
-# cross-page description leak fails the test instead of hiding behind
-# an identical placeholder.
+# CORRECTED 2026-11-03 (Gate B DEF-01/02): description inside
+# div[@id='comp-kbfkf17h'] as rich-text spans (with nav/promo rich text
+# outside the container). Descriptions are deliberately DIFFERENT per
+# clip (284 vs 282 vs 283/285/286) so a cross-page description leak
+# fails the test instead of hiding behind an identical placeholder.
+# CORRECTED 2026-11-04 (Gate B DEF-01 R2, Gate B v3 L9 evidence): the
+# live heading order is spacer h2 (U+200B) after the h1, Code, "Clip",
+# minutes, CLEAN 作品TIME label, min. The 2026-11-03 claim of a spacer
+# between minutes and the label and a leading U+200B on the label was
+# falsified by Gate B v3 and is corrected in the fixtures; both
+# reverse-axis Duration selectors pass on this live-shape page offline
+# yet returned null live in Stash, so R2 replaces them with a
+# forward-axis selector from the Clip label. New R2 cases: price
+# heading after Clip (287, must skip to 30), spacer after Clip (288,
+# must skip to 30), missing minutes (289, Duration must be empty).
 scraper: scrapers/BRAVO.yml
 cases:
   - name: "BRAVO clip 284"
@@ -321,6 +326,120 @@ cases:
         min: 1
         max: 1
         values: ["フィクスチャ用 285 の説明文です。価格見出し負例。"]
+    optionalField:
+      xpath: "//h2[normalize-space()='品番']"
+      expectedCount: 0
+  - name: "BRAVO clip price after Clip"
+    classification: completed
+    html: "clip-price-after-clip.html"
+    locale:
+      lang: "ja"
+      text: "287"
+    mappedExpect:
+      - field: Title
+        values: ["フィクスチャ用 287 のタイトル"]
+      - field: Code
+        values: ["287"]
+      - field: Duration
+        values: ["1800"]
+      - field: URLs
+        routeThrough: sceneByURL
+        values: ["https://www.bravo-japan.com/clips/287"]
+      - field: Details
+        values: ["フィクスチャ用 287 の説明文です。Clip 後価格見出し負例。"]
+      - field: Tags.Name
+        values: ["テスト,フィクスチャ"]
+      - field: Image
+        values: ["https://example.invalid/clip-287-poster.jpg"]
+    expect:
+      - xpath: "//h1"
+        min: 1
+        max: 1
+        values: ["フィクスチャ用 287 のタイトル"]
+      - xpath: "//h2[normalize-space()='Clip']/preceding::h2[1]"
+        min: 1
+        max: 1
+        values: ["287"]
+      - xpath: "//link[@rel='canonical']/@href"
+        min: 1
+        max: 1
+        values: ["https://www.bravo-japan.com/clips/287"]
+    optionalField:
+      xpath: "//h2[normalize-space()='品番']"
+      expectedCount: 0
+  - name: "BRAVO clip spacer after Clip"
+    classification: completed
+    html: "clip-spacer-after-clip.html"
+    locale:
+      lang: "ja"
+      text: "288"
+    mappedExpect:
+      - field: Title
+        values: ["フィクスチャ用 288 のタイトル"]
+      - field: Code
+        values: ["288"]
+      - field: Duration
+        values: ["1800"]
+      - field: URLs
+        routeThrough: sceneByURL
+        values: ["https://www.bravo-japan.com/clips/288"]
+      - field: Details
+        values: ["フィクスチャ用 288 の説明文です。Clip 後 spacer 負例。"]
+      - field: Tags.Name
+        values: ["テスト,フィクスチャ"]
+      - field: Image
+        values: ["https://example.invalid/clip-288-poster.jpg"]
+    expect:
+      - xpath: "//h1"
+        min: 1
+        max: 1
+        values: ["フィクスチャ用 288 のタイトル"]
+      - xpath: "//h2[normalize-space()='Clip']/preceding::h2[1]"
+        min: 1
+        max: 1
+        values: ["288"]
+      - xpath: "//link[@rel='canonical']/@href"
+        min: 1
+        max: 1
+        values: ["https://www.bravo-japan.com/clips/288"]
+    optionalField:
+      xpath: "//h2[normalize-space()='品番']"
+      expectedCount: 0
+  - name: "BRAVO clip missing duration"
+    classification: completed
+    html: "clip-missing-duration.html"
+    locale:
+      lang: "ja"
+      text: "289"
+    mappedExpect:
+      - field: Title
+        values: ["フィクスチャ用 289 のタイトル"]
+      - field: Code
+        values: ["289"]
+      - field: Duration
+        values: []
+      - field: URLs
+        routeThrough: sceneByURL
+        values: ["https://www.bravo-japan.com/clips/289"]
+      - field: Details
+        values: ["フィクスチャ用 289 の説明文です。Duration 缺席負例。"]
+      - field: Tags.Name
+        values: ["テスト,フィクスチャ"]
+      - field: Image
+        values: ["https://example.invalid/clip-289-poster.jpg"]
+    expect:
+      - xpath: "//h1"
+        min: 1
+        max: 1
+        values: ["フィクスチャ用 289 のタイトル"]
+      - xpath: "//h2[normalize-space()='Clip']/preceding::h2[1]"
+        min: 1
+        max: 1
+        values: ["289"]
+      - xpath: "//link[@rel='canonical']/@href"
+        min: 1
+        max: 1
+        values: ["https://www.bravo-japan.com/clips/289"]
     optionalField:
       xpath: "//h2[normalize-space()='品番']"
       expectedCount: 0

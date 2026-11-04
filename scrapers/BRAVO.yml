@@ -9,9 +9,17 @@
 #   - Title source: the single h1. Code source: the h2 immediately before
 #     the "Clip" label (284 / 282), which agrees with the document title and
 #     the canonical URL's last segment.
-#   - Duration source (CORRECTED 2026-11-03, Gate B DEF-01): minutes h2
-#     before the 作品TIME label (30 on both pages, hence 1800 seconds),
-#     spacer-proof and U+200B-proof; see the Duration comment below.
+#   - Duration source (CORRECTED 2026-11-04, Gate B DEF-01 R2): the
+#     first digit-starting, non-empty h2 AFTER the "Clip" label
+#     (forward axis; 30 on both pages, hence 1800 seconds); see the
+#     Duration comment below. CORRECTION to 2026-11-03: the R1 premise
+#     (spacer between minutes and the label, U+200B on the label) was
+#     falsified by Gate B v3 rendered-DOM evidence (L9): live order is
+#     Clip, 30, clean 作品TIME, min, with no spacer in that interval.
+#     Both reverse-axis Duration selectors (simple v2, composite v3)
+#     returned null live in Stash while passing lxml/Chrome offline,
+#     so R2 removes the reverse axis and the Japanese label anchor
+#     entirely instead of patching the predicate again.
 #   - Details source (CORRECTED 2026-11-03, Gate B DEF-02): first
 #     non-empty span.wixui-rich-text__text inside the product description
 #     container div[@id='comp-kbfkf17h'] (baseline $desc); the 2026-11-01
@@ -58,9 +66,9 @@
 #     character (UTF-8 E2 80 8B). It is invisible in a diff, so it is
 #     documented here and asserted by codepoint in
 #     tools/tests/test_bravo_clips.py. Do not "clean" it away.
-# Last Updated: 2026-11-03 (Wave 2E-G corrective fix for Gate B DEF-01/02:
-# spacer-proof Duration, container-scoped rich-text Details; Title,
-# Code, URLs, Tags, Image, routing and DVD exclusion unchanged)
+# Last Updated: 2026-11-04 (Wave 2E-G R2 corrective fix for Gate B DEF-01:
+# forward-axis Duration from the Clip label; Details, Title, Code,
+# URLs, Tags, Image, routing, QueryFragment and DVD exclusion unchanged)
 
 name: Bravo-Japan
 
@@ -106,17 +114,32 @@ xPathScrapers:
         selector: "//link[@rel='canonical']/@href"
 
       Duration:
-        # Clips rendered DOM (corrected): minutes are the digit-starting,
-        # non-empty h2 before the 作品TIME label, after the "Clip"
-        # label. Spacer h2s (empty / U+200B-only) and non-digit headings
-        # are skipped; a label carrying a leading U+200B still matches.
-        # Converted to seconds as before; a price heading starting with
-        # a currency symbol is excluded by the digit-start guard. A
-        # plain-digit price inserted directly between minutes and the
-        # label would still be ambiguous; no such heading exists in
-        # that interval on either live page (see report Known
-        # limitations).
-        selector: "//h2[normalize-space(translate(., '​', ''))='作品TIME']/preceding::h2[normalize-space(translate(., '​', '')) != '' and translate(substring(normalize-space(translate(., '​', '')), 1, 1), '0123456789', '') = '' and preceding::h2[normalize-space(translate(., '​', ''))='Clip']][1]"
+        # Clips rendered DOM (Gate B v3, L9, 2026-11-03): heading order
+        # is ... Code, "Clip", minutes, 作品TIME, min, ... on 284/282
+        # (and 283 spot-check). The minutes node is therefore the first
+        # digit-starting, non-empty h2 AFTER the "Clip" label, found
+        # with a FORWARD axis. Why forward: both reverse-axis forms
+        # failed live in Stash (simple preceding:: at v2, composite
+        # preceding:: with a nested preceding:: predicate at v3) while
+        # passing lxml and Chrome offline, and reverse-axis positional
+        # / filtered semantics differ between engines (lxml vs jsdom
+        # disagree on a filtered preceding:: candidate). This selector
+        # uses only live-proven primitives: the ASCII "Clip" anchor
+        # (Code's anchor, live-verified), the forward axis (document
+        # order = axis order in every engine), the translate() U+200B
+        # guard (Details' guard, live-verified), and a digit-start
+        # guard. Guards are each mandated by a regression case, not
+        # stacked for offline green: without the non-empty guard a
+        # U+200B spacer after Clip is taken (empty); without the
+        # digit guard a ¥ price heading after Clip is taken as 60 s.
+        # When no digit heading follows Clip, the selector matches
+        # nothing and postProcess fail-closes to "" (no guessing, and
+        # it cannot fall back to the Code number: Code precedes Clip).
+        # A plain-digit price directly after Clip before the minutes
+        # heading would still be ambiguous; no such heading exists on
+        # any live page (see report Known limitations). Converted to
+        # seconds as before (first digit group x 60).
+        selector: "//h2[normalize-space()='Clip']/following::h2[normalize-space(translate(., '​', '')) != '' and translate(substring(normalize-space(translate(., '​', '')), 1, 1), '0123456789', '') = ''][1]"
         postProcess:
           - javascript: |
               var v = value || "";
