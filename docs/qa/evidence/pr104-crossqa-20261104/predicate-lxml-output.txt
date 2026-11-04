@@ -1,0 +1,418 @@
+== dvd-synthetic-234.html
+   Title        ['勃起する白き花よ']
+   Code         ['234']
+   URLs_GATED   ['https://www.bravo-japan.com/dvds/234']
+   URLs_PLAIN   ['https://www.bravo-japan.com/dvds/234']
+   Details      ['フィクスチャ用の説明文です。']
+   Date         ['2018年8月29日']
+   Image        ['https://example.invalid/wixstatic/BR234.jpg']
+== dvd-synthetic-084.html
+   Title        ['少年集団強姦']
+   Code         ['084']
+   URLs_GATED   ['https://www.bravo-japan.com/dvds/084']
+   URLs_PLAIN   ['https://www.bravo-japan.com/dvds/084']
+   Details      ['']
+   Date         ['2012年11月17日']
+   Image        ['https://example.invalid/wixstatic/BR-084soldout.jpg']
+== dvd-synthetic-046.html
+   Title        ['ゆるゆる雄太のデブ竿ぽちゃ穴食べ放題!']
+   Code         ['046']
+   URLs_GATED   ['https://www.bravo-japan.com/dvds/046']
+   URLs_PLAIN   ['https://www.bravo-japan.com/dvds/046']
+   Details      ['フィクスチャ用の説明文です。']
+   Date         ['2010年09月30日']
+   Image        ['https://example.invalid/wixstatic/BR046-1.jpg']
+== dvd-synthetic-281.html
+   Title        ['熊ケツ4']
+   Code         ['281']
+   URLs_GATED   ['https://www.bravo-japan.com/dvds/281']
+   URLs_PLAIN   ['https://www.bravo-japan.com/dvds/281']
+   Details      ['フィクスチャ用の説明文です。']
+   Date         ['2020年7月31日']
+   Image        ['https://example.invalid/wixstatic/br281jk.jpg']
+== dvd-synthetic-377.html
+   Title        ['騒乱みだれ穴５']
+   Code         ['377']
+   URLs_GATED   ['https://www.bravo-japan.com/dvds/377']
+   URLs_PLAIN   ['https://www.bravo-japan.com/dvds/377']
+   Details      ['フィクスチャ用の説明文です。']
+   Date         ['2026年5月31日']
+   Image        ['https://example.invalid/wixstatic/br377jk.jpg']
+== dvd-synthetic-384.html
+   Title        ['ナマ狂い種壺待機５']
+   Code         ['384']
+   URLs_GATED   ['https://www.bravo-japan.com/dvds/384']
+   URLs_PLAIN   ['https://www.bravo-japan.com/dvds/384']
+   Details      ['フィクスチャ用の説明文です。']
+   Date         ['2026年10月22日']
+   Image        ['https://example.invalid/wixstatic/br384jk.jpg']
+== dvd-synthetic-404-00.html
+   Title        []
+   Code         []
+   URLs_GATED   []
+   URLs_PLAIN   ['https://www.bravo-japan.com/dvds/00']
+   Details      []
+   Date         []
+   Image        []
+== dvd-synthetic-404-999999.html
+   Title        []
+   Code         []
+   URLs_GATED   []
+   URLs_PLAIN   ['https://www.bravo-japan.com/dvds/999999']
+   Details      []
+   Date         []
+   Image        []
+== dvd-synthetic-cloudflare-challenge.html
+   Title        []
+   Code         []
+   URLs_GATED   []
+   URLs_PLAIN   []
+   Details      []
+   Date         []
+   Image        []
+== dvd-synthetic-logo-empty-alt.html
+   Title        ['熊ケツ4']
+   Code         ['281']
+   URLs_GATED   ['https://www.bravo-japan.com/dvds/281']
+   URLs_PLAIN   ['https://www.bravo-japan.com/dvds/281']
+   Details      ['フィクスチャ用の説明文です。']
+   Date         ['2020年7月31日']
+   Image        []
+== adversarial-fake-marker-777.html
+   Title        ['BRAVO-JAPAN']
+   Code         []
+   URLs_GATED   ['https://www.bravo-japan.com/dvds/777']
+   URLs_PLAIN   ['https://www.bravo-japan.com/dvds/777']
+   Details      []
+   Date         []
+   Image        []
+== adversarial-canonical-only-404.html
+   Title        []
+   Code         []
+   URLs_GATED   []
+   URLs_PLAIN   ['https://www.bravo-japan.com/dvds/555']
+   Details      []
+   Date         []
+   Image        []
+== adversarial-marker-in-p.html
+   Title        []
+   Code         []
+   URLs_GATED   []
+   URLs_PLAIN   ['https://www.bravo-japan.com/dvds/888']
+   Details      []
+   Date         []
+   Image        []
+== adversarial-code-missing.html
+   Title        ['勃起する白き花よ']
+   Code         ['発売日']
+   URLs_GATED   ['https://www.bravo-japan.com/dvds/234']
+   URLs_PLAIN   ['https://www.bravo-japan.com/dvds/234']
+   Details      ['フィクスチャ用の説明文です。']
+   Date         ['2018年8月29日']
+   Image        ['https://example.invalid/wixstatic/BR234.jpg']
+== adversarial-canonical-mismatch.html
+   Title        ['勃起する白き花よ']
+   Code         ['234']
+   URLs_GATED   ['https://www.bravo-japan.com/dvds/999']
+   URLs_PLAIN   ['https://www.bravo-japan.com/dvds/999']
+   Details      ['フィクスチャ用の説明文です。']
+   Date         ['2018年8月29日']
+   Image        ['https://example.invalid/wixstatic/BR234.jpg']
+== adversarial-marker-after-canonical-position.html
+   Title        []
+   Code         []
+   URLs_GATED   ['https://www.bravo-japan.com/dvds/234']
+   URLs_PLAIN   ['https://www.bravo-japan.com/dvds/234']
+   Details      []
+   Date         []
+   Image        []
+
+JSON:
+{
+ "dvd-synthetic-234.html": {
+  "Title": [
+   "勃起する白き花よ"
+  ],
+  "Code": [
+   "234"
+  ],
+  "URLs_GATED": [
+   "https://www.bravo-japan.com/dvds/234"
+  ],
+  "URLs_PLAIN": [
+   "https://www.bravo-japan.com/dvds/234"
+  ],
+  "Details": [
+   "フィクスチャ用の説明文です。"
+  ],
+  "Date": [
+   "2018年8月29日"
+  ],
+  "Image": [
+   "https://example.invalid/wixstatic/BR234.jpg"
+  ]
+ },
+ "dvd-synthetic-084.html": {
+  "Title": [
+   "少年集団強姦"
+  ],
+  "Code": [
+   "084"
+  ],
+  "URLs_GATED": [
+   "https://www.bravo-japan.com/dvds/084"
+  ],
+  "URLs_PLAIN": [
+   "https://www.bravo-japan.com/dvds/084"
+  ],
+  "Details": [
+   ""
+  ],
+  "Date": [
+   "2012年11月17日"
+  ],
+  "Image": [
+   "https://example.invalid/wixstatic/BR-084soldout.jpg"
+  ]
+ },
+ "dvd-synthetic-046.html": {
+  "Title": [
+   "ゆるゆる雄太のデブ竿ぽちゃ穴食べ放題!"
+  ],
+  "Code": [
+   "046"
+  ],
+  "URLs_GATED": [
+   "https://www.bravo-japan.com/dvds/046"
+  ],
+  "URLs_PLAIN": [
+   "https://www.bravo-japan.com/dvds/046"
+  ],
+  "Details": [
+   "フィクスチャ用の説明文です。"
+  ],
+  "Date": [
+   "2010年09月30日"
+  ],
+  "Image": [
+   "https://example.invalid/wixstatic/BR046-1.jpg"
+  ]
+ },
+ "dvd-synthetic-281.html": {
+  "Title": [
+   "熊ケツ4"
+  ],
+  "Code": [
+   "281"
+  ],
+  "URLs_GATED": [
+   "https://www.bravo-japan.com/dvds/281"
+  ],
+  "URLs_PLAIN": [
+   "https://www.bravo-japan.com/dvds/281"
+  ],
+  "Details": [
+   "フィクスチャ用の説明文です。"
+  ],
+  "Date": [
+   "2020年7月31日"
+  ],
+  "Image": [
+   "https://example.invalid/wixstatic/br281jk.jpg"
+  ]
+ },
+ "dvd-synthetic-377.html": {
+  "Title": [
+   "騒乱みだれ穴５"
+  ],
+  "Code": [
+   "377"
+  ],
+  "URLs_GATED": [
+   "https://www.bravo-japan.com/dvds/377"
+  ],
+  "URLs_PLAIN": [
+   "https://www.bravo-japan.com/dvds/377"
+  ],
+  "Details": [
+   "フィクスチャ用の説明文です。"
+  ],
+  "Date": [
+   "2026年5月31日"
+  ],
+  "Image": [
+   "https://example.invalid/wixstatic/br377jk.jpg"
+  ]
+ },
+ "dvd-synthetic-384.html": {
+  "Title": [
+   "ナマ狂い種壺待機５"
+  ],
+  "Code": [
+   "384"
+  ],
+  "URLs_GATED": [
+   "https://www.bravo-japan.com/dvds/384"
+  ],
+  "URLs_PLAIN": [
+   "https://www.bravo-japan.com/dvds/384"
+  ],
+  "Details": [
+   "フィクスチャ用の説明文です。"
+  ],
+  "Date": [
+   "2026年10月22日"
+  ],
+  "Image": [
+   "https://example.invalid/wixstatic/br384jk.jpg"
+  ]
+ },
+ "dvd-synthetic-404-00.html": {
+  "Title": [],
+  "Code": [],
+  "URLs_GATED": [],
+  "URLs_PLAIN": [
+   "https://www.bravo-japan.com/dvds/00"
+  ],
+  "Details": [],
+  "Date": [],
+  "Image": []
+ },
+ "dvd-synthetic-404-999999.html": {
+  "Title": [],
+  "Code": [],
+  "URLs_GATED": [],
+  "URLs_PLAIN": [
+   "https://www.bravo-japan.com/dvds/999999"
+  ],
+  "Details": [],
+  "Date": [],
+  "Image": []
+ },
+ "dvd-synthetic-cloudflare-challenge.html": {
+  "Title": [],
+  "Code": [],
+  "URLs_GATED": [],
+  "URLs_PLAIN": [],
+  "Details": [],
+  "Date": [],
+  "Image": []
+ },
+ "dvd-synthetic-logo-empty-alt.html": {
+  "Title": [
+   "熊ケツ4"
+  ],
+  "Code": [
+   "281"
+  ],
+  "URLs_GATED": [
+   "https://www.bravo-japan.com/dvds/281"
+  ],
+  "URLs_PLAIN": [
+   "https://www.bravo-japan.com/dvds/281"
+  ],
+  "Details": [
+   "フィクスチャ用の説明文です。"
+  ],
+  "Date": [
+   "2020年7月31日"
+  ],
+  "Image": []
+ },
+ "adversarial-fake-marker-777.html": {
+  "Title": [
+   "BRAVO-JAPAN"
+  ],
+  "Code": [],
+  "URLs_GATED": [
+   "https://www.bravo-japan.com/dvds/777"
+  ],
+  "URLs_PLAIN": [
+   "https://www.bravo-japan.com/dvds/777"
+  ],
+  "Details": [],
+  "Date": [],
+  "Image": []
+ },
+ "adversarial-canonical-only-404.html": {
+  "Title": [],
+  "Code": [],
+  "URLs_GATED": [],
+  "URLs_PLAIN": [
+   "https://www.bravo-japan.com/dvds/555"
+  ],
+  "Details": [],
+  "Date": [],
+  "Image": []
+ },
+ "adversarial-marker-in-p.html": {
+  "Title": [],
+  "Code": [],
+  "URLs_GATED": [],
+  "URLs_PLAIN": [
+   "https://www.bravo-japan.com/dvds/888"
+  ],
+  "Details": [],
+  "Date": [],
+  "Image": []
+ },
+ "adversarial-code-missing.html": {
+  "Title": [
+   "勃起する白き花よ"
+  ],
+  "Code": [
+   "発売日"
+  ],
+  "URLs_GATED": [
+   "https://www.bravo-japan.com/dvds/234"
+  ],
+  "URLs_PLAIN": [
+   "https://www.bravo-japan.com/dvds/234"
+  ],
+  "Details": [
+   "フィクスチャ用の説明文です。"
+  ],
+  "Date": [
+   "2018年8月29日"
+  ],
+  "Image": [
+   "https://example.invalid/wixstatic/BR234.jpg"
+  ]
+ },
+ "adversarial-canonical-mismatch.html": {
+  "Title": [
+   "勃起する白き花よ"
+  ],
+  "Code": [
+   "234"
+  ],
+  "URLs_GATED": [
+   "https://www.bravo-japan.com/dvds/999"
+  ],
+  "URLs_PLAIN": [
+   "https://www.bravo-japan.com/dvds/999"
+  ],
+  "Details": [
+   "フィクスチャ用の説明文です。"
+  ],
+  "Date": [
+   "2018年8月29日"
+  ],
+  "Image": [
+   "https://example.invalid/wixstatic/BR234.jpg"
+  ]
+ },
+ "adversarial-marker-after-canonical-position.html": {
+  "Title": [],
+  "Code": [],
+  "URLs_GATED": [
+   "https://www.bravo-japan.com/dvds/234"
+  ],
+  "URLs_PLAIN": [
+   "https://www.bravo-japan.com/dvds/234"
+  ],
+  "Details": [],
+  "Date": [],
+  "Image": []
+ }
+}

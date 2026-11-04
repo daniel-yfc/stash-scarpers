@@ -1,0 +1,37 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.2.0, pluggy-1.7.0 -- /tmp/fvenv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/hatch/workspace/crossqa-pr104/repo
+configfile: pytest.ini
+plugins: cov-7.1.0
+collecting ... collected 27 items
+
+tools/tests/test_bravo_dvd_integration.py::test_dvd_scraper_field_set_is_exactly_the_authorized_set PASSED [  3%]
+tools/tests/test_bravo_dvd_integration.py::test_dvd_selectors_match_g1_verified_values PASSED [  7%]
+tools/tests/test_bravo_dvd_integration.py::test_dvd_urls_selector_is_gated_on_the_product_marker PASSED [ 11%]
+tools/tests/test_bravo_dvd_integration.py::test_dvd_routing_contract PASSED [ 14%]
+tools/tests/test_bravo_dvd_integration.py::test_clip_scraper_is_untouched_by_dvd_work PASSED [ 18%]
+tools/tests/test_bravo_dvd_integration.py::test_date_js_normalizes_japanese_dates[-] PASSED [ 22%]
+tools/tests/test_bravo_dvd_integration.py::test_date_js_normalizes_japanese_dates[2010\u5e7409\u670830\u65e5-2010-09-30] PASSED [ 25%]
+tools/tests/test_bravo_dvd_integration.py::test_date_js_normalizes_japanese_dates[2012\u5e7411\u670817\u65e5-2012-11-17] PASSED [ 29%]
+tools/tests/test_bravo_dvd_integration.py::test_date_js_normalizes_japanese_dates[2018\u5e748\u670829\u65e5-2018-08-29] PASSED [ 33%]
+tools/tests/test_bravo_dvd_integration.py::test_date_js_normalizes_japanese_dates[2020\u5e747\u670831\u65e5-2020-07-31] PASSED [ 37%]
+tools/tests/test_bravo_dvd_integration.py::test_date_js_normalizes_japanese_dates[2021\u5e7410\u670815\u65e5-2021-10-15] PASSED [ 40%]
+tools/tests/test_bravo_dvd_integration.py::test_date_js_normalizes_japanese_dates[2022\u5e746\u670826\u65e5-2022-06-26] PASSED [ 44%]
+tools/tests/test_bravo_dvd_integration.py::test_date_js_normalizes_japanese_dates[2026\u5e7410\u670822\u65e5-2026-10-22] PASSED [ 48%]
+tools/tests/test_bravo_dvd_integration.py::test_date_js_normalizes_japanese_dates[2026\u5e745\u670831\u65e5-2026-05-31] PASSED [ 51%]
+tools/tests/test_bravo_dvd_integration.py::test_date_js_normalizes_japanese_dates[2026\u5e749\u670821\u65e5-2026-09-21] PASSED [ 55%]
+tools/tests/test_bravo_dvd_integration.py::test_date_js_normalizes_japanese_dates[not a date-] PASSED [ 59%]
+tools/tests/test_bravo_dvd_integration.py::test_image_js_filters_soldout_and_normalizes_urls[-] PASSED [ 62%]
+tools/tests/test_bravo_dvd_integration.py::test_image_js_filters_soldout_and_normalizes_urls[//static.wixstatic.com/media/x.jpg-https://static.wixstatic.com/media/x.jpg] PASSED [ 66%]
+tools/tests/test_bravo_dvd_integration.py::test_image_js_filters_soldout_and_normalizes_urls[/media/x.jpg-https://www.bravo-japan.com/media/x.jpg] PASSED [ 70%]
+tools/tests/test_bravo_dvd_integration.py::test_image_js_filters_soldout_and_normalizes_urls[https://static.wixstatic.com/media/BR-084soldout.jpg-] PASSED [ 74%]
+tools/tests/test_bravo_dvd_integration.py::test_image_js_filters_soldout_and_normalizes_urls[https://static.wixstatic.com/media/BR234.jpg-https://static.wixstatic.com/media/BR234.jpg] PASSED [ 77%]
+tools/tests/test_bravo_dvd_integration.py::test_image_js_filters_soldout_and_normalizes_urls[https://static.wixstatic.com/media/br084SOLDOUT.png-] PASSED [ 81%]
+tools/tests/test_bravo_dvd_integration.py::test_production_urls_selector_is_fail_closed_on_404[dvd-synthetic-234.html-expected0] PASSED [ 85%]
+tools/tests/test_bravo_dvd_integration.py::test_production_urls_selector_is_fail_closed_on_404[dvd-synthetic-084.html-expected1] PASSED [ 88%]
+tools/tests/test_bravo_dvd_integration.py::test_production_urls_selector_is_fail_closed_on_404[dvd-synthetic-046.html-expected2] PASSED [ 92%]
+tools/tests/test_bravo_dvd_integration.py::test_production_urls_selector_is_fail_closed_on_404[dvd-synthetic-404-00.html-expected3] PASSED [ 96%]
+tools/tests/test_bravo_dvd_integration.py::test_production_urls_selector_is_fail_closed_on_404[dvd-synthetic-404-999999.html-expected4] PASSED [100%]
+
+============================== 27 passed in 7.93s ==============================

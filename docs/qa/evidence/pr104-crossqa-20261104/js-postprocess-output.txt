@@ -1,0 +1,28 @@
+== DATE_JS
+  '2018年8月29日'                             -> '2018-08-29'   # unpadded valid
+  '2010年09月30日'                            -> '2010-09-30'   # zero-padded valid
+  ''                                       -> ''   # empty
+  '2018年13月1日'                             -> '2018-13-01'   # month 13 - format-valid chars, JS does NOT range-check
+  '2018年1月32日'                             -> '2018-01-32'   # day 32 - JS does NOT range-check
+  '2019年2月30日'                             -> '2019-02-30'   # Feb 30 - calendar-invalid, format-valid
+  '発売日は2018年8月29日です'                       -> '2018-08-29'   # embedded text - regex not anchored
+  '\u30002018年8月29日\u3000'                 -> '2018-08-29'   # full-width spaces around
+  '2018年\u200b8月29日'                       -> ''   # zero-width space inside
+  '2018/8/29'                              -> ''   # wrong separators
+  '2018年8月29'                              -> ''   # missing 日
+== IMAGE_JS
+  'https://static.wixstatic.com/media/BR234.jpg'          -> 'https://static.wixstatic.com/media/BR234.jpg'   # genuine cover
+  'https://static.wixstatic.com/media/BR-084soldout.jpg'  -> ''   # soldout lower
+  'https://static.wixstatic.com/media/BR-084SoldOut.jpg'  -> ''   # SoldOut mixed case
+  'https://static.wixstatic.com/media/BR-084SOLDOUT.jpg'  -> ''   # SOLDOUT upper
+  ''                                                      -> ''   # empty
+  '//static.wixstatic.com/media/x.jpg'                    -> 'https://static.wixstatic.com/media/x.jpg'   # protocol-relative
+  'https://static.wixstatic.com/media/x.jpg?dn=abc'       -> 'https://static.wixstatic.com/media/x.jpg'   # query params stripped
+  'http://static.wixstatic.com/media/x.jpg'               -> 'https://static.wixstatic.com/media/x.jpg'   # http upgraded
+  '/media/x.jpg'                                          -> 'https://www.bravo-japan.com/media/x.jpg'   # root-relative
+  'media/x.jpg'                                           -> 'https://www.bravo-japan.com/media/x.jpg'   # relative
+  './media/x.jpg'                                         -> 'https://www.bravo-japan.com/media/x.jpg'   # dot-relative
+  'https://example.com/not-wixstatic.jpg'                 -> 'https://example.com/not-wixstatic.jpg'   # unrelated host (JS alone does not check host; selector does)
+  'https://static.wixstatic.com/media/soldoutish-cover.jpg' -> ''   # filename merely containing 'soldout' substring
+Date postProcess step kinds: [['javascript']]
+Image postProcess step kinds: [['javascript']]

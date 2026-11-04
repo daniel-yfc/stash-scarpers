@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>Position probe</title>
+  <!-- CROSSQA PROBE: canonical link in head; 品番 h2 exists ONLY inside a
+       deeply nested footer at the very end of body, far from any product
+       structure. If the predicate's //h2 is an absolute (document-root)
+       path, the gate still opens; if it were relative to the link node,
+       it could not (link is in head, h2 in body footer). -->
+  <link rel="canonical" href="https://www.bravo-japan.com/dvds/234">
+</head>
+<body>
+  <h2>BRAVO-JAPAN</h2>
+  <main><p>content</p></main>
+  <footer><div><div><h2>品番</h2></div></div></footer>
+</body>
+</html>

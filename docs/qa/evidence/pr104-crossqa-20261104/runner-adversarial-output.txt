@@ -1,0 +1,18 @@
+CASE 1 cross-family dvds-via-clip
+  -> FAIL AS-EXPECTED | x1: URLs does not match sceneByURL
+CASE 2 dvds-via-dvd
+  -> PASS AS-EXPECTED 
+CASE 3 clips-via-clip
+  -> PASS AS-EXPECTED 
+CASE 4 ambiguous-no-scraper
+  -> FAIL AS-EXPECTED | Ambiguous entrypoint; specify scraper for sceneByURL
+CASE 5 missing-handler
+  -> FAIL AS-EXPECTED | Ambiguous entrypoint; specify scraper for sceneByURL
+CASE 6 single-handler
+  -> PASS AS-EXPECTED 
+CASE 7 foreign-host
+  -> FAIL AS-EXPECTED | x7: production YAML field URLs expected ["https://evil.example.com/dvds/234"] but got []
+CASE 8 invalid-url
+  -> FAIL AS-EXPECTED | x8: production YAML field URLs expected ["::not a url::"] but got []
+CASE 9 clip-extraction-on-dvd-page
+  -> FAIL AS-EXPECTED | x9: URLs does not match sceneByURL

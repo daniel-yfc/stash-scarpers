@@ -1,0 +1,25 @@
+[warn] docs/43-upstream-sources.md
+[warn] docs/53-skill-evaluation.md
+[warn] docs/72-evaluation-report-template.md
+[warn] docs/index.yml
+[warn] scrapers/BoyStudio.yml
+[warn] scrapers/fc2.yml
+[warn] scrapers/GAMES.yml
+[warn] scrapers/KOShop.yml
+[warn] scrapers/KOTube.yml
+[warn] scrapers/MensRushTV.yml
+[warn] scrapers/private/gayerdar.yml
+[warn] scrapers/RGBEE.yml
+[warn] skills/stash-scraper-builder/SKILL.md
+[warn] templates/README.md
+[warn] tests/fixtures/kotube/kotube-fixtures.yml
+[warn] tests/skill-evals/functional-cases.json
+[warn] tests/skill-evals/scenarios/E2E-01.json
+[warn] tests/skill-evals/scenarios/E2E-02.json
+[warn] tests/skill-evals/scenarios/E2E-03.json
+[warn] tests/skill-evals/scenarios/E2E-04.json
+[warn] tests/skill-evals/schemas/case.schema.json
+[warn] tests/skill-evals/schemas/result.schema.json
+[warn] tests/skill-evals/workflow-stop-cases.json
+[warn] tools/scrutiny.js
+[warn] Code style issues found in 24 files. Run Prettier with --write to fix.

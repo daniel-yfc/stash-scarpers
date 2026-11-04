@@ -1,0 +1,33 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.2.0, pluggy-1.7.0
+rootdir: /home/hatch/workspace/crossqa-pr104/repo
+configfile: pytest.ini
+plugins: cov-7.1.0
+collected 447 items
+
+tools/tests/test_bravo_clips.py ..............                           [  3%]
+tools/tests/test_bravo_dvd_integration.py ...........................    [  9%]
+tools/tests/test_bravo_dvd_routes.py ................................xxx [ 17%]
+..........ss...............................                              [ 26%]
+tools/tests/test_bravo_dvds.py ........................                  [ 31%]
+tools/tests/test_check_docs_index.py ..                                  [ 32%]
+tools/tests/test_check_scraper_docs.py ......                            [ 33%]
+tools/tests/test_docs_official.py ......                                 [ 35%]
+tools/tests/test_documentation_contract.py ...                           [ 35%]
+tools/tests/test_evidence_contract.py ...                                [ 36%]
+tools/tests/test_fixture_manifest_discovery.py ...                       [ 37%]
+tools/tests/test_fixture_runner.py .                                     [ 37%]
+tools/tests/test_metadata_feed.py ...........................            [ 43%]
+tools/tests/test_resource_placement.py .........                         [ 45%]
+tools/tests/test_scraper_source.py ............                          [ 48%]
+tools/tests/test_scrapers.py ...                                         [ 48%]
+tools/tests/test_session_policy.py ..................................... [ 57%]
+........................................................................ [ 73%]
+.......................................................................  [ 89%]
+tools/tests/test_skill.py ....                                           [ 89%]
+tools/tests/test_skill_contract.py ............                          [ 92%]
+tools/tests/test_skill_eval.py ..........................                [ 98%]
+tools/tests/test_tools.py ...                                            [ 99%]
+tools/tests/test_validator.py ....                                       [100%]
+
+================== 442 passed, 2 skipped, 3 xfailed in 36.85s ==================

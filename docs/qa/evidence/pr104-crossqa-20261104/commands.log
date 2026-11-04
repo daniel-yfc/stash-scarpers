@@ -1,0 +1,25 @@
+# CrossQA PR104 commands log — candidate 86ce058a49f9d762b193f91c80cc8be867d1c341
+# Environment: node v24.22.1, Python 3.12.3, lxml 6.1.3 (wave2e-b venv) / 5.2.1 (system), jsdom ^30.0.1 (repo node_modules)
+# Workdir: ~/workspace/crossqa-pr104/repo (isolated clone, detached HEAD 86ce058, candidate untouched)
+
+git clone ~/workspace/wave2e-f/repo-f ~/workspace/crossqa-pr104/repo ; git checkout 86ce058  -> HEAD verified (log: 86ce058, 4f598d8, ff236c9)
+npm ci                                                                -> exit 0
+/tmp/fvenv/bin/python predicate_lxml.py (wave2e-b venv python)        -> exit 0  [predicate-lxml-output.txt]
+node predicate_jsdom.mjs                                              -> exit 0  [predicate-jsdom-output.txt]
+/tmp/fvenv/bin/python -m pytest tools/tests/ -q                       -> exit 0, 442 passed, 2 skipped, 3 xfailed (36.85s) [pytest-full.log]
+/tmp/fvenv/bin/python -m pytest tools/tests/test_bravo_dvd_integration.py -v -> exit 0, 27 passed, 0 skipped [pytest-integration.log]
+/tmp/fvenv/bin/python -m pytest test_bravo_dvd_routes+dvds+clips -q   -> exit 0, 111 passed, 2 skipped, 3 xfailed
+/tmp/fvenv/bin/python tools/run_fixture_manifests.py                  -> exit 0, 20/20 PASS [validators.log]
+node validator/index.mjs -a --ci                                      -> exit 0
+npm run validate-sort                                                 -> exit 0
+python tools/check_scraper_semantics.py                               -> exit 0
+python tools/scan_session_material.py                                 -> exit 0
+python tools/check_evidence_contract.py                               -> exit 0
+npm run format:check                                                  -> exit 1 (24 pre-existing baseline files, none from PR #104) [format-warn.txt]
+node runner_adversarial.mjs (9 cases vs verify-scraper-mappings.mjs)  -> 9/9 AS-EXPECTED [runner-adversarial-output.txt]
+node /tmp/runner-old-check.mjs (main ff236c9 runner, cross-family)    -> old runner PASSED the cross-family assertion (defect confirmed) [runner-old-behavior.txt]
+/tmp/fvenv/bin/python js_postprocess_test.py                          -> exit 0 [js-postprocess-output.txt]
+python tools/build_scraper_source.py --output /tmp/cq-build           -> exit 0
+python tools/build_scraper_source.py --output /tmp/cq-build --verify-only -> exit 0
+sha256sum /tmp/cq-build/BRAVO.zip                                     -> 10fa6183cfe0d5d4cfba7451a27beb3cce0664318ae999f3c6c6bf1b841332fa (index version 4f598d8)
+git show 86ce058                                                      -> env-inherit fix confirmed (test_bravo_dvd_integration.py, +os import, env={**os.environ,"SEL":...})

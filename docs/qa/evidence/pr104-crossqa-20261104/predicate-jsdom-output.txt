@@ -1,0 +1,65 @@
+== dvd-synthetic-234.html
+   URLs_GATED   ["https://www.bravo-japan.com/dvds/234"]
+   URLs_PLAIN   ["https://www.bravo-japan.com/dvds/234"]
+   Title        ["勃起する白き花よ"]
+   Code         ["234"]
+== dvd-synthetic-084.html
+   URLs_GATED   ["https://www.bravo-japan.com/dvds/084"]
+   URLs_PLAIN   ["https://www.bravo-japan.com/dvds/084"]
+   Title        ["少年集団強姦"]
+   Code         ["084"]
+== dvd-synthetic-046.html
+   URLs_GATED   ["https://www.bravo-japan.com/dvds/046"]
+   URLs_PLAIN   ["https://www.bravo-japan.com/dvds/046"]
+   Title        ["ゆるゆる雄太のデブ竿ぽちゃ穴食べ放題!"]
+   Code         ["046"]
+== dvd-synthetic-404-00.html
+   URLs_GATED   []
+   URLs_PLAIN   ["https://www.bravo-japan.com/dvds/00"]
+   Title        []
+   Code         []
+== dvd-synthetic-404-999999.html
+   URLs_GATED   []
+   URLs_PLAIN   ["https://www.bravo-japan.com/dvds/999999"]
+   Title        []
+   Code         []
+== dvd-synthetic-cloudflare-challenge.html
+   URLs_GATED   []
+   URLs_PLAIN   []
+   Title        []
+   Code         []
+== dvd-synthetic-logo-empty-alt.html
+   URLs_GATED   ["https://www.bravo-japan.com/dvds/281"]
+   URLs_PLAIN   ["https://www.bravo-japan.com/dvds/281"]
+   Title        ["熊ケツ4"]
+   Code         ["281"]
+== adversarial-fake-marker-777.html
+   URLs_GATED   ["https://www.bravo-japan.com/dvds/777"]
+   URLs_PLAIN   ["https://www.bravo-japan.com/dvds/777"]
+   Title        ["BRAVO-JAPAN"]
+   Code         []
+== adversarial-canonical-only-404.html
+   URLs_GATED   []
+   URLs_PLAIN   ["https://www.bravo-japan.com/dvds/555"]
+   Title        []
+   Code         []
+== adversarial-marker-in-p.html
+   URLs_GATED   []
+   URLs_PLAIN   ["https://www.bravo-japan.com/dvds/888"]
+   Title        []
+   Code         []
+== adversarial-code-missing.html
+   URLs_GATED   ["https://www.bravo-japan.com/dvds/234"]
+   URLs_PLAIN   ["https://www.bravo-japan.com/dvds/234"]
+   Title        ["勃起する白き花よ"]
+   Code         ["発売日"]
+== adversarial-canonical-mismatch.html
+   URLs_GATED   ["https://www.bravo-japan.com/dvds/999"]
+   URLs_PLAIN   ["https://www.bravo-japan.com/dvds/999"]
+   Title        ["勃起する白き花よ"]
+   Code         ["234"]
+== adversarial-marker-after-canonical-position.html
+   URLs_GATED   ["https://www.bravo-japan.com/dvds/234"]
+   URLs_PLAIN   ["https://www.bravo-japan.com/dvds/234"]
+   Title        []
+   Code         []
