@@ -62,14 +62,15 @@ The Controller separately fetched **six B1/B2 original GraphQL responses** (282/
 | 999999 invalid case | Title/Code/Details/Duration/Image null, but **one canonical URL and nine site-generic Tags** are returned; **not an all-fields-empty response** |
 | B0 installed packages | **21** entries; installed candidate revision `ce7ef6c` present in record |
 | QueryFragment 284 | Correct core Code/Title/Details but Duration null |
-| B6 control | Published control summary agrees with the reported KOShop Title/Code |
-| Rollback | `restoration-comparison.json` independently read; **all five equality flags true**. This is historical log verification, not a new Stash environment check |
+| B6 control | Published control summary and the **original raw GraphQL response** contain the reported KOShop Title and Code; independently checked |
+| B3 page-HTML no-poster branch | Both full page HTML documents contain **2 video elements each and neither has a poster attribute**; **poster-present remains UNVERIFIED_BRANCH** and no CDP-rendered DOM equivalence is claimed |
+| Rollback | `restoration-comparison.json` independently read; **all five equality flags true**. The stored before/after Scene-stats JSON have the same Git blob SHA. Historical log verification only, not a new Stash environment check |
 
 The original Proxy Agent D verdict therefore now has independent, direct published-file corroboration rather than relying solely on the author's summary.
 
 ## 3. Public-repository sensitivity concern — separate from Gate B
 
-**Security/privacy review required before promoting or reusing the Proxy evidence branch.** The source branch currently includes two **complete rendered/page HTML** files (around 881 KB each), rather than only digests. In a targeted scan of 15 likely-sensitive files, the Controller also located a **plain internal tailnet/CDP endpoint** in the Proxy handoff, run log and rollback log, and session/cookie-related *terms* within the HTML.
+**Security/privacy review required before promoting or reusing the Proxy evidence branch.** The source branch currently includes two **complete page HTML** files (direct page-HTML fallback, **not** a verified CDP-rendered DOM capture) (around 881 KB each), rather than only digests. In a targeted scan of 15 likely-sensitive files, the Controller also located a **plain internal tailnet/CDP endpoint** in the Proxy handoff, run log and rollback log, and session/cookie-related *terms* within the HTML.
 
 - This **does not prove an exposed live credential**; the scan found **no clear populated bearer/api-key credential in the selected files**. A keyword scan is **not** a complete secret/sanitization audit.
 - Raw HTML may embed visitor/session identifiers or sensitive runtime state; inspect with an authorized security reviewer. **Do not copy full HTML, credentials, internal addresses or session-bearing logs into this correction document or comments.**
