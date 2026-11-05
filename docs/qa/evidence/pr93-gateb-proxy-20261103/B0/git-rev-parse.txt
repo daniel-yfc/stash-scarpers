@@ -1,0 +1,2 @@
+ce7ef6c8f5c5663f41295e92a0603bca486abe98
+(branch fix/e2e-bravo-clips, git ls-remote + local checkout rev-parse both match, 2026-11-03 lease -03 run)

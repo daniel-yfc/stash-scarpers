@@ -1,0 +1,17 @@
+{
+ "timestamp_utc": "2026-11-03T16:11:02.711550+00:00",
+ "elapsed_s": 0.68,
+ "response": {
+  "errors": [
+   {
+    "message": "Internal system error. Error <runtime error: index out of range [0] with length 0>",
+    "path": [
+     "scrapeSceneURL"
+    ]
+   }
+  ],
+  "data": {
+   "scrapeSceneURL": null
+  }
+ }
+}

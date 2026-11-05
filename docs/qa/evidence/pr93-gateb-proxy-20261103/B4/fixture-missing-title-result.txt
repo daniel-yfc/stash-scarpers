@@ -1,0 +1,21 @@
+B4 — Controlled fixture `clip-missing-title` (OFFLINE fixture layer; kept separate from live results)
+Run: 2026-11-03, lease GATEB-PR93-LEASE-20261103-03, repo checkout at exact HEAD ce7ef6c8f5c5663f41295e92a0603bca486abe98
+
+Command: python -m pytest tools/tests/test_bravo_clips.py -q
+Result: 11 passed (full file). Missing-title case selected alone (-k "missing or title"): 1 passed, 10 deselected.
+
+Fixture: tests/fixtures/bravo/clip-missing-title.html
+Case: "BRAVO clip missing title" (bravo-clips-fixtures.yml), mappedExpect:
+  Title:    [] (empty — no fabricated title)
+  Code:     ["999"]
+  Duration: ["1800"]
+  URLs:     ["https://www.bravo-japan.com/clips/999"] (canonical, routeThrough sceneByURL)
+  Details:  [] (empty)
+  Image:    [] (empty)
+All mappedExpect values confirmed by the passing repo fixture test at this HEAD.
+
+Note: the run-1 QA-side lxml extractor (independent_fixture_extract.py, written for HEAD 86e34a2 selectors)
+cannot evaluate the ce7ef6c YAML because the Details selector now uses the $desc common variable
+(lxml XPathEvalError: Undefined variable). It was NOT used for this result; the repo fixture test above
+is the fixture-layer evidence. Live title-less replay has no corresponding real page; the live negative
+evidence is live-nonexistent-999999-request/response.json in this directory (all core fields null).

@@ -1,0 +1,1 @@
+be1885d2097683e8c4ae5f2440120e8bd7945ac16f62c1910ac87e5d009d39b2  /home/hatch/workspace/qa-pr93-gateb-20261103/repo/tests/fixtures/bravo/bravo-fixtures.yml

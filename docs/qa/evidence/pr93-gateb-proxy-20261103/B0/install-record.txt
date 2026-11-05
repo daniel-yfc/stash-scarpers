@@ -1,0 +1,1 @@
+Isolated source gateb-pr93-r3 added via configureGeneral; baseline BRAVO b92acdd uninstalled (job returned, polled to absent); candidate installed via installPackages from isolated index; polled installedPackages -> BRAVO version ce7ef6c, sourceURL = isolated index URL; total packages 21. Full request/response log: install-record.json in this directory.

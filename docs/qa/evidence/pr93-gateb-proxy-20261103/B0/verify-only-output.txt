@@ -1,0 +1,2 @@
+Stash source integrity OK: /home/hatch/workspace/qa-pr93-gateb-proxy-20261103/pkgbuild
+(--verify-only against the rebuilt output, 2026-11-03 lease -03 run)

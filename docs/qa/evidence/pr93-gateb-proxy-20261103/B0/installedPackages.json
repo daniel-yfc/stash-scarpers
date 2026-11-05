@@ -1,0 +1,153 @@
+{
+ "data": {
+  "installedPackages": [
+   {
+    "package_id": "ACCEED",
+    "name": "ACCEED",
+    "version": "36c5db0",
+    "date": "2026-10-28T16:56:20Z",
+    "sourceURL": "https://daniel-yfc.github.io/stash-scarpers/main/index.yml"
+   },
+   {
+    "package_id": "BoyStudio",
+    "name": "BoyStudio",
+    "version": "62da780",
+    "date": "2026-10-18T16:01:45Z",
+    "sourceURL": "https://daniel-yfc.github.io/stash-scarpers/main/index.yml"
+   },
+   {
+    "package_id": "BRAVO",
+    "name": "Bravo-Japan",
+    "version": "ce7ef6c",
+    "date": "2026-11-03T14:18:31Z",
+    "sourceURL": "https://muse.ai/files/1261807643693502/977119628804735/v8daql0o87t5s5fc6nvbn281/gateb-index3.yml"
+   },
+   {
+    "package_id": "CK-Download",
+    "name": "CK-Download",
+    "version": "36c5db0",
+    "date": "2026-10-28T16:56:20Z",
+    "sourceURL": "https://daniel-yfc.github.io/stash-scarpers/main/index.yml"
+   },
+   {
+    "package_id": "ClubCK",
+    "name": "ClubCK COAT",
+    "version": "d3b61af",
+    "date": "2026-10-18T16:02:29Z",
+    "sourceURL": "https://daniel-yfc.github.io/stash-scarpers/main/index.yml"
+   },
+   {
+    "package_id": "Exfeed",
+    "name": "Exfeed",
+    "version": "b92acdd",
+    "date": "2026-10-17T15:37:39Z",
+    "sourceURL": "https://daniel-yfc.github.io/stash-scarpers/main/index.yml"
+   },
+   {
+    "package_id": "fc2",
+    "name": "fc2",
+    "version": "f5f2bfc",
+    "date": "2026-10-15T07:58:02Z",
+    "sourceURL": "https://daniel-yfc.github.io/stash-scarpers/main/index.yml"
+   },
+   {
+    "package_id": "GAMES",
+    "name": "Games-Video",
+    "version": "d3b61af",
+    "date": "2026-10-18T16:02:29Z",
+    "sourceURL": "https://daniel-yfc.github.io/stash-scarpers/main/index.yml"
+   },
+   {
+    "package_id": "Gayerdar",
+    "name": "Gayerdar",
+    "version": "bc5a75d",
+    "date": "2026-10-18T16:02:48Z",
+    "sourceURL": "https://daniel-yfc.github.io/stash-scarpers/main/index.yml"
+   },
+   {
+    "package_id": "GetFilm",
+    "name": "GetFilm",
+    "version": "bc5a75d",
+    "date": "2026-10-18T16:02:48Z",
+    "sourceURL": "https://daniel-yfc.github.io/stash-scarpers/main/index.yml"
+   },
+   {
+    "package_id": "GVWiki",
+    "name": "GVWiki",
+    "version": "36c5db0",
+    "date": "2026-10-28T16:56:20Z",
+    "sourceURL": "https://daniel-yfc.github.io/stash-scarpers/main/index.yml"
+   },
+   {
+    "package_id": "HunkCh",
+    "name": "Hunk's Channel",
+    "version": "bc5a75d",
+    "date": "2026-10-18T16:02:48Z",
+    "sourceURL": "https://daniel-yfc.github.io/stash-scarpers/main/index.yml"
+   },
+   {
+    "package_id": "JGVData",
+    "name": "JGVData",
+    "version": "d9facf1",
+    "date": "2026-10-09T19:05:11Z",
+    "sourceURL": "https://daniel-yfc.github.io/stash-scarpers/main/index.yml"
+   },
+   {
+    "package_id": "Justice01",
+    "name": "Justice01",
+    "version": "bc5a75d",
+    "date": "2026-10-18T16:02:48Z",
+    "sourceURL": "https://daniel-yfc.github.io/stash-scarpers/main/index.yml"
+   },
+   {
+    "package_id": "KOShop",
+    "name": "KO Shop",
+    "version": "2f1b15f",
+    "date": "2026-10-14T10:38:46Z",
+    "sourceURL": "https://daniel-yfc.github.io/stash-scarpers/main/index.yml"
+   },
+   {
+    "package_id": "KOTube",
+    "name": "KO-Tube",
+    "version": "bc5a75d",
+    "date": "2026-10-18T16:02:48Z",
+    "sourceURL": "https://daniel-yfc.github.io/stash-scarpers/main/index.yml"
+   },
+   {
+    "package_id": "KOVideo",
+    "name": "KO Video",
+    "version": "bba3af2",
+    "date": "2026-10-20T05:34:43Z",
+    "sourceURL": "https://daniel-yfc.github.io/stash-scarpers/main/index.yml"
+   },
+   {
+    "package_id": "MensRushTV",
+    "name": "Men's Rush TV",
+    "version": "4eb667e",
+    "date": "2026-10-19T09:20:19Z",
+    "sourceURL": "https://daniel-yfc.github.io/stash-scarpers/main/index.yml"
+   },
+   {
+    "package_id": "Pubu",
+    "name": "Pubu",
+    "version": "944f2d5",
+    "date": "2026-10-18T16:02:57Z",
+    "sourceURL": "https://daniel-yfc.github.io/stash-scarpers/main/index.yml"
+   },
+   {
+    "package_id": "RGBEE",
+    "name": "RGBEE",
+    "version": "944f2d5",
+    "date": "2026-10-18T16:02:57Z",
+    "sourceURL": "https://daniel-yfc.github.io/stash-scarpers/main/index.yml"
+   },
+   {
+    "package_id": "Trance",
+    "name": "Trance",
+    "version": "031b616",
+    "date": "2026-10-24T10:22:47Z",
+    "sourceURL": "https://daniel-yfc.github.io/stash-scarpers/main/index.yml"
+   }
+  ]
+ }
+}
