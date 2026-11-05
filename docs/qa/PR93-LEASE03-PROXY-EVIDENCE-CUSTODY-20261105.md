@@ -44,10 +44,10 @@ Agent D 轉交紀錄中，Proxy 專屬項目為：
 
 ## 3. 若要補齊原封存 ZIP 與完成公開去敏審查
 
-1. 經授權的證據保管者在私有環境提供 Proxy ZIP 與其完整 SHA-256、原始 `MANIFEST-LIVE` 及 manifest 所引用相對路徑。原件必須先通過完整性／檔案結構檢查，不得假定 836,389 bytes／67 entries 永遠正確。
-2. 另一位具權限的 QA 在該**同一份原始輸入**重新執行 `sha256sum -c`、逐一驗證 56/56、獨立取得 ZIP entry list 並重算 BRAVO.zip digest。記錄工具版本、執行時間、清單與結果摘要。
+1. 公開 Proxy 分支已有原始 `MANIFEST-LIVE` 與 56/56 個引用檔案；**仍須**由授權保管者在私有環境提供原 sealed evidence ZIP 與其完整 SHA-256，重驗 836,389 bytes／67 entries（皆為 Agent D 報告值，非 Controller 原封存 ZIP 查核值）。
+2. Controller 已對 GitHub 公開的 56 個 manifest 檔案獨立重算 56/56 PASS；取得原 sealed ZIP 後，另需對**原封存 bytes**執行 SHA 比對、ZIP entry list、BRAVO.zip 二進位重算，分開記錄原件 custody 與工具版本。
 3. 對 GraphQL payload、request、headers、瀏覽器 HTML、CDP 事件及 log 進行秘密掃描、遮罩與人員覆核。**原始 cookie、token、tailnet URL、session-bearing HTML 等私密材料不得上傳至公開 Repository。**
-4. 保存未去敏原件於受控空間（獨立 custody 與 access record）；Repo 僅上架可重算的公開去敏檔案、manifest、原始證據 digest index、test matrix 與審查記錄。
-5. 若原始保管者無法提供該包，保持 `HISTORICAL_VERDICT_ARCHIVED_WITH_RAW_PROXY_EVIDENCE_GAP`，不得標示為完整公開證據鏈或已由 Controller 重算。
+4. 未去敏原件應保存在受控空間；**目前 GitHub 專屬分支已公開兩份完整 page HTML 與內網端點**，必須先由安全審查者判斷是否含真實敏感值、並適用 Git history 清理及接觸面處置。不要將當前公開分支視為已完成去敏認可。
+5. 若原封存 ZIP 或 pkgbuild 二進位無法提供，維持 `PUBLIC_PROXY_56_OF_56_REHASHED_BINARY_CUSTODY_AND_SECURITY_REVIEW_PENDING`；**公開 56 檔已由 Controller 重算**，但**原 ZIP 67 entries / 二進位來源不可標示已直接驗證**。
 
 **本次 Repo 歸檔範圍：** Decision Record + YAML Handoff + Custody Note。沒有新增、搬運或宣稱公開原始 Proxy ZIP。沒有更改 `scrapers/BRAVO.yml`、PR #93 已合併提交、Stash 生產環境。
