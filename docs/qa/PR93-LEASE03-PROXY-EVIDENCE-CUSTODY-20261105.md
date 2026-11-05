@@ -1,7 +1,7 @@
 ---
 doc_id: PR93-LEASE03-PROXY-EVIDENCE-CUSTODY-20261105
 title: PR #93 Lease-03 Proxy evidence custody / publication gap
-status: partial_public_evidence
+status: public_56_files_rehashed_binary_archive_unavailable_security_review_pending
 layer: qa
 owner: controller
 audience: [maintainer, agent, auditor]
@@ -10,6 +10,9 @@ authority: evidence_index
 ---
 
 # PR #93 — Lease-03 Proxy 證據保管與公開界線
+
+> **最新核對更新：** 專屬 Proxy 公開分支 `docs/qa-pr93-gateb-proxy-20261103@80f5307` 現有 `MANIFEST-LIVE.sha256` 及 56 份引用檔案，Controller **重算 SHA-256：56/56 PASS**。先前對「MANIFEST 與原始 GraphQL 不公開」的描述已失效。仍缺原封存 ZIP（67 entries／836,389 bytes）及 `pkgbuild/BRAVO.zip` 二進位原件；公開分支含兩份完整頁面 HTML、明文內網端點，**須另行進行去敏審查**。以[公開證據重查與保管更正](PR93-LEASE03-PROXY-PUBLIC-EVIDENCE-RECHECK-20261105.md)為最新狀態。
+
 
 **Referenced historical candidate:** `ce7ef6c8f5c5663f41295e92a0603bca486abe98`  
 **Decision:** [`PR93-LEASE03-PROXY-HISTORICAL-REVIEW-20261105.md`](PR93-LEASE03-PROXY-HISTORICAL-REVIEW-20261105.md)  
@@ -30,16 +33,16 @@ Agent D 轉交紀錄中，Proxy 專屬項目為：
 
 | 物件 | Agent D 所述 | Controller 本輪狀態 |
 | --- | --- | --- |
-| `MANIFEST-LIVE`（Proxy 56 entries） | `sha256sum -c`：56/56 OK | **未提供原始 manifest bytes；NOT_REHASHED** |
+| `MANIFEST-LIVE`（Proxy 56 entries） | `sha256sum -c`：56/56 OK | **已從專屬公開分支讀取 56/56 原始 UTF-8 檔案、逐檔 SHA-256 重算 56/56 PASS**；封存 ZIP 仍未取得 |
 | `pkgbuild/BRAVO.zip` | `cdb9d2c57ea549c9167e683f1f56dcfadcd8ad4fb672d8c496f48c5fb938de78`，ZIP 只有 BRAVO.yml | v3 公開報告有相同 digest；**此 Proxy 實體 ZIP 未下載/重新雜湊** |
 | Evidence ZIP | 836,389 bytes、67 entries | **未取得 ZIP；byte count/entry count 由 Agent D 報告** |
-| B1/B2/B4/B5/B6 raw GraphQL | Agent D 表示逐筆回讀 | **Proxy 原始回應未接入 Controller**；本次報告以 Agent D 的具體結果為引述 |
+| B1/B2/B4/B5/B6 raw GraphQL | Agent D 表示逐筆回讀 | **公開 Proxy 分支已有原始回應；Controller 獨立回讀 B1/B2 六份、B4、B5、B6 控制摘要**。部分 B6 大型 response 僅做檔案 SHA-256 核對 |
 | Poster-present source | Agent D 表明 CDP tunnel 逾時、Page HTML 無 poster | **poster-present 仍 `UNVERIFIED_BRANCH`** |
-| Rollback comparison | 5/5 true，stats 15→15，lease-03 released | **本次未操作 Stash，無法親自查驗歷史 lease 狀態** |
+| Rollback comparison | 5/5 true，stats 15→15，lease-03 released | **已回讀公開 restoration-comparison.json，五旗標全 true；沒有重新操作 Stash 或驗證當下 lease** |
 
-**嚴禁替代驗證：** v3 的 `live-run2/MANIFEST-LIVE2.sha256`、v4 的 `MANIFEST-LIVE3.sha256` 與修訂契約的 `MANIFEST-REPO.sha256` **均為不同輪次**，不能冒稱 Proxy 的 `MANIFEST-LIVE 56/56`。
+**嚴禁替代驗證：** v3 的 `live-run2/MANIFEST-LIVE2.sha256`、v4 的 `MANIFEST-LIVE3.sha256` 與修訂契約的 `MANIFEST-REPO.sha256` **均為不同輪次**。本次已**直接讀取真正的 Proxy MANIFEST-LIVE** 並逐檔重算全部 56 項，並非以其他輪次替代。
 
-## 3. 若要將 Proxy 原始證據也補齊
+## 3. 若要補齊原封存 ZIP 與完成公開去敏審查
 
 1. 經授權的證據保管者在私有環境提供 Proxy ZIP 與其完整 SHA-256、原始 `MANIFEST-LIVE` 及 manifest 所引用相對路徑。原件必須先通過完整性／檔案結構檢查，不得假定 836,389 bytes／67 entries 永遠正確。
 2. 另一位具權限的 QA 在該**同一份原始輸入**重新執行 `sha256sum -c`、逐一驗證 56/56、獨立取得 ZIP entry list 並重算 BRAVO.zip digest。記錄工具版本、執行時間、清單與結果摘要。
