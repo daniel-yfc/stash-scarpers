@@ -1,7 +1,7 @@
 ---
 doc_id: PR93-LEASE03-PROXY-HISTORICAL-REVIEW-20261105
 title: PR #93 historical Lease-03 Proxy evidence — version-bounded independent review
-status: historical_review_with_custody_gap
+status: historical_review_public_manifest_verified_binary_custody_and_security_gaps
 layer: qa
 owner: controller
 audience: [maintainer, agent, auditor]
@@ -11,6 +11,9 @@ authority: controller_historical_addendum
 ---
 
 # PR #93 — Lease-03 Proxy 證據包獨立判讀之歷史歸檔（2026-11-05）
+
+> **重要更正（同日重查）：** 已發現專屬 Proxy 公開來源分支 `docs/qa-pr93-gateb-proxy-20261103@80f5307`；Controller 已**獨立重算全部 56/56 公開原始檔案之 SHA-256，均與 `MANIFEST-LIVE` 相符**，並回讀 B1/B2 六份 GraphQL 回應。原文有關『Proxy manifest/raw 56 files 未公開／Controller 未重算』之說明現已過期；**封存 evidence ZIP（67 entries）、BRAVO.zip 原始二進位仍未取得**。新來源分支另含兩份完整 HTML 及內網連線資訊，需保密審查。**以 [最新公開證據重查](PR93-LEASE03-PROXY-PUBLIC-EVIDENCE-RECHECK-20261105.md) 為證據可得性與保管狀態之有效裁決；舊 Gate B FAIL 及修訂 G0 PASS 均不變。**
+
 
 **Decision ID:** `PR93-LEASE03-PROXY-HISTORICAL-20261105`  
 **歷史裁決：** **`GATE_B_FAIL / BASELINE_BLOCKED_LIVE_QA`**（只對 **`ce7ef6c8f5c5663f41295e92a0603bca486abe98`** 與當時的 **Clips Duration = 1800** 契約）。  
@@ -56,9 +59,9 @@ authority: controller_historical_addendum
 4. [修訂 Duration PASS 報告](https://github.com/daniel-yfc/stash-scarpers/blob/docs/qa-pr93-gateb-20261103/docs/qa/PR93-GATEB-DURATION-DEFER-QA-20261104.md) 明確指明 `null` 是新 omission 契約的正確結果；PR #93 GitHub 合併紀錄證明 `88d27a5` 已以普通 merge 方式進入 `ff236c9`。
 5. 這些交叉對照**不能替代**對 Proxy 56 檔原始 MANIFEST／Proxy ZIP 67 entries 的檔案級讀取、SHA 重新計算及任何敏感資料去識別化檢查。
 
-## 4. 證據保管缺口與補交契約
+## 4. 證據保管缺口與補交契約（舊版建檔時之觀察；已有更正）
 
-**現有 GitHub 狀態：** 在 `docs/qa-pr93-gateb-20261103@37ea851` 所見歷史 v2/v3/v4 及修訂 PASS 檔案中，沒有發現本次 Lease-03 Proxy 專屬的完整 ZIP、MANIFEST-LIVE 與獨立 raw response 套件。此文件因此只發布**判讀及證據索引**，不假裝已公開原始 56 檔。
+**原建檔時的查核敘述（已被後續資料更新）**：在 `docs/qa-pr93-gateb-20261103@37ea851` 並未找到 Proxy 專屬檔案；**但另有** `docs/qa-pr93-gateb-proxy-20261103@80f5307` **已公開完整 MANIFEST 與 56/56 個 referenced files，且 Controller 均重新計算 SHA-256 相符**。只有原封存 evidence ZIP、`pkgbuild/BRAVO.zip` 二進位與發布保密審查仍待補。參照[最新重查報告](PR93-LEASE03-PROXY-PUBLIC-EVIDENCE-RECHECK-20261105.md)。
 
 未來補交原始包時，應由授權保管者依下列程序處理：
 
@@ -80,4 +83,4 @@ authority: controller_historical_addendum
 - **Wave 2E / PR #104：** 本文件**不是**任何 DVD Gate B PASS/FAIL、新候選版測試或合併授權。
 - **Merge／Production：** 此歷史檔案不授權任何變更。
 
-**Final historical status:** `LEASE03_PROXY_HISTORICAL_VERDICT_RECORDED / GATE_B_FAIL_OLD_CONTRACT / G0_POSTREVISION_ACCEPTANCE_UNAFFECTED / SOURCE_PACKAGE_CUSTODY_PENDING`.
+**Current historical status (superseded by linked recheck):** `PUBLIC_PROXY_MANIFEST_56_OF_56_INDEPENDENTLY_REHASHED / ORIGINAL_ZIP_BINARY_NOT_REVERIFIED / PUBLICATION_SECURITY_REVIEW_REQUIRED / HISTORICAL_GATE_B_FAIL_OLD_CONTRACT_UNCHANGED / G0_ACCEPTED_UNAFFECTED`.
