@@ -1,5 +1,69 @@
 version: 1
 documents:
+- doc_id: DOC-E2E-61
+  title: BRAVO DVD Wave 2E Detailed Implementation Plan
+  path: docs/61-bravo-dvd-wave-2e.md
+  layer: repository
+  status: draft
+  intents:
+  - bravo
+  - dvd-routing
+  - wave-2e
+- doc_id: DOC-E2E-62
+  title: STASH-E2E-02 Upstream Panic Report Preparation
+  path: docs/62-stash-panic-upstream-report.md
+  layer: repository
+  status: draft
+  intents:
+  - stash-panic
+  - upstream-issue
+  - graphql
+- doc_id: DOC-E2E-63
+  title: Wave 2E Agent B Routing Assignment Addendum
+  path: docs/63-wave2e-agent-b-assignment-addendum.md
+  layer: repository
+  status: draft
+  intents:
+  - wave-2e
+  - routing-tests
+  - agent-b
+- doc_id: DOC-E2E-64
+  title: Wave 2E Agent C Fixture Assignment Addendum
+  path: docs/64-wave2e-agent-c-assignment-addendum.md
+  layer: repository
+  status: draft
+  intents:
+  - wave-2e
+  - fixtures
+  - agent-c
+- doc_id: DOC-E2E-65
+  title: Wave 2E Agent F Integration Assignment Addendum
+  path: docs/65-wave2e-agent-f-assignment-addendum.md
+  layer: repository
+  status: draft
+  intents:
+  - wave-2e
+  - implementation
+  - agent-f
+- doc_id: DOC-E2E-66
+  title: Wave 2E Controller Decision WS-2E-QF-001 — BRAVO QueryFragment
+  path: docs/66-wave2e-queryfragment-decision.md
+  layer: repository
+  status: draft
+  intents:
+  - wave-2e
+  - query-fragment
+  - controller-decision
+- doc_id: DOC-E2E-67
+  title: Wave 2E Agent F Implementation and Integration Assignment v2
+  path: docs/67-wave2e-agent-f-assignment-v2.md
+  layer: repository
+  status: draft
+  intents:
+  - wave-2e
+  - agent-f
+  - dvd-integration
+  - query-fragment
 - doc_id: DOC-INTEGRATION-80
   title: Metadata Feed Integration
   path: docs/80-metadata-feed-integration.md
