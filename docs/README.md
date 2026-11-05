@@ -53,3 +53,7 @@ This directory contains repository-level workflow, architecture, testing, and ma
 | [`../tools/SRB-2.0-documentation.md`](../tools/SRB-2.0-documentation.md)   | Scraper Request Builder manual                            |
 
 Use `templates/` to start a file, the skill to author it, `validator/` and `tools/` to verify it, and these guides to understand governance. Historical `evidence/` reviews are not canonical instructions.
+
+## Temporary implementation workbench (not production-ready)
+
+- [Stash Live E2E fix workbench — 2026-10-31](workbench/stash-e2e-20261031/README.md): reported runtime evidence, M0–M6 implementation specification, design rationale, exact-package delta acceptance gates and the archive checklist. Status: **draft**; migrate to `docs/archive/stash-e2e-20261031/` by a separate reviewed PR only after completion and independent M6 QA. This record does not replace canonical docs or close the QA-06 security track.

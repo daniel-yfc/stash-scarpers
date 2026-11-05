@@ -426,3 +426,78 @@ documents:
   intents:
   - documentation
   - archive
+- doc_id: DOC-E2E-90
+  title: "Stash Live E2E Fix Workbench Index"
+  path: docs/workbench/stash-e2e-20261031/README.md
+  layer: repository
+  status: draft
+  intents:
+  - stash-e2e
+  - implementation-workbench
+- doc_id: DOC-E2E-91
+  title: "Stash Live E2E Evidence Ledger (Reported v2)"
+  path: docs/workbench/stash-e2e-20261031/91-live-e2e-evidence.md
+  layer: repository
+  status: draft
+  intents:
+  - live-e2e-evidence
+  - evidence-ledger
+- doc_id: DOC-E2E-92
+  title: "Stash Live E2E Fix Implementation Specification"
+  path: docs/workbench/stash-e2e-20261031/92-fix-implementation-spec.md
+  layer: repository
+  status: draft
+  intents:
+  - fix-spec
+  - implementation-roadmap
+- doc_id: DOC-E2E-93
+  title: "Stash E2E Design Decisions and Proposal Review"
+  path: docs/workbench/stash-e2e-20261031/93-design-decisions-and-references.md
+  layer: repository
+  status: draft
+  intents:
+  - design-decisions
+  - proposal-comparison
+- doc_id: DOC-E2E-94
+  title: "Stash Live Delta Acceptance Contract"
+  path: docs/workbench/stash-e2e-20261031/94-delta-acceptance.md
+  layer: repository
+  status: draft
+  intents:
+  - delta-qa
+  - acceptance-gates
+- doc_id: DOC-E2E-95
+  title: "Stash E2E Fix Workbench Archive Handoff"
+  path: docs/workbench/stash-e2e-20261031/95-archive-handoff.md
+  layer: repository
+  status: draft
+  intents:
+  - archive-handoff
+  - workbench-lifecycle
+- doc_id: DOC-E2E-96
+  title: "Wave 1A Agent Prompt - Metadata Integrity"
+  path: docs/workbench/stash-e2e-20261031/96-agent-prompt-metadata-integrity.md
+  layer: repository
+  status: draft
+  intents:
+  - agent-prompt
+  - wave-1a
+  - metadata-integrity
+- doc_id: DOC-E2E-97
+  title: "Wave 1B Agent Prompt - BRAVO Clips"
+  path: docs/workbench/stash-e2e-20261031/97-agent-prompt-bravo-clips.md
+  layer: repository
+  status: draft
+  intents:
+  - agent-prompt
+  - wave-1b
+  - bravo-clips
+- doc_id: DOC-E2E-98
+  title: "Wave 1C Agent Prompt - ACCEED Auth Guard"
+  path: docs/workbench/stash-e2e-20261031/98-agent-prompt-acceed-guard.md
+  layer: repository
+  status: draft
+  intents:
+  - agent-prompt
+  - wave-1c
+  - acceed-auth-guard
