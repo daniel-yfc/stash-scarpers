@@ -1,0 +1,363 @@
+{
+ "data": {
+  "listScrapers": [
+   {
+    "id": "ACCEED",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "acceed.jp/detail.",
+      "www.acceed.jp/detail."
+     ]
+    }
+   },
+   {
+    "id": "builtin_autotag",
+    "scene": {
+     "supported_scrapes": [
+      "FRAGMENT"
+     ],
+     "urls": null
+    }
+   },
+   {
+    "id": "BOY_STUDIO",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "boy-studio.com/videos/",
+      "www.boy-studio.com/videos/"
+     ]
+    }
+   },
+   {
+    "id": "BRAVO_JAPAN",
+    "scene": {
+     "supported_scrapes": [
+      "URL"
+     ],
+     "urls": [
+      "bravo-japan.com/clips/",
+      "www.bravo-japan.com/clips/",
+      "bravo-japan.com/dvds/",
+      "www.bravo-japan.com/dvds/"
+     ]
+    }
+   },
+   {
+    "id": "BRAVO",
+    "scene": {
+     "supported_scrapes": [
+      "URL"
+     ],
+     "urls": [
+      "bravo-japan.com/clips/",
+      "www.bravo-japan.com/clips/",
+      "bravo-japan.com/dvds/",
+      "www.bravo-japan.com/dvds/"
+     ]
+    }
+   },
+   {
+    "id": "COAT_CK_DOWNLOAD",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "ck-download.com/product/detail/",
+      "www.ck-download.com/product/detail/"
+     ]
+    }
+   },
+   {
+    "id": "COAT_CLUB_CK",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "coat.co.jp/products/detail.php",
+      "www.coat.co.jp/products/detail.php"
+     ]
+    }
+   },
+   {
+    "id": "CoomerFansly",
+    "scene": {
+     "supported_scrapes": [
+      "FRAGMENT",
+      "URL"
+     ],
+     "urls": [
+      "https://coomer.st/fansly"
+     ]
+    }
+   },
+   {
+    "id": "CoomerOnlyFans",
+    "scene": {
+     "supported_scrapes": [
+      "FRAGMENT",
+      "URL"
+     ],
+     "urls": [
+      "https://coomer.st/onlyfans"
+     ]
+    }
+   },
+   {
+    "id": "EXFEED",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "exfeed.jp/datail"
+     ]
+    }
+   },
+   {
+    "id": "FanslyAPI",
+    "scene": {
+     "supported_scrapes": [
+      "URL"
+     ],
+     "urls": [
+      "fansly.com/post/"
+     ]
+    }
+   },
+   {
+    "id": "FanslyCoomer",
+    "scene": {
+     "supported_scrapes": [
+      "FRAGMENT",
+      "URL"
+     ],
+     "urls": [
+      "https://fansly.com"
+     ]
+    }
+   },
+   {
+    "id": "FC2",
+    "scene": {
+     "supported_scrapes": [
+      "FRAGMENT",
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "https://adult.contents.fc2.com/article/"
+     ]
+    }
+   },
+   {
+    "id": "GAMES_VIDEO",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "games-video.co.jp/dvd_detail.php",
+      "www.games-video.co.jp/dvd_detail.php"
+     ]
+    }
+   },
+   {
+    "id": "GAYERDAR",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "gayerdar.com/zh-TW/videos/"
+     ]
+    }
+   },
+   {
+    "id": "GET_FILM",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "get-film.jp/products/detail.php",
+      "www.get-film.jp/products/detail.php"
+     ]
+    }
+   },
+   {
+    "id": "GV_WIKI",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "gvwiki.com/video/"
+     ]
+    }
+   },
+   {
+    "id": "HUNKS_CHANNEL",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "eng.hunk-ch.com/movie_detail.php",
+      "hunk-ch.com/movie_detail.php",
+      "www.hunk-ch.com/movie_detail.php"
+     ]
+    }
+   },
+   {
+    "id": "JGV_DATA",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "jgvdata.com/"
+     ]
+    }
+   },
+   {
+    "id": "JUSTICE",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "justice01.com/guilty",
+      "justice01.com/justice",
+      "www.justice01.com/guilty",
+      "www.justice01.com/justice"
+     ]
+    }
+   },
+   {
+    "id": "KO_SHOP",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "ko-shop.com/products/detail.php",
+      "www.ko-shop.com/products/detail.php"
+     ]
+    }
+   },
+   {
+    "id": "KO_TUBE",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "ko-tube.com/extra/package/",
+      "ko-tube.com/package/index/",
+      "ko-tube.com/product/index/",
+      "ko-tube.com/product/index2/"
+     ]
+    }
+   },
+   {
+    "id": "KO_VIDEO",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "ko-video.com/products/detail.php",
+      "www.ko-video.com/products/detail.php"
+     ]
+    }
+   },
+   {
+    "id": "Loverfans",
+    "scene": {
+     "supported_scrapes": [
+      "URL"
+     ],
+     "urls": [
+      "loverfans.com/posts"
+     ]
+    }
+   },
+   {
+    "id": "MENS_RUSH_TV",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "mensrush.tv/single.php",
+      "www.mensrush.tv/single.php"
+     ]
+    }
+   },
+   {
+    "id": "OnlyFansCoomer",
+    "scene": {
+     "supported_scrapes": [
+      "FRAGMENT",
+      "URL"
+     ],
+     "urls": [
+      "https://onlyfans.com"
+     ]
+    }
+   },
+   {
+    "id": "PUBU",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "pubu.com.tw/combo/",
+      "pubu.com.tw/ebook/",
+      "pubu.com.tw/magazine/",
+      "pubu.com.tw/media/"
+     ]
+    }
+   },
+   {
+    "id": "TRANCE_VIDEO",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "trance-video.com/product/detail/",
+      "www.trance-video.com/product/detail/"
+     ]
+    }
+   }
+  ]
+ }
+}

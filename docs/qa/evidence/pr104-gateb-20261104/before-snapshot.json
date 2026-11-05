@@ -1,0 +1,37 @@
+{
+ "data": {
+  "version": {
+   "version": "v0.31.1-182-g9e9ad972",
+   "build_time": "2026-10-27 01:24:53"
+  },
+  "stats": {
+   "scene_count": 15,
+   "performer_count": 1,
+   "studio_count": 1,
+   "tag_count": 7
+  },
+  "configuration": {
+   "general": {
+    "scraperPackageSources": [
+     {
+      "name": "Community (stable)",
+      "url": "https://stashapp.github.io/CommunityScrapers/stable/index.yml",
+      "local_path": "community"
+     },
+     {
+      "name": "yfc",
+      "url": "https://daniel-yfc.github.io/stash-scarpers/main/index.yml",
+      "local_path": ""
+     }
+    ],
+    "scrapersPath": "/root/.stash/scrapers"
+   },
+   "scraping": {
+    "scraperCDPPath": "http://<lxc-host>:9222/json/version",
+    "scraperCertCheck": true,
+    "scraperUserAgent": ""
+   }
+  },
+  "installedPackages": []
+ }
+}

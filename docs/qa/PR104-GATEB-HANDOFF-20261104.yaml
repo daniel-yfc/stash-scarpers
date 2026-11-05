@@ -38,29 +38,30 @@ PHASE_A:
   OFFLINE_SPOT_RERUN: "BRAVO clips/dvds/dvd_routes/dvd_integration tests: 158 passed, 2 skipped, 3 xfailed (reviewer's own run; full Gate A remains Delta QA record)"
 
 PHASE_B:
-  CONTROLLER_LIVE_AUTHORIZATION: NOT_GRANTED
-  EXCLUSIVE_STASH_TEST_LEASE: NOT_GRANTED
-  INSTALLED_PACKAGE_SHA256: NOT_VERIFIED
-  EFFECTIVE_HANDLER: NOT_VERIFIED
+  CONTROLLER_LIVE_AUTHORIZATION: GRANTED_BY_USER_INSTRUCTION_2026-11-05
+  EXCLUSIVE_STASH_TEST_LEASE: GATEB-PR104-LEASE-20261105-01_RELEASED
+  INSTALLED_PACKAGE_SHA256: 5bc3b2b7656d9c988f3552aaae271883e9a0e303f2c5a9e4c46494b232670ddb
+  EFFECTIVE_HANDLER: VERIFIED_URL_ONLY_BRAVO_DVD_AND_CLIPS_ROUTING
 
 TEST_RESULTS:
-  CLIPS_REGRESSION: NOT_RUN
-  DVD_POSITIVE: NOT_RUN
-  DVD_404: NOT_RUN
-  DVD_XPATH_RUNTIME: NOT_RUN
-  PRODUCT_IDENTITY_RUNTIME: NOT_RUN
-  DATE_RUNTIME: NOT_RUN
-  IMAGE_RUNTIME: NOT_RUN
-  QUERYFRAGMENT: NOT_RUN
-  UPSTREAM_PANIC: NOT_RUN
+  CLIPS_REGRESSION: PASS
+  DVD_POSITIVE: PASS_FIELDS
+  DVD_404: NO_METADATA_VIA_UPSTREAM_PANIC
+  DVD_XPATH_RUNTIME: PASS
+  PRODUCT_IDENTITY_RUNTIME: PASS_REAL_PAGES_SYNTHETIC_RESIDUAL_OPEN
+  DATE_RUNTIME: PASS
+  IMAGE_RUNTIME: FAIL_DVD084_SOLDOUT_ARTWORK_RETURNED
+  QUERYFRAGMENT: PASS_HANDLED_UNSUPPORTED_NO_PANIC
+  UPSTREAM_PANIC: REPRODUCED_ON_FULLY_EMPTY_SCRAPE_ISSUE97_FAMILY
 
 PRODUCT_IDENTITY_RESIDUAL_RISK: OPEN_CONTROLLER_RELEASE_DECISION
 ANTCHFX_RUNTIME_COMPATIBILITY: NOT_VERIFIED
 QUERYFRAGMENT_UPSTREAM_LIMITATION: OPEN
 
-RESTORATION_STATUS: NOT_RUN
+RESTORATION_STATUS: RESTORATION_PASS
 M0_ENVIRONMENT_CHANGES: NONE
-GATE_B_VERDICT: NOT_RUN
+PHASE_B_ENVIRONMENT_DRIFT: "F-B-01: instance changed between M0 and Phase B by others (package registry emptied, renamed scraper set incl. BRAVO_JAPAN on disk); rollback target rebased to the Phase B before-snapshot; BRAVO_JAPAN vs candidate diff = name line only"
+GATE_B_VERDICT: GATE_B_FAIL
 GATE_C: NOT_RUN
 
 CANDIDATE_MODIFIED: false
@@ -71,9 +72,16 @@ EVIDENCE:
   - docs/qa/evidence/pr104-gateb-20261104/baselines.json
   - docs/qa/evidence/pr104-gateb-20261104/candidate-provenance.json
   - docs/qa/evidence/pr104-gateb-20261104/environment-inventory.json
+  - docs/qa/evidence/pr104-gateb-20261104/lease-record.md
+  - docs/qa/evidence/pr104-gateb-20261104/before-snapshot.json
+  - docs/qa/evidence/pr104-gateb-20261104/installed-after.json
+  - docs/qa/evidence/pr104-gateb-20261104/listScrapers-after.json
+  - docs/qa/evidence/pr104-gateb-20261104/live-matrix-rows.json
+  - docs/qa/evidence/pr104-gateb-20261104/post-rollback-snapshot.json
+  - docs/qa/evidence/pr104-gateb-20261104/restoration-comparison.json
   - docs/qa/evidence/pr104-gateb-20261104/MANIFEST.sha256
 BLOCKERS:
-  - "Phase B requires a separate Controller approval containing the lease items enumerated in PR104-GATEB-M0-20261104.md M0-03 (instance, designated identity, exclusive lease ID/window, exact commit, exact package SHA, allowed GraphQL operations, install/reload mechanism, CDP target permission, allowed state changes, backup/rollback method, evidence rules)."
-  - "Database backup restorability remains UNVERIFIED (standing M0 item, not waived 2026-11-01); Controller must rule isolated-source rollback sufficient for scrape-only Phase B or require a restore drill first."
-  - "F-M0-01: PR #105 merged to main after the accepted baseline; BRAVO vs BRAVO_JAPAN package identity for any post-Gate-B release is a Controller decision."
-HANDOFF_STATUS: M0_COMPLETE_PHASE_B_PENDING_CONTROLLER
+  - "GATE_B_FAIL driver: DVD-084 Image returns the SOLD OUT artwork at runtime; candidate soldout defense is a filename-substring JS filter (/soldout/i) and the live filename (br281jk_998_635.jpg, already so in G1 capture) contains no 'soldout'. Fix requires a new candidate HEAD and an incremental Gate B (DVD-084 Image + DVD positive spot checks)."
+  - "Upstream panic on fully-empty scrapeSceneURL results (Issue #97 family) reproduced on DVD 404s and an unmatched URL; no metadata resulted. Controller to disposition alongside Issue #97."
+  - "F-M0-01 stands: PR #105 merged to main after the accepted baseline; BRAVO vs BRAVO_JAPAN package identity for any release remains a Controller decision."
+HANDOFF_STATUS: GATE_B_COMPLETE_FAIL_LEASE_RELEASED
