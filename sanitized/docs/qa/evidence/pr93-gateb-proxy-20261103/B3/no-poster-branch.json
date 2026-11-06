@@ -1,0 +1,11 @@
+{
+ "branch": "no-poster (both live pages)",
+ "exercised": true,
+ "evidence": [
+  "poster-check-284.json",
+  "poster-check-282.json",
+  "page-html-284.html",
+  "page-html-282.html"
+ ],
+ "poster_present_branch": "UNVERIFIED_BRANCH (see poster-check files)"
+}

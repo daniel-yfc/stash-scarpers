@@ -1,0 +1,1 @@
+Baseline BRAVO reinstalled from yfc source via installPackages; polled installedPackages -> BRAVO version b92acdd, sourceURL yfc index; total packages back to 21. Full log: rollback-log.json

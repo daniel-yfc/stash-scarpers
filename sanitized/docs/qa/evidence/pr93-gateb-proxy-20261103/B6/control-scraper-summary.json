@@ -1,0 +1,10 @@
+{
+ "scraper": "KOShop",
+ "url": "https://www.ko-shop.com/products/detail.php?product_id=41979",
+ "_note": "control result is stored in control-scraper-result-response.json alongside this summary",
+ "title": "ナマ狂い種壺待機",
+ "code": "BWB365_DVD",
+ "urls": [
+  "https://www.ko-shop.com/products/detail.php?product_id=41979"
+ ]
+}

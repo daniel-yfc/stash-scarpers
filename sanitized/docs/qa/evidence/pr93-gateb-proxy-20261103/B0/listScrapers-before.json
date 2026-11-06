@@ -1,0 +1,290 @@
+{
+ "data": {
+  "listScrapers": [
+   {
+    "id": "ACCEED",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "acceed.jp/detail.",
+      "www.acceed.jp/detail."
+     ]
+    }
+   },
+   {
+    "id": "builtin_autotag",
+    "scene": {
+     "supported_scrapes": [
+      "FRAGMENT"
+     ],
+     "urls": null
+    }
+   },
+   {
+    "id": "BoyStudio",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "boy-studio.com/videos/",
+      "www.boy-studio.com/videos/"
+     ]
+    }
+   },
+   {
+    "id": "BRAVO",
+    "scene": {
+     "supported_scrapes": [
+      "FRAGMENT",
+      "URL"
+     ],
+     "urls": [
+      "bravo-japan.com/clips/",
+      "www.bravo-japan.com/clips/"
+     ]
+    }
+   },
+   {
+    "id": "CK-Download",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "ck-download.com/product/detail/",
+      "www.ck-download.com/product/detail/"
+     ]
+    }
+   },
+   {
+    "id": "ClubCK",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "coat.co.jp/products/detail.php",
+      "www.coat.co.jp/products/detail.php"
+     ]
+    }
+   },
+   {
+    "id": "Exfeed",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "exfeed.jp/datail"
+     ]
+    }
+   },
+   {
+    "id": "fc2",
+    "scene": {
+     "supported_scrapes": [
+      "FRAGMENT",
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "https://adult.contents.fc2.com/article/"
+     ]
+    }
+   },
+   {
+    "id": "GAMES",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "games-video.co.jp/dvd_detail.php",
+      "www.games-video.co.jp/dvd_detail.php"
+     ]
+    }
+   },
+   {
+    "id": "Gayerdar",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "gayerdar.com/zh-TW/videos/"
+     ]
+    }
+   },
+   {
+    "id": "GetFilm",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "get-film.jp/products/detail.php",
+      "www.get-film.jp/products/detail.php"
+     ]
+    }
+   },
+   {
+    "id": "GVWiki",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "gvwiki.com/video/"
+     ]
+    }
+   },
+   {
+    "id": "HunkCh",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "eng.hunk-ch.com/movie_detail.php",
+      "hunk-ch.com/movie_detail.php",
+      "www.hunk-ch.com/movie_detail.php"
+     ]
+    }
+   },
+   {
+    "id": "JGVData",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "jgvdata.com/"
+     ]
+    }
+   },
+   {
+    "id": "Justice01",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "justice01.com/guilty",
+      "justice01.com/justice",
+      "www.justice01.com/guilty",
+      "www.justice01.com/justice"
+     ]
+    }
+   },
+   {
+    "id": "KOShop",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "ko-shop.com/products/detail.php",
+      "www.ko-shop.com/products/detail.php"
+     ]
+    }
+   },
+   {
+    "id": "KOVideo",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "ko-video.com/products/detail.php",
+      "www.ko-video.com/products/detail.php"
+     ]
+    }
+   },
+   {
+    "id": "KOTube",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "ko-tube.com/extra/package/",
+      "ko-tube.com/package/index/",
+      "ko-tube.com/product/index/",
+      "ko-tube.com/product/index2/"
+     ]
+    }
+   },
+   {
+    "id": "MensRushTV",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "mensrush.tv/single.php",
+      "www.mensrush.tv/single.php"
+     ]
+    }
+   },
+   {
+    "id": "Pubu",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "pubu.com.tw/combo/",
+      "pubu.com.tw/ebook/",
+      "pubu.com.tw/magazine/",
+      "pubu.com.tw/media/"
+     ]
+    }
+   },
+   {
+    "id": "RGBEE",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "rgbee.net/product/"
+     ]
+    }
+   },
+   {
+    "id": "Trance",
+    "scene": {
+     "supported_scrapes": [
+      "NAME",
+      "URL"
+     ],
+     "urls": [
+      "trance-video.com/product/detail/",
+      "www.trance-video.com/product/detail/"
+     ]
+    }
+   }
+  ]
+ }
+}

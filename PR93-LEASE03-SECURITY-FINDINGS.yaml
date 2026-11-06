@@ -1,0 +1,86 @@
+assignment: PR93-LEASE03-SECURITY-REMEDIATION-20261106
+source_branch: docs/qa-pr93-gateb-proxy-20261103
+source_head: 80f53073384214da2db902038b3e49c805a110bf
+scope_files: 62          # 57 evidence files (incl. MANIFEST-LIVE.sha256) + 5 proxy docs
+scan_date: "2026-11-06"
+scanners:
+  - tool: gitleaks
+    version: 8.21.2
+    command: "gitleaks dir <tree> --no-banner -f json"
+    result_raw_tree: no_leaks_found
+    result_sanitized_tree: no_leaks_found
+  - tool: custom-pattern-sweep (12 categories: cookie/authorization/bearer-basic/jwt/wix-session/api-key/tailscale-ip/rfc1918/cdp-ws/internal-host/email/graphql-auth/long-hex)
+    result: see findings below; zero authorization/bearer/jwt/api-key/password hits
+  - tool: manual review (context read of every pattern hit class + all evidence JSON key inventory)
+    result: zero JSON keys matching token|cookie|auth|password|secret|session across all evidence JSON files
+
+findings:
+  - id: F-01
+    class: INTERNAL_INFRASTRUCTURE
+    item: Tailscale (100.64.0.0/10) address of the stash-test host, incl. CDP endpoint form http://<ip>:9222/json/version
+    value_sha256_12: 5c3736460f98
+    locations:
+      - docs/qa/PR93-GATEB-PROXY-HANDOFF-20261104.yaml:9
+      - docs/qa/evidence/pr93-gateb-proxy-20261103/RUN-LOG.txt:10
+      - docs/qa/evidence/pr93-gateb-proxy-20261103/ROLLBACK/post-rollback-packages.json:29
+      - docs/qa/evidence/pr93-gateb-proxy-20261103/ROLLBACK/rollback-log.json:122
+      - docs/qa/evidence/pr93-gateb-proxy-20261103/ROLLBACK/scene-stats-after.json:29
+      - docs/qa/evidence/pr93-gateb-proxy-20261103/ROLLBACK/scene-stats-before.json:29
+    risk: "Discloses internal test-infrastructure addressing on a public repo. Not a credential; the address is only reachable inside the user's tailnet. CDP port exposure is bounded by tailnet membership."
+    disposition: REDACT_IN_PUBLIC_COPIES (done in sanitized set); history retained under Option A pending Controller decision
+  - id: F-02
+    class: INTERNAL_INFRASTRUCTURE
+    item: Internal hostname token for the stash-test host (3 chars)
+    value_sha256_12: d063b11832b5
+    locations: [docs/qa/PR93-GATEB-PROXY-HANDOFF-20261104.yaml:9]
+    risk: low; hostname alone, no address or credential
+    disposition: REDACT_IN_PUBLIC_COPIES (done)
+  - id: F-03
+    class: POTENTIALLY_SENSITIVE
+    item: muse.ai file-share URL used at runtime to fetch the candidate gateb-index3.yml (capability-style link)
+    occurrences: 10 across 6 files (B0/install-record.json x5, B0/installedPackages.json, ROLLBACK/rollback-log.json, gateb-index3.yml, proxy_install.py, proxy_rollback.py)
+    risk: "Share links of this form are bearer-style while valid; link age ~3 days at review; expiry not verified (verification would require using the link; not attempted). Content is a scraper index file, not user data."
+    disposition: REDACT_IN_PUBLIC_COPIES (done); recommend treating as expired-by-policy; no rotation applicable
+  - id: F-04
+    class: PUBLIC_NONSECRET
+    item: Wix instanceId UUIDs in captured page HTML (21 distinct, 36 chars)
+    locations: [B3/page-html-282.html, B3/page-html-284.html]
+    risk: "Per-component identifiers printed in the live site's public page source; not credentials; no authorization use."
+    disposition: RETAIN (documented decision; preserves DOM/XPath replay fidelity)
+  - id: F-05
+    class: FALSE_POSITIVE
+    item: Wix session identifiers (svSession, wixSession2, wixSession3, smSession, mpaSessionId)
+    locations: [B3/page-html-282.html, B3/page-html-284.html]
+    evidence: "Only framework code identifiers: a cookie-NAME set in Thunderbolt binding code and sessionStorage get/set calls. No session VALUE exists anywhere in the evidence; the value is generated at runtime in a browser. The pages were fetched anonymously (proxy scripts contain no cookie/auth handling). The one 14-char token initially extracted as an 'mpaSessionId value' is the code expression e.mpaSessionId (sha12 0848c445636b)."
+    disposition: NO_ACTION; recorded to prevent re-flagging
+  - id: F-06
+    class: FALSE_POSITIVE
+    item: "document.cookie references in page HTML (line 87 of both captures)"
+    evidence: Wix framework helper code reading document.cookie; no cookie value present
+    disposition: NO_ACTION
+  - id: F-07
+    class: FALSE_POSITIVE
+    item: RFC1918-shaped digit sequence in page HTML (line 843 of both captures)
+    evidence: SVG path coordinate data, not an address
+    disposition: NO_ACTION
+  - id: F-08
+    class: PUBLIC_NONSECRET
+    item: Sentry DSN endpoints (sentry.wixpress.com, sentry-next.wixpress.com, sentry.io) inside Wix client JS
+    evidence: "Client-side DSNs of the site vendor, public by design in shipped JS; not the user's credentials; no personal email addresses exist anywhere in scope (all email-pattern hits are these DSN hosts)"
+    disposition: RETAIN
+  - id: F-09
+    class: PUBLIC_NONSECRET
+    item: Long hex strings (224 sweep hits)
+    evidence: "MANIFEST-LIVE SHA-256 entries (56), commit/tree SHAs in docs, Wix asset content hashes in HTML"
+    disposition: RETAIN
+
+negative_results:
+  confirmed_secret_count: 0
+  authorization_or_bearer_or_jwt_or_api_key_hits: 0
+  graphql_auth_headers: none present in any request/response JSON
+  personal_pii: none found
+
+incident_response:
+  decision: NOT_REQUIRED
+  basis: "No CONFIRMED_SECRET, no reusable session value, no valid credential. Only internal-infrastructure addressing (F-01/F-02) and one potentially sensitive share link (F-03)."
+  rotation: none performed, none recommended for F-01/F-02 (tailnet-internal test host); F-03 has no rotation mechanism (share link) — redaction + expiry-by-policy

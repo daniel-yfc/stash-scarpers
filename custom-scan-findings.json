@@ -1,0 +1,2788 @@
+[
+ {
+  "file": "sanitized/docs/qa/PR93-DURATION-DEFERRED-SPEC.md",
+  "line": 5,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "6ad461fa26b9",
+  "value_len": 40
+ },
+ {
+  "file": "sanitized/docs/qa/PR93-GATEB-PROXY-HANDOFF-20261104.yaml",
+  "line": 5,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "bcfb7f1dde3b",
+  "value_len": 40
+ },
+ {
+  "file": "sanitized/docs/qa/PR93-GATEB-PROXY-HANDOFF-20261104.yaml",
+  "line": 6,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "32c49d261092",
+  "value_len": 40
+ },
+ {
+  "file": "sanitized/docs/qa/PR93-GATEB-PROXY-HANDOFF-20261104.yaml",
+  "line": 9,
+  "pattern": "cdp_ws",
+  "value_sha256_12": "2627488d0519",
+  "value_len": 13
+ },
+ {
+  "file": "sanitized/docs/qa/PR93-GATEB-PROXY-HANDOFF-20261104.yaml",
+  "line": 9,
+  "pattern": "internal_host",
+  "value_sha256_12": "cbfdfd43c7de",
+  "value_len": 7
+ },
+ {
+  "file": "sanitized/docs/qa/PR93-GATEB-PROXY-HANDOFF-20261104.yaml",
+  "line": 11,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "e25d2b6162cd",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/PR93-GATEB-PROXY-HANDOFF-20261104.yaml",
+  "line": 45,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "f13f4bd64d5d",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/PR93-GATEB-PROXY-LEASE-RECORD-20261103-03.md",
+  "line": 6,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "32c49d261092",
+  "value_len": 40
+ },
+ {
+  "file": "sanitized/docs/qa/PR93-GATEB-PROXY-REPORT-20261103.md",
+  "line": 6,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "32c49d261092",
+  "value_len": 40
+ },
+ {
+  "file": "sanitized/docs/qa/PR93-GATEB-PROXY-REPORT-20261103.md",
+  "line": 19,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "32c49d261092",
+  "value_len": 40
+ },
+ {
+  "file": "sanitized/docs/qa/PR93-GATEB-PROXY-REPORT-20261103.md",
+  "line": 24,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "e25d2b6162cd",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 1,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "e8684ffca8db",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 2,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "84cf1020057e",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 3,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "f422113441f5",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 4,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "6f8cf0fef4eb",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 5,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "0275867619a7",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 6,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "ac163a798574",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 7,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "e7d04287a2bf",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 8,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "43dada7829e0",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 9,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "64e0007001ba",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 10,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "605adbcb0a0e",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 11,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "da6caf9f25f8",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 12,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "437162b33e85",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 13,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "4c1c6844a96e",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 14,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "2311c388d5b4",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 15,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "804e50dfe8c1",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 16,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "068d119199aa",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 17,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "f69f4c70187e",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 18,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "2744f4dfa094",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 19,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "172a27c3772d",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 20,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "dc9b09c1b6e5",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 21,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "bc6f2797b549",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 22,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "fdeb00a5c24a",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 23,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "8aa6bbb3a543",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 24,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "9177ac065d6c",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 25,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "8332fd843e2b",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 26,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "70ed7b9e1b1b",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 27,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "3d24094a4908",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 28,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "132a8bef3c84",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 29,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "c71cf984871d",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 30,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "f1db6a1f341c",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 31,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "7a75d444e8f4",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 32,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "520b0708f25b",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 33,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "63f63349ad9a",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 34,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "d48460bc313d",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 35,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "e92c9c2338fc",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 36,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "83aa993ea43a",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 37,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "79e2c8363f14",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 38,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "560eaa29a1a4",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 39,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "2bfb593d3f30",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 40,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "9cf8d210b1c4",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 41,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "f0ce2c9b23e3",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 42,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "5be40b580708",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 43,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "9892d42e5bae",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 44,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "4f823f30199d",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 45,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "0e39250be949",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 46,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "43a44809cfeb",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 47,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "e6aaa43e4041",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 48,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "9892d42e5bae",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 49,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "9892d42e5bae",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 50,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "b1791cea04f8",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 51,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "bb2376a7d22f",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 52,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "8f1d4e2d8e28",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 53,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "39bb27b130df",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 54,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "d4951a3b2ac1",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 55,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "27ddb3af2a1c",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/MANIFEST-LIVE.sha256",
+  "line": 56,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "13d6e372b302",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/RUN-LOG.txt",
+  "line": 4,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "32c49d261092",
+  "value_len": 40
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/RUN-LOG.txt",
+  "line": 10,
+  "pattern": "cdp_ws",
+  "value_sha256_12": "2627488d0519",
+  "value_len": 13
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/RUN-LOG.txt",
+  "line": 10,
+  "pattern": "internal_host",
+  "value_sha256_12": "cbfdfd43c7de",
+  "value_len": 7
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/RUN-LOG.txt",
+  "line": 14,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "e25d2b6162cd",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/RUN-LOG.txt",
+  "line": 30,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "f13f4bd64d5d",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/gateb-index3.yml",
+  "line": 6,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "e25d2b6162cd",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B0/braavo-zip-sha256.txt",
+  "line": 1,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "e25d2b6162cd",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B0/build-output.txt",
+  "line": 3,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "e25d2b6162cd",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B0/git-rev-parse.txt",
+  "line": 1,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "32c49d261092",
+  "value_len": 40
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 87,
+  "pattern": "cookie_header",
+  "value_sha256_12": "59a39a744570",
+  "value_len": 7
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 87,
+  "pattern": "cookie_header",
+  "value_sha256_12": "59a39a744570",
+  "value_len": 7
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 843,
+  "pattern": "rfc1918",
+  "value_sha256_12": "0b590108c816",
+  "value_len": 10
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 852,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "8976e819ce04",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 880,
+  "pattern": "wix_session",
+  "value_sha256_12": "a7d5460a9ceb",
+  "value_len": 11
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 884,
+  "pattern": "wix_session",
+  "value_sha256_12": "267ef51eda14",
+  "value_len": 10
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 884,
+  "pattern": "wix_session",
+  "value_sha256_12": "d4f5a1017ee8",
+  "value_len": 10
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 884,
+  "pattern": "wix_session",
+  "value_sha256_12": "a2ad71de4163",
+  "value_len": 13
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 884,
+  "pattern": "wix_session",
+  "value_sha256_12": "a2ad71de4163",
+  "value_len": 13
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 932,
+  "pattern": "email",
+  "value_sha256_12": "f2dd72e41304",
+  "value_len": 57
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 932,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "8e83dbdcd3cf",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 932,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "8e83dbdcd3cf",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "c5914da42753",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "c5914da42753",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "c5914da42753",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "c5914da42753",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "c5914da42753",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "a7d5460a9ceb",
+  "value_len": 11
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "c3e6599be62b",
+  "value_len": 42
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "9259303e6cf8",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "9259303e6cf8",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "7a54ef15147e",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "7a54ef15147e",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "6b0df524b3b6",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "73c63547ea29",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "0218a869b3e7",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "18695de28165",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "18695de28165",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "5fc0441a3b8f",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "5fc0441a3b8f",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "b9b42fb52618",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "73c63547ea29",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "73c63547ea29",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "b9b42fb52618",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "b9b42fb52618",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "0218a869b3e7",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "0218a869b3e7",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "badfc984601c",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "badfc984601c",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "5fc0441a3b8f",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "5fc0441a3b8f",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "c3e6599be62b",
+  "value_len": 42
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "9259303e6cf8",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "9259303e6cf8",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "7a54ef15147e",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "7a54ef15147e",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "6b0df524b3b6",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "73c63547ea29",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "73c63547ea29",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "0218a869b3e7",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "0218a869b3e7",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "badfc984601c",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "18695de28165",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "18695de28165",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "5fc0441a3b8f",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "5fc0441a3b8f",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "5fc0441a3b8f",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "b9b42fb52618",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "b9b42fb52618",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "b9b42fb52618",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "c7bec9d8a639",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "c7bec9d8a639",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "6523697bb927",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "6523697bb927",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "0b3f63028a15",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "d98a49ff1169",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "d98a49ff1169",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "d80136270925",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "d80136270925",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "cfb8b8e4ecc6",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "cfb8b8e4ecc6",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "6522e80c83e5",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "b6ffbb176861",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "a33ec8e60cd4",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "4de1df3318ba",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "0416663e2d65",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "0416663e2d65",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "6aa7b3ae8b1d",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "b74c12a99986",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "e71c63b9f218",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "8ecb2e305e94",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "8ecb2e305e94",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "d3f417a94d62",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "d3f417a94d62",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "eee3ff795a46",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "da8c560e3982",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "a40879cc38fe",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "1ac3a03b9408",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "1ac3a03b9408",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "0ba23343ca7a",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "0ba23343ca7a",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "1f3b08836cdc",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "da8c560e3982",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "da8c560e3982",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "1f3b08836cdc",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "1f3b08836cdc",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "a40879cc38fe",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "a40879cc38fe",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "8e7549d29486",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "8e7549d29486",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "0ba23343ca7a",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "0ba23343ca7a",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "e71c63b9f218",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "8ecb2e305e94",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "8ecb2e305e94",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "d3f417a94d62",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "d3f417a94d62",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "eee3ff795a46",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "da8c560e3982",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "da8c560e3982",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "a40879cc38fe",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "a40879cc38fe",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "8e7549d29486",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "1ac3a03b9408",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "1ac3a03b9408",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "0ba23343ca7a",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "0ba23343ca7a",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "0ba23343ca7a",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "1f3b08836cdc",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "1f3b08836cdc",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "1f3b08836cdc",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "c99f3e81e92c",
+  "value_len": 40
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "d3cd3a444e8e",
+  "value_len": 40
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "824a829cca8f",
+  "value_len": 40
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "d3cd3a444e8e",
+  "value_len": 40
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "824a829cca8f",
+  "value_len": 40
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 983,
+  "pattern": "wix_session",
+  "value_sha256_12": "70161e41dea4",
+  "value_len": 13
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 983,
+  "pattern": "wix_session",
+  "value_sha256_12": "70161e41dea4",
+  "value_len": 13
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 1005,
+  "pattern": "wix_session",
+  "value_sha256_12": "0cdd98e9c778",
+  "value_len": 10
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 1005,
+  "pattern": "wix_session",
+  "value_sha256_12": "d4f5a1017ee8",
+  "value_len": 10
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 1005,
+  "pattern": "wix_session",
+  "value_sha256_12": "70161e41dea4",
+  "value_len": 13
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 1007,
+  "pattern": "wix_session",
+  "value_sha256_12": "0cdd98e9c778",
+  "value_len": 10
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 1007,
+  "pattern": "wix_session",
+  "value_sha256_12": "d4f5a1017ee8",
+  "value_len": 10
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 1007,
+  "pattern": "wix_session",
+  "value_sha256_12": "70161e41dea4",
+  "value_len": 13
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-282.html",
+  "line": 1056,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "8976e819ce04",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 87,
+  "pattern": "cookie_header",
+  "value_sha256_12": "59a39a744570",
+  "value_len": 7
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 87,
+  "pattern": "cookie_header",
+  "value_sha256_12": "59a39a744570",
+  "value_len": 7
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 843,
+  "pattern": "rfc1918",
+  "value_sha256_12": "0b590108c816",
+  "value_len": 10
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 852,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "84581de7a0c3",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 880,
+  "pattern": "wix_session",
+  "value_sha256_12": "a7d5460a9ceb",
+  "value_len": 11
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 884,
+  "pattern": "wix_session",
+  "value_sha256_12": "267ef51eda14",
+  "value_len": 10
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 884,
+  "pattern": "wix_session",
+  "value_sha256_12": "d4f5a1017ee8",
+  "value_len": 10
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 884,
+  "pattern": "wix_session",
+  "value_sha256_12": "a2ad71de4163",
+  "value_len": 13
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 884,
+  "pattern": "wix_session",
+  "value_sha256_12": "a2ad71de4163",
+  "value_len": 13
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 932,
+  "pattern": "email",
+  "value_sha256_12": "f2dd72e41304",
+  "value_len": 57
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 932,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "8e83dbdcd3cf",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 932,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "8e83dbdcd3cf",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "c5914da42753",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "c5914da42753",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "d14fa4901b29",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "c5914da42753",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "c5914da42753",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "c5914da42753",
+  "value_len": 12
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "wix_session",
+  "value_sha256_12": "a7d5460a9ceb",
+  "value_len": 11
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "c3e6599be62b",
+  "value_len": 42
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "9259303e6cf8",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "9259303e6cf8",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "7a54ef15147e",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "7a54ef15147e",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "6b0df524b3b6",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "73c63547ea29",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "0218a869b3e7",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "18695de28165",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "18695de28165",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "5fc0441a3b8f",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "5fc0441a3b8f",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "b9b42fb52618",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "73c63547ea29",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "73c63547ea29",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "b9b42fb52618",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "b9b42fb52618",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "0218a869b3e7",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "0218a869b3e7",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "badfc984601c",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "badfc984601c",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "5fc0441a3b8f",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "5fc0441a3b8f",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "c3e6599be62b",
+  "value_len": 42
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "9259303e6cf8",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "9259303e6cf8",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "7a54ef15147e",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "7a54ef15147e",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "6b0df524b3b6",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "73c63547ea29",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "73c63547ea29",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "0218a869b3e7",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "0218a869b3e7",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "badfc984601c",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "18695de28165",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "18695de28165",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "5fc0441a3b8f",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "5fc0441a3b8f",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "5fc0441a3b8f",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "b9b42fb52618",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "b9b42fb52618",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "email",
+  "value_sha256_12": "b9b42fb52618",
+  "value_len": 52
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "2c232acc08e5",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "2c232acc08e5",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "6523697bb927",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "6523697bb927",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "0b3f63028a15",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "d98a49ff1169",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "d98a49ff1169",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "d80136270925",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "d80136270925",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "2ebef147a296",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "2ebef147a296",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "2087caf99c8d",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "b6ffbb176861",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "67d6067a7326",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "47f754a339bb",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "0416663e2d65",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "0416663e2d65",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "6aa7b3ae8b1d",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "b74c12a99986",
+  "value_len": 56
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "e71c63b9f218",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "8ecb2e305e94",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "8ecb2e305e94",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "d3f417a94d62",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "d3f417a94d62",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "eee3ff795a46",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "da8c560e3982",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "a40879cc38fe",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "1ac3a03b9408",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "1ac3a03b9408",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "0ba23343ca7a",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "0ba23343ca7a",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "1f3b08836cdc",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "da8c560e3982",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "da8c560e3982",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "1f3b08836cdc",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "1f3b08836cdc",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "a40879cc38fe",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "a40879cc38fe",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "8e7549d29486",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "8e7549d29486",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "0ba23343ca7a",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "0ba23343ca7a",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "e71c63b9f218",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "8ecb2e305e94",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "8ecb2e305e94",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "d3f417a94d62",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "d3f417a94d62",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "eee3ff795a46",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "da8c560e3982",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "da8c560e3982",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "a40879cc38fe",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "a40879cc38fe",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "8e7549d29486",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "1ac3a03b9408",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "1ac3a03b9408",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "0ba23343ca7a",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "0ba23343ca7a",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "0ba23343ca7a",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "1f3b08836cdc",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "1f3b08836cdc",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "1f3b08836cdc",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "4da4b87a9f58",
+  "value_len": 40
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "d3cd3a444e8e",
+  "value_len": 40
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "824a829cca8f",
+  "value_len": 40
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "d3cd3a444e8e",
+  "value_len": 40
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 952,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "824a829cca8f",
+  "value_len": 40
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 983,
+  "pattern": "wix_session",
+  "value_sha256_12": "70161e41dea4",
+  "value_len": 13
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 983,
+  "pattern": "wix_session",
+  "value_sha256_12": "70161e41dea4",
+  "value_len": 13
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 1005,
+  "pattern": "wix_session",
+  "value_sha256_12": "0cdd98e9c778",
+  "value_len": 10
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 1005,
+  "pattern": "wix_session",
+  "value_sha256_12": "d4f5a1017ee8",
+  "value_len": 10
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 1005,
+  "pattern": "wix_session",
+  "value_sha256_12": "70161e41dea4",
+  "value_len": 13
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 1007,
+  "pattern": "wix_session",
+  "value_sha256_12": "0cdd98e9c778",
+  "value_len": 10
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 1007,
+  "pattern": "wix_session",
+  "value_sha256_12": "d4f5a1017ee8",
+  "value_len": 10
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 1007,
+  "pattern": "wix_session",
+  "value_sha256_12": "70161e41dea4",
+  "value_len": 13
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B3/page-html-284.html",
+  "line": 1056,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "84581de7a0c3",
+  "value_len": 32
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B4/fixture-missing-title-result.txt",
+  "line": 2,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "32c49d261092",
+  "value_len": 40
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B6/fixture-integrity-sha256.txt",
+  "line": 1,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "f13f4bd64d5d",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B6/route-and-isolation-check.json",
+  "line": 1,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "32c49d261092",
+  "value_len": 40
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/B6/route-and-isolation-check.json",
+  "line": 1,
+  "pattern": "long_hex_token",
+  "value_sha256_12": "f13f4bd64d5d",
+  "value_len": 64
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/ROLLBACK/post-rollback-packages.json",
+  "line": 29,
+  "pattern": "cdp_ws",
+  "value_sha256_12": "2627488d0519",
+  "value_len": 13
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/ROLLBACK/post-rollback-packages.json",
+  "line": 29,
+  "pattern": "internal_host",
+  "value_sha256_12": "cbfdfd43c7de",
+  "value_len": 7
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/ROLLBACK/rollback-log.json",
+  "line": 122,
+  "pattern": "cdp_ws",
+  "value_sha256_12": "2627488d0519",
+  "value_len": 13
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/ROLLBACK/rollback-log.json",
+  "line": 122,
+  "pattern": "internal_host",
+  "value_sha256_12": "cbfdfd43c7de",
+  "value_len": 7
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/ROLLBACK/scene-stats-after.json",
+  "line": 29,
+  "pattern": "cdp_ws",
+  "value_sha256_12": "2627488d0519",
+  "value_len": 13
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/ROLLBACK/scene-stats-after.json",
+  "line": 29,
+  "pattern": "internal_host",
+  "value_sha256_12": "cbfdfd43c7de",
+  "value_len": 7
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/ROLLBACK/scene-stats-before.json",
+  "line": 29,
+  "pattern": "cdp_ws",
+  "value_sha256_12": "2627488d0519",
+  "value_len": 13
+ },
+ {
+  "file": "sanitized/docs/qa/evidence/pr93-gateb-proxy-20261103/ROLLBACK/scene-stats-before.json",
+  "line": 29,
+  "pattern": "internal_host",
+  "value_sha256_12": "cbfdfd43c7de",
+  "value_len": 7
+ }
+]

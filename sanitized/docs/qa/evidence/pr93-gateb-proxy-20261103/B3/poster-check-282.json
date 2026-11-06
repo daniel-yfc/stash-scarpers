@@ -1,0 +1,17 @@
+{
+ "page": 282,
+ "url": "https://www.bravo-japan.com/clips/282",
+ "method_note": "Direct CDP rendered-DOM capture was attempted during this lease but the tunnel route to the stash-test CDP HTTP endpoint (configured IP form) timed out repeatedly (curl code 000 at 25s/90s); hostname form is rejected by Chrome (Host header 500). B3 therefore uses (a) the page HTML fetched directly from bravo-japan.com during this same lease (page-html-282.html, HTTP 200) and (b) the candidate scraper outputs from B1/B2.",
+ "page_html_video_elements": [
+  "<video id=\"pageBackground_vpgta_video\" ...> (no poster attribute)",
+  "<video id=\"comp-kbfkf16e_video\" ...> (product video; no poster attribute)"
+ ],
+ "poster_attributes_found_in_page_html": [],
+ "scraper_image_runs_1_to_3": [
+  null,
+  null,
+  null
+ ],
+ "observation": "No poster attribute exists on any <video> element in the fetched page HTML for this page, and the scraper returned an empty Image on all 3 runs. No myfans logo GIF, navigation image, advertisement, or other non-product image was returned.",
+ "poster_present_branch": "UNVERIFIED_BRANCH — no live page in this run carries a <video poster>, so the poster-present path could not be exercised live."
+}

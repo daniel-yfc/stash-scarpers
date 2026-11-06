@@ -1,0 +1,105 @@
+# PR #93 Lease-03 — Independent Security QA handoff (2026-11-06)
+# Reviewer: Independent Security Reviewer (different agent from the implementer)
+# Assignment: PR93-LEASE03-INDEPENDENT-SECURITY-QA-20261106
+# Status: INDEPENDENT_QA_COMPLETE — verdict signed below; publication still needs
+# Controller approval; push/merge/deploy NOT authorized by this QA.
+
+assignment: PR93-LEASE03-INDEPENDENT-SECURITY-QA-20261106
+remediation_assignment: PR93-LEASE03-SECURITY-REMEDIATION-20261106
+date: "2026-11-06"
+reviewer: independent_security_reviewer
+source_branch: docs/qa-pr93-gateb-proxy-20261103
+source_head: 80f53073384214da2db902038b3e49c805a110bf
+
+verdict: SECURITY_QA_PASS_WITH_NONBLOCKING_FINDINGS
+publication_readiness: READY_WITH_CONDITIONS
+
+bound_sha256:
+  reviewed_package_zip: b0fd77315a8a2921b349abb8448a413b1f8a4a5ebc6d0de8131cab28246414dc
+  public_sanitized_manifest: 18364466539f207d597fecd86a2a29ffdc58e015b577bbd00318600809e414fd
+  private_raw_manifest: 335a6e0aece0b3344679fdbd8bae3d68924a529346cdb2d951cefe50abbd30a5
+  original_to_sanitized_mapping_csv: aa48aa5c390f74adfe70b3faeb3c7c57e968ac5420fccfb86d454fff7b019ba5
+  sanitized_manifest_live: d792b5f4a93782e9d4342e19ee17e9a1ed561170cecd7c130bcee71415175960
+  raw_manifest_live: 17d85c2ef6eb53d8bd443e9297bf9e1e25d5b1d5b66e559873f9eff04b6859bd
+  page_html_282_raw_eq_sanitized: 95582b3040fc0ac43853c7c07866d212c3fd66aeb23de16a11b0c8928e664491
+  page_html_284_raw_eq_sanitized: 02f6c134020fdaf8597efc58f869a9fd7633581a25647706028684ab6fbdfd3a
+
+independent_verification:
+  manifest_live_raw: PASS_56_OF_56
+  raw_manifest_62: PASS_62_OF_62
+  sanitized_manifest_62: PASS_62_OF_62
+  sanitized_manifest_live: PASS_56_OF_56
+  transformed_vs_identical: PASS_12_TRANSFORMED_50_IDENTICAL
+  mapping_csv_62_rows: PASS_ALL_SHA_RECOMPUTED
+  json_parse_raw_and_sanitized: PASS_39_OF_39_EACH_ZERO_FAILURES
+  xpath_replay_282_284: PASS_RAW_EQ_SANITIZED_MATCHES_FIELD_SUMMARY
+  gitleaks_8_21_2_raw_and_sanitized: NO_LEAKS_FOUND_BOTH_TREES
+  independent_pattern_sweep: ZERO_AUTH_JWT_APIKEY_PASSWORD_COOKIE_SECRET
+  tailscale_ip_raw_to_sanitized: 6_TO_0
+  share_link_raw_to_sanitized: 10_TO_0
+  repo_scan_session_material: FLAGS_BOTH_PAGE_HTML_REPLAYABLE_AUTH_ASSIGNMENT # see QA-N1; resolved as non-secret telemetry ID
+
+confirmed_secret_count: 0
+incident_response: NOT_REQUIRED
+secret_rotation: NONE_REQUIRED
+
+corrections_required_before_or_at_publication:
+  - id: QA-N1
+    severity: medium_record_accuracy
+    issue: "F-05 claim 'no session value exists' is false: both page HTMLs contain quoted sessionId UUID values (2 per page, L880/L952; sha12 a7d1adab33a0 page-282, dffb3e73c870 page-284)."
+    corrected_classification: PUBLIC_NONSECRET
+    rationale: "Anonymous per-load telemetry/BI session correlation ID in Wix viewerModel site descriptor; distinct UUID per page in the same proxy run; issued to an anonymous fetch; Wix member auth uses svSession cookies (no values present); no auth use anywhere in evidence."
+    action: "Record this corrected classification with the QA report / custody addendum at publication. No byte change, no redaction, no rotation."
+  - id: QA-N2
+    severity: low
+    issue: "F-04 instanceId distinct count: implementer says 21, independently verified 19."
+    action: "Correct the number when the custody/docs are committed."
+  - id: QA-N3
+    severity: low
+    issue: "F-09 long-hex count: implementer says 224, independently verified 216 in both trees."
+    action: "Correct the number when the custody/docs are committed."
+  - id: QA-N4
+    severity: low
+    issue: "Scan total '399' is the raw-tree count; delivered findings JSON (398) is the sanitized-tree count; raw-tree scan output was not in the package (QA re-ran it: raw 399 / sanitized 398)."
+    action: "Label both tree counts and attach the raw-tree scan output."
+  - id: QA-N5
+    severity: low
+    issue: "HISTORICAL-REVIEW addendum says status changed from X to X (same value); that file's status line was never security_review_pending."
+    action: "Fix the transition wording when the custody docs are committed."
+
+git_history_decision:
+  recommendation: KEEP_HISTORY_AND_PUBLISH_SANITIZED_EVIDENCE # Option A
+  forks: 0 # GitHub API verified 2026-11-06; does NOT exclude existing clones
+  reachable_only_from: docs/qa-pr93-gateb-proxy-20261103
+  tags_pointing: none
+  caveats:
+    - "Old versions remain retrievable via commit SHA (3b36c43, ed93399, 3e09b91, 80f5307) even after any future branch deletion; GitHub may keep serving old objects for a time after a force-push."
+    - "forks = 0 does not exclude copies already cloned since 2026-11-05 publication; Option A rests on the no-confirmed-secret classification, not on nobody having fetched it."
+    - "Option B only if the Controller upgrades F-01; force-push / branch deletion needs separate approval; none performed in this QA."
+
+custody_docs_audit:
+  corrected_files_compared_against_archive_head_96f7194: 3
+  diff_result: APPEND_ONLY_NO_HISTORICAL_TEXT_ALTERED
+  proxy_branch_and_head: CORRECT
+  public_manifest_56_of_56: CORRECT
+  sealed_zip_and_bravo_zip_not_reacquired: CORRECTLY_STATED_STILL_UNAVAILABLE
+  ce7ef6c_gate_b_fail_retained: true
+  revised_88d27a5_pass_retained: true
+  g0_accepted_closed_retained: true
+  open_gaps_not_closed_by_this_qa:
+    - "Original sealed evidence ZIP (67 entries / 836,389 bytes) still not obtained or re-verified."
+    - "pkgbuild/BRAVO.zip binary still not directly re-hashed."
+    - "Poster-present path still UNVERIFIED_BRANCH."
+
+publication_conditions:
+  - "Publish the sanitized set only together with this independent QA report, so the QA-N1 correction is part of the public record; do not publish under the implementer's original F-05 wording alone."
+  - "Apply the N2-N5 one-line text corrections when the custody docs are committed (no byte rework, no re-scan)."
+  - "Publish only the set bound by PUBLIC-SANITIZED-MANIFEST sha256 18364466...414fd; any byte change requires re-binding and re-review."
+  - "Push to security/pr93-lease03-evidence-remediation-20261106 or any public branch still needs separate Controller approval; this QA does not authorize push, merge, or deploy."
+  - "No secret rotation, no Incident Response, no Git history rewrite (Option A)."
+
+deliverables:
+  report: PR93-LEASE03-INDEPENDENT-SECURITY-QA.md
+  test_record: QA-TEST-RECORD.md
+  qa_scripts_and_outputs: "qa_*.py, qa_sweep_counts.json, run/scan/qa-findings-raw.json, run/scan/qa-findings-san.json"
+  workdir: ~/workspace/review/pr93-lease03-qa-20261106/

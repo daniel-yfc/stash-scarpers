@@ -1,0 +1,16 @@
+{
+ "timestamp_utc": "2026-11-03T16:10:45.956008+00:00",
+ "request": {
+  "query": "query($src: ScraperSourceInput!, $in: ScrapeSingleSceneInput!) {\n  scrapeSingleScene(source: $src, input: $in) { title code details duration image urls date studio { name } tags { name } } }",
+  "variables": {
+   "src": {
+    "scraper_id": "BRAVO"
+   },
+   "in": {
+    "scene_input": {
+     "url": "https://www.bravo-japan.com/clips/284"
+    }
+   }
+  }
+ }
+}

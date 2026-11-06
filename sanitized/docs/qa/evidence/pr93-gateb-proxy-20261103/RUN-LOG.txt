@@ -1,0 +1,44 @@
+RUN LOG — Proxy Agent Execution, Assignment WAVE2E-D-PR93-GATEB-PROXY-EXEC-20261103
+Lease: GATEB-PR93-LEASE-20261103-03 (granted by user 2026-11-03 22:50 CST in chat ace76ce3)
+Role: Proxy QA Runner — execution + evidence only; PASS/FAIL verdict reserved to Agent D.
+Target: PR #93, frozen HEAD ce7ef6c8f5c5663f41295e92a0603bca486abe98, stash-test ONLY.
+
+2026-11-03 22:50  Lease -03 granted by user ("我要核發新 lease -03，照 Proxy 規格完整重跑").
+2026-11-03 22:51  Preflight: git ls-remote fix/e2e-bravo-clips == ce7ef6c (frozen value still current);
+                  stash-test baseline snapshot saved (ROLLBACK/scene-stats-before.json):
+                  Stash v0.31.1-182-g9e9ad972, stats 15/1/1, sources [Community (stable), yfc],
+                  CDP http://REDACTED-TAILNET-IP:9222/json/version, 21 packages, BRAVO baseline b92acdd.
+2026-11-03 22:52  listScrapers-before saved (22 scene scrapers; baseline BRAVO supports [FRAGMENT, URL]).
+2026-11-03 22:52– (B0 build) git checkout exact HEAD in repo clone; build_scraper_source.py rebuilt the
+2026-11-04 00:08  source into pkgbuild/ and --verify-only returned OK. BRAVO.zip SHA-256 =
+                  cdb9d2c57ea549c9167e683f1f56dcfadcd8ad4fb672d8c496f48c5fb938de78 (ZIP contains BRAVO.yml
+                  only; index version ce7ef6c). Upload of BRAVO.zip + gateb-index3.yml to Muse built-in
+                  storage was slow (one upload call ~13 min; one exec session lost and re-run) — no
+                  Stash state was touched during this window.
+2026-11-04 00:09  Install sequence (B0/install-record.json): configureGeneral added isolated source
+                  gateb-pr93-r3; availablePackages(isolated) returned BRAVO ce7ef6c; uninstallPackages
+                  removed baseline BRAVO (polled to absent, 20 pkgs); installPackages installed candidate
+                  (polled: BRAVO == ce7ef6c from isolated source, 21 pkgs). installedPackages.json and
+                  listScrapers.json saved (candidate BRAVO: supported [URL], clips/ URLs only).
+2026-11-04 00:09– B1/B2: clips/284 x3 runs (reloadScrapers before run 3), clips/282 x3 runs (same).
+2026-11-04 00:10  Request/response pairs saved per run. Field summary in B1_B2/field-summary.json.
+2026-11-04 00:10– B4 live clips/999999 scrape; B5 QueryFragment valid (url) + 2 direct-fragment negative
+2026-11-04 00:11  variants (empty scene_input, empty title); B6 KOShop control (product_id=41979) and
+                  unmatched /dvds/284 (recorded separately as upstream behavior). Fixture layer: repo
+                  test_bravo_clips.py = 11 passed; missing-title case isolated = 1 passed
+                  (B4/fixture-missing-title-result.txt). Fixture manifest SHA-256 =
+                  be1885d2097683e8c4ae5f2440120e8bd7945ac16f62c1910ac87e5d009d39b2 (matches assignment).
+2026-11-04 00:11– B3: direct CDP rendered-DOM capture attempted repeatedly; the tunnel route to the
+2026-11-04 00:42  stash-test CDP HTTP endpoint (configured IP form) timed out (curl code 000 at 25s and
+                  90s); hostname form is rejected by Chrome (Host header 500). Fallback executed in the
+                  same lease: page HTML fetched directly from bravo-japan.com (HTTP 200, ~881 KB/page,
+                  B3/page-html-284.html, page-html-282.html) + candidate outputs. Poster-present branch
+                  marked UNVERIFIED_BRANCH in B3 records (not inferred).
+2026-11-04 00:43  Rollback: candidate uninstalled (polled absent) -> baseline BRAVO b92acdd reinstalled
+                  from yfc (polled) -> isolated source removed -> reloadScrapers -> post-rollback
+                  snapshot compared to pre-test snapshot: version/stats/sources/scraping-config/
+                  packages ALL EQUAL (ROLLBACK/restoration-comparison.json). Scene stats unchanged
+                  (15 scenes before and after; no Scene was persisted at any point — all scrapes were
+                  read-only scrape operations).
+2026-11-04 00:43  Lease -03 RELEASED (environment restored and verified). Evidence package sealed with
+                  MANIFEST-LIVE.sha256.

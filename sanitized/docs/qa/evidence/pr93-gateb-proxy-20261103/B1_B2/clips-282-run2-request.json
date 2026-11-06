@@ -1,0 +1,10 @@
+{
+ "timestamp_utc": "2026-11-03T16:09:51.418225+00:00",
+ "operation": "scrapeSceneURL",
+ "request": {
+  "query": "query($u: String!) { scrapeSceneURL(url: $u) {\n  title code details duration image urls date\n  studio { name } tags { name } performers { name } } }",
+  "variables": {
+   "u": "https://www.bravo-japan.com/clips/282"
+  }
+ }
+}
