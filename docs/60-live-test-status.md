@@ -55,3 +55,11 @@ For each site, record:
 5. The date and site response status.
 
 Do not promote a scraper from `Unverified` based only on schema validation.
+
+## 2026-10-31 Stash GraphQL E2E addendum (not a replacement for older browser verification)
+
+Independent stash-test QA (QA-STASH-LIVE-E2E-20261031-01, Stash `v0.31.1-182-g9e9ad972`) recorded BRAVO `/dvds/234` and `/dvds/084` returning `runtime error: index out of range [0] with length 0` (2/2). The baseline `sceneByURL` supported `/clips/` but not `/dvds/`, and an unrelated unmatched example.com URL produced the same error class. The live verdict for BRAVO as tested in this round is **FAIL**; prior 2026-10-06 browser DOM status is not a passing Stash GraphQL E2E result.
+
+- **Wave 1B:** [PR #93](https://github.com/daniel-yfc/stash-scarpers/pull/93) provides Clips-only changes; Draft and independent live Gate B not yet proven here. Do not promote to verified on the basis of its local tests.
+- **Wave 2E:** [dedicated DVD route plan](61-bravo-dvd-wave-2e.md) — `dvdSceneScraper` on `/dvds/`; **PLANNED / NOT_IMPLEMENTED / NOT_LIVE_VERIFIED**. Requires Wave 1B acceptance and user-authorized merge first.
+- **Upstream panic:** [STASH-E2E-02 bug preparation](62-stash-panic-upstream-report.md), [local tracking #97](https://github.com/daniel-yfc/stash-scarpers/issues/97). **UPSTREAM_NOT_FILED**; GraphQL original request and server stack trace still to collect. DVD routing does not fix arbitrary unmatched-URL panic.
