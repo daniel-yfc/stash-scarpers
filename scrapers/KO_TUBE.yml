@@ -1,0 +1,197 @@
+name: KO TUBE
+# 2026-10-14: added ko-tube.com/extra/package/ (特典パッケージ, bonus packages)
+# to sceneByURL + groupByURL — verified against 5 extra pages
+# (26646, 26422, 26592, 26726, 26887): same DOM as /package/index/
+# (h3 title, th/td spec table, sub_data description, btn_dvd Code fallback).
+sceneByURL:
+- action: scrapeXPath
+  url:
+  - ko-tube.com/extra/package/
+  - ko-tube.com/package/index/
+  - ko-tube.com/product/index/
+  - ko-tube.com/product/index2/
+  scraper: sceneScraper
+# 2026-10-15: search requires x=0&y=0 (image-button coords) to trigger the
+# 302 redirect to /search/result/keep:1; without them kw is ignored.
+# Verified 2026-10-15: 27/40 EROS hits with cookies + redirect following.
+sceneByName:
+  action: scrapeXPath
+  queryURL: https://www.ko-tube.com/search/index?kw={}&sk=0&x=0&y=0
+  scraper: sceneSearch
+# sceneByQueryFragment kept for the query-dropdown flow.
+sceneByQueryFragment:
+  action: scrapeXPath
+  queryURL: '{url}'
+  scraper: sceneScraper
+groupByURL:
+- action: scrapeXPath
+  url:
+  - ko-tube.com/extra/package/
+  - ko-tube.com/package/index/
+  scraper: groupScraper
+xPathScrapers:
+  sceneSearch:
+    common:
+      $item: //a[contains(@href, "/product/index") or contains(@href, "/package/index/") or contains(@href, "/extra/package/")]
+    scene:
+      Title: $item
+      Image: $item//img/@src
+      URLs: $item/@href
+  sceneScraper:
+    scene:
+      # Live DOM verified 2026-10-06 against package page 28444 and
+      # single-product page 95976:
+      # - title is a classless h3 inside div#Contents (not h1.title)
+      # - spec table labels are <th>, values are sibling <td> (not td/td)
+      # - description: div.sub_data > p (package) / div.intro_text > p (single)
+      Title:
+        selector: //div[@id='Contents']//h3[1]/text()
+        postProcess:
+        - replace:
+          - regex: ^\s+|\s+$
+            with: ''
+      Code:
+        # Package pages lack 作品番号; fall back to the DVD link's
+        # product_code (strip _DVD suffix) — verified 2026-10-07.
+        selector: //th[contains(text(), "作品番号")]/following-sibling::td[1]/text() | //a[@class='btn_dvd']/@href
+        postProcess:
+        - replace:
+          - regex: ^.*?[?&]product_code=([A-Za-z0-9]+).*$
+            with: $1
+          - regex: _DVD$
+            with: ''
+          - regex: ^\s+|\s+$
+            with: ''
+      Date:
+        # div.date (2017.06.18) is more precise than the spec table's
+        # 2017年06月 and sorts first in document order — 2026-10-07.
+        selector: //div[@class='date']/text() | //th[contains(text(), "DVD 発売") or contains(text(), "発売")]/following-sibling::td[1]/text()
+        postProcess:
+        - replace:
+          - regex: (\d{4})\.(\d{1,2})\.(\d{1,2})
+            with: $1-$2-$3
+        - replace:
+          - regex: ([0-9]{4}) 年 ([0-9]{1,2}) 月
+            with: $1-$2-01
+        - javascript: "var p = value.split(\"-\");\nif (p.length >= 2) {\n  return p[0] + \"-\" + (\"0\" + p[1]).slice(-2) + \"-\" + (p[2] ? (\"0\" + p[2]).slice(-2) : \"01\");\n}\nreturn value;\n"
+        - parseDate: '2006-01-02'
+      Details:
+        selector: //div[contains(concat(' ',normalize-space(@class),' '),' sub_data ')]/p//text()[normalize-space()] | //div[contains(concat(' ',normalize-space(@class),' '),' intro_text ')]/p//text()[normalize-space()]
+        concat: "\n\n"
+      Image:
+        # On package pages the _3.jpg fallback catches included-work thumbnails
+        # inside #include_title — exclude them. Verified 2026-10-08.
+        selector: //div[@class='pack_photo']//img/@src | //img[contains(@src, "/picture/parent/") and contains(@src, "_3.jpg") and not(ancestor::*[@id='include_title'])]/@src | //img[contains(@src, "/picture/")]/@src
+        postProcess:
+          - javascript: |
+              var v = value || "";
+              if (!v) return "";
+              v = v.replace(/\?.*$/, "");
+              v = v.replace(/^\/\//, "https://");
+              v = v.replace(/^http:\/\//i, "https://");
+              if (/^https?:/i.test(v)) return v;
+              v = v.replace(/^\.\/+/, "");
+              if (v.charAt(0) === "/") return "https://www.ko-tube.com" + v;
+              return "https://www.ko-tube.com/" + v;
+      # Studio convention: label/brand-level field → Studio (sub-studio model,
+      # StashDB amateur-studios).
+      # Studio URLs mapped from the same anchor as Studio Name for Identify URL-matching.
+      # Parent studio (platform/network) assigned manually once; Ignore Auto-Tag
+      # recommended for short label names.
+      Studio:
+        Name:
+          # Label value sits inside an <a>, not a direct text node —
+          # use descendant text (2026-10-07).
+          selector: //th[contains(text(), "レーベル")]/following-sibling::td[1]//text()[normalize-space()]
+          postProcess:
+          - replace:
+            - regex: ^\s+|\s+$
+              with: ''
+        URLs:
+          selector: //th[contains(text(), "レーベル")]/following-sibling::td[1]//a[1]/@href
+      Tags:
+        Name:
+          selector: //th[contains(text(), "プレイ") or contains(text(), "モデル")]/following-sibling::td[1]//a/text()
+          postProcess:
+          - replace:
+            - regex: ^\s+|\s+$
+              with: ''
+          split: 、
+      Performers:
+        Name:
+          # Live DOM (2026-10-06, corrected 2026-10-10): the spec-table
+          # th[モデル] row holds BODY-TYPE tags only (e.g. スリム・細身,
+          # ガチムチ・ラガー体型) — never performer names. A previous
+          # selector revision mistakenly fed those tags into Performers
+          # (four walkthrough rounds, 2026-10-10: 5/5 single pages show
+          # body-type tags in the モデル row).
+          # Named performers appear only in the standalone 出演モデル block
+          # (package pages and some single pages, e.g. EROS / 裸王-RAOH- /
+          # TUBEオリジナル) as a[href^='/search/index?ml='] + h6 pairs.
+          # The field is page-dependent: absent on most single-product pages
+          # (e.g. 西麻布撮影所 / 広輔project) — legitimately empty, not a bug.
+          # concat first: Stash's split only processes the FIRST text node
+          # and returns early, dropping the rest (2026-10-07).
+          selector: //a[starts-with(@href,'/search/index?ml=')]/following-sibling::h6[1]/text()
+          concat: "、"
+          postProcess:
+          - replace:
+            - regex: ^\s+|\s+$
+              with: ''
+          split: 、
+      # Panic guard (2026-10-07): fixed URLs guarantees scrapeScene never
+      # returns zero results — Stash nil-panics on empty results
+      # (pkg/scraper/mapped.go processSceneRelationships).
+        Gender:
+          fixed: MALE
+        Country:
+          fixed: JP
+        Ethnicity:
+          fixed: Asian
+      URLs:
+        fixed: "{inputURL}"
+      Groups:
+        Name: //div[@id='Contents']//h3[1]/text()
+  groupScraper:
+    group:
+      Name: //div[@id='Contents']//h3[1]/text()
+      Date:
+        selector: //th[contains(text(), "DVD 発売") or contains(text(), "発売")]/following-sibling::td[1]/text()
+        postProcess:
+        - replace:
+          - regex: (\d{4})\.(\d{1,2})\.(\d{1,2})
+            with: $1-$2-$3
+        - replace:
+          - regex: ([0-9]{4}) 年 ([0-9]{1,2}) 月
+            with: $1-$2-01
+        - javascript: "var p = value.split(\"-\");\nif (p.length >= 2) {\n  return p[0] + \"-\" + (\"0\" + p[1]).slice(-2) + \"-\" + (p[2] ? (\"0\" + p[2]).slice(-2) : \"01\");\n}\nreturn value;\n"
+        - parseDate: '2006-01-02'
+      Synopsis:
+        selector: //div[contains(concat(' ',normalize-space(@class),' '),' sub_data ')]/p//text()[normalize-space()] | //div[contains(concat(' ',normalize-space(@class),' '),' intro_text ')]/p//text()[normalize-space()]
+        concat: "\n\n"
+      FrontImage: //img[contains(@src, "/picture/parent/") and contains(@src, "_3.jpg")]/@src | //img[contains(@src, "/picture/")]/@src
+      Studio:
+        Name:
+          # Label value sits inside an <a>, not a direct text node —
+          # use descendant text (2026-10-07).
+          selector: //th[contains(text(), "レーベル")]/following-sibling::td[1]//text()[normalize-space()]
+          postProcess:
+          - replace:
+            - regex: ^\s+|\s+$
+              with: ''
+      Tags:
+        Name:
+          selector: //th[contains(text(), "プレイ") or contains(text(), "モデル")]/following-sibling::td[1]//a/text()
+          postProcess:
+          - replace:
+            - regex: ^\s+|\s+$
+              with: ''
+          split: 、
+      URLs: //a[contains(@href, "ko-video.com")]/@href
+# Last Updated: 2026-10-06 — scene/group selectors rewritten against live DOM
+# (h3 title, th/td spec table, sub_data/intro_text description).
+driver:
+  useCDP: true
+  headers:
+  - Key: User-Agent
+    Value: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36

@@ -1,0 +1,734 @@
+# Wave 2E (WS-2E-40) - BRAVO DVD fixture manifest, v2.3 (updated spec).
+# Isolated from:
+#   - the archived historical manifest (bravo-fixtures.yml, evidence digest
+#     be1885d2097683e8c4ae5f2440120e8bd7945ac16f62c1910ac87e5d009d39b2,
+#     preserved byte-for-byte; its old Wix comp-ID / h1 selectors are
+#     OBSOLETE for the current site but the file itself must never be edited),
+#   - the Wave 1B Clips manifest (bravo-clips-fixtures.yml).
+#   Every case name AND fixture html filename in THIS manifest is unique
+#   across all three manifests (C-FIX-1 + follow-up), and every fixture is
+#   DVD-owned and SYNTHETIC_REGRESSION-marked.
+#
+# Evidence basis (Agent A, WS-2E-10):
+#   docs/research/wave2e/RAW-DOM-VERIFICATION-ADDENDUM.md
+#   (WAVE2E-A-DVD-DOM-20261102, CDP captures 2026-11-02).
+#   9 verified product pages (046/234/084/281/377/383/384/304/315) with
+#   cardinality=1 for Title/Code/URLs/Details/Image/Date/Studio/Duration,
+#   plus 2 verified 404 pages (/dvds/00, /dvds/999999).
+#
+# Fixture policy:
+#   * Every dvd-synthetic-*.html is a SYNTHETIC_REGRESSION sanitized
+#     reconstruction of the verified CDP rendered-DOM template (22-h2
+#     layout, U+200B-carrying label h2s, p.font_8 details, wixstatic
+#     product image with non-empty alt). Only XPath-relevant nodes and
+#     attributes are retained; no session material and no raw DOM.
+#   * Title/Code/URLs/Date/Studio/Duration values are Agent A verified.
+#     Details text (except 084's verified emptiness) is fixture-local
+#     control copy, NOT real website text.
+#   * The current DOM has NO h1 and no historical Wix comp IDs; selectors
+#     relying on either are stale and must fail these fixtures.
+#   * CDP (driver.useCDP: true) is REQUIRED: unrendered SSR HTML contains
+#     no product fields (Agent A evidence).
+#
+# mappedExpect policy (v2.3 - Controller metadata policy alignment):
+#   * SOURCE-vs-PRODUCTION separation: `expect` blocks verify SOURCE XPath
+#     extraction (what the page provably contains); `mappedExpect` declares
+#     PRODUCTION field mappings (what Stash may store). A source XPath hit
+#     NEVER implies a production mapping.
+#   * Production-mapped fields: Title, Code, URLs (sceneByURL routeThrough),
+#     Details. Every entry names scraper: dvdSceneScraper (multi-route
+#     sceneByURL is otherwise ambiguous to the fixture helper). Naming the
+#     scraper does NOT prove Stash selects that handler at runtime;
+#     effective routing is Agent B's tests and Gate B.
+#   * Duration: OMITTED from mappedExpect. The source value is the whole
+#     DVD total (minutes, provenance kept in expect); a full-length DVD is
+#     not automatically one Stash Scene. Mapping stays omitted until the
+#     Controller approves the whole-DVD-equals-single-Scene model.
+#   * Studio (source Label レーベル): OMITTED from mappedExpect. The source
+#     Label is verified via expect (provenance), but no published Controller
+#     decision adopts Label -> Studio (checked 2026-11-04: only an
+#     UNAPPROVED D-084-IMAGE-01 draft exists). Mapping stays omitted.
+#   * Image: NO mappedExpect - exact sanitized cover URLs are not published
+#     evidence, and 084's cover (BR-084soldout.jpg) is a sold-out
+#     placeholder, not a real cover. Cardinality pinned by expect.
+#   * Date: NO mappedExpect - Japanese date formats; the offline runner
+#     only supports parseDate 2006.01.02. Source value pinned by expect.
+#   * Tags: NO mappedExpect - meta keywords are site-generic (identical on
+#     all pages including 404) and must not become product Tags (C-07).
+#
+# EXPECTED_RED_PENDING_IMPLEMENTATION: scrapers/BRAVO_JAPAN.yml on the base branch
+# has no /dvds/ sceneByURL route and no dvdSceneScraper. Until Agent F
+# implements them (feat/e2e-bravo-dvds), the runner fails on this manifest
+# with "Ambiguous entrypoint; specify scraper for sceneByURL". Do NOT merge
+# this manifest into the accepted green baseline ahead of that
+# implementation, and do NOT weaken or remove expectations to force a pass.
+scraper: scrapers/BRAVO_JAPAN.yml
+cases:
+  # C-P case - positive, sanitized reconstruction of the CDP rendered DOM
+  # verified by Agent A (RAW-DOM-VERIFICATION-ADDENDUM.md). Title / Code /
+  # URLs / Date / Studio(source Label) / Duration(source minutes) values
+  # are Agent A verified.
+  # Case name carries the (synthetic regression) suffix so it can never
+  # collide with the archived historical manifest's case names (C-FIX-1).
+  - name: "BRAVO dvd 234 (synthetic regression)"
+    classification: completed
+    html: "dvd-synthetic-234.html"
+    locale:
+      lang: "ja"
+      text: "234"
+    mappedExpect:
+      # Production mapping (Controller policy, v2.3): ONLY Title / Code /
+      # URLs / Details are mapped. Duration and Studio(source Label) are
+      # deliberately NOT mapped here - see header mappedExpect policy.
+      - field: Title
+        scraper: dvdSceneScraper
+        values: ["勃起する白き花よ"]
+      - field: Code
+        scraper: dvdSceneScraper
+        values: ["234"]
+      - field: URLs
+        scraper: dvdSceneScraper
+        routeThrough: sceneByURL
+        values: ["https://www.bravo-japan.com/dvds/234"]
+      - field: Details
+        scraper: dvdSceneScraper
+        values: ["フィクスチャ用の説明文です。"]
+    expect:
+      # Cardinality matrix (C-04): every verified field must match exactly 1.
+      - xpath: "//h2[contains(.,'品番')]/preceding::h2[2]"
+        min: 1
+        max: 1
+        values: ["勃起する白き花よ"]
+      - xpath: "//h2[contains(.,'品番')]/following::h2[1]"
+        min: 1
+        max: 1
+        values: ["234"]
+      - xpath: "//link[@rel='canonical']/@href"
+        min: 1
+        max: 1
+        values: ["https://www.bravo-japan.com/dvds/234"]
+      - xpath: "//h2[contains(.,'発売日')]/following::h2[1]"
+        min: 1
+        max: 1
+        values: ["2018年8月29日"]
+      # Source Label (レーベル) verification ONLY - provenance, NOT a
+      # production Studio mapping (v2.3 policy: mapping omitted pending a
+      # Controller Label->Studio decision; none exists in published evidence).
+      - xpath: "//h2[contains(.,'レーベル')]/preceding::h2[1]"
+        min: 1
+        max: 1
+        values: ["GAYSIAN"]
+      # Source total-duration verification ONLY - minutes as displayed on
+      # the product page (source: 収録時間 h2). A full-length DVD total is
+      # NOT a Stash Scene Duration; production mapping stays omitted until
+      # the Controller approves the whole-DVD-equals-single-Scene model.
+      - xpath: "//h2[contains(.,'収録時間')]/following::h2[1]"
+        min: 1
+        max: 1
+        values: ["110"]
+      - xpath: "//p[contains(@class,'font_8')]"
+        min: 1
+        max: 1
+      - xpath: "//img[@alt!='' and contains(@src,'wixstatic')]/@src"
+        min: 1
+        max: 1
+      # Validity-gate control: a product page must carry the 品番 label.
+      - xpath: "//h2[contains(.,'品番')]"
+        min: 1
+        max: 1
+      # Site-generic keywords exist on every page; they must never become
+      # product Tags (C-07). No Tags mappedExpect is declared on purpose.
+      - xpath: "//meta[@name='keywords']/@content"
+        min: 1
+        max: 1
+    optionalField:
+      # Image mappedExpect is intentionally absent: the exact sanitized
+      # cover URL is not published evidence, and 084's cover is a soldout
+      # placeholder (not a real cover) whose adoption is an explicit
+      # Agent F/controller decision. Cardinality is pinned by the Image
+      # expect above.
+      xpath: "//img[@alt='']"
+      expectedCount: 0
+  # C-P case - positive, sanitized reconstruction of the CDP rendered DOM
+  # verified by Agent A (RAW-DOM-VERIFICATION-ADDENDUM.md). Title / Code /
+  # URLs / Date / Studio(source Label) / Duration(source minutes) values
+  # are Agent A verified.
+  # Case name carries the (synthetic regression) suffix so it can never
+  # collide with the archived historical manifest's case names (C-FIX-1).
+  - name: "BRAVO dvd 084 (synthetic regression)"
+    classification: completed
+    html: "dvd-synthetic-084.html"
+    locale:
+      lang: "ja"
+      text: "084"
+    mappedExpect:
+      # Production mapping (Controller policy, v2.3): ONLY Title / Code /
+      # URLs / Details are mapped. Duration and Studio(source Label) are
+      # deliberately NOT mapped here - see header mappedExpect policy.
+      - field: Title
+        scraper: dvdSceneScraper
+        values: ["少年集団強姦"]
+      - field: Code
+        scraper: dvdSceneScraper
+        values: ["084"]
+      - field: URLs
+        scraper: dvdSceneScraper
+        routeThrough: sceneByURL
+        values: ["https://www.bravo-japan.com/dvds/084"]
+      - field: Details
+        scraper: dvdSceneScraper
+        values: [""]
+    expect:
+      # Cardinality matrix (C-04): every verified field must match exactly 1.
+      - xpath: "//h2[contains(.,'品番')]/preceding::h2[2]"
+        min: 1
+        max: 1
+        values: ["少年集団強姦"]
+      - xpath: "//h2[contains(.,'品番')]/following::h2[1]"
+        min: 1
+        max: 1
+        values: ["084"]
+      - xpath: "//link[@rel='canonical']/@href"
+        min: 1
+        max: 1
+        values: ["https://www.bravo-japan.com/dvds/084"]
+      - xpath: "//h2[contains(.,'発売日')]/following::h2[1]"
+        min: 1
+        max: 1
+        values: ["2012年11月17日"]
+      # Source Label (レーベル) verification ONLY - provenance, NOT a
+      # production Studio mapping (v2.3 policy: mapping omitted pending a
+      # Controller Label->Studio decision; none exists in published evidence).
+      - xpath: "//h2[contains(.,'レーベル')]/preceding::h2[1]"
+        min: 1
+        max: 1
+        values: ["Lucifer"]
+      # Source total-duration verification ONLY - minutes as displayed on
+      # the product page (source: 収録時間 h2). A full-length DVD total is
+      # NOT a Stash Scene Duration; production mapping stays omitted until
+      # the Controller approves the whole-DVD-equals-single-Scene model.
+      - xpath: "//h2[contains(.,'収録時間')]/following::h2[1]"
+        min: 1
+        max: 1
+        values: ["140"]
+      - xpath: "//p[contains(@class,'font_8')]"
+        min: 1
+        max: 1
+      - xpath: "//img[@alt!='' and contains(@src,'wixstatic')]/@src"
+        min: 1
+        max: 1
+      # Validity-gate control: a product page must carry the 品番 label.
+      - xpath: "//h2[contains(.,'品番')]"
+        min: 1
+        max: 1
+      # Site-generic keywords exist on every page; they must never become
+      # product Tags (C-07). No Tags mappedExpect is declared on purpose.
+      - xpath: "//meta[@name='keywords']/@content"
+        min: 1
+        max: 1
+    optionalField:
+      # Image mappedExpect is intentionally absent: the exact sanitized
+      # cover URL is not published evidence, and 084's cover is a soldout
+      # placeholder (not a real cover) whose adoption is an explicit
+      # Agent F/controller decision. Cardinality is pinned by the Image
+      # expect above.
+      xpath: "//img[@alt='']"
+      expectedCount: 0
+  # C-P case - positive, sanitized reconstruction of the CDP rendered DOM
+  # verified by Agent A (RAW-DOM-VERIFICATION-ADDENDUM.md). Title / Code /
+  # URLs / Date / Studio(source Label) / Duration(source minutes) values
+  # are Agent A verified.
+  # Case name carries the (synthetic regression) suffix so it can never
+  # collide with the archived historical manifest's case names (C-FIX-1).
+  - name: "BRAVO dvd 281 (synthetic regression)"
+    classification: completed
+    html: "dvd-synthetic-281.html"
+    locale:
+      lang: "ja"
+      text: "281"
+    mappedExpect:
+      # Production mapping (Controller policy, v2.3): ONLY Title / Code /
+      # URLs / Details are mapped. Duration and Studio(source Label) are
+      # deliberately NOT mapped here - see header mappedExpect policy.
+      - field: Title
+        scraper: dvdSceneScraper
+        values: ["熊ケツ4"]
+      - field: Code
+        scraper: dvdSceneScraper
+        values: ["281"]
+      - field: URLs
+        scraper: dvdSceneScraper
+        routeThrough: sceneByURL
+        values: ["https://www.bravo-japan.com/dvds/281"]
+      - field: Details
+        scraper: dvdSceneScraper
+        values: ["フィクスチャ用の説明文です。"]
+    expect:
+      # Cardinality matrix (C-04): every verified field must match exactly 1.
+      - xpath: "//h2[contains(.,'品番')]/preceding::h2[2]"
+        min: 1
+        max: 1
+        values: ["熊ケツ4"]
+      - xpath: "//h2[contains(.,'品番')]/following::h2[1]"
+        min: 1
+        max: 1
+        values: ["281"]
+      - xpath: "//link[@rel='canonical']/@href"
+        min: 1
+        max: 1
+        values: ["https://www.bravo-japan.com/dvds/281"]
+      - xpath: "//h2[contains(.,'発売日')]/following::h2[1]"
+        min: 1
+        max: 1
+        values: ["2020年7月31日"]
+      # Source Label (レーベル) verification ONLY - provenance, NOT a
+      # production Studio mapping (v2.3 policy: mapping omitted pending a
+      # Controller Label->Studio decision; none exists in published evidence).
+      - xpath: "//h2[contains(.,'レーベル')]/preceding::h2[1]"
+        min: 1
+        max: 1
+        values: ["ooooPS!!"]
+      # Source total-duration verification ONLY - minutes as displayed on
+      # the product page (source: 収録時間 h2). A full-length DVD total is
+      # NOT a Stash Scene Duration; production mapping stays omitted until
+      # the Controller approves the whole-DVD-equals-single-Scene model.
+      - xpath: "//h2[contains(.,'収録時間')]/following::h2[1]"
+        min: 1
+        max: 1
+        values: ["120"]
+      - xpath: "//p[contains(@class,'font_8')]"
+        min: 1
+        max: 1
+      - xpath: "//img[@alt!='' and contains(@src,'wixstatic')]/@src"
+        min: 1
+        max: 1
+      # Validity-gate control: a product page must carry the 品番 label.
+      - xpath: "//h2[contains(.,'品番')]"
+        min: 1
+        max: 1
+      # Site-generic keywords exist on every page; they must never become
+      # product Tags (C-07). No Tags mappedExpect is declared on purpose.
+      - xpath: "//meta[@name='keywords']/@content"
+        min: 1
+        max: 1
+    optionalField:
+      # Image mappedExpect is intentionally absent: the exact sanitized
+      # cover URL is not published evidence, and 084's cover is a soldout
+      # placeholder (not a real cover) whose adoption is an explicit
+      # Agent F/controller decision. Cardinality is pinned by the Image
+      # expect above.
+      xpath: "//img[@alt='']"
+      expectedCount: 0
+  # C-P case - positive, sanitized reconstruction of the CDP rendered DOM
+  # verified by Agent A (RAW-DOM-VERIFICATION-ADDENDUM.md). Title / Code /
+  # URLs / Date / Studio(source Label) / Duration(source minutes) values
+  # are Agent A verified.
+  # Case name carries the (synthetic regression) suffix so it can never
+  # collide with the archived historical manifest's case names (C-FIX-1).
+  - name: "BRAVO dvd 046 (synthetic regression)"
+    classification: completed
+    html: "dvd-synthetic-046.html"
+    locale:
+      lang: "ja"
+      text: "046"
+    mappedExpect:
+      # Production mapping (Controller policy, v2.3): ONLY Title / Code /
+      # URLs / Details are mapped. Duration and Studio(source Label) are
+      # deliberately NOT mapped here - see header mappedExpect policy.
+      - field: Title
+        scraper: dvdSceneScraper
+        values: ["ゆるゆる雄太のデブ竿ぽちゃ穴食べ放題!"]
+      - field: Code
+        scraper: dvdSceneScraper
+        values: ["046"]
+      - field: URLs
+        scraper: dvdSceneScraper
+        routeThrough: sceneByURL
+        values: ["https://www.bravo-japan.com/dvds/046"]
+      - field: Details
+        scraper: dvdSceneScraper
+        values: ["フィクスチャ用の説明文です。"]
+    expect:
+      # Cardinality matrix (C-04): every verified field must match exactly 1.
+      - xpath: "//h2[contains(.,'品番')]/preceding::h2[2]"
+        min: 1
+        max: 1
+        values: ["ゆるゆる雄太のデブ竿ぽちゃ穴食べ放題!"]
+      - xpath: "//h2[contains(.,'品番')]/following::h2[1]"
+        min: 1
+        max: 1
+        values: ["046"]
+      - xpath: "//link[@rel='canonical']/@href"
+        min: 1
+        max: 1
+        values: ["https://www.bravo-japan.com/dvds/046"]
+      - xpath: "//h2[contains(.,'発売日')]/following::h2[1]"
+        min: 1
+        max: 1
+        values: ["2010年09月30日"]
+      # Source Label (レーベル) verification ONLY - provenance, NOT a
+      # production Studio mapping (v2.3 policy: mapping omitted pending a
+      # Controller Label->Studio decision; none exists in published evidence).
+      - xpath: "//h2[contains(.,'レーベル')]/preceding::h2[1]"
+        min: 1
+        max: 1
+        values: ["ooooPS!!"]
+      # Source total-duration verification ONLY - minutes as displayed on
+      # the product page (source: 収録時間 h2). A full-length DVD total is
+      # NOT a Stash Scene Duration; production mapping stays omitted until
+      # the Controller approves the whole-DVD-equals-single-Scene model.
+      - xpath: "//h2[contains(.,'収録時間')]/following::h2[1]"
+        min: 1
+        max: 1
+        values: ["260"]
+      - xpath: "//p[contains(@class,'font_8')]"
+        min: 1
+        max: 1
+      - xpath: "//img[@alt!='' and contains(@src,'wixstatic')]/@src"
+        min: 1
+        max: 1
+      # Validity-gate control: a product page must carry the 品番 label.
+      - xpath: "//h2[contains(.,'品番')]"
+        min: 1
+        max: 1
+      # Site-generic keywords exist on every page; they must never become
+      # product Tags (C-07). No Tags mappedExpect is declared on purpose.
+      - xpath: "//meta[@name='keywords']/@content"
+        min: 1
+        max: 1
+    optionalField:
+      # Image mappedExpect is intentionally absent: the exact sanitized
+      # cover URL is not published evidence, and 084's cover is a soldout
+      # placeholder (not a real cover) whose adoption is an explicit
+      # Agent F/controller decision. Cardinality is pinned by the Image
+      # expect above.
+      xpath: "//img[@alt='']"
+      expectedCount: 0
+  # C-P case - positive, sanitized reconstruction of the CDP rendered DOM
+  # verified by Agent A (RAW-DOM-VERIFICATION-ADDENDUM.md). Title / Code /
+  # URLs / Date / Studio(source Label) / Duration(source minutes) values
+  # are Agent A verified.
+  # Case name carries the (synthetic regression) suffix so it can never
+  # collide with the archived historical manifest's case names (C-FIX-1).
+  - name: "BRAVO dvd 377 (synthetic regression)"
+    classification: completed
+    html: "dvd-synthetic-377.html"
+    locale:
+      lang: "ja"
+      text: "377"
+    mappedExpect:
+      # Production mapping (Controller policy, v2.3): ONLY Title / Code /
+      # URLs / Details are mapped. Duration and Studio(source Label) are
+      # deliberately NOT mapped here - see header mappedExpect policy.
+      - field: Title
+        scraper: dvdSceneScraper
+        values: ["騒乱みだれ穴５"]
+      - field: Code
+        scraper: dvdSceneScraper
+        values: ["377"]
+      - field: URLs
+        scraper: dvdSceneScraper
+        routeThrough: sceneByURL
+        values: ["https://www.bravo-japan.com/dvds/377"]
+      - field: Details
+        scraper: dvdSceneScraper
+        values: ["フィクスチャ用の説明文です。"]
+    expect:
+      # Cardinality matrix (C-04): every verified field must match exactly 1.
+      - xpath: "//h2[contains(.,'品番')]/preceding::h2[2]"
+        min: 1
+        max: 1
+        values: ["騒乱みだれ穴５"]
+      - xpath: "//h2[contains(.,'品番')]/following::h2[1]"
+        min: 1
+        max: 1
+        values: ["377"]
+      - xpath: "//link[@rel='canonical']/@href"
+        min: 1
+        max: 1
+        values: ["https://www.bravo-japan.com/dvds/377"]
+      - xpath: "//h2[contains(.,'発売日')]/following::h2[1]"
+        min: 1
+        max: 1
+        values: ["2026年5月31日"]
+      # Source Label (レーベル) verification ONLY - provenance, NOT a
+      # production Studio mapping (v2.3 policy: mapping omitted pending a
+      # Controller Label->Studio decision; none exists in published evidence).
+      - xpath: "//h2[contains(.,'レーベル')]/preceding::h2[1]"
+        min: 1
+        max: 1
+        values: ["BRAVO!"]
+      # Source total-duration verification ONLY - minutes as displayed on
+      # the product page (source: 収録時間 h2). A full-length DVD total is
+      # NOT a Stash Scene Duration; production mapping stays omitted until
+      # the Controller approves the whole-DVD-equals-single-Scene model.
+      - xpath: "//h2[contains(.,'収録時間')]/following::h2[1]"
+        min: 1
+        max: 1
+        values: ["110"]
+      - xpath: "//p[contains(@class,'font_8')]"
+        min: 1
+        max: 1
+      - xpath: "//img[@alt!='' and contains(@src,'wixstatic')]/@src"
+        min: 1
+        max: 1
+      # Validity-gate control: a product page must carry the 品番 label.
+      - xpath: "//h2[contains(.,'品番')]"
+        min: 1
+        max: 1
+      # Site-generic keywords exist on every page; they must never become
+      # product Tags (C-07). No Tags mappedExpect is declared on purpose.
+      - xpath: "//meta[@name='keywords']/@content"
+        min: 1
+        max: 1
+    optionalField:
+      # Image mappedExpect is intentionally absent: the exact sanitized
+      # cover URL is not published evidence, and 084's cover is a soldout
+      # placeholder (not a real cover) whose adoption is an explicit
+      # Agent F/controller decision. Cardinality is pinned by the Image
+      # expect above.
+      xpath: "//img[@alt='']"
+      expectedCount: 0
+  # C-P case - positive, sanitized reconstruction of the CDP rendered DOM
+  # verified by Agent A (RAW-DOM-VERIFICATION-ADDENDUM.md). Title / Code /
+  # URLs / Date / Studio(source Label) / Duration(source minutes) values
+  # are Agent A verified.
+  # Case name carries the (synthetic regression) suffix so it can never
+  # collide with the archived historical manifest's case names (C-FIX-1).
+  - name: "BRAVO dvd 384 (synthetic regression)"
+    classification: completed
+    html: "dvd-synthetic-384.html"
+    locale:
+      lang: "ja"
+      text: "384"
+    mappedExpect:
+      # Production mapping (Controller policy, v2.3): ONLY Title / Code /
+      # URLs / Details are mapped. Duration and Studio(source Label) are
+      # deliberately NOT mapped here - see header mappedExpect policy.
+      - field: Title
+        scraper: dvdSceneScraper
+        values: ["ナマ狂い種壺待機５"]
+      - field: Code
+        scraper: dvdSceneScraper
+        values: ["384"]
+      - field: URLs
+        scraper: dvdSceneScraper
+        routeThrough: sceneByURL
+        values: ["https://www.bravo-japan.com/dvds/384"]
+      - field: Details
+        scraper: dvdSceneScraper
+        values: ["フィクスチャ用の説明文です。"]
+    expect:
+      # Cardinality matrix (C-04): every verified field must match exactly 1.
+      - xpath: "//h2[contains(.,'品番')]/preceding::h2[2]"
+        min: 1
+        max: 1
+        values: ["ナマ狂い種壺待機５"]
+      - xpath: "//h2[contains(.,'品番')]/following::h2[1]"
+        min: 1
+        max: 1
+        values: ["384"]
+      - xpath: "//link[@rel='canonical']/@href"
+        min: 1
+        max: 1
+        values: ["https://www.bravo-japan.com/dvds/384"]
+      - xpath: "//h2[contains(.,'発売日')]/following::h2[1]"
+        min: 1
+        max: 1
+        values: ["2026年10月22日"]
+      # Source Label (レーベル) verification ONLY - provenance, NOT a
+      # production Studio mapping (v2.3 policy: mapping omitted pending a
+      # Controller Label->Studio decision; none exists in published evidence).
+      - xpath: "//h2[contains(.,'レーベル')]/preceding::h2[1]"
+        min: 1
+        max: 1
+        values: ["BRAVO-RAW"]
+      # Source total-duration verification ONLY - minutes as displayed on
+      # the product page (source: 収録時間 h2). A full-length DVD total is
+      # NOT a Stash Scene Duration; production mapping stays omitted until
+      # the Controller approves the whole-DVD-equals-single-Scene model.
+      - xpath: "//h2[contains(.,'収録時間')]/following::h2[1]"
+        min: 1
+        max: 1
+        values: ["100"]
+      - xpath: "//p[contains(@class,'font_8')]"
+        min: 1
+        max: 1
+      - xpath: "//img[@alt!='' and contains(@src,'wixstatic')]/@src"
+        min: 1
+        max: 1
+      # Validity-gate control: a product page must carry the 品番 label.
+      - xpath: "//h2[contains(.,'品番')]"
+        min: 1
+        max: 1
+      # Site-generic keywords exist on every page; they must never become
+      # product Tags (C-07). No Tags mappedExpect is declared on purpose.
+      - xpath: "//meta[@name='keywords']/@content"
+        min: 1
+        max: 1
+    optionalField:
+      # Image mappedExpect is intentionally absent: the exact sanitized
+      # cover URL is not published evidence, and 084's cover is a soldout
+      # placeholder (not a real cover) whose adoption is an explicit
+      # Agent F/controller decision. Cardinality is pinned by the Image
+      # expect above.
+      xpath: "//img[@alt='']"
+      expectedCount: 0
+  # C-N case - realistic 404 page (Agent A CDP capture): title/og:title are
+  # "404 | bravo-works", no 品番 label, canonical exists but points at the
+  # 404 URL (canonical alone never proves a valid product page), and the
+  # Image selector matches 0. A scraper must return NO product metadata.
+  - name: "BRAVO dvd 00 not-found page (synthetic 404, fail-closed)"
+    classification: completed
+    html: "dvd-synthetic-404-00.html"
+    locale:
+      lang: "ja"
+      text: "404"
+    mappedExpect:
+      - field: Title
+        scraper: dvdSceneScraper
+        values: []
+      - field: Code
+        scraper: dvdSceneScraper
+        values: []
+      - field: Details
+        scraper: dvdSceneScraper
+        values: []
+      - field: Image
+        scraper: dvdSceneScraper
+        values: []
+    expect:
+      - xpath: "//title"
+        min: 1
+        max: 1
+        values: ["404 | bravo-works"]
+      - xpath: "//link[@rel='canonical']/@href"
+        min: 1
+        max: 1
+        values: ["https://www.bravo-japan.com/dvds/00"]
+      # No product fields at all.
+      - xpath: "//h2[contains(.,'品番')]"
+        min: 0
+        max: 0
+      - xpath: "//p[contains(@class,'font_8')]"
+        min: 0
+        max: 0
+      - xpath: "//img[@alt!='' and contains(@src,'wixstatic')]/@src"
+        min: 0
+        max: 0
+      # Site-generic keywords are present even on 404 pages; never Tags.
+      - xpath: "//meta[@name='keywords']/@content"
+        min: 1
+        max: 1
+    optionalField:
+      xpath: "//h2[contains(.,'品番')]"
+      expectedCount: 0
+  # C-N case - realistic 404 page (Agent A CDP capture): title/og:title are
+  # "404 | bravo-works", no 品番 label, canonical exists but points at the
+  # 404 URL (canonical alone never proves a valid product page), and the
+  # Image selector matches 0. A scraper must return NO product metadata.
+  - name: "BRAVO dvd 999999 not-found page (synthetic 404, fail-closed)"
+    classification: completed
+    html: "dvd-synthetic-404-999999.html"
+    locale:
+      lang: "ja"
+      text: "404"
+    mappedExpect:
+      - field: Title
+        scraper: dvdSceneScraper
+        values: []
+      - field: Code
+        scraper: dvdSceneScraper
+        values: []
+      - field: Details
+        scraper: dvdSceneScraper
+        values: []
+      - field: Image
+        scraper: dvdSceneScraper
+        values: []
+    expect:
+      - xpath: "//title"
+        min: 1
+        max: 1
+        values: ["404 | bravo-works"]
+      - xpath: "//link[@rel='canonical']/@href"
+        min: 1
+        max: 1
+        values: ["https://www.bravo-japan.com/dvds/999999"]
+      # No product fields at all.
+      - xpath: "//h2[contains(.,'品番')]"
+        min: 0
+        max: 0
+      - xpath: "//p[contains(@class,'font_8')]"
+        min: 0
+        max: 0
+      - xpath: "//img[@alt!='' and contains(@src,'wixstatic')]/@src"
+        min: 0
+        max: 0
+      # Site-generic keywords are present even on 404 pages; never Tags.
+      - xpath: "//meta[@name='keywords']/@content"
+        min: 1
+        max: 1
+    optionalField:
+      xpath: "//h2[contains(.,'品番')]"
+      expectedCount: 0
+  # C-N case - valid-product template whose only wixstatic image is a site
+  # logo with an empty alt. The verified Image selector filters on
+  # alt!='' , so Image must stay empty (fail-closed).
+  - name: "BRAVO dvd logo only, empty alt (synthetic)"
+    classification: completed
+    html: "dvd-synthetic-logo-empty-alt.html"
+    locale:
+      lang: "ja"
+      text: "281"
+    mappedExpect:
+      - field: Title
+        scraper: dvdSceneScraper
+        values: ["熊ケツ4"]
+      - field: Code
+        scraper: dvdSceneScraper
+        values: ["281"]
+      - field: URLs
+        scraper: dvdSceneScraper
+        routeThrough: sceneByURL
+        values: ["https://www.bravo-japan.com/dvds/281"]
+      - field: Details
+        scraper: dvdSceneScraper
+        values: ["フィクスチャ用の説明文です。"]
+      - field: Image
+        scraper: dvdSceneScraper
+        values: []
+    expect:
+      - xpath: "//h2[contains(.,'品番')]/preceding::h2[2]"
+        min: 1
+        max: 1
+        values: ["熊ケツ4"]
+      - xpath: "//h2[contains(.,'品番')]/following::h2[1]"
+        min: 1
+        max: 1
+        values: ["281"]
+      - xpath: "//link[@rel='canonical']/@href"
+        min: 1
+        max: 1
+        values: ["https://www.bravo-japan.com/dvds/281"]
+      # Trap control: a wixstatic logo exists but carries an empty alt.
+      - xpath: "//img[@alt='' and contains(@src,'wixstatic')]/@src"
+        min: 1
+        max: 1
+        values: ["https://example.invalid/wixstatic/site-logo.gif"]
+      - xpath: "//img[@alt!='' and contains(@src,'wixstatic')]/@src"
+        min: 0
+        max: 0
+    optionalField:
+      xpath: "//img[@alt!='' and contains(@src,'wixstatic')]/@src"
+      expectedCount: 0
+  # C-N case - DVD-owned SYNTHETIC Cloudflare challenge model (failure).
+  # Renamed (C-FIX-1) so it cannot collide with the historical manifest's
+  # "BRAVO Cloudflare challenge" case name. Uses its own synthetic fixture
+  # (C-FIX-1 follow-up): the shared archived failure-cloudflare.html stays
+  # referenced ONLY by the historical and Clips manifests and is NOT
+  # modified. This synthetic model carries no product selectors, so a
+  # scraper must fail (no product metadata) here.
+  - name: "BRAVO dvd Cloudflare challenge (dvd manifest control)"
+    classification: failure
+    html: "dvd-synthetic-cloudflare-challenge.html"

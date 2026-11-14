@@ -1,0 +1,217 @@
+# Games-Video / GAMES (games-video.co.jp) — plain server-rendered HTML shop.
+# IMPORTANT: the site moved from games-video.com (parked domain, no longer
+# serving content) to games-video.co.jp — the official ゲームスビデオ site.
+# All URLs below target the live .co.jp domain.
+#
+# Verification status (2026-09-06, anonymous fetch of live pages):
+#   VERIFIED against https://www.games-video.co.jp/dvd_detail.php?code=WIG-387
+#   and https://www.games-video.co.jp/search.php?s=HUNK:
+#   - detail is static HTML (Dreamweaver template, comments hold an old copy
+#     of the info block — parsers treat it as a comment node, not elements):
+#       div.left_etc > div.titlebar > h2       work title (雄穴中出し28)
+#       table#property rows:
+#         収録時間：165分                      duration in minutes
+#         レーベル：WILD GAMES                 label → Studio
+#         カテゴリー：search.php?c=NN links    categories → Tags
+#         …発売日：2026年9月04日発売           release date
+#       hidden input name=code (cart form)    product code (WIG-387)
+#       a[rel=lightbox] href ./product/l/…    large cover (./product/sm/ is 240px)
+#       p after h3 g_h3 ■作品詳細             description paragraph
+#   - search: GET https://www.games-video.co.jp/search.php?s={query};
+#     result cards are ul.product_list > li > table.product_list_b with the
+#     detail link (dvd_detail.php?code=CODE), title link (tr 2), pickup
+#     image (./product/pickup/CODE.jpg) and hidden input[name=code].
+#   - dvd index: /dvd_index.php; category/label listings reuse the same
+#     search.php endpoint (c=, pickup= params).
+# No age gate; plain HTML 200 without cookies — CDP not required.
+#
+# Field rules (source language, not translated):
+#   Title    titlebar h2 as-is
+#   Code     cart hidden input @value (uppercase product code)
+#   Date     発売日 text "2026年9月04日発売" → normalized to YYYY-MM-DD
+#   Image    a[rel=lightbox] @href (large ./product/l/ cover)
+#   Tags     property table カテゴリー links (labels as shown)
+#   Studio   レーベル text (WILD GAMES, HUNK, …)
+#   Performers: 3/5 sampled detail pages (2026-10-10) carry a structured
+#   ■出演モデル block: h3.g_h3 + ul.product_list > li > table.product_list_b,
+#   names in tr[2] td a (href search.php?c=<id>&model=on). Page-dependent:
+#   legitimately empty when absent (e.g. WIG-387, WIG-386).
+# 2026-10-06: URLs gained og:url fallback (no canonical on detail pages).
+# 2026-10-10: corrected Performers status — 3/5 sampled pages (HNK-188,
+#   WIG-384, URG-072) have structured ■出演モデル; earlier "no performer
+#   list" note was based on WIG-387 only.
+# Last Updated: 2026-10-10
+
+name: GAMES VIDEO
+
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - "games-video.co.jp/dvd_detail.php"
+      - "www.games-video.co.jp/dvd_detail.php"
+    scraper: sceneScraper
+
+sceneByName:
+  action: scrapeXPath
+  queryURL: "https://www.games-video.co.jp/search.php?s={}"
+  scraper: searchScraper
+
+sceneByQueryFragment:
+  action: scrapeXPath
+  queryURL: "{url}"
+  scraper: sceneScraper
+
+# Identify disabled: this entry returned a keyword-results page as one scene.
+# Use sceneByName and select a result for sceneByQueryFragment instead.
+# See docs/metadata-feed-integration.md (2026-10-10).
+
+xPathScrapers:
+  searchScraper:
+    common:
+      $card: "//table[contains(concat(' ',normalize-space(@class),' '),' product_list_b ')]"
+
+    scene:
+      Title:
+        selector: "$card//tr[2]//a[1]/text()"
+        postProcess:
+          - replace:
+              - regex: "^\\s+|\\s+$"
+                with: ""
+
+      Code:
+        selector: "$card//input[@name='code']/@value"
+
+      URLs:
+        selector: "$card//tr[2]//a[1]/@href"
+
+      Image:
+        selector: "$card//tr[1]//img/@src"
+        postProcess:
+          - javascript: |
+              var v = value || "";
+              if (!v) return "";
+              v = v.replace(/\?.*$/, "");
+              v = v.replace(/^\/\//, "https://");
+              v = v.replace(/^http:\/\//i, "https://");
+              if (/^https?:/i.test(v)) return v;
+              v = v.replace(/^\.\/+/, "");
+              if (v.charAt(0) === "/") return "https://www.games-video.co.jp" + v;
+              return "https://www.games-video.co.jp/" + v;
+
+  sceneScraper:
+    common:
+      $prop: "//table[@id='property']"
+
+    scene:
+      Title:
+        selector: "//div[contains(@class,'left_etc')]//div[contains(@class,'titlebar')]//h2/text()"
+        postProcess:
+          - replace:
+              - regex: "^\\s+|\\s+$"
+                with: ""
+
+      Code:
+        selector: "//div[@id='main_contents']//form//input[@name='code']/@value"
+
+      URLs:
+        # Live DOM (2026-10-06): no canonical link on detail pages; fall back to og:url.
+        selector: "//link[@rel='canonical']/@href | //meta[@property='og:url']/@content"
+
+      Date:
+        selector: "$prop//td[contains(.,'発売')]"
+        postProcess:
+          - javascript: |
+              var v = value || "";
+              var m = v.match(/(\d{4})\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日/);
+              if (!m) return "";
+              var mm = ("0" + m[2]).slice(-2);
+              var dd = ("0" + m[3]).slice(-2);
+              return m[1] + "-" + mm + "-" + dd;
+          - parseDate: "2006-01-02"
+
+      Duration:
+        selector: "$prop//td[contains(text(),'収録時間')]/text()"
+        postProcess:
+          - javascript: |
+              var v = value || "";
+              var m = v.match(/(\d+)/);
+              if (!m) return "";
+              return String(parseInt(m[1], 10) * 60);
+
+      Studio:
+        Name:
+          selector: "$prop//td[contains(text(),'レーベル')]/text()"
+          postProcess:
+            - replace:
+                - regex: "^.*?レーベル："
+                  with: ""
+                - regex: "^\\s+|\\s+$"
+                  with: ""
+
+      Performers:
+        # Verified 2026-10-10 against live DOM (HNK-188): h3.g_h3
+        # ■出演モデル followed by ul.product_list; names in tr[2] td a.
+        # Page-dependent: empty when the block is absent (e.g. WIG-387).
+        Name:
+          selector: "//h3[contains(.,'出演モデル')]/following-sibling::ul[1]//table//tr[2]/td/a/text()"
+          postProcess:
+            - replace:
+                - regex: "^\\s+|\\s+$"
+                  with: ""
+        URL:
+          selector: "//h3[contains(.,'出演モデル')]/following-sibling::ul[1]//table//tr[2]/td/a/@href"
+          postProcess:
+            - javascript: |
+                var v = value || "";
+                if (!v) return "";
+                v = v.replace(/\?.*$/, "");
+                v = v.replace(/^\/\//, "https://");
+                v = v.replace(/^http:\/\//i, "https://");
+                if (/^https?:/i.test(v)) return v;
+                v = v.replace(/^\.\/+/, "");
+                if (v.charAt(0) === "/") return "https://www.games-video.co.jp" + v;
+                return "https://www.games-video.co.jp/" + v;
+
+        Gender:
+          fixed: MALE
+        Country:
+          fixed: JP
+        Ethnicity:
+          fixed: Asian
+      Details:
+        selector: "//p[preceding-sibling::h3[contains(text(),'作品詳細')]]//text()[normalize-space()]"
+        concat: "\n"
+        postProcess:
+          - javascript: |
+              var v = value || "";
+              v = v.replace(/\r\n/g, "\n");
+              v = v.replace(/[ \t]+\n/g, "\n");
+              v = v.replace(/\n{3,}/g, "\n\n");
+              return v.replace(/^\s+|\s+$/g, "");
+
+      Image:
+        selector: "//a[@rel='lightbox']/@href | //a[@rel='lightbox']//img/@src"
+        postProcess:
+          - javascript: |
+              var v = value || "";
+              if (!v) return "";
+              v = v.replace(/\?.*$/, "");
+              v = v.replace(/^\/\//, "https://");
+              v = v.replace(/^http:\/\//i, "https://");
+              if (/^https?:/i.test(v)) return v;
+              v = v.replace(/^\.\/+/, "");
+              if (v.charAt(0) === "/") return "https://www.games-video.co.jp" + v;
+              return "https://www.games-video.co.jp/" + v;
+
+      Tags:
+        Name:
+          selector: "$prop//td[contains(text(),'カテゴリー')]//a[contains(@href,'search.php?c=')]/text()"
+          postProcess:
+            - replace:
+                - regex: "^\\s+|\\s+$"
+                  with: ""
+
+driver:
+  headers:
+    - Key: User-Agent
+      Value: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36

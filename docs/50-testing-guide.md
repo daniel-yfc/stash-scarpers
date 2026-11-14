@@ -51,9 +51,9 @@ The repository's Node validator/schema expectations derive from upstream Communi
 When the target permits responsible live access, inspect configured search and detail independently:
 
 ```bash
-node tools/scrutiny.js scrapers/CK-Download.yml --search
-node tools/scrutiny.js scrapers/CK-Download.yml --paginate --multi
-node tools/scrutiny.js scrapers/CK-Download.yml --url="<detail-url>"
+node tools/scrutiny.js scrapers/COAT_CK_DOWNLOAD.yml --search
+node tools/scrutiny.js scrapers/COAT_CK_DOWNLOAD.yml --paginate --multi
+node tools/scrutiny.js scrapers/COAT_CK_DOWNLOAD.yml --url="<detail-url>"
 ```
 
 `tools/scrutiny.js` fetches HTTP and parses with JSDOM; it does not execute website JavaScript, complete an interactive login, or prove a live Stash/CDP extraction. Record response date, source URL, response type, access state, extracted values, and failures. A search result does not verify its detail scraper unless the detail page is tested separately.

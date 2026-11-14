@@ -5,7 +5,7 @@ import { JSDOM } from "jsdom";
 import { parse } from "yaml";
 import { assertMappedCase } from "../tools/verify-scraper-mappings.mjs";
 
-const production = parse(fs.readFileSync("scrapers/Trance.yml", "utf8"));
+const production = parse(fs.readFileSync("scrapers/TRANCE_VIDEO.yml", "utf8"));
 const document = new JSDOM(
   fs.readFileSync("tests/fixtures/trance/detail-40625.html", "utf8"),
 ).window.document;

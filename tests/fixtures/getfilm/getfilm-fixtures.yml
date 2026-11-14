@@ -1,4 +1,4 @@
-scraper: scrapers/GetFilm.yml
+scraper: scrapers/GET_FILM.yml
 cases:
   - name: "GetFilm product 1201"
     classification: completed
