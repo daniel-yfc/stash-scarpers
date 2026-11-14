@@ -7,10 +7,10 @@ states:
   fixture:
     status: verified
     artifact: tests/fixtures/acceed/acceed-fixtures.yml
-    sha256: ffa832d7b8f121ad5b84e4c11d8a9697e4b24d3a7107afb08ceed9971960b4bf
-    captured_at: '2026-10-14T19:09:10+08:00'
+    sha256: 09d3d3f740da9eca93191593995d9dded0f034878b8303c1650153fa6861f348
+    captured_at: '2026-11-01T07:26:00+08:00'
     source_url: https://acceed.jp/
-    revision: 901c2b8b9411f806d746d97ee330e3c6ac56ed92
+    revision: 15bdbd154fd75e3b2067729ab2102bc622a2615f
   live_search:
     status: unverified
   live_detail:

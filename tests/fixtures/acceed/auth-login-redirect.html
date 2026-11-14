@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--
+  ACCEED anonymous login-redirect fixture — STASH-E2E-09 negative case.
+  Sanitized offline MODEL, not a byte-exact capture: an authorized QA
+  capture of the anonymous /detail.*.html login redirect is still pending
+  (ROOT_CAUSE_NOT_CONFIRMED at Stash-runtime level). It reproduces the
+  QA-v2-reported symptom (Scene Title ログイン) using the site's verified
+  page-heading template — main > div#content4 > div.title > blockquote >
+  h2, the same nodes as detail-ACST270/397/430.html — with the heading
+  ログイン, plus over-approximated leakage-risk structures (ul.select with
+  trailing text) so the guard is tested against the worst plausible login
+  layout. No credentials, cookies, or session data.
+-->
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>ログイン</title>
+</head>
+<body>
+<main>
+  <div id="content4">
+    <div id="midle1"></div>
+    <div style="padding-left:10px" class="title">
+      <blockquote style="border-left:5px solid #999999;"><h2>ログイン<span class="favoritebtn">この作品を<br>お気に入りに<br>追加</span></h2></blockquote>
+    </div>
+    <div class="section1">
+      <div class="mota">
+        <ul class="select">
+          <li class="cf">会員ログイン</li>
+        </ul>
+        <p>会員の方はメールアドレスとパスワードを入力してください。</p>
+      </div>
+      <form method="post">
+        <input type="email" name="email" placeholder="メールアドレス">
+        <input type="password" name="password" placeholder="パスワード">
+        <input type="submit" value="ログイン">
+      </form>
+    </div>
+  </div>
+</main>
+</body>
+</html>
