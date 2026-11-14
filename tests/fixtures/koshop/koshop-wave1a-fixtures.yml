@@ -1,0 +1,88 @@
+scraper: scrapers/KO_SHOP.yml
+cases:
+  - name: "KOShop product detail 38513"
+    classification: completed
+    html: "product-38513.html"
+    locale:
+      lang: "ja"
+      text: "体育教師 8"
+    expect:
+      - xpath: "//div[contains(concat(' ',normalize-space(@class),' '),' detail_product ')]//h2[1]"
+        min: 1
+        max: 1
+      - xpath: "//div[contains(concat(' ',normalize-space(@class),' '),' detail_product ')]//dl[1]/dt[normalize-space(.)='商品コード']/following-sibling::dd[1]"
+        min: 1
+        max: 1
+        values: [" : KKUR117_DVD"]
+      - xpath: "//div[contains(concat(' ',normalize-space(@class),' '),' detail_product ')]//dl[1]/dt[normalize-space(.)='発売日']/following-sibling::dd[1]"
+        min: 1
+        max: 1
+        values: [" : 2021年11月24日"]
+      - xpath: "//div[contains(concat(' ',normalize-space(@class),' '),' detail_main_img ')]//a[contains(@href,'upload/save_image/') or contains(@href,'uploadsaveimage')][1]/@href"
+        min: 1
+        max: 1
+        values: ["/upload/save_image/11/KKUR117_DVD.jpg?t=1698629106"]
+    optionalField:
+      xpath: "//div[contains(concat(' ',normalize-space(@class),' '),' detail_product ')]//dl[1]/dt[normalize-space(.)='監督']/following-sibling::dd[1]"
+      expectedCount: 0
+  - name: "KOShop product detail 40445"
+    classification: completed
+    html: "product-40445.html"
+    locale:
+      lang: "ja"
+      text: "JUSTICE 5th 03"
+    mappedExpect:
+      - field: Title
+        values: ["JUSTICE 5th 03"]
+      - field: Code
+        values: ["JUS180_DVD"]
+    expect:
+      - xpath: "//div[contains(concat(' ',normalize-space(@class),' '),' detail_product ')]//h2[1]"
+        min: 1
+        max: 1
+      - xpath: "//div[contains(concat(' ',normalize-space(@class),' '),' detail_product ')]//dl[1]/dt[normalize-space(.)='商品コード']/following-sibling::dd[1]"
+        min: 1
+        max: 1
+        values: [" : JUS180_DVD"]
+      - xpath: "//div[contains(concat(' ',normalize-space(@class),' '),' detail_main_img ')]//a[contains(@href,'upload/save_image/') or contains(@href,'uploadsaveimage')][1]/@href"
+        min: 1
+        max: 1
+        values: ["/upload/save_image/84/JUS180_DVD.jpg?t=1761558841"]
+  - name: "KOShop search 41979 controlled (STASH-E2E-06a)"
+    classification: completed
+    html: "search-41979-controlled.html"
+    locale:
+      lang: "ja"
+      text: "ナマ狂い種壺待機"
+    mappedExpect:
+      - field: URLs
+        entrypoint: sceneByName
+        scraper: searchScraper
+        values:
+          - "https://www.ko-shop.com/products/detail.php?product_id=41979"
+          - "https://www.ko-shop.com/products/detail.php?product_id=40445"
+    expect:
+      - xpath: "//a[contains(@href,'/products/detail.php?product_id=')][.//img][.//div[contains(@class,'list_title')]]/@href"
+        min: 2
+        max: 2
+        values:
+          - "/products/detail.php?product_id=41979"
+          - "/products/detail.php?product_id=40445&from=search"
+  - name: "KOShop missing product 99999999 controlled (STASH-E2E-06b)"
+    classification: completed
+    html: "error-missing-product-controlled.html"
+    locale:
+      lang: "ja"
+      text: "指定されたページは存在しません"
+    mappedExpect:
+      - field: Title
+        values: []
+      - field: Code
+        values: []
+    expect:
+      - xpath: "//div[contains(concat(' ',normalize-space(@class),' '),' detail_product ')]"
+        min: 0
+        max: 0
+  - name: "KOShop Cloudflare challenge"
+    classification: failure
+    html: "failure-cloudflare.html"

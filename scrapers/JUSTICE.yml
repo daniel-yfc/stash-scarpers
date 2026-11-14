@@ -118,8 +118,20 @@ xPathScrapers:
                 with: ""
 
       URLs:
-        selector: "//link[@rel='canonical']/@href | //meta[@property='og:url']/@content"
-        concat: "\n"
+        # STASH-E2E-05: canonical is primary; og:url is a fallback only
+        # when canonical is absent. The old union + concat:"\n" merged
+        # both (usually identical) URLs into one newline-joined duplicate
+        # string. Parenthesised branches with a not(canonical) guard on
+        # the fallback emit exactly one URL (same pattern as the
+        # CK-Download Studio label/maker guard).
+        # Stabilization: the guard tests for a canonical whose href is
+        # non-empty after normalize-space. An empty/whitespace-only
+        # canonical href previously still counted as "present", emitted
+        # a single empty URL value and suppressed the valid og:url
+        # fallback; it now falls back like an absent canonical. A
+        # non-empty but malformed canonical still wins — XPath cannot
+        # validate URL syntax, and no such page is in the evidence.
+        selector: "(//link[@rel='canonical'][normalize-space(@href)]/@href)[1] | (//meta[@property='og:url']/@content)[1][not(//link[@rel='canonical'][normalize-space(@href)]/@href)]"
 
       Details:
         selector: "$article//div[contains(@class,'entry-content')]//p//text()[normalize-space()]"

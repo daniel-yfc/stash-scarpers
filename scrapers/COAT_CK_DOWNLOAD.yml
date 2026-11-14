@@ -77,7 +77,14 @@ xPathScrapers:
         # th text is 'DVDタイトル' (no space); DVDタイトル td may be empty for
         # streaming-only items — fall back to the h3 product title (h1 is the
         # site slogan, not the product). Verified 2026-10-08 via walkthrough.
-        selector: "$data//th[normalize-space(.)='DVDタイトル']/following-sibling::td[1][normalize-space()] | //div[@id='Contents']/h3[normalize-space()]/text() | //title"
+        # STASH-E2E-08: the old three-way union returned nodes in document
+        # order, so //title (the generic site slogan) won in Stash. Use
+        # explicit priority instead: (1) a real DVDタイトル td; the td is
+        # not a title when it only carries the generic 'DVD未収録…'
+        # placeholder (e.g. detail/34418, product 16942 — for those the
+        # search-result title equals the h3); (2) the h3 product title,
+        # only when no real DVDタイトル exists. //title is never used.
+        selector: "($data//th[normalize-space(.)='DVDタイトル']/following-sibling::td[1][normalize-space() and not(starts-with(normalize-space(.), 'DVD未収録'))])[1] | (//div[@id='Contents']/h3[normalize-space()]/text())[1][not($data//th[normalize-space(.)='DVDタイトル']/following-sibling::td[1][normalize-space() and not(starts-with(normalize-space(.), 'DVD未収録'))])]"
         postProcess:
           - replace:
               - regex: "^\\s+|\\s+$"
