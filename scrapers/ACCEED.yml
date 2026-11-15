@@ -10,9 +10,23 @@
 #       input[name=product_code]; NO canonical on detail pages
 #     - one ul.select with li.cf section headers
 #       (シリーズ/出演モデル/モデルタイプ/プレイ内容/…)
+#   sceneScraper auth guard: ADDED 2026-11-01 (STASH-E2E-09). QA v2 reported
+#     that anonymous detail requests (ACSM051/ACST431) are redirected to a
+#     login page and the GraphQL Scene Title came back as ログイン. The
+#     product-page heading selector reads the SITE-WIDE template
+#     (div#content4 > div.title > blockquote > h2 — the same nodes as
+#     product titles), so a login page's heading leaked into Title. Every
+#     page-derived sceneScraper selector is now scoped behind $guard (the
+#     ul.thongso spec table, rendered only on product pages), so
+#     login/error/challenge responses yield NO writable scene metadata —
+#     not just an empty Title. Offline red/green evidence:
+#     tests/fixtures/acceed/auth-login-redirect.html + mappedExpect in
+#     acceed-fixtures.yml + tools/tests/acceed-regression.test.mjs.
+#     Runtime root cause remains ROOT_CAUSE_NOT_CONFIRMED pending an
+#     authorized QA capture of the anonymous login page (see PR).
 # Search URL: https://acceed.jp/search.php?s={keyword}
 # Expected fields: Title, Date, Image, Code, URL, Tags, Details, Studio, Performer
-# Last Updated: 2026-10-06
+# Last Updated: 2026-11-01
 
 name: ACCEED
 
@@ -118,14 +132,26 @@ xPathScrapers:
     #   (シリーズ / 出演モデル / モデルタイプ / プレイ内容 / …)
     # - NO link[rel=canonical] on detail pages
     # - series (Studio) absent on some pages (e.g. ACSM344)
+    #
+    # E2E-09 product-page guard (2026-11-01): $guard only matches when the
+    # product spec table (ul.thongso) is rendered somewhere in the body.
+    # Committed product fixtures (detail-ACST270/397/430.html) all render
+    # it; the anonymous login redirect does not. Every page-derived
+    # selector is prefixed with $guard so a non-product response returns
+    # no writable Scene metadata (Title/Code/Date/Details/Image/Studio/
+    # Tags/Performers), not just a blank Title. A valid product page is
+    # NOT suppressed (mappedExpect controls in acceed-fixtures.yml).
+    # URLs remains fixed:{inputURL}: it echoes the user-supplied URL, not
+    # site data — documented residual, reviewed in the E2E-09 PR.
     common:
+      $guard: "//body[.//ul[contains(@class,'thongso')]]"
       $spec: "//ul[contains(@class,'thongso')]"
       $cats: "//ul[contains(@class,'select')]"
     scene:
       Title:
         # h2 embeds the favorite-button span (with text) — take the first
         # text node only.
-        selector: //div[@id='content4']//blockquote/h2/text()[normalize-space()][1]
+        selector: "$guard//div[@id='content4']//blockquote/h2/text()[normalize-space()][1]"
         postProcess:
           - replace:
               - regex: "\\s{2,}"
@@ -134,7 +160,7 @@ xPathScrapers:
                 with: ""
 
       Code:
-        selector: "$spec//input[@name='product_code']/@value"
+        selector: "$guard$spec//input[@name='product_code']/@value"
         postProcess:
           - replace:
               - regex: "^\\s+|\\s+$"
@@ -146,7 +172,7 @@ xPathScrapers:
       Date:
         # Streaming items use 配信開始 instead of DVD発売 — match both.
         # Verified 2026-10-08 via logged-in walkthrough (3 detail pages).
-        selector: "$spec//li[div[contains(@class,'trai')][contains(.,'発売') or contains(.,'配信')]]/div[contains(@class,'phai')]/text()"
+        selector: "$guard$spec//li[div[contains(@class,'trai')][contains(.,'発売') or contains(.,'配信')]]/div[contains(@class,'phai')]/text()"
         postProcess:
           - javascript: |
               var v = value || "";
@@ -163,7 +189,7 @@ xPathScrapers:
         # Blurb sits right after ul.select ends as bare text nodes (DVD
         # template) or inside div.chitiet > p (streaming template).
         # Verified 2026-10-08 round 2 (4 detail pages, logged-in).
-        selector: "$cats/following-sibling::p//text()[normalize-space()] | $cats/following-sibling::text()[normalize-space()] | //div[contains(@class,'chitiet')]//text()[normalize-space()]"
+        selector: "$guard$cats/following-sibling::p//text()[normalize-space()] | $guard$cats/following-sibling::text()[normalize-space()] | $guard//div[contains(@class,'chitiet')]//text()[normalize-space()]"
         concat: "\n\n"
         postProcess:
           - javascript: |
@@ -179,7 +205,7 @@ xPathScrapers:
               return out.join("\n\n");
 
       Image:
-        selector: "//div[contains(@class,'show')]//a[contains(@class,'jacket1')]/@href"
+        selector: "$guard//div[contains(@class,'show')]//a[contains(@class,'jacket1')]/@href"
         postProcess:
           - javascript: |
               var v = value || "";
@@ -194,7 +220,7 @@ xPathScrapers:
 
       Studio:
         Name:
-          selector: "$spec//li[div[contains(@class,'trai')][normalize-space()='シリーズ']]/div[contains(@class,'phai')]/text()"
+          selector: "$guard$spec//li[div[contains(@class,'trai')][normalize-space()='シリーズ']]/div[contains(@class,'phai')]/text()"
           postProcess:
             - replace:
                 - regex: "^\\s+|\\s+$"
@@ -203,7 +229,7 @@ xPathScrapers:
       Tags:
         Name:
           # Skip the シリーズ section (that's Studio, not a tag).
-          selector: "$cats/li[not(contains(@class,'cf'))][not(preceding-sibling::li[contains(@class,'cf')][1]/a[@title='シリーズ'])]//a[contains(@href,'search.php?c=') and not(contains(@href,'model=on'))]/text()"
+          selector: "$guard$cats/li[not(contains(@class,'cf'))][not(preceding-sibling::li[contains(@class,'cf')][1]/a[@title='シリーズ'])]//a[contains(@href,'search.php?c=') and not(contains(@href,'model=on'))]/text()"
           postProcess:
             - replace:
                 - regex: "^\\s+|\\s+$"
@@ -211,7 +237,7 @@ xPathScrapers:
 
       Performers:
         Name:
-          selector: "$cats//a[contains(@href,'search.php?model=on')]/@title"
+          selector: "$guard$cats//a[contains(@href,'search.php?model=on')]/@title"
           postProcess:
             # title is "stagename (realname)" -- keep the realname inside
             # either half- or full-width parentheses.
@@ -221,7 +247,7 @@ xPathScrapers:
             # Drop space between CJK chars (響木 一馬 -> 響木一馬),
             # but keep it after romaji (Williams 龍).
             # NOTE: Stash postProcess uses Go regexp (RE2), which does NOT
-            # support JS-style \uXXXX escapes -- use \p{...} classes.
+            # support JS-style \\uXXXX escapes -- use \\p{...} classes.
             - replace:
                 - regex: "([\\p{Han}\\p{Hiragana}\\p{Katakana}])\\s+([\\p{Han}\\p{Hiragana}\\p{Katakana}])"
                   with: "$1$2"
@@ -229,7 +255,7 @@ xPathScrapers:
                 - regex: "^\\s+|\\s+$"
                   with: ""
         URL:
-          selector: "$cats//a[contains(@href,'search.php?model=on')]/@href"
+          selector: "$guard$cats//a[contains(@href,'search.php?model=on')]/@href"
           postProcess:
             - replace:
                 - regex: "^/"

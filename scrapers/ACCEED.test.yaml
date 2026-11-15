@@ -8,6 +8,13 @@ probes:
   - ACST431
   - アナル突かれ
 # 2026-10-17: added 5 urls (user-provided)
+# 2026-11-01 (STASH-E2E-09): anonymous-negative controls. In an anonymous
+# session detail.ACSM051.html and detail.ACST431.html redirect to the site
+# login page. With the product-page guard the expected result is NO
+# writable scene metadata (no misleading ログイン Scene Title). Logged-in
+# positive detail tests remain BLOCKED_AUTH unless separately authorized
+# under an exclusive QA lease. The ACST431 probe above stays the valid
+# anonymous sceneByName search control.
 urls:
   - https://acceed.jp/detail.ACSM344_1.html
   - https://acceed.jp/detail.ACSM051.html
@@ -18,4 +25,5 @@ urls:
   - https://acceed.jp/detail.ACSM273.html
   - https://acceed.jp/detail.ACSM326_1.html
   - https://acceed.jp/detail.ACSM252.html
+  - https://acceed.jp/detail.ACST431.html
 multi: true
