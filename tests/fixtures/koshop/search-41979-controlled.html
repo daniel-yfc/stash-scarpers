@@ -1,0 +1,17 @@
+<!-- CONTROLLED fixture for STASH-E2E-06a (Wave 1A).
+     No captured KOShop search-results page exists in this repository, so
+     this minimal page reproduces only the card structure the production
+     searchScraper $results selector requires (an anchor whose href
+     contains /products/detail.php?product_id=, containing an img and a
+     div.list_title). Card 1 is the frozen control product 41979
+     (Title and product_id from the Live E2E evidence: Code BWB365_DVD).
+     Card 2 is product 40445 (a captured detail fixture in this folder)
+     with an extra non-identity query parameter, to prove normalization
+     keeps product_id only. -->
+<html lang="ja">
+<head><title>検索結果 | KO-SHOP</title></head>
+<body>
+<a href="/products/detail.php?product_id=41979"><img src="/upload/save_image/93/BWB365A.jpg"><div class="list_title">ナマ狂い種壺待機</div></a>
+<a href="/products/detail.php?product_id=40445&amp;from=search"><img src="/upload/save_image/84/JUS180_DVD_A.jpg"><div class="list_title">JUSTICE 5th 03</div></a>
+</body>
+</html>

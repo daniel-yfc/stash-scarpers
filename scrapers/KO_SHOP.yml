@@ -63,13 +63,18 @@ xPathScrapers:
           - javascript: |
               var v = value || "";
               if (!v) return "";
+              // STASH-E2E-06a: product_id is the detail page's identity
+              // parameter and must survive; every other query parameter
+              // is dropped. Links without a product_id fail closed.
+              var m = v.match(/[?&]product_id=(\d+)/);
+              if (!m) return "";
               v = v.replace(/\?.*$/, "");
               v = v.replace(/^\/\//, "https://");
               v = v.replace(/^http:\/\//i, "https://");
-              if (/^https?:/i.test(v)) return v;
+              if (/^https?:/i.test(v)) return v + "?product_id=" + m[1];
               v = v.replace(/^\.\/+/, "");
-              if (v.charAt(0) === "/") return "https://www.ko-shop.com" + v;
-              return "https://www.ko-shop.com/" + v;
+              if (v.charAt(0) === "/") return "https://www.ko-shop.com" + v + "?product_id=" + m[1];
+              return "https://www.ko-shop.com/" + v + "?product_id=" + m[1];
       Image:
         selector: "$results//img[1]/@src"
         postProcess:
@@ -89,7 +94,13 @@ xPathScrapers:
       $meta: "//div[contains(concat(' ',normalize-space(@class),' '),' detail_product ')]//dl[1]"
     scene:
       Title:
-        selector: "//div[contains(concat(' ',normalize-space(@class),' '),' detail_product ')]//h2[1] | //title"
+        # STASH-E2E-06b: no //title fallback. A missing product returns an
+        # error page whose <title> ("エラー | KO-SHOP…") was saved as the
+        # Scene Title. Only the h2 inside the proven detail_product
+        # structure counts; on an error page every extracted field below
+        # is likewise gated on that structure, so nothing misleading is
+        # emitted (URLs is the fixed {inputURL} echo, not extracted data).
+        selector: "//div[contains(concat(' ',normalize-space(@class),' '),' detail_product ')]//h2[1]"
         postProcess:
           - replace:
               - regex: '^\s+|\s+$'
@@ -197,7 +208,9 @@ xPathScrapers:
       $meta: "//div[contains(concat(' ',normalize-space(@class),' '),' detail_product ')]//dl[1]"
     group:
       Name:
-        selector: "//div[contains(concat(' ',normalize-space(@class),' '),' detail_product ')]//h2[1] | //title"
+        # STASH-E2E-06b: same fail-closed rule as the scene Title above;
+        # no //title fallback on error pages.
+        selector: "//div[contains(concat(' ',normalize-space(@class),' '),' detail_product ')]//h2[1]"
         postProcess:
           - replace:
               - regex: '^\s+|\s+$'
