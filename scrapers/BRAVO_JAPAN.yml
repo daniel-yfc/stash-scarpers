@@ -76,8 +76,12 @@
 #     docs/qa-pr93-gateb-20261103@37ea851): /dvds/ routes to
 #     dvdSceneScraper. Verified selectors (cardinality 1 on all 9
 #     CDP-rendered product pages, 2010-2026 releases): Title =
-#     品番-preceding h2[2], Code = 品番-following h2[1] (leading zeros
-#     preserved, never derived from the URL), URLs = canonical GATED
+#     品番-preceding h2[2] composed with the h2[1] subtitle line when
+#     non-blank (finetune 2026-11-14, see the Title mapping below),
+#     Code = the "BR -" prefix element (品番-following h2[2]) composed
+#     with the number element (品番-following h2[1], leading zeros
+#     preserved, never derived from the URL; finetune 2026-11-14, see
+#     the Code mapping below), URLs = canonical GATED
 #     on the 品番 marker plus non-blank marker-anchored Title/Code
 #     (see below), Details = p.font_8 (084 is
 #     empty and stays empty), Date = 発売日-following h2[1] normalized
@@ -198,27 +202,112 @@ xPathScrapers:
   dvdSceneScraper:
     scene:
       Title:
-        # DVD rendered DOM (G1-accepted, 9/9 product pages): the title
-        # line is the h2 two positions before the 品番 label. The
-        # template has exactly 4 h2s before 品番 (BRAVO-JAPAN, GO to
-        # BRAVO-CLIPS, title line 1, title line 2); preceding::h2[2]
-        # is title line 1. Never derive Title from the URL.
-        selector: "//h2[contains(.,'品番')]/preceding::h2[2]"
+        # DVD rendered DOM (G1-accepted template, 9/9 product pages):
+        # the title occupies TWO h2 lines before the 品番 label —
+        # title line 1 (main title) and title line 2 (subtitle; the
+        # h2 exists on every verified page but is EMPTY when the work
+        # has no subtitle). Production Title = line 1, plus " - " +
+        # line 2 when line 2 is non-blank (finetune 2026-11-14, user
+        # ground truth for dvds/198: "体育会DASH! 4 - ヌル穴大学生";
+        # the G1-era mapping returned line 1 only). The union returns
+        # both lines in document order; concat joins them
+        # (attribute-level, before postProcess) and the JS drops
+        # blank parts and joins the rest with " - ". The subtitle is
+        # identified STRUCTURALLY — the two h2s immediately before
+        # the 品番 marker inside the page content — never by its
+        # inline font-size style (Wix styles are presentation detail
+        # and drift). Never derive Title from the URL.
+        #
+        # The chrome-exclusion predicate is load-bearing (runtime
+        # fix 2026-11-15, Gate B GATEB-BRAVO-FINETUNE-20261115):
+        # two further h2s precede the marker on every page — the
+        # site chrome lines BRAVO-JAPAN and GO to BRAVO-CLIPS in
+        # <header id="SITE_HEADER">, while the product block lives
+        # in <main id="PAGES_CONTAINER">. The Stash runtime's XPath
+        # engine (antchfx) applies a positional predicate on a
+        # preceding/following axis step per ancestor-level batch of
+        # its axis walk, NOT per axis result set, so the unfiltered
+        # preceding::h2[2] / [1] also matched the header batch's
+        # lines and live Title came back as four segments ("体育会
+        # DASH! 4 - GO to BRAVO-CLIPS - ヌル穴大学生 -
+        # BRAVO-JAPAN"). Excluding the two chrome lines from the
+        # axis stream by their text leaves exactly the two title
+        # lines in it, so [2] / [1] pick main title / subtitle
+        # under BOTH engines (verified with antchfx/htmlquery
+        # itself and with the jsdom harness against the CDP
+        # captures of all 7 verified DVD pages, and against the
+        # header-less synthetic fixtures; pinned offline by the
+        # runtime-model simulation in
+        # tools/tests/bravo-runtime-model.test.mjs). The exclusion
+        # is deliberately content-based, not ancestor::header: the
+        # jsdom engine misapplies the positional predicate when the
+        # axis step carries an ancestor-axis predicate — on the
+        # header-less synthetic fixtures that form returns the
+        # chrome lines themselves. If the site ever renames its
+        # chrome lines, they re-enter the stream and Title degrades
+        # to the pre-fix four-segment shape — the simulation test's
+        # frozen pre-fix values document that failure shape.
+        selector: "//h2[contains(.,'品番')]/preceding::h2[not(contains(.,'BRAVO-JAPAN') or contains(.,'BRAVO-CLIPS'))][2] | //h2[contains(.,'品番')]/preceding::h2[not(contains(.,'BRAVO-JAPAN') or contains(.,'BRAVO-CLIPS'))][1]"
+        concat: "\n"
         postProcess:
           - javascript: |
-              var v = value || "";
-              v = v.replace(/^[\s\u200b]+|[\s\u200b]+$/g, "");
-              return v;
+              var parts = (value || "").split("\n")
+                .map(function (s) { return s.replace(/^[\s\u200b]+|[\s\u200b]+$/g, ""); })
+                .filter(function (s) { return s !== ""; });
+              return parts.join(" - ");
 
       Code:
-        # DVD rendered DOM: the code is the h2 immediately after the
-        # 品番 label; leading zeros are preserved as a string
-        # (046, 084). Never derive Code from the URL segment.
-        selector: "//h2[contains(.,'品番')]/following::h2[1]"
+        # DVD rendered DOM: the product code is split across TWO h2s
+        # after the 品番 label — the first following h2 is the
+        # number (leading zeros preserved as a string: 046, 084) and
+        # the second is a prefix element "BR -" (present on every
+        # verified page; in document order it sits AFTER the number
+        # although it renders to its left). Production Code is the
+        # composed form "BR-" + number (finetune 2026-11-14, user
+        # ground truth for dvds/198: BR-198; the G1-era mapping
+        # returned the number alone). The union's prefix member is
+        # gated on containing '-': on a page without the prefix
+        # element the next h2 is the 収録時間 label (no '-'), so
+        # Code falls back to the number alone instead of absorbing
+        # an unrelated label. The JS assembles the parts from the
+        # concat-joined value and also normalizes a hypothetical
+        # single-element full code. Never derive Code from the URL
+        # segment.
+        #
+        # The PARENTHESIZED form is load-bearing (runtime fix
+        # 2026-11-15, Gate B GATEB-BRAVO-FINETUNE-20261115): a
+        # positional predicate on the following axis STEP
+        # (following::h2[1]) is applied by the Stash runtime's
+        # XPath engine (antchfx) per sibling-subtree batch of its
+        # axis walk, so live it returned EVERY following h2 and the
+        # JS — whose digits variable is overwritten by each
+        # digits-only part — degraded Code to the LAST digits-only
+        # h2 on the page, the 枚数 disc count ("BR-1", "BR-2" on
+        # the 2-disc dvds/046). Wrapping the axis path in
+        # parentheses makes the predicate apply to the whole axis
+        # result in document order, which is the spec behaviour and
+        # what both engines agree on here (verified with
+        # antchfx/htmlquery itself and with the jsdom harness
+        # against the CDP captures of all 7 verified DVD pages;
+        # pinned offline by the runtime-model simulation in
+        # tools/tests/bravo-runtime-model.test.mjs).
+        selector: "(//h2[contains(.,'品番')]/following::h2)[1] | (//h2[contains(.,'品番')]/following::h2)[2][contains(.,'-')]"
+        concat: "\n"
         postProcess:
-          - replace:
-              - regex: "^\\s+|\\s+$"
-                with: ""
+          - javascript: |
+              var parts = (value || "").split("\n")
+                .map(function (s) { return s.replace(/^[\s\u200b]+|[\s\u200b]+$/g, ""); })
+                .filter(function (s) { return s !== ""; });
+              var digits = "", prefix = "";
+              for (var i = 0; i < parts.length; i++) {
+                var full = parts[i].match(/^([A-Za-z]+)\s*-\s*(\d+)$/);
+                if (full) return full[1] + "-" + full[2];
+                if (/^\d+$/.test(parts[i])) digits = parts[i];
+                var pre = parts[i].match(/^([A-Za-z]+)\s*-+$/);
+                if (pre) prefix = pre[1];
+              }
+              if (digits && prefix) return prefix + "-" + digits;
+              return parts.join("");
 
       URLs:
         # Canonical, GATED on product identity: the predicates are

@@ -82,10 +82,10 @@ cases:
       # deliberately NOT mapped here - see header mappedExpect policy.
       - field: Title
         scraper: dvdSceneScraper
-        values: ["勃起する白き花よ"]
+        values: ["勃起する白き花よ - Mr.Lily 編"]
       - field: Code
         scraper: dvdSceneScraper
-        values: ["234"]
+        values: ["BR-234"]
       - field: URLs
         scraper: dvdSceneScraper
         routeThrough: sceneByURL
@@ -99,10 +99,23 @@ cases:
         min: 1
         max: 1
         values: ["勃起する白き花よ"]
+      # Title line 2 (subtitle) source pin - production Title appends
+      # it as " - <subtitle>" when non-blank (finetune 2026-11-14).
+      - xpath: "//h2[contains(.,'品番')]/preceding::h2[1]"
+        min: 1
+        max: 1
+        values: ["Mr.Lily 編"]
       - xpath: "//h2[contains(.,'品番')]/following::h2[1]"
         min: 1
         max: 1
         values: ["234"]
+      # Code prefix element source pin - production Code composes
+      # it with the number element into "BR-<number>" (finetune
+      # 2026-11-14). In document order it follows the number h2.
+      - xpath: "//h2[contains(.,'品番')]/following::h2[2]"
+        min: 1
+        max: 1
+        values: ["BR -"]
       - xpath: "//link[@rel='canonical']/@href"
         min: 1
         max: 1
@@ -170,7 +183,7 @@ cases:
         values: ["少年集団強姦"]
       - field: Code
         scraper: dvdSceneScraper
-        values: ["084"]
+        values: ["BR-084"]
       - field: URLs
         scraper: dvdSceneScraper
         routeThrough: sceneByURL
@@ -184,10 +197,23 @@ cases:
         min: 1
         max: 1
         values: ["少年集団強姦"]
+      # Title line 2 (subtitle) source pin - production Title appends
+      # it as " - <subtitle>" when non-blank (finetune 2026-11-14).
+      - xpath: "//h2[contains(.,'品番')]/preceding::h2[1]"
+        min: 1
+        max: 1
+        values: [""]
       - xpath: "//h2[contains(.,'品番')]/following::h2[1]"
         min: 1
         max: 1
         values: ["084"]
+      # Code prefix element source pin - production Code composes
+      # it with the number element into "BR-<number>" (finetune
+      # 2026-11-14). In document order it follows the number h2.
+      - xpath: "//h2[contains(.,'品番')]/following::h2[2]"
+        min: 1
+        max: 1
+        values: ["BR -"]
       - xpath: "//link[@rel='canonical']/@href"
         min: 1
         max: 1
@@ -252,10 +278,10 @@ cases:
       # deliberately NOT mapped here - see header mappedExpect policy.
       - field: Title
         scraper: dvdSceneScraper
-        values: ["熊ケツ4"]
+        values: ["熊ケツ4 - しゅうた参上！"]
       - field: Code
         scraper: dvdSceneScraper
-        values: ["281"]
+        values: ["BR-281"]
       - field: URLs
         scraper: dvdSceneScraper
         routeThrough: sceneByURL
@@ -269,10 +295,23 @@ cases:
         min: 1
         max: 1
         values: ["熊ケツ4"]
+      # Title line 2 (subtitle) source pin - production Title appends
+      # it as " - <subtitle>" when non-blank (finetune 2026-11-14).
+      - xpath: "//h2[contains(.,'品番')]/preceding::h2[1]"
+        min: 1
+        max: 1
+        values: ["しゅうた参上！"]
       - xpath: "//h2[contains(.,'品番')]/following::h2[1]"
         min: 1
         max: 1
         values: ["281"]
+      # Code prefix element source pin - production Code composes
+      # it with the number element into "BR-<number>" (finetune
+      # 2026-11-14). In document order it follows the number h2.
+      - xpath: "//h2[contains(.,'品番')]/following::h2[2]"
+        min: 1
+        max: 1
+        values: ["BR -"]
       - xpath: "//link[@rel='canonical']/@href"
         min: 1
         max: 1
@@ -340,7 +379,7 @@ cases:
         values: ["ゆるゆる雄太のデブ竿ぽちゃ穴食べ放題!"]
       - field: Code
         scraper: dvdSceneScraper
-        values: ["046"]
+        values: ["BR-046"]
       - field: URLs
         scraper: dvdSceneScraper
         routeThrough: sceneByURL
@@ -354,10 +393,23 @@ cases:
         min: 1
         max: 1
         values: ["ゆるゆる雄太のデブ竿ぽちゃ穴食べ放題!"]
+      # Title line 2 (subtitle) source pin - production Title appends
+      # it as " - <subtitle>" when non-blank (finetune 2026-11-14).
+      - xpath: "//h2[contains(.,'品番')]/preceding::h2[1]"
+        min: 1
+        max: 1
+        values: [""]
       - xpath: "//h2[contains(.,'品番')]/following::h2[1]"
         min: 1
         max: 1
         values: ["046"]
+      # Code prefix element source pin - production Code composes
+      # it with the number element into "BR-<number>" (finetune
+      # 2026-11-14). In document order it follows the number h2.
+      - xpath: "//h2[contains(.,'品番')]/following::h2[2]"
+        min: 1
+        max: 1
+        values: ["BR -"]
       - xpath: "//link[@rel='canonical']/@href"
         min: 1
         max: 1
@@ -425,7 +477,7 @@ cases:
         values: ["騒乱みだれ穴５"]
       - field: Code
         scraper: dvdSceneScraper
-        values: ["377"]
+        values: ["BR-377"]
       - field: URLs
         scraper: dvdSceneScraper
         routeThrough: sceneByURL
@@ -439,10 +491,23 @@ cases:
         min: 1
         max: 1
         values: ["騒乱みだれ穴５"]
+      # Title line 2 (subtitle) source pin - production Title appends
+      # it as " - <subtitle>" when non-blank (finetune 2026-11-14).
+      - xpath: "//h2[contains(.,'品番')]/preceding::h2[1]"
+        min: 1
+        max: 1
+        values: [""]
       - xpath: "//h2[contains(.,'品番')]/following::h2[1]"
         min: 1
         max: 1
         values: ["377"]
+      # Code prefix element source pin - production Code composes
+      # it with the number element into "BR-<number>" (finetune
+      # 2026-11-14). In document order it follows the number h2.
+      - xpath: "//h2[contains(.,'品番')]/following::h2[2]"
+        min: 1
+        max: 1
+        values: ["BR -"]
       - xpath: "//link[@rel='canonical']/@href"
         min: 1
         max: 1
@@ -510,7 +575,7 @@ cases:
         values: ["ナマ狂い種壺待機５"]
       - field: Code
         scraper: dvdSceneScraper
-        values: ["384"]
+        values: ["BR-384"]
       - field: URLs
         scraper: dvdSceneScraper
         routeThrough: sceneByURL
@@ -524,10 +589,23 @@ cases:
         min: 1
         max: 1
         values: ["ナマ狂い種壺待機５"]
+      # Title line 2 (subtitle) source pin - production Title appends
+      # it as " - <subtitle>" when non-blank (finetune 2026-11-14).
+      - xpath: "//h2[contains(.,'品番')]/preceding::h2[1]"
+        min: 1
+        max: 1
+        values: [""]
       - xpath: "//h2[contains(.,'品番')]/following::h2[1]"
         min: 1
         max: 1
         values: ["384"]
+      # Code prefix element source pin - production Code composes
+      # it with the number element into "BR-<number>" (finetune
+      # 2026-11-14). In document order it follows the number h2.
+      - xpath: "//h2[contains(.,'品番')]/following::h2[2]"
+        min: 1
+        max: 1
+        values: ["BR -"]
       - xpath: "//link[@rel='canonical']/@href"
         min: 1
         max: 1
@@ -687,7 +765,7 @@ cases:
         values: ["熊ケツ4"]
       - field: Code
         scraper: dvdSceneScraper
-        values: ["281"]
+        values: ["BR-281"]
       - field: URLs
         scraper: dvdSceneScraper
         routeThrough: sceneByURL
@@ -703,10 +781,25 @@ cases:
         min: 1
         max: 1
         values: ["熊ケツ4"]
+      # Title line 2 (subtitle) source pin - production Title appends
+      # it as " - <subtitle>" when non-blank (finetune 2026-11-14).
+      # This logo fixture's own subtitle h2 is empty (unlike the 281
+      # product fixture), so its Title stays line 1 only.
+      - xpath: "//h2[contains(.,'品番')]/preceding::h2[1]"
+        min: 1
+        max: 1
+        values: [""]
       - xpath: "//h2[contains(.,'品番')]/following::h2[1]"
         min: 1
         max: 1
         values: ["281"]
+      # Code prefix element source pin - production Code composes
+      # it with the number element into "BR-<number>" (finetune
+      # 2026-11-14). In document order it follows the number h2.
+      - xpath: "//h2[contains(.,'品番')]/following::h2[2]"
+        min: 1
+        max: 1
+        values: ["BR -"]
       - xpath: "//link[@rel='canonical']/@href"
         min: 1
         max: 1

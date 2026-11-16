@@ -36,8 +36,15 @@ FIXTURE_DIR = ROOT / "tests" / "fixtures" / "bravo"
 JSDOM = ROOT / "node_modules" / "jsdom"
 
 VERIFIED_SELECTORS = {
-    "Title": "//h2[contains(.,'品番')]/preceding::h2[2]",
-    "Code": "//h2[contains(.,'品番')]/following::h2[1]",
+    # Title/Code superseded 2026-11-15 (Gate B GATEB-BRAVO-FINETUNE-
+    # 20261115 runtime fix): the G1 positional forms are correct in a
+    # spec engine but not in the Stash runtime's antchfx engine, whose
+    # per-batch axis predicates swept the header chrome lines into
+    # Title and every following h2 into Code. The replacements keep
+    # the same target elements under both engines; behaviour is
+    # pinned by tools/tests/bravo-runtime-model.test.mjs.
+    "Title": "//h2[contains(.,'品番')]/preceding::h2[not(contains(.,'BRAVO-JAPAN') or contains(.,'BRAVO-CLIPS'))][2] | //h2[contains(.,'品番')]/preceding::h2[not(contains(.,'BRAVO-JAPAN') or contains(.,'BRAVO-CLIPS'))][1]",
+    "Code": "(//h2[contains(.,'品番')]/following::h2)[1] | (//h2[contains(.,'品番')]/following::h2)[2][contains(.,'-')]",
     "Details": "//p[contains(@class,'font_8')]",
     "Date": "//h2[contains(.,'発売日')]/following::h2[1]",
     "Image": "//img[@alt!='' and contains(@src,'wixstatic')]/@src",
@@ -203,6 +210,104 @@ def test_date_js_normalizes_japanese_dates(source, expected):
 @pytest.mark.parametrize("source,expected", sorted(IMAGE_CASES.items()))
 def test_image_js_filters_soldout_and_normalizes_urls(source, expected):
     assert run_js(field_js("Image"), source) == expected
+
+
+# Finetune 2026-11-14: Title composes the two title h2 lines. The JS
+# receives the concat-joined raw lines (attribute-level concat runs
+# before postProcess) and joins non-blank lines with " - ".
+TITLE_JS_CASES = {
+    "体育会DASH! 4\nヌル穴大学生": "体育会DASH! 4 - ヌル穴大学生",
+    "勃起する白き花よ\nMr.Lily 編": "勃起する白き花よ - Mr.Lily 編",
+    "少年集団強姦": "少年集団強姦",
+    "少年集団強姦\n": "少年集団強姦",
+    "​少年集団強姦\n​": "少年集団強姦",
+    "": "",
+    "\n": "",
+}
+
+
+@pytest.mark.parametrize("source,expected", sorted(TITLE_JS_CASES.items()))
+def test_title_js_composes_main_and_subtitle_lines(source, expected):
+    assert run_js(field_js("Title"), source) == expected
+
+
+def eval_concat_field(html_file: str, field: str) -> str:
+    """Run a production concat field (selector + concat + JS) on a fixture.
+
+    Mirrors the documented pipeline: matches in document order, raw
+    values trimmed, joined with the field's concat string, then the
+    field's javascript postProcess runs once on the joined string.
+    """
+    mapping = dvd_scene()[field]
+    program = (
+        "const fs=require('fs');"
+        f"const {{JSDOM}}=require({json.dumps(str(JSDOM))});"
+        "const doc=new JSDOM(fs.readFileSync(process.argv[1],'utf-8')).window.document;"
+        "const r=doc.evaluate(process.env.SEL,doc,null,"
+        "doc.defaultView.XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,null);"
+        "const parts=[];"
+        "for(let i=0;i<r.snapshotLength;i++){const n=r.snapshotItem(i);"
+        "parts.push((n.nodeValue!==null?n.nodeValue:n.textContent).trim());}"
+        "const value=parts.join(process.env.CONCAT);"
+        "const f=new Function('value', process.env.JS);"
+        "console.log(f(value));"
+    )
+    js = [s["javascript"] for s in mapping["postProcess"] if "javascript" in s]
+    assert len(js) == 1, field
+    env = {**os.environ, "SEL": mapping["selector"], "CONCAT": mapping["concat"], "JS": js[0]}
+    result = subprocess.run(
+        ["node", "-e", program, str(FIXTURE_DIR / html_file)],
+        capture_output=True, text=True, cwd=ROOT, env=env,
+    )
+    assert result.returncode == 0, result.stderr
+    return result.stdout.rstrip("\n")
+
+
+@pytest.mark.parametrize(
+    "html,expected",
+    [
+        # Real-template fixtures (carry the 'BR -' code element and,
+        # where present, a subtitle h2) — not the synthetic manifest set.
+        ("dvd-281.html", "熊ケツ4 - しゅうた参上！"),
+        ("dvd-173.html", "筋肉BANANA - 自分のチンポ型ディルドをハメた台湾BOY!"),
+        ("dvd-215.html", "種竿狂"),
+        ("dvd-046.html", "ゆるゆる雄太のデブ竿ぽちゃ穴食べ放題!"),
+    ],
+)
+def test_production_title_composition_on_real_template_fixtures(html, expected):
+    assert eval_concat_field(html, "Title") == expected
+
+
+# Finetune 2026-11-14: Code composes the "BR -" prefix element with
+# the number element. The JS receives the concat-joined parts in
+# document order (number first, prefix second).
+CODE_JS_CASES = {
+    "198\nBR -": "BR-198",
+    "046\nBR -": "BR-046",
+    "084\nBR-": "BR-084",
+    "046": "046",
+    "BR-198": "BR-198",
+    "BR - 198": "BR-198",
+    "": "",
+}
+
+
+@pytest.mark.parametrize("source,expected", sorted(CODE_JS_CASES.items()))
+def test_code_js_composes_prefix_and_number(source, expected):
+    assert run_js(field_js("Code"), source) == expected
+
+
+@pytest.mark.parametrize(
+    "html,expected",
+    [
+        ("dvd-281.html", "BR-281"),
+        ("dvd-173.html", "BR-173"),
+        ("dvd-215.html", "BR-215"),
+        ("dvd-046.html", "BR-046"),
+    ],
+)
+def test_production_code_composition_on_real_template_fixtures(html, expected):
+    assert eval_concat_field(html, "Code") == expected
 
 
 @pytest.mark.parametrize(
