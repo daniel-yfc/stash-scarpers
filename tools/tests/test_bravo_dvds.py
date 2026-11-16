@@ -99,18 +99,18 @@ SOURCE_ONLY_FIELDS = {"Duration", "Studio", "Tags", "Date"}
 # Duration is the whole-DVD total in MINUTES as displayed on the page
 # (source provenance only - NOT a Stash Scene Duration).
 AGENT_A_VERIFIED = {
-    "234": {"title": "勃起する白き花よ", "code": "234", "studio": "GAYSIAN",
+    "234": {"title": "勃起する白き花よ", "subtitle": "Mr.Lily 編", "code": "234", "studio": "GAYSIAN",
              "duration_minutes": "110", "date": "2018年8月29日"},
-    "084": {"title": "少年集団強姦", "code": "084", "studio": "Lucifer",
+    "084": {"title": "少年集団強姦", "subtitle": "", "code": "084", "studio": "Lucifer",
              "duration_minutes": "140", "date": "2012年11月17日"},
-    "281": {"title": "熊ケツ4", "code": "281", "studio": "ooooPS!!",
+    "281": {"title": "熊ケツ4", "subtitle": "しゅうた参上！", "code": "281", "studio": "ooooPS!!",
              "duration_minutes": "120", "date": "2020年7月31日"},
-    "046": {"title": "ゆるゆる雄太のデブ竿ぽちゃ穴食べ放題!", "code": "046",
+    "046": {"title": "ゆるゆる雄太のデブ竿ぽちゃ穴食べ放題!", "subtitle": "", "code": "046",
              "studio": "ooooPS!!", "duration_minutes": "260",
              "date": "2010年09月30日"},
-    "377": {"title": "騒乱みだれ穴５", "code": "377", "studio": "BRAVO!",
+    "377": {"title": "騒乱みだれ穴５", "subtitle": "", "code": "377", "studio": "BRAVO!",
              "duration_minutes": "110", "date": "2026年5月31日"},
-    "384": {"title": "ナマ狂い種壺待機５", "code": "384", "studio": "BRAVO-RAW",
+    "384": {"title": "ナマ狂い種壺待機５", "subtitle": "", "code": "384", "studio": "BRAVO-RAW",
              "duration_minutes": "100", "date": "2026年10月22日"},
 }
 POSITIVE_CODES = ("234", "084", "281", "046", "377", "384")
@@ -179,8 +179,16 @@ def test_positive_cases_cover_agent_a_matrix():
         expected = AGENT_A_VERIFIED[code]
         # Production mapping: Title / Code / URLs / Details ONLY (v2.3).
         assert mapped_fields(case) == {"Title", "Code", "URLs", "Details"}
-        assert mapped(case, "Title")["values"] == [expected["title"]]
-        assert mapped(case, "Code")["values"] == [expected["code"]]
+        # Production Title (finetune 2026-11-14): line 1 composed with
+        # the subtitle line when non-blank; the matrix title/subtitle
+        # stay the SOURCE values (provenance, pinned via expect below).
+        mapped_title = expected["title"]
+        if expected["subtitle"]:
+            mapped_title = f'{expected["title"]} - {expected["subtitle"]}'
+        assert mapped(case, "Title")["values"] == [mapped_title]
+        # Production Code (finetune 2026-11-14): the number element
+        # composed with the page's "BR -" prefix element.
+        assert mapped(case, "Code")["values"] == [f'BR-{expected["code"]}']
         assert mapped(case, "URLs")["values"] == [
             f"https://www.bravo-japan.com/dvds/{code}"
         ]
@@ -210,7 +218,9 @@ def test_positive_cases_cover_agent_a_matrix():
 
 def test_046_leading_zero_is_preserved():
     case = case_by_html("dvd-synthetic-046.html")
-    assert mapped(case, "Code")["values"] == ["046"]
+    # Production value composes the "BR -" prefix element (finetune
+    # 2026-11-14); the zero inside the number element is preserved.
+    assert mapped(case, "Code")["values"] == ["BR-046"]
     code_assertion = next(
         a for a in case["expect"] if "following::h2[1]" in a["xpath"]
     )

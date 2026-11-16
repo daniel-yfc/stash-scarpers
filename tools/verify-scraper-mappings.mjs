@@ -87,11 +87,21 @@ function extractValues(document, mapping, common) {
   } catch (error) {
     fail("Invalid production YAML XPath: " + error.message);
   }
-  return Array.from({ length: result.snapshotLength }, (_, i) => {
+  const raws = Array.from({ length: result.snapshotLength }, (_, i) => {
     const node = result.snapshotItem(i);
-    const raw = (node.nodeValue ?? node.textContent ?? "").trim();
-    return postProcessValue(raw, typeof mapping === "object" ? mapping.postProcess : undefined);
+    return (node.nodeValue ?? node.textContent ?? "").trim();
   });
+  // Attribute-level concat (skills/stash-scraper-builder/references/
+  // post-processing.md): when the field declares `concat`, all matches
+  // are joined with it BEFORE postProcess runs on the joined string.
+  // Zero matches stay zero values (fail-closed fields expect []).
+  if (typeof mapping === "object" && mapping !== null && typeof mapping.concat === "string") {
+    if (raws.length === 0) return [];
+    return [postProcessValue(raws.join(mapping.concat), mapping.postProcess)];
+  }
+  return raws.map((raw) =>
+    postProcessValue(raw, typeof mapping === "object" ? mapping.postProcess : undefined),
+  );
 }
 
 export function assertMappedCase(item, document, scraper) {
