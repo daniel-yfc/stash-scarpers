@@ -1,0 +1,17 @@
+# JapanBoyz live-test fixtures (server-rendered HTML verified 2026-11-17)
+# Zen-And-Kou-Get-Raw: Code 6132, Date 2026-10-30, performers Kou Ichinose + Zen, 13 tags
+# Oil-Massage-Mood: Code 5916, Date 2025-10-31, performers Kazu Miura + Zen, 11 tags
+# Milky-Twink-Threesome: Code 6087, Date 2026-09-25, performers Koki 2 + Kou Ichinose + Ramu, 15 tags
+# models/Zen: Name "Zen", portrait 513-set-4x.jpg
+# models/KouIchinose: Name "Kou Ichinose"
+# probes (verified 2026-11-17): Zen -> 12 scene cards + Zen model card
+probes:
+  - Zen
+  - Kou
+urls:
+  - https://www.japanboyz.com/scenes/Zen-And-Kou-Get-Raw_vids.html
+  - https://www.japanboyz.com/scenes/Oil-Massage-Mood_vids.html
+  - https://www.japanboyz.com/scenes/Milky-Twink-Threesome_vids.html
+  - https://www.japanboyz.com/models/Zen.html
+  - https://www.japanboyz.com/models/KouIchinose.html
+multi: true
