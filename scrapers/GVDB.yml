@@ -40,9 +40,49 @@
 # Bracketed text is a studio/series name, never a performer name
 # (e.g. "[ Yutoの秘密部屋 ]" has no name after "]").
 #
-# Plain HTTP fetches of md.gvdb.org returned 403 in testing (2026-10 and
-# 2026-11) while a real browser loads the site fine, so CDP is required
-# (same situation as RGBEE / GVWiki).
+# Name-grammar hardening (2026-11-04, from a 3000-record dataset scan and
+# an 18-page logic batch over the production-linked performers): readings
+# are stripped before the set split in ALL code paths (Name, primaryOf,
+# parseSets) and the strip accepts mixed half/full-width paren pairs; a
+# set whose JP/Romaji boundary has no space is split at the character-
+# class boundary; the JP whitelist also covers 々, 〇, the mask circles
+# ○/◯ and the CJK compatibility ideographs, and permits one leading or
+# trailing Romaji letter in a JP name; the Romaji segment allows Latin
+# Extended letters; a heading may carry a second bracketed group, which
+# is stripped like the first; a trailing "." after the Romaji is
+# punctuation, not part of the name. Deliberately unchanged: digit
+# rejection (load-bearing against model codes and descriptive non-names;
+# the numbered-name page 72917 stays a known limitation).
+#
+# Follow-up (same day, from the 004+007 dataset scan): splitSet now
+# retries the joined split when the spaced split's JP candidate fails
+# the whitelist — with a space-less boundary before a multiword Romaji
+# ("橋蔵陽Hashikura Akira") the set was dropped whole and the primary
+# leaked into Aliases wherever a spaced variant of it parsed (66132,
+# 128684) — and a set that is Romaji-only as a whole is kept as a
+# Romaji-only name even when it has several words ("Isaki Yuto" on
+# 64822 was previously dropped because its first word was misread as
+# the JP part). Still open (tracked, not fixed): mask/star characters
+# inside the Romaji segment (〇 in "Base〇") and the ●/★ symbols.
+#
+# O1 follow-up (2026-11-10): a parenthetical holding only Romaji is
+# an alternate romanization, not a kana reading — parseSets lifts it
+# out as an extra name-set, like the "(or ...)" alternates
+# (126493: "安斎黎太郎 Anzai Ryotaro (Reitaro)" gains the alias
+# Reitaro; "匠海 (TAKUMI)" gains TAKUMI). Parentheticals containing
+# kana, digits or anything else are still stripped as readings.
+# Fixtures: the live 126493 page plus logic cases; a rescan of all
+# 10,436 dataset records changed 20 records, all alias gains of the
+# parenthetical Romaji, zero losses, zero Name changes.
+#
+# Transport: plain HTTP; no CDP. Early testing (2026-10 and 2026-11) saw
+# 403s from md.gvdb.org and concluded CDP was required, but that was a
+# User-Agent issue: with the browser User-Agent sent by the driver block
+# below, plain fetches serve everything this scraper needs. A live A/B
+# on stash-test (2026-11-15) proved it: useCDP:false returned
+# byte-identical results on 7/7 pages (77/77 field checks) at ~0.8s/page
+# vs ~3.7s/page with CDP. CDP was removed the same day on the user's
+# ruling; the User-Agent header stays, as it is what the site checks.
 #
 # GVDB ID custom field: YAML scrapers cannot return custom_fields (the
 # v0.31.1 scraper schema has no such performer field; upstream stash #6394).
@@ -83,13 +123,28 @@
 # at 130/143 — every field correct except the performer image, whose
 # root cause is documented at the Images field below; the fix there is
 # pending its own runtime re-test.
+# Parser hardening (2026-11-04): after the Images fix the runtime stands
+# at 143/143. The name-grammar hardening above was regression-tested
+# offline only: the 13 rendered pages still pass 143/143 end-to-end,
+# the 36 sim-batch logic pages still pass, the 18 production-linked
+# pages pass 196/198 (the two remaining fields are 72917's Name/Aliases,
+# the tracked digit limitation), and ten category fixture pages
+# (3940, 999, 31245, 34951, 31025, 3608, 4988, 580, 35451, 100941)
+# pass 110/110. The splitSet follow-up above adds three fixture pages
+# (128684, 66132, 64822; 39/39 checks incl. reconstructed inputs) and
+# was re-verified against the same corpora with no regressions; a
+# rescan of the 4000-record 004+007 datasets shows zero primary leaks
+# (was 2) and 26 changed records, all alias gains except the two leak
+# removals. The O1 follow-up (2026-11-10) adds the live 126493 page
+# plus logic cases (25/25) and was re-verified against the same
+# corpora with no regressions. Stash runtime re-test of the hardened
+# parser: NOT_RUN.
 name: GVDB
 
 driver:
-  useCDP: true
   headers:
     - Key: User-Agent
-      Value: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36
+      Value: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36
 
 performerByURL:
   - action: scrapeXPath
@@ -108,14 +163,35 @@ xPathScrapers:
           - javascript: |
               var v = value || "";
               v = v.replace(/^\s*Name:\s*/, "");
-              var first = (v.split("/")[0] || "").replace(/\([^)]*\)/g, "").replace(/（[^）]*）/g, "").replace(/\s+/g, " ").trim();
+              // Strip kana readings BEFORE taking the first name-set: a
+              // reading may itself contain "/" (3940: "後藤珊二 (サンジ /
+              // さんじ) Goto Sanji"), and the strip accepts mixed
+              // half/full-width paren pairs (4988: "卓哉（たくや) Takuya").
+              var first = (v.replace(/[\(（][^\)）]*[\)）]/g, "").split("/")[0] || "").replace(/\s+/g, " ").trim();
+              // A trailing "." is sentence punctuation, not part of the
+              // Romaji (580: the page shows "Mizushima Raimu.").
+              first = first.replace(/([A-Za-z\u00C0-\u024F])\.$/, "$1");
               // The JP name is everything before the trailing Romaji segment.
               // A space inside the JP name is cleaned away (6180: the page
               // shows "加藤 拓 Kato Taku"; the stored Name is "加藤拓").
               // Spaces inside the Romaji segment are kept ("Kato Taku").
-              var m = first.match(/^(.*?)\s+([A-Za-z]+(?:[ .'-]+[A-Za-z]+)*)$/);
-              if (m && m[1] && /^[\u3040-\u30FF\u3400-\u4DBF\u4E00-\u9FFF]+(?:\s+[\u3040-\u30FF\u3400-\u4DBF\u4E00-\u9FFF]+)*$/.test(m[1])) return m[1].replace(/\s+/g, "");
-              if (/^[\u3040-\u30FF\u3400-\u4DBF\u4E00-\u9FFF\s]+$/.test(first)) return first.replace(/\s+/g, "");
+              // The JP whitelist covers 々 (U+3005), 〇 (U+3007), the
+              // mask circles ○/◯ and the CJK compatibility ideographs,
+              // and a JP name may carry one leading or
+              // trailing Romaji letter (J君; the G-suffix names such as
+              // プロレスG). The Romaji segment allows Latin Extended
+              // letters (35451: "Yōhei").
+              var JP = "[\\u3005\\u3007\\u25CB\\u25EF\\u3040-\\u30FF\\u3400-\\u4DBF\\u4E00-\\u9FFF\\uFA0E-\\uFA6D]";
+              var ROMA = "A-Za-z\\u00C0-\\u024F";
+              var JP_NAME = new RegExp("^[A-Za-z]?" + JP + "+(?:\\s+" + JP + "+)*[A-Za-z]?$");
+              var m = first.match(new RegExp("^(.*?)\\s+([" + ROMA + "]+(?:[ .'-]+[" + ROMA + "]+)*)$"));
+              if (m && m[1] && JP_NAME.test(m[1])) return m[1].replace(/\s+/g, "");
+              // No space between the JP name and the Romaji (100941:
+              // "彰馬（しょうま）Shouma" — once the reading is stripped
+              // no separator remains): split at the class boundary.
+              var mj = first.match(new RegExp("^(" + JP + "+)([" + ROMA + "]+(?:[ .'-]+[" + ROMA + "]+)*)$"));
+              if (mj && JP_NAME.test(mj[1])) return mj[1].replace(/\s+/g, "");
+              if (JP_NAME.test(first)) return first.replace(/\s+/g, "");
               return first;
       Aliases:
         # All <p> text lines of .entry-content: the Name line, an optional
@@ -123,7 +199,9 @@ xPathScrapers:
         # and standalone stage-name <p>s. Other label lines (Age:/Height:/...)
         # contain ":" and are skipped; work titles live in <li>, never in
         # <p>, so they cannot leak in. A "(or <name-set>)" parenthetical is
-        # an alternate name-set, not a kana reading, and is kept as a set.
+        # an alternate name-set, not a kana reading, and is kept as a set;
+        # a Romaji-only parenthetical is likewise kept as an extra set
+        # (an alternate romanization), never stripped as a reading.
         # The javascript parses name-sets, drops kana readings, drops the
         # primary Name, drops decorative non-name sets (e.g. the kaomoji
         # stage name on 54676) via a strict JP/Romaji character whitelist,
@@ -132,9 +210,18 @@ xPathScrapers:
         concat: "\n"
         postProcess:
           - javascript: |
-              var JP_CHARS = "[\\u3040-\\u30FF\\u3400-\\u4DBF\\u4E00-\\u9FFF]";
-              var JP_NAME_RE = new RegExp("^[A-Za-z]?" + JP_CHARS + "+(?:\\s+" + JP_CHARS + "+)*$");
-              var ROMAJI_RE = /^[A-Za-z]+(?:[ .'-]+[A-Za-z]+)*$/;
+              // The JP whitelist covers 々 (U+3005), 〇 (U+3007) and the
+              // mask circles ○/◯ and the CJK compatibility ideographs
+              // alongside the kana/kanji ranges; a JP name
+              // may carry one leading or trailing Romaji letter (J君; the
+              // G-suffix names such as プロレスG). The Romaji segment
+              // allows Latin Extended letters (35451: "Yōhei").
+              var JP_CHARS = "[\\u3005\\u3007\\u25CB\\u25EF\\u3040-\\u30FF\\u3400-\\u4DBF\\u4E00-\\u9FFF\\uFA0E-\\uFA6D]";
+              var ROMA_CHARS = "A-Za-z\\u00C0-\\u024F";
+              var JP_NAME_RE = new RegExp("^[A-Za-z]?" + JP_CHARS + "+(?:\\s+" + JP_CHARS + "+)*[A-Za-z]?$");
+              var ROMAJI_RE = new RegExp("^[" + ROMA_CHARS + "]+(?:[ .'-]+[" + ROMA_CHARS + "]+)*$");
+              var SPACED_RE = new RegExp("^(.*?)\\s+([" + ROMA_CHARS + "]+(?:[ .'-]+[" + ROMA_CHARS + "]+)*)$");
+              var JOINED_RE = new RegExp("^(" + JP_CHARS + "+)([" + ROMA_CHARS + "]+(?:[ .'-]+[" + ROMA_CHARS + "]+)*)$");
               // Split one cleaned name-set into [jp, romaji]; null when the set
               // is not a plausible name (e.g. decorative kaomoji stage names).
               // The JP part is everything before the trailing Romaji segment
@@ -142,11 +229,29 @@ xPathScrapers:
               function splitSet(s) {
                 var jp = "",
                   romaji = "";
-                var m = s.match(/^(.*?)\s+([A-Za-z]+(?:[ .'-]+[A-Za-z]+)*)$/);
-                if (m) {
+                var m = s.match(SPACED_RE);
+                if (m && JP_NAME_RE.test(m[1])) {
+                  jp = m[1];
+                  romaji = m[2];
+                } else if ((m = s.match(JOINED_RE))) {
+                  // No space between the JP name and the Romaji (100941:
+                  // the page shows "彰馬（しょうま）Shouma"; once the
+                  // reading is stripped no separator remains): split at
+                  // the character-class boundary instead. This is also
+                  // the retry for a spaced split whose JP candidate is
+                  // not a plausible JP name because the boundary space
+                  // is missing before a multiword Romaji (128684:
+                  // "橋蔵陽Hashikura Akira" — without the retry the set
+                  // was dropped whole and the primary leaked into
+                  // Aliases wherever a spaced variant of it parsed).
                   jp = m[1];
                   romaji = m[2];
                 } else if (ROMAJI_RE.test(s)) {
+                  // A Romaji-only name-set, one or more words (64822:
+                  // "Isaki Yuto"). Reached only when no JP reading of
+                  // the set works: the spaced split would otherwise
+                  // misread the first Romaji word as the JP part and
+                  // drop the whole set.
                   romaji = s;
                 } else {
                   jp = s;
@@ -158,7 +263,13 @@ xPathScrapers:
                 return [jp.replace(/\s+/g, ""), romaji];
               }
               function primaryOf(nameLine) {
-                var first = nameLine.substring(5).split("/")[0].replace(/\([^)]*\)/g, "").replace(/（[^）]*）/g, "").replace(/\s+/g, " ").trim();
+                // Same order as parseSets and the Name field: strip kana
+                // readings BEFORE splitting on "/" — a reading may itself
+                // contain "/" (3940: "後藤珊二 (サンジ / さんじ)"), and the
+                // strip accepts mixed half/full-width paren pairs.
+                var first = nameLine.substring(5).replace(/[\(（][^\)）]*[\)）]/g, "").split("/")[0].replace(/\s+/g, " ").trim();
+                // A trailing "." is sentence punctuation (580).
+                first = first.replace(/([A-Za-z\u00C0-\u024F])\.$/, "$1");
                 var parts = splitSet(first);
                 if (parts && parts[0]) return parts[0];
                 return first;
@@ -169,21 +280,32 @@ xPathScrapers:
                 // it out as an extra set before other parentheticals are
                 // stripped as readings.
                 var extra = [];
-                str = str.replace(/\(or\s*([^)]*)\)/gi, function (m, g) {
+                str = str.replace(/[\(（]or\s*([^\)）]*)[\)）]/gi, function (m, g) {
                   extra.push(g);
                   return " ";
                 });
-                str = str.replace(/（or\s*([^）]*)）/gi, function (m, g) {
+                // A parenthetical holding only Romaji is not a kana
+                // reading either: it is an alternate romanization
+                // (126493: "安斎黎太郎 Anzai Ryotaro (Reitaro)") or the
+                // set's only Romaji ("匠海 (TAKUMI)"): lift it out as
+                // an extra set, like the "(or ...)" alternates above.
+                // Parentheticals with kana, digits or anything else in
+                // them are still stripped as readings below.
+                str = str.replace(/[\(（]([A-Za-z\u00C0-\u024F]+(?:[ .'-]+[A-Za-z\u00C0-\u024F]+)*)[\)）]/g, function (m, g) {
                   extra.push(g);
                   return " ";
                 });
                 // Strip kana readings BEFORE splitting the name-sets: a
                 // reading may itself contain "/" (20575: "湊 (あきひと/みなと)
-                // Akihito / Minato"), which is not a set separator.
-                str = str.replace(/\([^)]*\)/g, "").replace(/（[^）]*）/g, "");
+                // Akihito / Minato"), which is not a set separator. The
+                // strip accepts mixed half/full-width paren pairs
+                // (4988: "卓哉（たくや) Takuya").
+                str = str.replace(/[\(（][^\)）]*[\)）]/g, "");
                 var parts = str.split("/").concat(extra);
                 for (var i = 0; i < parts.length; i++) {
-                  var s = parts[i].replace(/\([^)]*\)/g, "").replace(/（[^）]*）/g, "").replace(/\s+/g, " ").trim();
+                  var s = parts[i].replace(/[\(（][^\)）]*[\)）]/g, "").replace(/\s+/g, " ").trim();
+                  // A trailing "." is sentence punctuation (580).
+                  s = s.replace(/([A-Za-z\u00C0-\u024F])\.$/, "$1");
                   if (!s) continue;
                   var pair = splitSet(s);
                   if (!pair) continue;
@@ -225,6 +347,18 @@ xPathScrapers:
                   var close = line.indexOf("]");
                   if (close < 0) continue;
                   var suffix = line.substring(close + 1).trim();
+                  // A heading may carry a second bracketed group
+                  // ("[ Studio ] [ Series ] Name"): bracketed text is a
+                  // studio/series name, never part of the performer's
+                  // name, so further leading groups are stripped too.
+                  while (suffix.charAt(0) === "[") {
+                    var c2 = suffix.indexOf("]");
+                    if (c2 < 0) {
+                      suffix = "";
+                      break;
+                    }
+                    suffix = suffix.substring(c2 + 1).trim();
+                  }
                   if (suffix) parseSets(suffix, primary, out, seen);
                   continue;
                 }
@@ -317,7 +451,8 @@ xPathScrapers:
         # singular Image URL server-side and replaces it with the fetched
         # bytes (pkg/scraper/image.go, setPerformerImage), silently
         # dropping it when the fetch fails. md.gvdb.org refuses
-        # non-browser fetches — the very reason this scraper needs CDP —
+        # fetches that do not carry a browser User-Agent, and that
+        # server-side download does not send the driver headers below,
         # so a singular Image always came back empty at runtime
         # (production evidence 2026-11-03/04: 130/143 with Image null on
         # 13/13, under two different selector shapes; the selector was
@@ -333,16 +468,20 @@ xPathScrapers:
           # javascript maps each slug to the JP tag name only (the page's
           # bilingual display text, e.g. "刺青 Tattoo", is NOT used).
           # Inventory basis: all 56 verified performer pages carry 15
-          # distinct footer tags; only these 8 are kept, everything else
+          # distinct footer tags; only these are kept, everything else
           # (Subscription Channel, Asian, Monthly Top GV Model, 三連結
           # 3Some, ...) is dropped. Slugs observed paired with their
           # display names on the pages noted in GVDB.test.yaml.
-          selector: "//article[starts-with(@id,'post-')]//li[contains(concat(' ', normalize-space(@class), ' '), ' meta-tags ')]/a[@rel='tag'][contains(@href,'/tag/beard/') or contains(@href,'/tag/sunburned/') or contains(@href,'/tag/tattoo/') or contains(@href,'/tag/six-pack/') or contains(@href,'/tag/chubby-bear/') or contains(@href,'/tag/big-dick/') or contains(@href,'/tag/squirting/') or contains(@href,'/tag/chest-hair/')]/@href"
+          # 2026-11-14: the site renamed the sunburned slug to tanned
+          # (display now just 日焼, user ruling); both slugs are
+          # matched, sunburned kept for archived pages and mirrors.
+          selector: "//article[starts-with(@id,'post-')]//li[contains(concat(' ', normalize-space(@class), ' '), ' meta-tags ')]/a[@rel='tag'][contains(@href,'/tag/beard/') or contains(@href,'/tag/sunburned/') or contains(@href,'/tag/tanned/') or contains(@href,'/tag/tattoo/') or contains(@href,'/tag/six-pack/') or contains(@href,'/tag/chubby-bear/') or contains(@href,'/tag/big-dick/') or contains(@href,'/tag/squirting/') or contains(@href,'/tag/chest-hair/')]/@href"
           postProcess:
             - javascript: |
                 var MAP = {
                   "beard": "髭",
                   "sunburned": "日焼/色黒",
+                  "tanned": "日焼",
                   "tattoo": "刺青",
                   "six-pack": "腹筋",
                   "chubby-bear": "豊満",
@@ -353,4 +492,4 @@ xPathScrapers:
                 var m = (value || "").match(/\/tag\/([^/]+)\//);
                 return m && MAP[m[1]] ? MAP[m[1]] : "";
 
-# Last Updated: 2026-11-03
+# Last Updated: 2026-11-15

@@ -66,6 +66,58 @@
 #   accepted by user ruling 2026-11-03), Tags=[日焼/色黒, 髭]
 # 6194: Images=.../6194_49.jpg, Tags=[日焼/色黒, 髭]
 # No probes: the scraper is performerByURL only, no search modes exist.
+#
+# Hardening fixtures (added 2026-11-14): the pages below pin the
+# Name/Aliases parser behaviour fixed by R1-R7, R2b, the Romaji-only
+# rule and O1, plus the known boundary behaviours. Expectations are the
+# independently set values from the fix rounds (fixture HTML archived in
+# the fix workspace), re-verified against the current parser; only the
+# Name and Aliases fields are listed, as those are what the hardening
+# touched. The original thirteen pages above pass under both the old
+# and the hardened parser; these are the pages that tell them apart.
+# R1 (readings stripped before the name-set split; character whitelist;
+# trailing-letter/dot rules; repeated bracket groups; mixed-width
+# parens):
+# 3940: Name=後藤珊二, Aliases="Goto Sanji" (reading itself contains "/")
+# 100941: Name=彰馬, Aliases="Shouma" (no space after the reading paren;
+#   the original R2 page)
+# 999: Name=佐々木, Aliases="Sasaki" (U+3005 in the JP name)
+# 31245: Name=野村〇平似, Aliases="Nomura" (U+3007 in the JP name)
+# 34951: Name=魔○斗似, Aliases="Masato Style" (U+25CB mask in JP name)
+# 31025: Name=プロレスG, Aliases="Wrestling G, ジュン, Jun, タカヒト,
+#   Takahito, アツシ, Atsushi" (one trailing Romaji letter kept)
+# 3608: Name=虎鋼, Aliases="Kotetsu, 蒼武蔵, Aoi Musashi, Musashi"
+#   (two leading studio brackets stripped from a heading)
+# 4988: Name=卓哉, Aliases="Takuya" (mixed half/full-width paren pair)
+# 580: Name=水嶋来夢, Aliases="Mizushima Raimu" (one trailing dot cut)
+# 35451: Name=松村陽平, Aliases="Matsumura Yōhei" (Latin Extended macron)
+# R2b / Romaji-only:
+# 128684: Name=橋蔵陽, Aliases="Hashikura Akira" (joined-boundary split;
+#   the primary's own Romaji is an alias by design)
+# 66132: Name=松嶋太悟, Aliases="Matsushima Daigo, 山本, Yamamoto, 豪田,
+#   Goda" (same leak class as 128684)
+# 64822: Name=海, Aliases="Kai, 良樹, Yoshiki, 空也, Kuuya, ゆうと, Yuto,
+#   松中よしき, Matsunaka Yoshiki, 陸, Riku, ヤマト, Yamato, Isaki Yuto"
+#   (multiword Romaji-only name-set kept whole as an alias)
+# O1 (Romaji-only parenthetical is an alternate romanization):
+# 126493: Name=安斎黎太郎, Aliases="Anzai Ryotaro, Reitaro, Eito,
+#   レイタロウ, Ryotaro, 士浦黎太郎, Shiura Reitaro"
+# Boundary behaviours (pinned as-is, not bugs to fix here):
+# 72917: Name="バリタチ3号 Mask Man No.3", Aliases="松岡, Matsuoka" —
+#   R8: the Name field never rejects, so the digit-bearing display is
+#   kept whole, while the digit name-set is refused as an alias
+#   (fail-close; the digits are load-bearing for Model Code rejection)
+# 21084: Name="Williams 龍 Ryu", Aliases="蒼, Aoi" — Romaji-first mixed
+#   display kept whole (observation only, no rule)
+# 4466: Name=仁, Aliases="Jin, 慎, Shin" (single JP char with its Romaji
+#   in the same name-set)
+# 162630 / 162794 / 163813: Name=(blank), Aliases=(none) — the page
+#   Name line is literally empty; the scraper faithfully returns blank
+# Tags note (2026-11-14): the site renamed the sunburned tag slug to
+# tanned (display now just 日焼). The archived fixture HTML above still
+# carries sunburned, so its expectations stay 日焼/色黒; on live pages
+# the scraper now maps tanned to 日焼 (verified live 2026-11-14 on
+# 54676 and 163886, the only footer tag on both current pages).
 urls:
   - https://md.gvdb.org/159685/
   - https://md.gvdb.org/54676/
@@ -80,4 +132,24 @@ urls:
   - https://md.gvdb.org/6142/
   - https://md.gvdb.org/6155/
   - https://md.gvdb.org/6194/
+  - https://md.gvdb.org/3940/
+  - https://md.gvdb.org/100941/
+  - https://md.gvdb.org/999/
+  - https://md.gvdb.org/31245/
+  - https://md.gvdb.org/34951/
+  - https://md.gvdb.org/31025/
+  - https://md.gvdb.org/3608/
+  - https://md.gvdb.org/4988/
+  - https://md.gvdb.org/580/
+  - https://md.gvdb.org/35451/
+  - https://md.gvdb.org/128684/
+  - https://md.gvdb.org/66132/
+  - https://md.gvdb.org/64822/
+  - https://md.gvdb.org/126493/
+  - https://md.gvdb.org/72917/
+  - https://md.gvdb.org/21084/
+  - https://md.gvdb.org/4466/
+  - https://md.gvdb.org/162630/
+  - https://md.gvdb.org/162794/
+  - https://md.gvdb.org/163813/
 multi: true
