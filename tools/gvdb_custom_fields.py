@@ -62,7 +62,7 @@ def gql(url, api_key, query, variables=None):
     req.add_header("Content-Type", "application/json")
     if api_key:
         req.add_header("ApiKey", api_key)
-    with urllib.request.urlopen(req) as resp:
+    with urllib.request.urlopen(req, timeout=30) as resp:
         payload = json.loads(resp.read().decode())
     if payload.get("errors"):
         raise RuntimeError("GraphQL errors: %s" % payload["errors"])
