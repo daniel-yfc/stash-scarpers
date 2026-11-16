@@ -1,11 +1,8 @@
-// Wave 1A — Metadata Integrity regression tests (STASH-E2E-06a, 06b, 08).
-// Split note (2026-11-15): the STASH-E2E-05 (JUSTICE) cases from PR #106 land
-// with the JUSTICE scraper itself; this file carries the KO SHOP and
-// COAT CK DOWNLOAD cases that were split out of PR #106 for earlier merge.
+// Wave 1A — Metadata Integrity regression tests (STASH-E2E-05, 06a, 06b, 08).
 //
 // These tests execute the *production* YAML selectors and postProcess
-// steps from scrapers/KO_SHOP.yml and scrapers/COAT_CK_DOWNLOAD.yml
-// against committed fixtures, following the
+// steps from scrapers/JUSTICE.yml, scrapers/KO_SHOP.yml and
+// scrapers/COAT_CK_DOWNLOAD.yml against committed fixtures, following the
 // pattern of tools/tests/trance-regression.test.mjs. They are an offline
 // regression aid, not a substitute for Stash runtime (Gate B) evidence.
 //
@@ -87,6 +84,7 @@ function fieldValues(doc, scraperDef, domain, fieldPath) {
   });
 }
 
+const justice = loadScraper("JUSTICE.yml");
 const koshop = loadScraper("KO_SHOP.yml");
 const ck = loadScraper("COAT_CK_DOWNLOAD.yml");
 
@@ -109,6 +107,89 @@ const ck = loadScraper("COAT_CK_DOWNLOAD.yml");
 //   could reject legitimate URLs. This residual behavior is documented
 //   here rather than silently "fixed" (asserted below so any change is
 //   a deliberate, reviewed event).
+
+
+// ---- STASH-E2E-05: Justice01 detail URLs --------------------------------
+
+test("Wave1A E2E-05: justice115th yields exactly one URL, equal to canonical", () => {
+  const doc = loadDoc("tests/fixtures/justice01/page-justice115th-controlled.html");
+  const urls = fieldValues(doc, justice.xPathScrapers.sceneScraper, "scene", "URLs");
+  assert.deepEqual(urls, ["https://www.justice01.com/justice115th/"]);
+  assert.ok(!urls.join("").includes("\n"), "URL must not contain a newline");
+});
+
+test("Wave1A E2E-05: captured Justice01 pages yield exactly the canonical URL", () => {
+  for (const [file, url] of [
+    ["page-justice4th17.html", "https://www.justice01.com/justice4th17/"],
+    ["page-justice095th.html", "https://www.justice01.com/justice095th/"],
+    ["page-guilty2nd14.html", "https://www.justice01.com/guilty2nd14/"],
+  ]) {
+    const doc = loadDoc(path.join("tests/fixtures/justice01", file));
+    assert.deepEqual(
+      fieldValues(doc, justice.xPathScrapers.sceneScraper, "scene", "URLs"),
+      [url],
+      file,
+    );
+  }
+});
+
+test("Wave1A E2E-05: og:url is used only when canonical is missing", () => {
+  const doc = loadDoc("tests/fixtures/justice01/page-justice095th-no-canonical-controlled.html");
+  assert.deepEqual(
+    fieldValues(doc, justice.xPathScrapers.sceneScraper, "scene", "URLs"),
+    ["https://www.justice01.com/justice095th/"],
+  );
+});
+
+test("Wave1A E2E-05: no canonical and no og:url yields no URL (no fabrication)", () => {
+  const doc = loadDocString(
+    '<html><head><title>JUSTICE09(5th) | JUSTICE</title></head><body>'
+    + '<article class="post"><h1 class="entry-title">JUSTICE09(5th)</h1></article>'
+    + "</body></html>",
+  );
+  assert.deepEqual(
+    fieldValues(doc, justice.xPathScrapers.sceneScraper, "scene", "URLs"),
+    [],
+  );
+});
+
+// Stabilization (Task B, case 4) — canonical present but empty/invalid:
+// * Before the stabilization fix, an empty or whitespace-only canonical
+//   href still counted as "present": the selector emitted one empty
+//   value ("") and the not(canonical) guard suppressed the valid og:url
+//   fallback. The guard now tests normalize-space(@href), so an empty /
+//   whitespace-only canonical falls back to og:url exactly like an
+//   absent canonical (asserted below).
+// * A non-empty but malformed canonical still wins and the og:url is
+//   NOT used: XPath cannot validate URL syntax, no such page exists in
+//   the captured evidence, and guessing a validity rule in the selector
+//   could reject legitimate URLs. This residual behavior is documented
+//   here rather than silently "fixed" (asserted below so any change is
+//   a deliberate, reviewed event).
+test("Wave1A E2E-05: empty or whitespace canonical falls back to og:url", () => {
+  for (const href of ["", "   "]) {
+    const doc = loadDocString(
+      `<html><head><link rel="canonical" href="${href}">`
+      + '<meta property="og:url" content="https://www.justice01.com/justice095th/"></head>'
+      + '<body><article class="post"><h1 class="entry-title">JUSTICE09(5th)</h1></article></body></html>',
+    );
+    const urls = fieldValues(doc, justice.xPathScrapers.sceneScraper, "scene", "URLs");
+    assert.deepEqual(urls, ["https://www.justice01.com/justice095th/"], `href=${JSON.stringify(href)}`);
+    assert.ok(!urls.join("").includes("\n"), "URL must not contain a newline");
+  }
+});
+
+test("Wave1A E2E-05: non-empty malformed canonical still wins (documented limitation)", () => {
+  const doc = loadDocString(
+    '<html><head><link rel="canonical" href="not-a-url">'
+    + '<meta property="og:url" content="https://www.justice01.com/justice095th/"></head>'
+    + '<body><article class="post"><h1 class="entry-title">JUSTICE09(5th)</h1></article></body></html>',
+  );
+  assert.deepEqual(
+    fieldValues(doc, justice.xPathScrapers.sceneScraper, "scene", "URLs"),
+    ["not-a-url"],
+  );
+});
 
 
 // ---- STASH-E2E-06a: KOShop search URLs keep product_id -------------------
