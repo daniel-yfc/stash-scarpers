@@ -20,7 +20,7 @@
 #   - Result item: //ul[@class='title_list']/li > a[href='/product/detail/<id>']
 #   - Title: ./h4 inside the same <a> (1:1 Title/URL pairing)
 # 95 prefixes mapped: TR-01..50, TM-01..14, TO-01..23, TC-01..05, TP-01, DF-02/03.
-# Last Updated: 2026-10-13
+# Last Updated: 2026-11-17
 
 name: TRANCE VIDEO
 
@@ -137,12 +137,27 @@ xPathScrapers:
                 if (v.charAt(0) === "/") return "https://www.trance-video.com" + v;
                 return "https://www.trance-video.com/" + v;
 
+        # Demographics: selector+replace constants (not fixed:) — Stash
+        # applies fixed: inside scene Performers only to the first
+        # performer (Gate B finding, 2026-11-17). Same nodes as Name.
         Gender:
-          fixed: MALE
+          selector: "//div[@class='prod_category']//li[strong[normalize-space(text())='出演モデル']]/div[@class='item']/a"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "MALE"
         Country:
-          fixed: JP
+          selector: "//div[@class='prod_category']//li[strong[normalize-space(text())='出演モデル']]/div[@class='item']/a"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "JP"
         Ethnicity:
-          fixed: Asian
+          selector: "//div[@class='prod_category']//li[strong[normalize-space(text())='出演モデル']]/div[@class='item']/a"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "Asian"
       Tags:
         Name:
           selector: "//div[@class='prod_category']//li[strong[normalize-space(text())='カテゴリ']]/div[@class='item']/a"

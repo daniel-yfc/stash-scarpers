@@ -13,7 +13,7 @@
 #   - URLs: canonical link
 # Selector risk: site redesign breaks table th labels; re-verify against
 # a fresh page before trusting.
-# Last Updated: 2026-10-18
+# Last Updated: 2026-11-17
 
 name: BOY STUDIO
 
@@ -117,13 +117,27 @@ xPathScrapers:
             - replace:
                 - regex: "^/"
                   with: "https://boy-studio.com/"
+        # Demographics: selector+replace constants (not fixed:) — Stash
+        # applies fixed: inside scene Performers only to the first
+        # performer (Gate B finding, 2026-11-17). Same nodes as Name.
         Gender:
-          fixed: MALE
+          selector: "//th[normalize-space(text())='出演モデル']/../td/a/text()"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "MALE"
         Country:
-          fixed: JP
+          selector: "//th[normalize-space(text())='出演モデル']/../td/a/text()"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "JP"
         Ethnicity:
-          fixed: Asian
-
+          selector: "//th[normalize-space(text())='出演モデル']/../td/a/text()"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "Asian"
       Tags:
         Name:
           selector: "//th[normalize-space(text())='ジャンル']/../td/a/text()"

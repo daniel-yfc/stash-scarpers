@@ -142,12 +142,28 @@ xPathScrapers:
       # Panic guard (2026-10-07): fixed URLs guarantees scrapeScene never
       # returns zero results — Stash nil-panics on empty results
       # (pkg/scraper/mapped.go processSceneRelationships).
+        # Demographics: selector+replace constants (not fixed:) — Stash
+        # applies fixed: inside scene Performers only to the first
+        # performer (Gate B finding, 2026-11-17). Raw Name nodes (no
+        # concat/split), so each performer receives one value.
         Gender:
-          fixed: MALE
+          selector: //a[starts-with(@href,'/search/index?ml=')]/following-sibling::h6[1]/text()
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "MALE"
         Country:
-          fixed: JP
+          selector: //a[starts-with(@href,'/search/index?ml=')]/following-sibling::h6[1]/text()
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "JP"
         Ethnicity:
-          fixed: Asian
+          selector: //a[starts-with(@href,'/search/index?ml=')]/following-sibling::h6[1]/text()
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "Asian"
       URLs:
         fixed: "{inputURL}"
       Groups:
@@ -188,7 +204,7 @@ xPathScrapers:
               with: ''
           split: 、
       URLs: //a[contains(@href, "ko-video.com")]/@href
-# Last Updated: 2026-10-06 — scene/group selectors rewritten against live DOM
+# Last Updated: 2026-11-17 — scene/group selectors rewritten against live DOM
 # (h3 title, th/td spec table, sub_data/intro_text description).
 driver:
   useCDP: true

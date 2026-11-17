@@ -103,12 +103,27 @@ xPathScrapers:
             - replace:
                 - regex: ^/
                   with: https://www.rgbee.net/
+        # Demographics: selector+replace constants (not fixed:) — Stash
+        # applies fixed: inside scene Performers only to the first
+        # performer (Gate B finding, 2026-11-17). Same nodes as Name.
         Gender:
-          fixed: MALE
+          selector: //section[@id='facts']//dt[normalize-space()='主角']/following-sibling::dd[1]/a
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "MALE"
         Country:
-          fixed: TW
+          selector: //section[@id='facts']//dt[normalize-space()='主角']/following-sibling::dd[1]/a
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "TW"
         Ethnicity:
-          fixed: Asian
+          selector: //section[@id='facts']//dt[normalize-space()='主角']/following-sibling::dd[1]/a
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "Asian"
       Tags: &rgbeeTags
         Name:
           selector: //section[@id='facts']//nav[@aria-label='標籤']/a
@@ -152,4 +167,4 @@ xPathScrapers:
 # search probes (筋肉大叔 / MJD-P418 / 刺青猛男) all HIT.
 # 2026-10-09: sceneSearch selectors verified against the live search page
 # (kw=筋肉, article.card > .meta/.t/a + img.art-img/@src); UNVERIFIED tag removed.
-# Last Updated: 2026-10-09
+# Last Updated: 2026-11-17

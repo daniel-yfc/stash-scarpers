@@ -17,7 +17,7 @@
 #   - Result card: //div[contains(concat(' ', normalize-space(@class), ' '), ' neo_product_area ')]
 #   - Title/URL: .//h3/a (title text inside the same <a>; image link <a class="over"> excluded to keep 1:1 Title/URL pairing)
 # Note: GET-film DVDs discontinued, now released via Men's Rush.TV.
-# Last Updated: 2026-10-13
+# Last Updated: 2026-11-17
 
 name: GET FILM
 
@@ -96,13 +96,27 @@ xPathScrapers:
                 v = v.replace(/^\.\/+/, "");
                 if (v.charAt(0) === "/") return "https://www.get-film.jp" + v;
                 return "https://www.get-film.jp/" + v;
+        # Demographics: selector+replace constants (not fixed:) — Stash
+        # applies fixed: inside scene Performers only to the first
+        # performer (Gate B finding, 2026-11-17). Same nodes as Name.
         Gender:
-          fixed: MALE
+          selector: "//div[@class='relative_cat']/p[a[1][normalize-space(text())='モデル']]/a[position()>1]"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "MALE"
         Country:
-          fixed: JP
+          selector: "//div[@class='relative_cat']/p[a[1][normalize-space(text())='モデル']]/a[position()>1]"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "JP"
         Ethnicity:
-          fixed: Asian
-
+          selector: "//div[@class='relative_cat']/p[a[1][normalize-space(text())='モデル']]/a[position()>1]"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "Asian"
       Tags:
         Name:
           selector: "//div[@class='relative_cat']//a"

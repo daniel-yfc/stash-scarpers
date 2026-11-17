@@ -40,7 +40,7 @@
 # 2026-10-10: corrected Performers status — 3/5 sampled pages (HNK-188,
 #   WIG-384, URG-072) have structured ■出演モデル; earlier "no performer
 #   list" note was based on WIG-387 only.
-# Last Updated: 2026-10-10
+# Last Updated: 2026-11-17
 
 name: GAMES VIDEO
 
@@ -172,12 +172,27 @@ xPathScrapers:
                 if (v.charAt(0) === "/") return "https://www.games-video.co.jp" + v;
                 return "https://www.games-video.co.jp/" + v;
 
+        # Demographics: selector+replace constants (not fixed:) — Stash
+        # applies fixed: inside scene Performers only to the first
+        # performer (Gate B finding, 2026-11-17). Same nodes as Name.
         Gender:
-          fixed: MALE
+          selector: "//h3[contains(.,'出演モデル')]/following-sibling::ul[1]//table//tr[2]/td/a/text()"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "MALE"
         Country:
-          fixed: JP
+          selector: "//h3[contains(.,'出演モデル')]/following-sibling::ul[1]//table//tr[2]/td/a/text()"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "JP"
         Ethnicity:
-          fixed: Asian
+          selector: "//h3[contains(.,'出演モデル')]/following-sibling::ul[1]//table//tr[2]/td/a/text()"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "Asian"
       Details:
         selector: "//p[preceding-sibling::h3[contains(text(),'作品詳細')]]//text()[normalize-space()]"
         concat: "\n"
