@@ -1,0 +1,17 @@
+# PeterFever live-test fixtures (server-rendered HTML verified 2026-11-17)
+# ASGmax-A-Little-Lost: Code 14205, no Date/Performers/Tags on the tour page
+# the-stalker: Title "The Stalker", Code 8292
+# ObseXXXion-5-Dirty-Little-Secrets: Code 14277, long Details (1546 chars)
+# models/Zen-Goken: Name "Zen Gōken", portrait 683-set-4x.jpg
+# models/JohnnyHakson: Name "Johnny Hakson", portrait 740-set-4x.jpg
+# probes (verified 2026-11-17): Zen -> 24 scene cards, no model cards
+#   (search.php returns scenes only; performerByName unsupported)
+probes:
+  - Zen
+urls:
+  - https://www.peterfever.com/scenes/ASGmax-A-Little-Lost_vids.html
+  - https://www.peterfever.com/scenes/the-stalker_vids.html
+  - https://www.peterfever.com/scenes/ObseXXXion-5-Dirty-Little-Secrets_vids.html
+  - https://www.peterfever.com/models/Zen-Goken.html
+  - https://www.peterfever.com/models/JohnnyHakson.html
+multi: true

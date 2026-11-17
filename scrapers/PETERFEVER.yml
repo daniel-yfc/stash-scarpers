@@ -1,0 +1,116 @@
+# PeterFever (peterfever.com) — English-language membership site (US studio,
+# mostly Asian performers of various nationalities).
+# Verification status (2026-11-17, server-rendered HTML fetched anonymously):
+#   VERIFIED against /scenes/ASGmax-A-Little-Lost_vids.html,
+#   /scenes/the-stalker_vids.html, /scenes/ObseXXXion-5-Dirty-Little-Secrets_vids.html,
+#   /models/Zen-Goken.html, /models/JohnnyHakson.html and /search.php?query=Zen:
+#   - Title: og:title (the styled <h2> on scene pages is empty in the
+#     server HTML; the title is only in <title>/og:title)
+#   - Code: numeric content ID from og:image filename (e.g. 8292 from 8292-3x.jpg)
+#   - Details: div.video-block h4 (full text; og:description is truncated)
+#   - Image: og:image (contentthumbs ...-3x.jpg)
+#   - Performer Name: .model-info h1; Performer Image: the page's
+#     *-set-4x.jpg portrait.
+#   - Search: /search.php?query={} returns SCENE cards only
+#     (div.product-item; h3.vid a + span.pi-added date) — no model
+#     results, so performerByName is not supported.
+#   Public (tour) scene pages print NO date, NO performer list, NO tags
+#   and NO duration, so Date/Performers/Tags/Duration are not mapped in
+#   sceneScraper. Search cards do carry a date (span.pi-added,
+#   e.g. "13 Oct 26" -> 2026-10-13). Card titles are truncated by the
+#   site itself for long titles ("..."), so search-stub titles can be
+#   truncated; the fragment scrape returns the full og:title.
+#   Studio is the site brand itself (fixed). Partner-branded scenes
+#   exist (e.g. "ASGmax-..." titles) and keep the partner name in the
+#   title; they are still PeterFever pages, so Studio stays fixed.
+#   Performer pages print no stats/bio and performers are of various
+#   nationalities, so only Gender is fixed (all-male site); Country and
+#   Ethnicity are deliberately not pinned.
+#   Stash's Go HTTP client UA is accepted (200); no CDP needed.
+# Selector risk: site redesign breaks class names; re-verify against a
+# fresh page before trusting.
+# Last Updated: 2026-11-17
+
+name: PETERFEVER
+
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - "peterfever.com/scenes/"
+    scraper: sceneScraper
+
+sceneByName:
+  action: scrapeXPath
+  queryURL: "https://www.peterfever.com/search.php?query={}"
+  scraper: sceneSearchScraper
+
+sceneByQueryFragment:
+  action: scrapeXPath
+  queryURL: "{url}"
+  scraper: sceneScraper
+
+performerByURL:
+  - action: scrapeXPath
+    url:
+      - "peterfever.com/models/"
+    scraper: performerScraper
+
+xPathScrapers:
+  sceneSearchScraper:
+    scene:
+      Title:
+        selector: "//div[contains(@class,'product-item')]//h3[contains(@class,'vid')]//a"
+      URL:
+        selector: "//div[contains(@class,'product-item')]//h3[contains(@class,'vid')]//a/@href"
+      Image:
+        selector: "//div[contains(@class,'product-item')]//div[contains(@class,'pi-img-wrapper')]//img[contains(@class,'img-responsive')]/@src"
+      Date:
+        selector: "//div[contains(@class,'product-item')]//span[contains(@class,'pi-added')]"
+        postProcess:
+          - javascript: |
+              var months = {Jan:'01',Feb:'02',Mar:'03',Apr:'04',May:'05',Jun:'06',Jul:'07',Aug:'08',Sep:'09',Oct:'10',Nov:'11',Dec:'12'};
+              var m = (value || '').trim().match(/^(\d{1,2}) ([A-Za-z]{3}) (\d{2})$/);
+              if (!m || !months[m[2]]) return '';
+              return '20' + m[3] + '-' + months[m[2]] + '-' + ('0' + m[1]).slice(-2);
+          - parseDate: "2006-01-02"
+
+  sceneScraper:
+    scene:
+      Title:
+        selector: "//meta[@property='og:title']/@content"
+
+      Code:
+        selector: "//meta[@property='og:image']/@content"
+        postProcess:
+          - replace:
+              - regex: "^.*/(\\d+)-\\d+x\\.jpg$"
+                with: "$1"
+
+      Details:
+        selector: "//div[contains(@class,'video-block')]//h4[1]"
+        postProcess:
+          - replace:
+              - regex: "^\\s+|\\s+$"
+                with: ""
+
+      Studio:
+        Name:
+          fixed: "PeterFever"
+
+      Image:
+        selector: "//meta[@property='og:image']/@content"
+
+  performerScraper:
+    performer:
+      Name:
+        selector: "//div[contains(@class,'model-info')]//h1"
+        postProcess:
+          - replace:
+              - regex: "^\\s+|\\s+$"
+                with: ""
+
+      Image:
+        selector: "(//img[contains(@src,'-set-4x.jpg')])[1]/@src"
+
+      Gender:
+        fixed: MALE
