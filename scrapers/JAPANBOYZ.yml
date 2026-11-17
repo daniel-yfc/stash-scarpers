@@ -1,0 +1,168 @@
+# JapanBoyz (japanboyz.com) — English-language membership site (JP performers).
+# Verification status (2026-11-17, server-rendered HTML fetched anonymously):
+#   VERIFIED against /scenes/Zen-And-Kou-Get-Raw_vids.html,
+#   /scenes/Oil-Massage-Mood_vids.html, /scenes/Milky-Twink-Threesome_vids.html,
+#   /models/Zen.html and /search.php?query=Zen:
+#   - Title: .movie-player h2 (e.g. "Zen And Kou Get Raw")
+#   - Code: numeric content ID from og:image filename (e.g. 6132 from 6132-3x.jpg)
+#   - Date: .date span.mr-2 (e.g. "30 Oct 26" -> 2026-10-30)
+#   - Details: div.description
+#   - Performers: .model-list .m-name a (names + model page URLs)
+#   - Tags: div.v-tags a (link text carries a leading "#")
+#   - Image: og:image (contentthumbs ...-3x.jpg)
+#   - Performer Name: .model-bio h2; Performer Image: .model-bio img (…-set-4x.jpg)
+#   - Search: /search.php?query={} returns scene cards (div.v-item) and
+#     model cards (div.model-block) on one page.
+#   No duration or studio code is printed on the public (tour) pages, so
+#   Duration is not mapped. Studio is the site brand itself (fixed).
+#   Stash's Go HTTP client UA is accepted (200); no CDP needed.
+# Selector risk: site redesign breaks class names; re-verify against a
+# fresh page before trusting.
+#   Gate B (2026-11-17): scene Performers demographics use selector+
+#   replace constants, not fixed: — the runtime applies fixed: inside
+#   scene Performers only to the first performer. Runtime-verified:
+#   all 7 performers across the 3 fixture scenes carry MALE/JP/Asian.
+# Last Updated: 2026-11-17
+
+name: JAPANBOYZ
+
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - "japanboyz.com/scenes/"
+    scraper: sceneScraper
+
+sceneByName:
+  action: scrapeXPath
+  queryURL: "https://www.japanboyz.com/search.php?query={}"
+  scraper: sceneSearchScraper
+
+sceneByQueryFragment:
+  action: scrapeXPath
+  queryURL: "{url}"
+  scraper: sceneScraper
+
+performerByURL:
+  - action: scrapeXPath
+    url:
+      - "japanboyz.com/models/"
+    scraper: performerScraper
+
+performerByName:
+  action: scrapeXPath
+  queryURL: "https://www.japanboyz.com/search.php?query={}"
+  scraper: performerSearchScraper
+
+xPathScrapers:
+  sceneSearchScraper:
+    scene:
+      Title:
+        selector: "//div[contains(@class,'v-item')]//div[contains(@class,'v-title')]//a"
+      URL:
+        selector: "//div[contains(@class,'v-item')]//div[contains(@class,'v-title')]//a/@href"
+      Image:
+        selector: "//div[contains(@class,'v-item')]//div[contains(@class,'v-img')]//img/@src"
+
+  performerSearchScraper:
+    performer:
+      Name:
+        selector: "//div[contains(@class,'model-block')]//div[contains(@class,'m-name')]/a"
+      URL:
+        selector: "//div[contains(@class,'model-block')]//div[contains(@class,'m-name')]/a/@href"
+      Image:
+        selector: "//div[contains(@class,'model-block')]//div[contains(@class,'m-img')]//img/@src"
+
+  sceneScraper:
+    scene:
+      Title:
+        selector: "//div[contains(@class,'movie-player')]//h2[1]"
+        postProcess:
+          - replace:
+              - regex: "^\\s+|\\s+$"
+                with: ""
+
+      Code:
+        selector: "//meta[@property='og:image']/@content"
+        postProcess:
+          - replace:
+              - regex: "^.*/(\\d+)-\\d+x\\.jpg$"
+                with: "$1"
+
+      Date:
+        selector: "//div[contains(@class,'date')]//span[contains(@class,'mr-2')]"
+        postProcess:
+          - javascript: |
+              var months = {Jan:'01',Feb:'02',Mar:'03',Apr:'04',May:'05',Jun:'06',Jul:'07',Aug:'08',Sep:'09',Oct:'10',Nov:'11',Dec:'12'};
+              var m = (value || '').trim().match(/^(\d{1,2}) ([A-Za-z]{3}) (\d{2})$/);
+              if (!m || !months[m[2]]) return '';
+              return '20' + m[3] + '-' + months[m[2]] + '-' + ('0' + m[1]).slice(-2);
+          - parseDate: "2006-01-02"
+
+      Details:
+        selector: "//div[contains(@class,'description')]"
+        postProcess:
+          - replace:
+              - regex: "^\\s+|\\s+$"
+                with: ""
+
+      Studio:
+        Name:
+          fixed: "JapanBoyz"
+
+      Performers:
+        Name:
+          selector: "//div[contains(@class,'model-list')]//div[contains(@class,'m-name')]/a/text()"
+        URLs:
+          selector: "//div[contains(@class,'model-list')]//div[contains(@class,'m-name')]/a/@href"
+        # Workaround: `fixed:` values inside scene Performers are applied by
+        # Stash only to the first performer (Gate B finding, 2026-11-17).
+        # Selecting the same nodes as Name and replacing each value with the
+        # constant yields one value per performer.
+        Gender:
+          selector: "//div[contains(@class,'model-list')]//div[contains(@class,'m-name')]/a/text()"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "MALE"
+        Country:
+          selector: "//div[contains(@class,'model-list')]//div[contains(@class,'m-name')]/a/text()"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "JP"
+        Ethnicity:
+          selector: "//div[contains(@class,'model-list')]//div[contains(@class,'m-name')]/a/text()"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "Asian"
+
+      Tags:
+        Name:
+          selector: "//div[contains(@class,'v-tags')]/a/text()"
+          postProcess:
+            - replace:
+                - regex: "^\\s*#\\s*|\\s+$"
+                  with: ""
+
+      Image:
+        selector: "//meta[@property='og:image']/@content"
+
+  performerScraper:
+    performer:
+      Name:
+        selector: "//div[contains(@class,'model-bio')]//h2[1]"
+        postProcess:
+          - replace:
+              - regex: "^\\s+|\\s+$"
+                with: ""
+
+      Image:
+        selector: "//div[contains(@class,'model-bio')]//img[1]/@src"
+
+      Gender:
+        fixed: MALE
+      Country:
+        fixed: JP
+      Ethnicity:
+        fixed: Asian
