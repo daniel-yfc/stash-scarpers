@@ -18,6 +18,10 @@
 #   Stash's Go HTTP client UA is accepted (200); no CDP needed.
 # Selector risk: site redesign breaks class names; re-verify against a
 # fresh page before trusting.
+#   Gate B (2026-11-17): scene Performers demographics use selector+
+#   replace constants, not fixed: — the runtime applies fixed: inside
+#   scene Performers only to the first performer. Runtime-verified:
+#   all 7 performers across the 3 fixture scenes carry MALE/JP/Asian.
 # Last Updated: 2026-11-17
 
 name: JAPANBOYZ
@@ -110,12 +114,28 @@ xPathScrapers:
           selector: "//div[contains(@class,'model-list')]//div[contains(@class,'m-name')]/a/text()"
         URLs:
           selector: "//div[contains(@class,'model-list')]//div[contains(@class,'m-name')]/a/@href"
+        # Workaround: `fixed:` values inside scene Performers are applied by
+        # Stash only to the first performer (Gate B finding, 2026-11-17).
+        # Selecting the same nodes as Name and replacing each value with the
+        # constant yields one value per performer.
         Gender:
-          fixed: MALE
+          selector: "//div[contains(@class,'model-list')]//div[contains(@class,'m-name')]/a/text()"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "MALE"
         Country:
-          fixed: JP
+          selector: "//div[contains(@class,'model-list')]//div[contains(@class,'m-name')]/a/text()"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "JP"
         Ethnicity:
-          fixed: Asian
+          selector: "//div[contains(@class,'model-list')]//div[contains(@class,'m-name')]/a/text()"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "Asian"
 
       Tags:
         Name:
