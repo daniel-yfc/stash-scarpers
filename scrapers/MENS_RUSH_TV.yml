@@ -14,7 +14,7 @@
 # 2026-10-06: Performers fixed to a[href^='list.php?mid='] (old selector hit the
 # description paragraph); Image covers both player renders (<video poster>
 # and <img class="no-save" src>); Date documented as page-dependent.
-# Last Updated: 2026-10-10
+# Last Updated: 2026-11-17
 
 name: MENS RUSH TV
 
@@ -168,12 +168,27 @@ xPathScrapers:
                 - regex: '^\s+|\s+$'
                   with: ""
 
+        # Demographics: selector+replace constants (not fixed:) — Stash
+        # applies fixed: inside scene Performers only to the first
+        # performer (Gate B finding, 2026-11-17). Same nodes as Name.
         Gender:
-          fixed: MALE
+          selector: "//div[@class='movie_detail'][1]//a[starts-with(@href,'list.php?mid=')]"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "MALE"
         Country:
-          fixed: JP
+          selector: "//div[@class='movie_detail'][1]//a[starts-with(@href,'list.php?mid=')]"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "JP"
         Ethnicity:
-          fixed: Asian
+          selector: "//div[@class='movie_detail'][1]//a[starts-with(@href,'list.php?mid=')]"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "Asian"
       Tags:
         Name:
           selector: //div[@class='movie_detail'][1]//p//a[contains(@href,'list.php?geid=')]/text()
@@ -215,4 +230,4 @@ driver:
   headers:
     - Key: User-Agent
       Value: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
-# Last Updated: 2026-10-10
+# Last Updated: 2026-11-17

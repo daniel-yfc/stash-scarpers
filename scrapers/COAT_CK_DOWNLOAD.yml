@@ -4,7 +4,7 @@
 # (ul.title_list cards: /product/detail/34124, 34114, 27341).
 # Detail sceneScraper UNVERIFIED on guest pages — product table is login-gated.
 # 2026-10-06: Image gained div.set_photo branch (set pages) against live DOM.
-# Last Updated: 2026-10-10
+# Last Updated: 2026-11-17
 
 name: COAT CK DOWNLOAD
 
@@ -167,12 +167,27 @@ xPathScrapers:
             - replace:
                 - regex: "^/"
                   with: "https://www.ck-download.com/"
+        # Demographics: selector+replace constants (not fixed:) — Stash
+        # applies fixed: inside scene Performers only to the first
+        # performer (Gate B finding, 2026-11-17). Same nodes as Name.
         Gender:
-          fixed: MALE
+          selector: "$cats//li[strong[normalize-space(.)='出演モデル']]//a/text()"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "MALE"
         Country:
-          fixed: JP
+          selector: "$cats//li[strong[normalize-space(.)='出演モデル']]//a/text()"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "JP"
         Ethnicity:
-          fixed: Asian
+          selector: "$cats//li[strong[normalize-space(.)='出演モデル']]//a/text()"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "Asian"
       Details:
         selector: "//div[contains(@class,'intro_text')]//p[string-length(normalize-space(.)) > 10 and not(contains(@style,'color'))]//text()[normalize-space()]"
         concat: "\n\n"

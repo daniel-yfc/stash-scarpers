@@ -101,12 +101,27 @@ xPathScrapers:
             - replace:
                 - regex: ^/
                   with: https://www.pubu.com.tw/
+        # Demographics: selector+replace constants (not fixed:) — Stash
+        # applies fixed: inside scene Performers only to the first
+        # performer (Gate B finding, 2026-11-17). Same nodes as Name.
         Gender:
-          fixed: MALE
+          selector: //div[contains(concat(' ', normalize-space(@class), ' '), ' class-more ')]//a[contains(@href, 'fl_ahr')]
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "MALE"
         Country:
-          fixed: TW
+          selector: //div[contains(concat(' ', normalize-space(@class), ' '), ' class-more ')]//a[contains(@href, 'fl_ahr')]
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "TW"
         Ethnicity:
-          fixed: Asian
+          selector: //div[contains(concat(' ', normalize-space(@class), ' '), ' class-more ')]//a[contains(@href, 'fl_ahr')]
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "Asian"
       Tags:
         Name: //nav[contains(concat(' ', normalize-space(@class), ' '), ' class-tag ')]/h3/a
 

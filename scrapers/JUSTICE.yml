@@ -41,7 +41,7 @@
 # be bare and may touch the series (TOKUTENBEST+1); the trailing +N is
 # always spaced ("BEST2 +1"). Only fully-anchored matches are touched;
 # info posts and announcements pass through byte-identical.
-# Last Updated: 2026-11-14
+# Last Updated: 2026-11-17
 
 name: JUSTICE
 
@@ -329,12 +329,90 @@ xPathScrapers:
             - replace:
                 - regex: "^\\s+|\\s+$"
                   with: ""
+        # Demographics: mirror the Name pipeline (same selector/concat/
+        # split) with a javascript step that emits one constant per
+        # extracted name token — fixed: inside scene Performers applies
+        # only to the first performer (Gate B finding, 2026-11-17), and a
+        # plain selector+replace cannot work here because Name's values
+        # come from one concatenated string, not one node per performer.
         Gender:
-          fixed: MALE
+          selector: "$article//h3[contains(@class,'wp-block-heading')][contains(normalize-space(.), '【')][not(contains(., 'Bonus Track'))][not(contains(normalize-space(.), '【Type'))][not(contains(., '単品'))][not(contains(., 'セット'))]"
+          concat: "\n"
+          split: "×"
+          postProcess:
+            - javascript: |
+                var v = value || "";
+                if (!v) return "";
+                if (v.indexOf("【") === -1) return "MALE";
+                var out = [];
+                var re = /【([^】]*)】/g;
+                var m;
+                while ((m = re.exec(v)) !== null) {
+                  var token = m[1];
+                  if (token.indexOf("Bonus Track") !== -1) continue;
+                  if (token.indexOf("Type") === 0) continue;
+                  if (token.indexOf("単品") !== -1 || token.indexOf("セット") !== -1) continue;
+                  var parts = token.split("＆");
+                  for (var i = 0; i < parts.length; i++) {
+                    if (parts[i].replace(/^\s+|\s+$/g, "")) out.push("MALE");
+                  }
+                }
+                return out.join("×");
+            - replace:
+                - regex: "^\\s+|\\s+$"
+                  with: ""
         Country:
-          fixed: JP
+          selector: "$article//h3[contains(@class,'wp-block-heading')][contains(normalize-space(.), '【')][not(contains(., 'Bonus Track'))][not(contains(normalize-space(.), '【Type'))][not(contains(., '単品'))][not(contains(., 'セット'))]"
+          concat: "\n"
+          split: "×"
+          postProcess:
+            - javascript: |
+                var v = value || "";
+                if (!v) return "";
+                if (v.indexOf("【") === -1) return "JP";
+                var out = [];
+                var re = /【([^】]*)】/g;
+                var m;
+                while ((m = re.exec(v)) !== null) {
+                  var token = m[1];
+                  if (token.indexOf("Bonus Track") !== -1) continue;
+                  if (token.indexOf("Type") === 0) continue;
+                  if (token.indexOf("単品") !== -1 || token.indexOf("セット") !== -1) continue;
+                  var parts = token.split("＆");
+                  for (var i = 0; i < parts.length; i++) {
+                    if (parts[i].replace(/^\s+|\s+$/g, "")) out.push("JP");
+                  }
+                }
+                return out.join("×");
+            - replace:
+                - regex: "^\\s+|\\s+$"
+                  with: ""
         Ethnicity:
-          fixed: Asian
+          selector: "$article//h3[contains(@class,'wp-block-heading')][contains(normalize-space(.), '【')][not(contains(., 'Bonus Track'))][not(contains(normalize-space(.), '【Type'))][not(contains(., '単品'))][not(contains(., 'セット'))]"
+          concat: "\n"
+          split: "×"
+          postProcess:
+            - javascript: |
+                var v = value || "";
+                if (!v) return "";
+                if (v.indexOf("【") === -1) return "Asian";
+                var out = [];
+                var re = /【([^】]*)】/g;
+                var m;
+                while ((m = re.exec(v)) !== null) {
+                  var token = m[1];
+                  if (token.indexOf("Bonus Track") !== -1) continue;
+                  if (token.indexOf("Type") === 0) continue;
+                  if (token.indexOf("単品") !== -1 || token.indexOf("セット") !== -1) continue;
+                  var parts = token.split("＆");
+                  for (var i = 0; i < parts.length; i++) {
+                    if (parts[i].replace(/^\s+|\s+$/g, "")) out.push("Asian");
+                  }
+                }
+                return out.join("×");
+            - replace:
+                - regex: "^\\s+|\\s+$"
+                  with: ""
       Groups:
         Name:
           # Series group from entry-categories, excluding the generic parent.

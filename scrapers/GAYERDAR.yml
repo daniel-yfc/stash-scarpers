@@ -9,7 +9,7 @@
 # - Title selectors split on fullwidth ｜, which depends on zh-TW page chrome.
 # 2026-10-06: Tags gained plain-text li fallback (some pages render tags
 # without links) against live DOM.
-# Last Updated: 2026-10-06
+# Last Updated: 2026-11-17
 name: GAYERDAR
 
 sceneByURL:
@@ -101,12 +101,27 @@ xPathScrapers:
       Performers:
         Name:
           selector: //a[contains(@href,"/models/")]//text()[normalize-space()]
+        # Demographics: selector+replace constants (not fixed:) — Stash
+        # applies fixed: inside scene Performers only to the first
+        # performer (Gate B finding, 2026-11-17). Same nodes as Name.
         Gender:
-          fixed: MALE
+          selector: //a[contains(@href,"/models/")]//text()[normalize-space()]
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "MALE"
         Country:
-          fixed: TW
+          selector: //a[contains(@href,"/models/")]//text()[normalize-space()]
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "TW"
         Ethnicity:
-          fixed: Asian
+          selector: //a[contains(@href,"/models/")]//text()[normalize-space()]
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "Asian"
       URLs:
         selector: //link[@rel="canonical"]/@href
         postProcess:

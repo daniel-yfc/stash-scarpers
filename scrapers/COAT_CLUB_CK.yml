@@ -33,7 +33,7 @@
 #           出演モデル block excluded (performers live there)
 #   Performers  出演モデル links (first ul.relative_cat2 in #products_description2)
 # Search does not paginate. Stash only sees the first result page.
-# Last Updated: 2026-10-10
+# Last Updated: 2026-11-17
 
 name: COAT CLUB CK
 
@@ -246,13 +246,27 @@ xPathScrapers:
             - replace:
                 - regex: "^/"
                   with: "https://www.coat.co.jp/"
+        # Demographics: selector+replace constants (not fixed:) — Stash
+        # applies fixed: inside scene Performers only to the first
+        # performer (Gate B finding, 2026-11-17). Same nodes as Name.
         Gender:
-          fixed: MALE
+          selector: //div[@id='products_description2']/ul[contains(@class,'relative_cat2')][1]//a[normalize-space()]/text()
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "MALE"
         Country:
-          fixed: JP
+          selector: //div[@id='products_description2']/ul[contains(@class,'relative_cat2')][1]//a[normalize-space()]/text()
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "JP"
         Ethnicity:
-          fixed: Asian
-
+          selector: //div[@id='products_description2']/ul[contains(@class,'relative_cat2')][1]//a[normalize-space()]/text()
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "Asian"
 driver:
   useCDP: true
   headers:

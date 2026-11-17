@@ -8,7 +8,7 @@
 # `A | B//x` and match the container itself. Always keep the parens.
 # 2026-10-06: re-verified healthy on 3 detail pages; search probes
 # (陸翔 / CR-0945_DL / 夏ハメ2026) all HIT.
-# Last Updated: 2026-10-10
+# Last Updated: 2026-11-17
 # Validator fix: Code no longer combines `fixed` with `postProcess` (schema
 # fixed-value nodeSelector allows only 'fixed'). Uses canonical/og:url selector,
 # same pattern as the existing Aliases field.
@@ -258,13 +258,27 @@ xPathScrapers:
                 # Clear if no match (full title is long)
                 - regex: "^.{3,}$"
                   with: ""
+        # Demographics: selector+replace constants (not fixed:) — Stash
+        # applies fixed: inside scene Performers only to the first
+        # performer (Gate B finding, 2026-11-17). Same nodes as Name.
         Gender:
-          fixed: MALE
+          selector: "$product//h2[1]"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "MALE"
         Country:
-          fixed: JP
+          selector: "$product//h2[1]"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "JP"
         Ethnicity:
-          fixed: Asian
-
+          selector: "$product//h2[1]"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "Asian"
 driver:
   useCDP: true
   headers:
