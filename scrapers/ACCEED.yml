@@ -26,7 +26,7 @@
 #     authorized QA capture of the anonymous login page (see PR).
 # Search URL: https://acceed.jp/search.php?s={keyword}
 # Expected fields: Title, Date, Image, Code, URL, Tags, Details, Studio, Performer
-# Last Updated: 2026-11-01
+# Last Updated: 2026-11-17
 
 name: ACCEED
 
@@ -114,12 +114,28 @@ xPathScrapers:
             - replace:
                 - regex: "^\\s+|\\s+$"
                   with: ""
+        # Demographics use selector+replace constants, not fixed: — Stash
+        # applies fixed: inside scene Performers only to the first
+        # performer (Gate B finding, 2026-11-17). Same nodes as Name, so
+        # each performer receives one value.
         Gender:
-          fixed: MALE
+          selector: "$results//div[contains(@class,'index-label')]//a[contains(@href,'model=on')]"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "MALE"
         Country:
-          fixed: JP
+          selector: "$results//div[contains(@class,'index-label')]//a[contains(@href,'model=on')]"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "JP"
         Ethnicity:
-          fixed: Asian
+          selector: "$results//div[contains(@class,'index-label')]//a[contains(@href,'model=on')]"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "Asian"
 
   sceneScraper:
     # Live DOM verified 2026-10-06 (logged in) against
@@ -260,8 +276,30 @@ xPathScrapers:
             - replace:
                 - regex: "^/"
                   with: "https://acceed.jp/"
+        # Demographics use selector+replace constants, not fixed: — Stash
+        # applies fixed: inside scene Performers only to the first
+        # performer (Gate B finding, 2026-11-17). Same nodes as Name
+        # (raw @title values), so each performer receives one value.
+        # Country/Ethnicity added 2026-11-17 (were absent here; the
+        # searchScraper already carried JP / Asian).
         Gender:
-          fixed: MALE
+          selector: "$guard$cats//a[contains(@href,'search.php?model=on')]/@title"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "MALE"
+        Country:
+          selector: "$guard$cats//a[contains(@href,'search.php?model=on')]/@title"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "JP"
+        Ethnicity:
+          selector: "$guard$cats//a[contains(@href,'search.php?model=on')]/@title"
+          postProcess:
+            - replace:
+                - regex: ".+"
+                  with: "Asian"
 
 driver:
   useCDP: true
