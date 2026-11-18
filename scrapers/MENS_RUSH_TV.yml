@@ -1,5 +1,5 @@
 # Men's Rush TV — sceneByURL + search scraper
-# Public CDP version: driver.useCDP: true; no driver.cookies.
+# Public Surf version: driver.useSurf: true; no driver.cookies.
 # Search verification: selectors checked against rendered search DOM
 #   https://www.mensrush.tv/list.php?keyword=%E9%9B%84%E7%A9%B4
 # sceneByURL verified against live detail pages (2026-09-07):
@@ -226,7 +226,7 @@ xPathScrapers:
               return "https://www.mensrush.tv/" + v;
 
 driver:
-  useCDP: true
+  useSurf: true
   headers:
     - Key: User-Agent
       Value: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"

@@ -1,10 +1,10 @@
 # KO Video — sceneByURL + search scraper
-# Public CDP version: driver.useCDP: true; no driver.cookies.
+# Public Surf version: driver.useSurf: true; no driver.cookies.
 # Search verification: selectors checked against rendered search DOM
 #   https://ko-video.com/products/list.php?mode=search&name=雄穴
 #   (2026-08-27 snapshot). sceneByURL still UNVERIFIED against live detail pages.
 #
-# This site uses age-gate / login. Public CDP version requires browser session.
+# This site uses age-gate / login.
 # See: skills/stash-scraper-builder/references/debugging.md
 # 2026-10-06: fixed Title selector (div.title_bar is a sibling of
 # div.detail_main_col, not a descendant) against live DOM.
@@ -265,7 +265,7 @@ xPathScrapers:
 
               return "https://ko-video.com/" + v;'
 driver:
-  useCDP: true
+  useSurf: true
   headers:
     - Key: User-Agent
       Value: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36

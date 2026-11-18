@@ -1,5 +1,5 @@
 # Hunk's Channel
-# Public CDP version: driver.useCDP: true; no driver.cookies.
+# Public Surf version: driver.useSurf: true; no driver.cookies.
 # Search verified 2026-08-27: /search.php?s=雄穴&fromSearch=on
 # cards in #newmovie tables (GV-OND28001, TR-CS007, KPP-1122).
 # Detail: guest HTML has ブランド/発売日/ストーリー; cover/title h2 need login+CDP.
@@ -280,7 +280,7 @@ xPathScrapers:
                 - regex: ".+"
                   with: "Asian"
 driver:
-  useCDP: true
+  useSurf: true
   headers:
     - Key: User-Agent
       Value: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
