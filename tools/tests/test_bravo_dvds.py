@@ -319,12 +319,17 @@ def test_site_generic_keywords_are_not_product_tags():
 
 
 # --------------------------------------------------------------------------
-# C-08 - CDP dependency is recorded and preserved
+# C-08 - driver dependency is recorded and preserved
 # --------------------------------------------------------------------------
 
-def test_cdp_driver_requirement_is_preserved():
+def test_surf_driver_requirement_is_preserved():
+    # Supersedes the CDP-era pin: BRAVO_JAPAN was converted from CDP to
+    # Surf TLS impersonation following upstream PR #2925 (Gate B PASS on
+    # stash-test, 2026-11-17). The driver requirement is still pinned —
+    # now on useSurf — so a silent driver regression fails here.
     data = yaml.safe_load(BRAVO.read_text(encoding="utf-8"))
-    assert data["driver"]["useCDP"] is True
+    assert data["driver"]["useSurf"] is True
+    assert "useCDP" not in data["driver"]
 
 
 # --------------------------------------------------------------------------
