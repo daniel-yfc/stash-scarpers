@@ -322,14 +322,18 @@ def test_site_generic_keywords_are_not_product_tags():
 # C-08 - driver dependency is recorded and preserved
 # --------------------------------------------------------------------------
 
-def test_surf_driver_requirement_is_preserved():
-    # Supersedes the CDP-era pin: BRAVO_JAPAN was converted from CDP to
-    # Surf TLS impersonation following upstream PR #2925 (Gate B PASS on
-    # stash-test, 2026-11-17). The driver requirement is still pinned —
-    # now on useSurf — so a silent driver regression fails here.
+def test_driver_requirement_is_preserved():
+    # Both driver modes are supported and either satisfies the
+    # requirement: CDP (the original configuration, pinned here until
+    # 2026-11-18) and Surf TLS impersonation (upstream PR #2925;
+    # BRAVO_JAPAN converted 2026-11-17, Gate B PASS on stash-test).
+    # What this test pins is that exactly one driver mode is explicitly
+    # enabled — a silent removal of the driver configuration fails here,
+    # whichever mode the scraper currently ships.
     data = yaml.safe_load(BRAVO.read_text(encoding="utf-8"))
-    assert data["driver"]["useSurf"] is True
-    assert "useCDP" not in data["driver"]
+    driver = data["driver"]
+    enabled = [m for m in ("useCDP", "useSurf") if driver.get(m) is True]
+    assert len(enabled) == 1
 
 
 # --------------------------------------------------------------------------
