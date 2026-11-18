@@ -319,21 +319,12 @@ def test_site_generic_keywords_are_not_product_tags():
 
 
 # --------------------------------------------------------------------------
-# C-08 - driver dependency is recorded and preserved
+# C-08 - driver mode validity is covered by the COMMON semantics check
+# (tools/check_scraper_semantics.py, rule: useCDP/useSurf are alternative
+# fetch modes, both-at-once rejected) and its general tests in
+# tools/tests/test_scraper_semantics.py. Per user direction 2026-11-18
+# the validation is general for all scrapers, not fitted to this one.
 # --------------------------------------------------------------------------
-
-def test_driver_requirement_is_preserved():
-    # Both driver modes are supported and either satisfies the
-    # requirement: CDP (the original configuration, pinned here until
-    # 2026-11-18) and Surf TLS impersonation (upstream PR #2925;
-    # BRAVO_JAPAN converted 2026-11-17, Gate B PASS on stash-test).
-    # What this test pins is that exactly one driver mode is explicitly
-    # enabled — a silent removal of the driver configuration fails here,
-    # whichever mode the scraper currently ships.
-    data = yaml.safe_load(BRAVO.read_text(encoding="utf-8"))
-    driver = data["driver"]
-    enabled = [m for m in ("useCDP", "useSurf") if driver.get(m) is True]
-    assert len(enabled) == 1
 
 
 # --------------------------------------------------------------------------

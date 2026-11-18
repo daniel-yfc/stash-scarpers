@@ -118,3 +118,17 @@ def test_graphql_errors_and_negative_controls():
 def test_cli_missing_file_fails_closed(tmp_path):
     assert feed.main([str(tmp_path / "absent.yml")]) == 1
     assert feed.main(["--payload", str(tmp_path / "absent.json")]) == 1
+
+
+def test_capabilities_identify_driver_mode():
+    # Both fetch modes are identified in the capability inventory, for
+    # any scraper: CDP (useCDP) and Surf (useSurf) are alternatives.
+    from pathlib import Path as _P
+
+    base = {"name": "Synthetic"}
+    cdp = feed.capabilities(_P("x.yml"), {**base, "driver": {"useCDP": True}})
+    assert cdp["cdp_required"] is True and cdp["surf_required"] is False
+    surf = feed.capabilities(_P("x.yml"), {**base, "driver": {"useSurf": True}})
+    assert surf["cdp_required"] is False and surf["surf_required"] is True
+    plain = feed.capabilities(_P("x.yml"), dict(base))
+    assert plain["cdp_required"] is False and plain["surf_required"] is False

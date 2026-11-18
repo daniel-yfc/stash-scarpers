@@ -70,6 +70,7 @@ def capabilities(path, data):
         "identify_declared": bool(fragment),
         "identify_query": fragment.get("queryURL") if fragment else None,
         "cdp_required": bool(data.get("driver", {}).get("useCDP")),
+        "surf_required": bool(data.get("driver", {}).get("useSurf")),
         "scene_fields": sorted(fields),
         "live_stash": "UNVERIFIED",
         "stash_box_feed": "not implemented",
