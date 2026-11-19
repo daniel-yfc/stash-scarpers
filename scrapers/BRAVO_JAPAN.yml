@@ -1,5 +1,5 @@
 # BRAVO-JAPAN (bravo-japan.com) — Wix dynamic-pages site (配信作品紹介).
-# Public CDP version: driver.useCDP: true; no driver.cookies.
+# Public Surf version: driver.useSurf: true; no driver.cookies.
 # Clips + DVD scraper (Wave 1B Clips, STASH-E2E-03 / BRAVO part of
 # STASH-E2E-04; Wave 2E DVD, feat/e2e-bravo-dvds).
 # Verification status (2026-11-01, live rendered DOM for /clips/284 and
@@ -399,7 +399,7 @@ xPathScrapers:
       # - Performers: no structured performer field in the source.
 
 driver:
-  useCDP: true
+  useSurf: true
   headers:
     - Key: User-Agent
       Value: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36

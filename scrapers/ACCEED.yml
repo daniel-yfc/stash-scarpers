@@ -1,4 +1,4 @@
-# ACCEED (acceed.jp) — public CDP version.
+# ACCEED (acceed.jp) — public Surf version.
 # Verification status:
 #   searchScraper: VERIFIED 2026-09-06 against https://acceed.jp/search.php?s=ACST
 #     - cards: div.item_img; title: h6.overflow > a; link: a[href^='/detail.']
@@ -302,7 +302,7 @@ xPathScrapers:
                   with: "Asian"
 
 driver:
-  useCDP: true
+  useSurf: true
   headers:
     - Key: User-Agent
       Value: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36

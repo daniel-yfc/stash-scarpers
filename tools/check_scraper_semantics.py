@@ -11,6 +11,12 @@
    Stash applies postProcess with Go regexp (RE2), which rejects `\\u`
    escapes -- the step fails to compile and is silently skipped at
    runtime (Incident 5). Use \\p{...} classes or literal characters.
+5. driver mode: `useCDP` and `useSurf` are alternative fetch modes
+   (real-browser CDP vs Surf TLS impersonation). Both are valid alone,
+   and neither (plain HTTP) is valid; enabling both at once is an
+   ambiguous configuration and is rejected. The JSON schema accepts
+   both flags independently, so the exclusion lives here. This rule
+   applies to every scraper uniformly.
 
 Exit 0 if clean, 1 with details otherwise.
 Usage: python3 tools/check_scraper_semantics.py [file ...]
@@ -124,6 +130,17 @@ def check_postprocess_regex(data, path):
     walk(data)
 
 
+def check_driver_mode(data, path):
+    """Reject a driver block that enables both fetch modes at once."""
+    driver = data.get("driver")
+    if isinstance(driver, dict):
+        if driver.get("useCDP") is True and driver.get("useSurf") is True:
+            errors.append(
+                f"{path}: driver enables both useCDP and useSurf; they are "
+                "alternative fetch modes -- enable only one"
+            )
+
+
 def check_file(path):
     try:
         with open(path) as f:
@@ -137,6 +154,7 @@ def check_file(path):
     check_movie_by_url(data, path)
     check_parse_date(data, path)
     check_postprocess_regex(data, path)
+    check_driver_mode(data, path)
 
 
 def main():

@@ -1,5 +1,5 @@
 # Justice01 (justice01.com) — WordPress/Cocoon blog + EC-CUBE shop.
-# Public version: driver.useCDP: true; no driver.cookies.
+# Public version: driver.useSurf: true; no driver.cookies.
 # IMPORTANT: the site moved from justice01.jp (dead, DNS no longer resolves)
 # to justice01.com. All URLs below target the live .com domain.
 #
@@ -430,7 +430,7 @@ xPathScrapers:
           selector: "//div[contains(@class,'entry-categories')]//a[contains(@class,'cat-link')][not(normalize-space(.)='ゲイビデオ・DVD')][not((//h1[contains(@class,'entry-title')][contains(normalize-space(.),'新発売')]) and (//div[contains(@class,'entry-categories')]//a[contains(@class,'cat-link')][normalize-space(.)='新着情報']))]/@href"
 
 driver:
-  useCDP: true
+  useSurf: true
   headers:
     - Key: User-Agent
       Value: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36

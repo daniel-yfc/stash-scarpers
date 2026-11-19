@@ -1,5 +1,5 @@
 # KO Shop
-# Public CDP version: driver.useCDP: true; no driver.cookies.
+# Public Surf version: driver.useSurf: true; no driver.cookies.
 # Search URL verified 2026-08-27: /products/list.php?word=雄穴
 # → /products/detail.php?product_id=42743, 42707, 42727.
 # Card XPath UNVERIFIED ($x not run on list markup).
@@ -298,7 +298,7 @@ xPathScrapers:
         fixed: "{inputURL}"
 
 driver:
-  useCDP: true
+  useSurf: true
   headers:
     - Key: User-Agent
       Value: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"

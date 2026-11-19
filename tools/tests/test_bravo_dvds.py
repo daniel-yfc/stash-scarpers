@@ -319,12 +319,12 @@ def test_site_generic_keywords_are_not_product_tags():
 
 
 # --------------------------------------------------------------------------
-# C-08 - CDP dependency is recorded and preserved
+# C-08 - driver mode validity is covered by the COMMON semantics check
+# (tools/check_scraper_semantics.py, rule: useCDP/useSurf are alternative
+# fetch modes, both-at-once rejected) and its general tests in
+# tools/tests/test_scraper_semantics.py. Per user direction 2026-11-18
+# the validation is general for all scrapers, not fitted to this one.
 # --------------------------------------------------------------------------
-
-def test_cdp_driver_requirement_is_preserved():
-    data = yaml.safe_load(BRAVO.read_text(encoding="utf-8"))
-    assert data["driver"]["useCDP"] is True
 
 
 # --------------------------------------------------------------------------

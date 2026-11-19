@@ -1,11 +1,13 @@
 # GVWiki
+# 搜尋分級（2026-11-17 使用者註記）：有帳號可單獨搜尋 model；
+# 一般（未登入）用戶只能 videos＋models 混合搜尋，混合結果屬站方分級，非 scraper 問題。
 # Cookies are placeholders (see ACCEED.yml pattern); fill in actual values locally.
 # Verification: live-DOM verified 2026-10-06 (Title/Image/Details fixed).
 # 2026-10-06: Details fixed — #plot-box holds text nodes + <br>, no <p>.
 # (Title/Image already used the robust class-token pattern.)
 # Last Updated: 2026-11-17
 # Validator fixes:
-#   - removed CookieURL (not allowed when useCDP is true)
+#   - removed CookieURL (was not allowed under useCDP; permitted under useSurf, unused here)
 #   - sceneByURL regex -> simple prefix (url items are plain strings)
 #   - {query} -> {} (Stash sceneByName only substitutes the {} placeholder)
 #   - replaced invalid `trim` postProcess with replace-regex trim
@@ -14,11 +16,13 @@
 name: GV WIKI
 
 driver:
-  useCDP: true
+  useSurf: true
   headers:
     - Key: User-Agent
       Value: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36
 # Private scraper cookies: fill in actual values locally, do NOT commit real values.
+# 注意：Surf 模式下啟用 cookies 時，每組 cookies 需另加 CookieURL（站台網址），
+# 否則 cookie jar 不會帶上（上游 PR #2925 Kink 轉換註記）。
 # cookies:
 #     - Cookies:
 #         - Name: "gcaycnniik"

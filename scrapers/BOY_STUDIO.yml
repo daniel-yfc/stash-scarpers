@@ -153,4 +153,4 @@ xPathScrapers:
         selector: "//link[@rel='canonical']/@href"
 
 driver:
-  useCDP: true
+  useSurf: true

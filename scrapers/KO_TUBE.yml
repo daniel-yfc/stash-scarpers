@@ -207,7 +207,7 @@ xPathScrapers:
 # Last Updated: 2026-11-17 — scene/group selectors rewritten against live DOM
 # (h3 title, th/td spec table, sub_data/intro_text description).
 driver:
-  useCDP: true
+  useSurf: true
   headers:
   - Key: User-Agent
     Value: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36
