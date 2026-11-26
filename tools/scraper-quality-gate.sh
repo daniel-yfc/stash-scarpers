@@ -63,11 +63,15 @@ if grep -qE '^[[:space:]]*xPathScrapers:' "${SCRAPER_FILE}" && ! grep -qE '^name
   fail "XPath scrapers require a non-empty root 'name:' field | XPath 擷取器必須在根層包含非空的 'name:' 欄位"
 fi
 
-# sceneByQueryFragment 必須保留原始 URL，不可經過搜尋端點重新路由
+# sceneByQueryFragment 的 queryURL 必須以 {url} 佔位符帶入原始 URL：
+# 允許裸 "{url}" 直通，或把 {url} 嵌進端點樣板（API 擷取器把命中 URL 改寫為
+# detail 端點，例如 GAYERDAR 的 api/v2/videos/{url}）。與
+# tools/tests/test_scrapers.py 的 test_fragment_mapping_is_optional_but_valid_when_present
+# 採用同一條規則。
 if grep -qE '^sceneByQueryFragment:' "${SCRAPER_FILE}"; then
   QUERY_FRAGMENT_BLOCK=$(sed -n '/^sceneByQueryFragment:/,/^[^[:space:]#][^:]*:/p' "${SCRAPER_FILE}")
-  if ! grep -qE "^[[:space:]]*queryURL:[[:space:]]*['\"]?\{url\}['\"]?[[:space:]]*(#.*)?$" <<< "${QUERY_FRAGMENT_BLOCK}"; then
-    fail "sceneByQueryFragment must contain 'queryURL: "{url}"' | sceneByQueryFragment 必須包含 'queryURL: "{url}"'"
+  if ! grep -qE "^[[:space:]]*queryURL:.*\{url\}" <<< "${QUERY_FRAGMENT_BLOCK}"; then
+    fail "sceneByQueryFragment queryURL must use the '{url}' placeholder | sceneByQueryFragment 的 queryURL 必須使用 '{url}' 佔位符"
   fi
 fi
 
