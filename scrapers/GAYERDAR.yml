@@ -1,206 +1,375 @@
-# Gayerdar scraper. Historical zh-TW rendered-DOM inspection (2026-09-28,
-# record not committed to this repo). Reproducible fixture
-# verification and live Stash/CDP verification are not established.
-# No cookies, credentials, tokens, or browser profile data.
+# Gayerdar scraper — API-based integration (2026-11-10).
 #
-# Fragility notes:
-# - performerScraper Height/Weight anchor on Tailwind utility class text-D1D0CF.
-# - sceneSearchScraper per-field card selectors work positionally; not live-verified.
-# - Title selectors split on fullwidth ｜, which depends on zh-TW page chrome.
-# 2026-10-06: Tags gained plain-text li fallback (some pages render tags
-# without links) against live DOM.
-# Last Updated: 2026-11-17
+# Why this rewrite exists: the previous version scraped the rendered
+# website via XPath + CDP, and gayerdar.com sits behind a Cloudflare
+# challenge. In the production Stash runtime (v0.32.0-3, 2026-11-10,
+# read-only scrapeSinglePerformer) performerByURL returned the
+# challenge page title "Just a moment..." as the performer Name and
+# performerByName returned no results. The site's own JSON API
+# (api.gayerdar.com/api/v2, the same source the community ModelGaydar
+# scraper uses) is not challenged and returns complete data, so all
+# entry points below go through the API. No CDP driver is used.
+#
+# Integrated from the community ModelGaydar scraper: API transport,
+# dual-language scrapers (en-US / zh-TW) with the other language's
+# name as Aliases, real Gender from the API, sceneByFragment.
+# Kept from the previous GAYERDAR version: performer/scene URLs are
+# returned, Studio fixed to Gayerdar, sceneByQueryFragment entry.
+# Improvements over both: scene Duration (data.duration), per-language
+# Tag names (name / name_cn), performer Twitter handle from
+# data.socialmedia, Height/Weight blanked when the API reports 0
+# (0 means "no data" — e.g. models 47 and 31 — and must not be
+# written as a real 0 cm / 0 kg measurement).
+#
+# Name search (added 2026-11-14): performerByName / sceneByName use
+# the API's real search endpoint, GET /api/v2/search?keyword={},
+# verified live 2026-11-14. (The /api/v2/models list still ignores
+# search/name/q parameters; the search endpoint is a separate path.)
+# It filters in both languages (毛蛋 -> Moudan id 118, 小鐵 -> Bruce
+# id 47 — the query the old CDP performerByName returned [] for) and
+# returns empty lists for nonsense keywords. Results arrive wrapped
+# as data.models / data.videos. Search model items carry the same
+# fields as /models/{id}, so performer search reuses the full
+# performer mapping. Search video items have no tags / models keys,
+# so scene search results omit Tags and Performers; selecting a
+# result and scraping it via sceneByURL yields the full record.
+# Stash ByName accepts a single queryURL, so the search scrapers
+# follow the zh-TW (Cn) variants, as sceneByQueryFragment does; the
+# English name is still returned as performer Aliases.
+#
+# Deliberate omissions (verified 2026-11-10 against the live API):
+# - No performer Country: the API model payload's birth_place was
+#   empty for every sampled model; the old XPath "From" text has no
+#   API equivalent. Scene-level Performers keep Country fixed to
+#   Taiwan, as in both predecessor scrapers.
+# - No performer Birthdate: API birth_day is the zero date
+#   "0001-01-01" in sampled payloads.
+# - Date keeps "parseDate: unix" (user ruling 2026-11-14). The repo
+#   semantics checker only accepts Go reference layouts and flags
+#   this; a one-line checker exemption is prepared alongside this
+#   candidate (checker_patched.py, verified: full-repo semantics
+#   back to 0 errors) and is to land with the candidate when it goes
+#   to the repo by PR.
+#
+# Verification status: field selectors checked against live API
+# payloads on 2026-11-10 (models 47, 31 and a height-populated model;
+# videos GD-025, GDSR-003-1). Search selectors simulated against
+# live /api/v2/search payloads on 2026-11-14 (keyword 小鐵 ->
+# 1 performer; GD-025 -> 1 scene; GDSR -> 8 scenes; nonsense
+# keyword -> empty). Stash runtime load/live test: NOT_RUN
+# (stash-test instance unavailable; production still runs the old
+# files). No cookies, credentials, tokens, or browser profile data.
 name: GAYERDAR
 
 sceneByURL:
-  - action: scrapeXPath
+  - action: scrapeJson
     url:
-      - "gayerdar.com/zh-TW/videos/"
-    queryURL: "{url}"
+      - gayerdar.com/en-US/videos/
+    queryURL: https://api.gayerdar.com/api/v2/videos/{url}
     queryURLReplace:
       url:
-        - regex: "(?i)gayerdar\\.com/(?:en-us|zh-tw)?/?videos/"
-          with: "gayerdar.com/zh-TW/videos/"
-    scraper: sceneScraper
+        - regex: .*\/videos\/([^?]*).*
+          with: $1
+    scraper: sceneEn
+  - action: scrapeJson
+    url:
+      - gayerdar.com/zh-TW/videos/
+    queryURL: https://api.gayerdar.com/api/v2/videos/{url}
+    queryURLReplace:
+      url:
+        - regex: .*\/videos\/([^?]*).*
+          with: $1
+    scraper: sceneCn
 
-sceneByName:
-  action: scrapeXPath
-  queryURL: "https://gayerdar.com/zh-TW/search?query={}"
-  scraper: sceneSearchScraper
+sceneByFragment:
+  action: scrapeJson
+  queryURL: https://api.gayerdar.com/api/v2/videos/{filename}
+  queryURLReplace:
+    # Assume the beginning of the filename contains the code.
+    filename:
+      - regex: ^([\w\d-]+).*
+        with: $1
+      - regex: .*\.[^\.]+$ # if no code is found in the filename
+        with: # clear the filename so that it does not leak
+  scraper: sceneEn
 
 sceneByQueryFragment:
-  action: scrapeXPath
-  queryURL: "{url}"
+  action: scrapeJson
+  queryURL: https://api.gayerdar.com/api/v2/videos/{url}
   queryURLReplace:
     url:
-      - regex: "(?i)gayerdar\\.com/(?:en-us|zh-tw)?/?videos/"
-        with: "gayerdar.com/zh-TW/videos/"
-  scraper: sceneScraper
+      - regex: .*\/videos\/([^?]*).*
+        with: $1
+  scraper: sceneCn
+
+sceneByName:
+  action: scrapeJson
+  queryURL: https://api.gayerdar.com/api/v2/search?keyword={}
+  scraper: sceneSearchCn
 
 performerByURL:
-  - action: scrapeXPath
+  - action: scrapeJson
     url:
-      - "gayerdar.com/zh-TW/models/"
-    queryURL: "{url}"
+      - gayerdar.com/en-US/models/
+    queryURL: https://api.gayerdar.com/api/v2/models/{url}
     queryURLReplace:
       url:
-        - regex: "(?i)gayerdar\\.com/(?:en-us|zh-tw)?/?models/"
-          with: "gayerdar.com/zh-TW/models/"
-    scraper: performerScraper
+        - regex: .*\/models\/([^?]*).*
+          with: $1
+    scraper: performerEn
+  - action: scrapeJson
+    url:
+      - gayerdar.com/zh-TW/models/
+    queryURL: https://api.gayerdar.com/api/v2/models/{url}
+    queryURLReplace:
+      url:
+        - regex: .*\/models\/([^?]*).*
+          with: $1
+    scraper: performerCn
 
 performerByName:
-  action: scrapeXPath
-  queryURL: "https://gayerdar.com/zh-TW/search?query={}"
-  scraper: performerSearchScraper
+  action: scrapeJson
+  queryURL: https://api.gayerdar.com/api/v2/search?keyword={}
+  scraper: performerSearchCn
 
-xPathScrapers:
-  sceneScraper:
+jsonScrapers:
+  performerEn:
+    performer:
+      Name: data.name
+      Disambiguation:
+        fixed: Gayerdar
+      Aliases: data.name_cn
+      Gender: data.gender
+      Ethnicity:
+        fixed: Asian
+      Height:
+        selector: data.height_cm
+        postProcess:
+          - replace:
+              - regex: "^0$"
+                with: ""
+      Weight:
+        selector: data.weight_kg
+        postProcess:
+          - replace:
+              - regex: "^0$"
+                with: ""
+      Image: data.avatar
+      Twitter:
+        selector: data.socialmedia
+        postProcess:
+          - replace:
+              - regex: '^https://twitter\.com/'
+                with: ""
+              - regex: '^https://x\.com/'
+                with: ""
+      URLs:
+        selector: data.id
+        postProcess:
+          - replace:
+              - regex: ^
+                with: https://gayerdar.com/en-US/models/
+
+  performerCn:
+    performer:
+      Name: data.name_cn
+      Disambiguation:
+        fixed: Gayerdar
+      Aliases: data.name
+      Gender: data.gender
+      Ethnicity:
+        fixed: Asian
+      Height:
+        selector: data.height_cm
+        postProcess:
+          - replace:
+              - regex: "^0$"
+                with: ""
+      Weight:
+        selector: data.weight_kg
+        postProcess:
+          - replace:
+              - regex: "^0$"
+                with: ""
+      Image: data.avatar
+      Twitter:
+        selector: data.socialmedia
+        postProcess:
+          - replace:
+              - regex: '^https://twitter\.com/'
+                with: ""
+              - regex: '^https://x\.com/'
+                with: ""
+      URLs:
+        selector: data.id
+        postProcess:
+          - replace:
+              - regex: ^
+                with: https://gayerdar.com/zh-TW/models/
+
+  sceneEn:
     scene:
-      Title:
-        selector: //title/text()
+      Title: data.title
+      Code: &code data.serial_number
+      Date: &date
+        selector: data.published_at
         postProcess:
           - replace:
-              - regex: "｜.*$"
+              # milliseconds -> seconds
+              - regex: (\d{10}).*
+                with: $1
+          - parseDate: unix
+      Details:
+        selector: data.description
+        postProcess:
+          - replace:
+              - regex: 【[^】]*】
                 with: ""
-              - regex: "\\|.*$"
+              - regex: '^\s+|\s+$'
                 with: ""
-      Code:
-        selector: //link[@rel="canonical"]/@href
+      Duration: data.duration
+      Image: data.cover
+      URL:
+        selector: data.serial_number
         postProcess:
           - replace:
-              - regex: ".*/videos/([^/]+).*"
-                with: "$1"
-              - regex: ".*/clips/([^/]+).*"
-                with: "$1"
-      Date:
-        # 發佈日期: 2025/07/18 in span.genres-info. Verified 2026-10-17.
-        selector: //span[contains(text(),"發佈日期")]/text()
-        postProcess:
-          - replace:
-              - regex: '^.*?(\d{4})/(\d{2})/(\d{2}).*$'
-                with: "$1-$2-$3"
-          - parseDate: "2006-01-02"
-      Image:
-        # og:image is favicon; use video cover. Verified 2026-10-17.
-        selector: (//img[contains(@src,"video_covers")])[1]/@src
+              - regex: ^
+                with: https://gayerdar.com/en-US/videos/
+      Tags:
+        Name: data.tags.#.name
       Studio:
         Name:
-          fixed: "Gayerdar"
-      Tags:
-        # Live DOM (2026-10-06): linked variant is ul.iq-blogtag li a.title
-        # (the <a> has no href); some pages render plain-text li nodes
-        # instead — union both, strip separators.
-        Name:
-          selector: //ul[contains(@class,"iq-blogtag")]/li/a[contains(@class,"title")]/text() | //ul[contains(@class,"iq-blogtag")]/li/text()[normalize-space()]
-          postProcess:
-            - replace:
-                - regex: '^[，、,]\s*|\s*[，、,]$'
-                  with: ""
-                - regex: '^\s+|\s+$'
-                  with: ""
+          fixed: Gayerdar
       Performers:
-        Name:
-          selector: //a[contains(@href,"/models/")]//text()[normalize-space()]
-        # Demographics: selector+replace constants (not fixed:) — Stash
-        # applies fixed: inside scene Performers only to the first
-        # performer (Gate B finding, 2026-11-17). Same nodes as Name.
-        Gender:
-          selector: //a[contains(@href,"/models/")]//text()[normalize-space()]
-          postProcess:
-            - replace:
-                - regex: ".+"
-                  with: "MALE"
-        Country:
-          selector: //a[contains(@href,"/models/")]//text()[normalize-space()]
-          postProcess:
-            - replace:
-                - regex: ".+"
-                  with: "TW"
+        Name: data.models.#.name
+        Disambiguation:
+          fixed: Gayerdar
+        Aliases: data.models.#.name_cn
+        Image: data.models.#.avatar
+        Gender: data.models.#.gender
         Ethnicity:
-          selector: //a[contains(@href,"/models/")]//text()[normalize-space()]
+          fixed: Asian
+        Country:
+          fixed: Taiwan
+        URLs:
+          selector: data.models.#.id
           postProcess:
             - replace:
-                - regex: ".+"
-                  with: "Asian"
-      URLs:
-        selector: //link[@rel="canonical"]/@href
-        postProcess:
-          - replace:
-              - regex: "^/"
-                with: "https://gayerdar.com/"
-              - regex: "(?i)gayerdar\\.com/(?:en-us|zh-tw)?/?videos/"
-                with: "gayerdar.com/zh-TW/videos/"
+                - regex: ^
+                  with: https://gayerdar.com/en-US/models/
 
-  performerScraper:
-    performer:
-      Name:
-        selector: //title/text()
-        postProcess:
-          - replace:
-              - regex: "｜.*$"
-                with: ""
-              - regex: "\\|.*$"
-                with: ""
-      Gender:
-        fixed: "male"
-      Country:
-        selector: //p[contains(@class,"text-D1D0CF")][contains(text(),"From")]/text()
-        postProcess:
-          - replace:
-              - regex: ".*From\\s+"
-                with: ""
-      Height:
-        selector: //p[contains(@class,"text-D1D0CF")][contains(text(),"cm")]/text()
-        postProcess:
-          - replace:
-              - regex: ".*?(\\d+)\\s*cm.*"
-                with: "$1"
-      Weight:
-        selector: //p[contains(@class,"text-D1D0CF")][contains(text(),"kg")]/text()
-        postProcess:
-          - replace:
-              - regex: ".*?(\\d+)\\s*kg.*"
-                with: "$1"
-      Image:
-        selector: //meta[@property="og:image"]/@href
-      URLs:
-        selector: //link[@rel="canonical"]/@href
-        postProcess:
-          - replace:
-              - regex: "^/"
-                with: "https://gayerdar.com/"
-              - regex: "(?i)gayerdar\\.com/(?:en-us|zh-tw)?/?models/"
-                with: "gayerdar.com/zh-TW/models/"
-
-  sceneSearchScraper:
-    # 2026-10-17: verified against live search DOM (browser + rendered HTML).
+  sceneCn:
     scene:
-      Title:
-        selector: .//div[@id and @description][.//a[contains(@href,"/videos/")]]//p[1]/text()
-      Image:
-        selector: .//div[@id and @description][.//a[contains(@href,"/videos/")]]//img[1]/@src
-      URL:
-        selector: .//div[@id and @description][.//a[contains(@href,"/videos/")]]//a[contains(@href,"/videos/")][1]/@href
+      Title: data.title_cn
+      Code: *code
+      Date: *date
+      Details:
+        selector: data.description_cn
         postProcess:
           - replace:
-              - regex: "^/"
-                with: "https://gayerdar.com/"
+              - regex: 【[^】]*】
+                with: ""
+              - regex: '^\s+|\s+$'
+                with: ""
+      Duration: data.duration
+      Image: data.cover
+      URL:
+        selector: data.serial_number
+        postProcess:
+          - replace:
+              - regex: ^
+                with: https://gayerdar.com/zh-TW/videos/
+      Tags:
+        Name: data.tags.#.name_cn
+      Studio:
+        Name:
+          fixed: Gayerdar
+      Performers:
+        Name: data.models.#.name_cn
+        Disambiguation:
+          fixed: Gayerdar
+        Aliases: data.models.#.name
+        Image: data.models.#.avatar
+        Gender: data.models.#.gender
+        Ethnicity:
+          fixed: Asian
+        Country:
+          fixed: Taiwan
+        URLs:
+          selector: data.models.#.id
+          postProcess:
+            - replace:
+                - regex: ^
+                  with: https://gayerdar.com/zh-TW/models/
 
-  performerSearchScraper:
-    # 2026-10-17: verified against live search DOM (browser).
-    # Performer card is <a href="/zh-TW/models/{id}"> containing <img> and name text.
+  performerSearchCn:
     performer:
-      Name:
-        selector: .//a[contains(@href,"/models/")]/text()[normalize-space()]
-      Image:
-        selector: .//a[contains(@href,"/models/")]//img[1]/@src
-      URL:
-        selector: .//a[contains(@href,"/models/")][1]/@href
+      Name: data.models.#.name_cn
+      Disambiguation:
+        fixed: Gayerdar
+      Aliases: data.models.#.name
+      Gender: data.models.#.gender
+      Ethnicity:
+        fixed: Asian
+      Height:
+        selector: data.models.#.height_cm
         postProcess:
           - replace:
-              - regex: "^/"
-                with: "https://gayerdar.com/"
+              - regex: "^0$"
+                with: ""
+      Weight:
+        selector: data.models.#.weight_kg
+        postProcess:
+          - replace:
+              - regex: "^0$"
+                with: ""
+      Image: data.models.#.avatar
+      Twitter:
+        selector: data.models.#.socialmedia
+        postProcess:
+          - replace:
+              - regex: '^https://twitter\.com/'
+                with: ""
+              - regex: '^https://x\.com/'
+                with: ""
+      URLs:
+        selector: data.models.#.id
+        postProcess:
+          - replace:
+              - regex: ^
+                with: https://gayerdar.com/zh-TW/models/
 
-driver:
-  useCDP: true
-# Last Updated: 2026-10-06
+  sceneSearchCn:
+    scene:
+      Title: data.videos.#.title_cn
+      Code: data.videos.#.serial_number
+      Date:
+        selector: data.videos.#.published_at
+        postProcess:
+          - replace:
+              # milliseconds -> seconds
+              - regex: (\d{10}).*
+                with: $1
+          - parseDate: unix
+      Details:
+        selector: data.videos.#.description_cn
+        postProcess:
+          - replace:
+              - regex: 【[^】]*】
+                with: ""
+              - regex: '^\s+|\s+$'
+                with: ""
+      Duration: data.videos.#.duration
+      Image: data.videos.#.cover
+      URL:
+        selector: data.videos.#.serial_number
+        postProcess:
+          - replace:
+              - regex: ^
+                with: https://gayerdar.com/zh-TW/videos/
+      Studio:
+        Name:
+          fixed: Gayerdar
+      # Tags / Performers intentionally not mapped: search video
+      # items carry no tags / models keys (verified 2026-11-14).
+# Last Updated: 2026-11-14
