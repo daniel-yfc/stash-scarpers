@@ -30,4 +30,11 @@ def test_fragment_mapping_is_optional_but_valid_when_present():
         # Stop at the next top-level key (no indentation) so we only inspect
         # the sceneByQueryFragment block.
         block = re.split(r"\n[A-Za-z]", block, maxsplit=1)[0]
-        assert 'queryURL: "{url}"' in block or "queryURL: '{url}'" in block
+        # The fragment placeholder must drive the queryURL: either the raw
+        # "{url}" passthrough, or an endpoint template embedding {url}
+        # (API scrapers rewrite the selected hit URL into their detail
+        # endpoint, e.g. GAYERDAR's api/v2/videos/{url}).
+        query_url_lines = [ln for ln in block.splitlines() if "queryURL:" in ln]
+        assert any("{url}" in ln for ln in query_url_lines), (
+            f"{scraper}: sceneByQueryFragment queryURL must use the {{url}} placeholder"
+        )

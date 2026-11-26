@@ -81,7 +81,7 @@ def check_parse_date(data, path):
         if isinstance(node, dict):
             for k, v in node.items():
                 if k == "parseDate" and isinstance(v, str):
-                    if "2006" not in v:
+                    if v != "unix" and "2006" not in v:
                         errors.append(
                             f"{path}:{trail}/parseDate: {v!r} does not look like a "
                             "Go reference layout (expected 2006-01-02 style)"
